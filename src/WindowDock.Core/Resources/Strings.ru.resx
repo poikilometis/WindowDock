@@ -1,0 +1,1203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="AgentIntegrations.WorkingPermissionRequestsCompletionAndErrorsRestart" xml:space="preserve">
+    <value>Работа, запрос разрешения, завершение и ошибка. После настройки перезапустите агент; проект должен быть доверенным.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.WorkingPermissionRequestsAndCompletionRestartCodex" xml:space="preserve">
+    <value>Работа, запрос разрешения и завершение. После настройки перезапустите Codex и разрешите hooks через /hooks. Проверка доверия не меняется.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.WorkingPermissionRequestsAndCompletionRestartThe" xml:space="preserve">
+    <value>Работа, запрос разрешения и завершение. После настройки перезапустите агент. Используйте актуальную версию Gemini CLI.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsRootMustBeAJSON" xml:space="preserve">
+    <value>Корень настроек должен быть объектом JSON.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheHooksFieldMustBeAnObject" xml:space="preserve">
+    <value>Поле hooks должно быть объектом. Исходный файл не изменён.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.EventMustContainAHooksArrayThe" xml:space="preserve">
+    <value>Событие «{0}» должно содержать массив hooks. Исходный файл не изменён.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsFileIsTooLarge" xml:space="preserve">
+    <value>Файл настроек слишком велик: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SelectAProjectFolder" xml:space="preserve">
+    <value>Выберите папку проекта.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.ProjectFolderNotFound" xml:space="preserve">
+    <value>Папка проекта не найдена: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsPathIsOutsideTheProject" xml:space="preserve">
+    <value>Путь настроек вышел за пределы проекта.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsPathContainsASymbolicLink" xml:space="preserve">
+    <value>Путь настроек содержит ссылку или junction: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.InvalidProjectPath" xml:space="preserve">
+    <value>Некорректный путь проекта.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheIntegrationJournalDoesNotMatchThe" xml:space="preserve">
+    <value>Журнал интеграции не соответствует выбранному проекту.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SetupIsAlreadyRunningForThisProject" xml:space="preserve">
+    <value>Настройка этого проекта уже выполняется. Повторите действие после её завершения.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsChangedDuringPreparationTryAgain" xml:space="preserve">
+    <value>Настройки изменились во время подготовки. Повторите действие.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SelectAtLeastOneAgent" xml:space="preserve">
+    <value>Выберите хотя бы одного агента.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheBackupWasModifiedTheSettingsWere" xml:space="preserve">
+    <value>Резервная копия изменена. Настройки не заменены.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheBackupPathDoesNotBelongTo" xml:space="preserve">
+    <value>Путь резервной копии не принадлежит проекту.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="HookPayload.TheAgentIsRequestingPermission" xml:space="preserve">
+    <value>Агент запрашивает разрешение</value>
+    <comment>Context: HookPayload</comment>
+  </data>
+  <data name="HookPayload.AgentError" xml:space="preserve">
+    <value>Ошибка агента</value>
+    <comment>Context: HookPayload</comment>
+  </data>
+  <data name="JsonSyntax.TheJSONFileIsTooLarge" xml:space="preserve">
+    <value>Файл JSON слишком велик.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnexpectedDataAfterJSON" xml:space="preserve">
+    <value>Лишние данные после JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnterminatedJSONComment" xml:space="preserve">
+    <value>Незавершённый комментарий JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidOrExcessivelyNestedJSON" xml:space="preserve">
+    <value>Некорректный или слишком вложенный JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.DuplicateJSONKey" xml:space="preserve">
+    <value>Повторяющийся ключ JSON: {0}</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidJSONValue" xml:space="preserve">
+    <value>Некорректное значение JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.ControlCharacterInAJSONString" xml:space="preserve">
+    <value>Управляющий символ в строке JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidUnicodeEscapeInJSON" xml:space="preserve">
+    <value>Некорректная Unicode-последовательность JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidEscapeSequenceInJSON" xml:space="preserve">
+    <value>Некорректная escape-последовательность JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnterminatedJSONString" xml:space="preserve">
+    <value>Незавершённая строка JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.ExpectedInJSON" xml:space="preserve">
+    <value>Ожидался символ «{0}» в JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="Models.Agents" xml:space="preserve">
+    <value>Агенты</value>
+    <comment>Context: Models</comment>
+  </data>
+  <data name="Models.Tab" xml:space="preserve">
+    <value>Вкладка</value>
+    <comment>Context: Models</comment>
+  </data>
+  <data name="ProjectModels.NewProject" xml:space="preserve">
+    <value>Новый проект</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="ProjectModels.Project" xml:space="preserve">
+    <value>Проект</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="ProjectModels.Terminal" xml:space="preserve">
+    <value>Терминал</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="RuntimePanel.Working" xml:space="preserve">
+    <value>Работает</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.NeedsInput" xml:space="preserve">
+    <value>Нужен ввод</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Done" xml:space="preserve">
+    <value>Готов</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Error" xml:space="preserve">
+    <value>Ошибка</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Attention" xml:space="preserve">
+    <value>Внимание</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePaths.CouldNotDetermineTheApplicationPath" xml:space="preserve">
+    <value>Не удалось определить путь приложения.</value>
+    <comment>Context: RuntimePaths</comment>
+  </data>
+  <data name="WindowRules.NewRule" xml:space="preserve">
+    <value>Новое правило</value>
+    <comment>Context: WindowRules</comment>
+  </data>
+  <data name="WindowRules.Rule" xml:space="preserve">
+    <value>Правило</value>
+    <comment>Context: WindowRules</comment>
+  </data>
+  <data name="WorkspaceSession.SettingsWereNotSaved" xml:space="preserve">
+    <value>Настройки не сохранены: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.ThisWindowIsAlreadyDocked" xml:space="preserve">
+    <value>Это окно уже подключено.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.ThisTabHasNoFreeSlots" xml:space="preserve">
+    <value>Во вкладке нет свободного места.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.AddWindow" xml:space="preserve">
+    <value>Добавление окна</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.NewTab" xml:space="preserve">
+    <value>Новая вкладка</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TabName" xml:space="preserve">
+    <value>Название вкладки</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CloseTab" xml:space="preserve">
+    <value>Закрытие вкладки</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSelectedTabDoesNotHaveEnough" xml:space="preserve">
+    <value>В выбранной вкладке недостаточно свободных мест.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MoveWindows" xml:space="preserve">
+    <value>Перенос окон</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSelectionExceedsTheNewTabS" xml:space="preserve">
+    <value>Выбрано больше окон, чем лимит новой вкладки.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MoveToANewTab" xml:space="preserve">
+    <value>Перенос в новую вкладку</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.PanelOrder" xml:space="preserve">
+    <value>Порядок панелей</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TabOrder" xml:space="preserve">
+    <value>Порядок вкладок</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LayoutProportions" xml:space="preserve">
+    <value>Пропорции раскладки</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.PanelName" xml:space="preserve">
+    <value>Название панели</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.UndockWindows" xml:space="preserve">
+    <value>Открепление окон</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheWindowWasNotUndocked" xml:space="preserve">
+    <value>Окно не откреплено.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CollectDesktopWindows" xml:space="preserve">
+    <value>Сбор окон рабочего стола</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.WindowsAdded" xml:space="preserve">
+    <value>Добавлено окон: {0}.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MinimizedWindowsSkipped" xml:space="preserve">
+    <value> Свёрнутых пропущено: {0}.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.NoFreeSlots" xml:space="preserve">
+    <value> Нет свободных мест: {0}.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CouldNotDock" xml:space="preserve">
+    <value> Не удалось подключить: {0}. {1}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.Tab" xml:space="preserve">
+    <value>Вкладка {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSavedPanelSTabIsFull" xml:space="preserve">
+    <value>Вкладка сохранённой панели заполнена.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LinkSavedPanel" xml:space="preserve">
+    <value>Привязка сохранённой панели</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.Undone" xml:space="preserve">
+    <value>Отменено: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.FolderNotFound" xml:space="preserve">
+    <value>Папка не найдена: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.AutomaticSetupForTheseHookProfilesIs" xml:space="preserve">
+    <value>Автонастройка этих профилей hooks пока доступна в Windows.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.SelectAnAgentForAutomaticHookSetup" xml:space="preserve">
+    <value>Выберите агента для автонастройки hooks.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CouldNotStart" xml:space="preserve">
+    <value>Не удалось запустить {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LaunchedButNoWindowWasFound" xml:space="preserve">
+    <value>Запуск выполнен, но окно не найдено: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceState.TheGroupsFileIsDamagedABackup" xml:space="preserve">
+    <value>Файл групп повреждён. Использована резервная копия, если она доступна.</value>
+    <comment>Context: WorkspaceState</comment>
+  </data>
+  <data name="Appaxaml.SecondTab" xml:space="preserve">
+    <value>Вторая вкладка</value>
+    <comment>Context: App.axaml</comment>
+  </data>
+  <data name="Appaxaml.TheInterfaceIsAvailableDockingOtherApplications" xml:space="preserve">
+    <value>Интерфейс доступен. Подключение чужих окон для этой ОС запланировано отдельным системным модулем.</value>
+    <comment>Context: App.axaml</comment>
+  </data>
+  <data name="BackgroundWindow.TabBackground" xml:space="preserve">
+    <value>Фон вкладки</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Save" xml:space="preserve">
+    <value>Сохранить</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Color" xml:space="preserve">
+    <value>Цвет</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImageGIF" xml:space="preserve">
+    <value>Изображение / GIF</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Transparent" xml:space="preserve">
+    <value>Прозрачный</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.BackgroundType" xml:space="preserve">
+    <value>Тип фона</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Browse" xml:space="preserve">
+    <value>Выбрать…</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImageOrGIFFile" xml:space="preserve">
+    <value>Файл изображения или GIF</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImagesAndAnimatedGIFsUpToMB" xml:space="preserve">
+    <value>Изображения и анимированные GIF до 80 МБ. В стеклянных темах фон слегка размывается.</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.TheDesktopShowsThroughEmptyTabSpace" xml:space="preserve">
+    <value>Рабочий стол виден сквозь свободное пространство вкладки. Окна приложений сохраняют свою непрозрачность.</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.TheSelectedFileWasNotFound" xml:space="preserve">
+    <value>Выбранный файл не найден.</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImagesAndGIFs" xml:space="preserve">
+    <value>Изображения и GIF</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BasicDialogs.AddOpenWindows" xml:space="preserve">
+    <value>Добавить открытые окна</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Add" xml:space="preserve">
+    <value>Добавить</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.FreeSlotsInThisTabUseCtrl" xml:space="preserve">
+    <value>Свободных мест в текущей вкладке: {0}. Ctrl / Shift позволяют выбрать несколько окон.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowOrApplicationName" xml:space="preserve">
+    <value>Название окна или приложения</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Minimized" xml:space="preserve">
+    <value> · свёрнуто</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.NoAvailableWindowsDockedAndSystemWindows" xml:space="preserve">
+    <value>Доступных окон нет. Подключённые окна и служебные окна скрыты из списка.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheSelectionExceedsTheFreeSlotsUse" xml:space="preserve">
+    <value>Выбрано больше окон, чем свободных мест. Для автоматического распределения используйте «Собрать окна».</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.FindWindow" xml:space="preserve">
+    <value>Найти окно</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.GoTo" xml:space="preserve">
+    <value>Перейти</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.PanelApplicationOrTab" xml:space="preserve">
+    <value>Панель, приложение или вкладка</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.NoMatches" xml:space="preserve">
+    <value>Совпадений нет.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.SelectAWindow" xml:space="preserve">
+    <value>Выберите окно.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowSizesAndLimit" xml:space="preserve">
+    <value>Размеры и лимит окон</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.MinimumWidth" xml:space="preserve">
+    <value>Минимальная ширина</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.MinimumHeight" xml:space="preserve">
+    <value>Минимальная высота</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowsPerTab" xml:space="preserve">
+    <value>Окон во вкладке</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheGridFitsTheAvailableWidthA" xml:space="preserve">
+    <value>Сетка помещается по ширине. При нехватке высоты появляется вертикальная прокрутка.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheLimitMustBeBetweenAnd" xml:space="preserve">
+    <value>Лимит должен быть от 1 до 25.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Close" xml:space="preserve">
+    <value>Закрыть</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CompactWorkspacesForExistingWindowsNETLTS" xml:space="preserve">
+    <value>Компактные рабочие пространства для существующих окон. .NET 10 LTS · C# 14 · Avalonia.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.AddWindowsSelectsExistingApplicationsCollectWindows" xml:space="preserve">
+    <value>Добавить окна — выбрать существующие приложения. «Собрать окна» распределяет доступные окна по вкладкам с учётом лимитов и исключений.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.DoubleClickAPanelHeaderToZoom" xml:space="preserve">
+    <value>Двойной щелчок по заголовку панели — увеличить / вернуть сетку. Перетаскивание заголовка — изменить порядок или перенести на вкладку.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlShiftClickHeadersToSelectPanels" xml:space="preserve">
+    <value>Ctrl / Shift + щелчок по заголовкам — выделение. Меню панели содержит перенос и групповые действия. Ctrl + Alt + Z — отмена.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlAltTabsCtrlAltEnterZoom" xml:space="preserve">
+    <value>Ctrl + Alt + 1…9 — вкладки; Ctrl + Alt + Enter — увеличение; Ctrl + Alt + A — добавить окна; Ctrl + Alt + K — поиск.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlAltDMinimizeTheGroupCtrl" xml:space="preserve">
+    <value>Ctrl + Alt + D — свернуть группу; Ctrl + Alt + G — показать. В оболочке также работают Ctrl + N, Ctrl + K и Esc.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.RulesProjectsGroupRestoreAndAgentIntegrations" xml:space="preserve">
+    <value>Правила, проекты, восстановление групп и интеграции с агентами находятся в меню … . При закрытии WindowDock окна возвращаются на рабочий стол, сессии остаются в отдельных процессах.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="ColorPickerView.Hue" xml:space="preserve">
+    <value>Оттенок</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.Opacity" xml:space="preserve">
+    <value>Непрозрачность</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.Color" xml:space="preserve">
+    <value>Цвет {0}</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.HEXColor" xml:space="preserve">
+    <value>Цвет HEX</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.ColorModel" xml:space="preserve">
+    <value>Цветовая модель</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.SaturationAndBrightness" xml:space="preserve">
+    <value>Насыщенность и яркость</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.ArrowKeysChangeSaturationAndBrightnessShift" xml:space="preserve">
+    <value>Стрелки меняют насыщенность и яркость; Shift увеличивает шаг.</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.HEXEnterRGBDigitsOrARGBDigits" xml:space="preserve">
+    <value>HEX: укажите 6 цифр RGB или 8 цифр ARGB.</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="EditorWindow.ThisSettingsPageIsAlreadyClosed" xml:space="preserve">
+    <value>Эта страница настроек уже закрыта.</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Back" xml:space="preserve">
+    <value>Назад</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.BackDiscardChangesOnThisPage" xml:space="preserve">
+    <value>Назад · отменить изменения этой страницы</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Cancel" xml:space="preserve">
+    <value>Отмена</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.EnterAValueFor" xml:space="preserve">
+    <value>Заполните поле «{0}».</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.ProjectFolder" xml:space="preserve">
+    <value>Папка проекта</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Name" xml:space="preserve">
+    <value>Название</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="MainWindowCommands.RenameTab" xml:space="preserve">
+    <value>Переименовать вкладку</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.FindWindow" xml:space="preserve">
+    <value>Найти окно…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Workspaces" xml:space="preserve">
+    <value>Рабочие пространства</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SaveGroups" xml:space="preserve">
+    <value>Сохранить состав групп</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RestoreAvailableWindows" xml:space="preserve">
+    <value>Восстановить доступные окна</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.PendingWindows" xml:space="preserve">
+    <value>Ожидающие окна ({0})…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RestoreOnStartup" xml:space="preserve">
+    <value>Восстанавливать после запуска</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.NewTab" xml:space="preserve">
+    <value>Новая вкладка…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RenameCurrentTab" xml:space="preserve">
+    <value>Переименовать текущую…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CloseCurrentTab" xml:space="preserve">
+    <value>Закрыть текущую вкладку</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CaptureRules" xml:space="preserve">
+    <value>Правила захвата…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.AgentIntegrations" xml:space="preserve">
+    <value>Интеграции с агентами…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Launch" xml:space="preserve">
+    <value>Запустить «{0}»</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CommandsLaunched" xml:space="preserve">
+    <value>Запущено команд: {0}</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ManageProjects" xml:space="preserve">
+    <value>Настроить проекты…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Projects" xml:space="preserve">
+    <value>Проекты</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Selection" xml:space="preserve">
+    <value>Выделение ({0})</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SelectAllPanels" xml:space="preserve">
+    <value>Выбрать все панели</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ClearSelection" xml:space="preserve">
+    <value>Снять выделение</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndockSelected" xml:space="preserve">
+    <value>Открепить выбранные</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Undo" xml:space="preserve">
+    <value>Отменить: {0}</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndoAction" xml:space="preserve">
+    <value>Отменить действие</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.View" xml:space="preserve">
+    <value>Вид</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Appearance" xml:space="preserve">
+    <value>Оформление…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.TabBackground" xml:space="preserve">
+    <value>Фон вкладки…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ScrollOnHover" xml:space="preserve">
+    <value>Прокрутка по наведению</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndockTabWindows" xml:space="preserve">
+    <value>Открепить окна вкладки</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MinimizeGroup" xml:space="preserve">
+    <value>Свернуть группу</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Help" xml:space="preserve">
+    <value>Справка…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Grid" xml:space="preserve">
+    <value>Сетка</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MainWindowOnTheLeft" xml:space="preserve">
+    <value>Главное окно слева</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.TwoMainWindowsOnTop" xml:space="preserve">
+    <value>Два главных сверху</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Automatic" xml:space="preserve">
+    <value>Автоматически</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Columns" xml:space="preserve">
+    <value>{0} столбцов</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.GridColumns" xml:space="preserve">
+    <value>Столбцы сетки</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ResetProportions" xml:space="preserve">
+    <value>Сбросить пропорции</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SizesAndLimit" xml:space="preserve">
+    <value>Размеры и лимит…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Layout" xml:space="preserve">
+    <value>Раскладка</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MoveToNewTab" xml:space="preserve">
+    <value>Переместить в новую вкладку</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MoveToTab" xml:space="preserve">
+    <value>Переместить во вкладку</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ReturnToGrid" xml:space="preserve">
+    <value>Вернуться к сетке</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Zoom" xml:space="preserve">
+    <value>Увеличить</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Rename" xml:space="preserve">
+    <value>Переименовать…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Undock" xml:space="preserve">
+    <value>Открепить</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SelectPanel" xml:space="preserve">
+    <value>Выделить панель</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ClearAttention" xml:space="preserve">
+    <value>Снять внимание</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SetUpHooks" xml:space="preserve">
+    <value>Настроить hooks…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CloseTab" xml:space="preserve">
+    <value>Закрыть вкладку</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindow.CollectWindows" xml:space="preserve">
+    <value>Собрать окна</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CollectDesktopWindowsMinimizedWindowsAreSkipped" xml:space="preserve">
+    <value>Переместить активные окна · свёрнутые пропускаются</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.NewTabCtrlN" xml:space="preserve">
+    <value>Новая вкладка · Ctrl + N</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindowsCtrlAltA" xml:space="preserve">
+    <value>Добавить окна · Ctrl + Alt + A</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.GridShowAllWindowsAndResetThe" xml:space="preserve">
+    <value>Сетка · показать все окна и сбросить раскладку</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CaptureWindowsAsYouDragThem" xml:space="preserve">
+    <value>Захватывать окна при перетаскивании</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.WindowDockMenu" xml:space="preserve">
+    <value>Меню WindowDock</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindowsToThisTab" xml:space="preserve">
+    <value>Добавьте окна в эту вкладку</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindows" xml:space="preserve">
+    <value>Добавить окна</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.OrEnableTheMagnetAndDragA" xml:space="preserve">
+    <value>Или включите магнит и перетащите сюда окно</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CollectDesktopWindows" xml:space="preserve">
+    <value>Переместить активные окна</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="PanelCard.ZoomWindowReturnToGrid" xml:space="preserve">
+    <value>Увеличить окно / вернуться к сетке</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.WindowActions" xml:space="preserve">
+    <value>Действия с окном</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.ReturnWindowToDesktop" xml:space="preserve">
+    <value>Вернуть окно на рабочий стол</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.ResizePanels" xml:space="preserve">
+    <value>Изменить пропорции панелей</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelDragPreview.MoveToTab" xml:space="preserve">
+    <value>Перенести во вкладку «{0}»</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.ThisTabHasNoFreeSlots" xml:space="preserve">
+    <value>Во вкладке нет свободных мест</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
+    <value>Поменять порядок панелей</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">
+    <value>Перетащите на панель или вкладку</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.MovingPanel" xml:space="preserve">
+    <value>Перемещение панели</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.MovingWindows" xml:space="preserve">
+    <value>Перемещение окон: {0}</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="ProjectDialogs.SavedCommandsRunOnlyWhenYouChoose" xml:space="preserve">
+    <value>Сохранённые команды запускаются только выбранным действием «Запустить проект». Настройка проекта сама ничего не запускает.</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Commands" xml:space="preserve">
+    <value>Команд: {0} · </value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Edit" xml:space="preserve">
+    <value>Изменить</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Remove" xml:space="preserve">
+    <value>Удалить</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.EditProject" xml:space="preserve">
+    <value>Настроить проект</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.InitialTab" xml:space="preserve">
+    <value>Начальная вкладка</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AProjectCanContainUpToCommands" xml:space="preserve">
+    <value>В проекте может быть до 64 команд.</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AddCommand" xml:space="preserve">
+    <value>Добавить команду</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.ProjectCommand" xml:space="preserve">
+    <value>Команда проекта</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.DoNotConfigure" xml:space="preserve">
+    <value>Не настраивать</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.DetectAgentAutomatically" xml:space="preserve">
+    <value>Определить агента автоматически</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Program" xml:space="preserve">
+    <value>Программа</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Arguments" xml:space="preserve">
+    <value>Аргументы</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.WorkingFolder" xml:space="preserve">
+    <value>Рабочая папка</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.TitlePattern" xml:space="preserve">
+    <value>Маска заголовка</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AutomaticHookSetup" xml:space="preserve">
+    <value>Автонастройка hooks</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Environment" xml:space="preserve">
+    <value>Окружение</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.OneKEYValueVariablePerLineAgentId" xml:space="preserve">
+    <value>Одна переменная KEY=value на строку. {agentId} в аргументах и маске заменяется идентификатором запуска. Для составных команд укажите оболочку явно.</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.HooksAreConfiguredBeforeLaunchExistingHooks" xml:space="preserve">
+    <value>Автонастройка hooks выполняется перед запуском. Существующие hooks сохраняются. Доверие к hooks подтверждается в самом агенте.</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.VariablesMustUseTheKEYValueFormat" xml:space="preserve">
+    <value>Переменная должна иметь вид KEY=value.</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.InvalidOrDuplicateVariableName" xml:space="preserve">
+    <value>Недопустимое или повторяющееся имя переменной: {0}</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CaptureRules" xml:space="preserve">
+    <value>Правила захвата</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.AutomaticallyCaptureMatchingNewWindows" xml:space="preserve">
+    <value>Автоматически захватывать новые подходящие окна</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.ExclusionsTakePriorityPreviewShowsTheResult" xml:space="preserve">
+    <value>Исключения имеют приоритет. Предпросмотр показывает результат без перемещения окон.</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Exclude" xml:space="preserve">
+    <value>Исключение · </value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Disabled" xml:space="preserve">
+    <value> · выключено</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.AnyApplication" xml:space="preserve">
+    <value>Любое приложение</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Check" xml:space="preserve">
+    <value>Проверить</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CaptureRule" xml:space="preserve">
+    <value>Правило захвата</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.RuleEnabled" xml:space="preserve">
+    <value>Правило включено</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.ExcludeMatchingWindowsFromCapture" xml:space="preserve">
+    <value>Исключить совпадающие окна из захвата</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.TerminalsOnly" xml:space="preserve">
+    <value>Только терминалы</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CreateTabsWhenFull" xml:space="preserve">
+    <value>Создавать вкладки при заполнении</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Application" xml:space="preserve">
+    <value>Приложение</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.WindowTitle" xml:space="preserve">
+    <value>Заголовок окна</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.PatternsMatchesAnyTextMatchesOneCharacter" xml:space="preserve">
+    <value>Маски: * — любой фрагмент, ? — один символ. Пустое поле подходит любому значению. Без маски ищется вхождение текста.</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.RulePreview" xml:space="preserve">
+    <value>Предпросмотр правил</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.WindowsStayWhereTheyAre" xml:space="preserve">
+    <value>Окна остаются на своих местах.</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Excluded" xml:space="preserve">
+    <value>Исключено</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.NoMatchingRule" xml:space="preserve">
+    <value>Нет подходящего правила</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Tab" xml:space="preserve">
+    <value>Вкладка: {0}</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAPanel" xml:space="preserve">
+    <value>Выберите панель</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Link" xml:space="preserve">
+    <value>Привязать</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AmbiguousSessionsAreNotLinkedAutomatically" xml:space="preserve">
+    <value>Неоднозначные сеансы не привязываются автоматически.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectADockedPanel" xml:space="preserve">
+    <value>Выберите подключённую панель.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.PendingWindows" xml:space="preserve">
+    <value>Ожидающие окна</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.GroupsAreRetainedForUpToDays" xml:space="preserve">
+    <value>Состав групп сохраняется до 30 дней. Однозначные совпадения восстанавливаются автоматически. При нескольких подходящих окнах назначьте роль вручную.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Restore" xml:space="preserve">
+    <value>Восстановить</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AssignToPanel" xml:space="preserve">
+    <value>Назначить панели…</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Forget" xml:space="preserve">
+    <value>Забыть</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AgentSessions" xml:space="preserve">
+    <value>Сеансы агентов</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AssignAnUnidentifiedSessionToAPanel" xml:space="preserve">
+    <value>Назначьте неопределённый сеанс нужной панели. Запросы и ответы агентов здесь не сохраняются.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Agent" xml:space="preserve">
+    <value>Агент</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.NoPanelAssigned" xml:space="preserve">
+    <value>Панель не назначена</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AgentIntegrations" xml:space="preserve">
+    <value>Интеграции с агентами</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAProjectFolderAndAgentsWindowDock" xml:space="preserve">
+    <value>Выберите папку проекта и агентов. WindowDock сохранит чужие hooks и создаст резервные копии своих изменений.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetupForPanelSelectTheProjectFolder" xml:space="preserve">
+    <value>Настройка для панели «{0}». Укажите папку проекта, в которой запущен агент.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.CommandNotFoundInPATH" xml:space="preserve">
+    <value> · команда не найдена в PATH</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Found" xml:space="preserve">
+    <value> · найден</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.RestartTheAgentAfterSetupCodexRequires" xml:space="preserve">
+    <value>После настройки перезапустите агент. Codex требует отдельного просмотра и подтверждения hooks через /hooks. Настройки доверия и разрешений не изменяются.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetUp" xml:space="preserve">
+    <value>Настроить</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.RemoveSetup" xml:space="preserve">
+    <value>Удалить настройку</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Preview" xml:space="preserve">
+    <value>Предпросмотр</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Sessions" xml:space="preserve">
+    <value>Сеансы…</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.FilesChanged" xml:space="preserve">
+    <value>{0}Изменено файлов: {1}{2}{3}</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAnAgent" xml:space="preserve">
+    <value>Выберите агента.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="ThemePreview.GridAllWindowsAreShownWithEqual" xml:space="preserve">
+    <value>Сетка: все окна показаны с одинаковым приоритетом.</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.WorkspaceAppearance" xml:space="preserve">
+    <value>Оформление рабочего пространства</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.SelectAThemeToPreviewItImmediately" xml:space="preserve">
+    <value>Нажмите на тему — рабочее пространство сразу покажет её. Сохраните выбор или отмените изменения.</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.Graphite" xml:space="preserve">
+    <value>Графит</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.SolidDarkMaterial" xml:space="preserve">
+    <value>Плотный тёмный материал</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.Light" xml:space="preserve">
+    <value>Светлая</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.LightSurfaces" xml:space="preserve">
+    <value>Светлые поверхности</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.FrostedGlass" xml:space="preserve">
+    <value>Матовое стекло</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.BlurredTranslucentBackground" xml:space="preserve">
+    <value>Размытый полупрозрачный фон</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.ClearGlass" xml:space="preserve">
+    <value>Прозрачное стекло</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.LightweightTransparentMaterial" xml:space="preserve">
+    <value>Лёгкий прозрачный материал</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.ThemesChangeTheShellDockedApplicationsKeep" xml:space="preserve">
+    <value>Тема меняет оболочку. Приложения внутри сохраняют своё оформление.</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="WallpaperView.BackgroundCouldNotBeLoaded" xml:space="preserve">
+    <value>Фон не загружен: {0}</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.CouldNotUpdateTheImage" xml:space="preserve">
+    <value>Не удалось обновить изображение.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageExceedsMB" xml:space="preserve">
+    <value>Изображение больше 80 МБ.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageFileIsUnavailable" xml:space="preserve">
+    <value>Файл изображения недоступен.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.UnsupportedImageFormat" xml:space="preserve">
+    <value>Формат изображения не поддерживается.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageResolutionIsTooLarge" xml:space="preserve">
+    <value>Слишком большое разрешение изображения.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageFrameIsDamaged" xml:space="preserve">
+    <value>Кадр изображения повреждён.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.CouldNotResizeTheImage" xml:space="preserve">
+    <value>Не удалось изменить размер изображения.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="Native.CouldNotRestoreTheWindowRegion" xml:space="preserve">
+    <value>Не удалось восстановить область окна.</value>
+    <comment>Context: Native</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheWindowDockWindowIsNotReadyYet" xml:space="preserve">
+    <value>Окно WindowDock ещё не готово.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheWindowWasClosedOrTheApplication" xml:space="preserve">
+    <value>Окно закрыто или приложение не отвечает.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.WindowDockCannotDockItsOwnWindow" xml:space="preserve">
+    <value>Нельзя подключить окно самого WindowDock.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.WindowsDidNotAllowTheWindowTo" xml:space="preserve">
+    <value>Windows не разрешила связать окно с контейнером.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.AccessToTheWindowIsRestrictedRun" xml:space="preserve">
+    <value>Доступ к окну ограничен. WindowDock и приложение должны работать в одной среде и с одинаковыми правами.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheApplicationIsNotRespondingTryUndocking" xml:space="preserve">
+    <value>Приложение не отвечает. Повторите открепление, когда оно снова начнёт отвечать.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.CouldNotReturnTheWindowToThe" xml:space="preserve">
+    <value>Не удалось вернуть окно на рабочий стол. Повторите открепление.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="RuleDialogs.NotFound" xml:space="preserve">
+    <value>не найдена</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetupComplete" xml:space="preserve">
+    <value>Настройка завершена. </value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.WindowDockHooksRemoved" xml:space="preserve">
+    <value>Собственные hooks удалены. </value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="Counts.Columns.One" xml:space="preserve">
+    <value>{0} столбец</value>
+  </data>
+  <data name="Counts.Columns.Few" xml:space="preserve">
+    <value>{0} столбца</value>
+  </data>
+</root>

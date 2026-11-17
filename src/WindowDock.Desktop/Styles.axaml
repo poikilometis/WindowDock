@@ -1,0 +1,51 @@
+<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style Selector="Window">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{DynamicResource DockText}" />
+    <Setter Property="Background" Value="{DynamicResource DockGround}" />
+  </Style>
+  <Style Selector="Button.dock">
+    <Setter Property="MinHeight" Value="0" /><Setter Property="Height" Value="26" />
+    <Setter Property="MinWidth" Value="26" /><Setter Property="Padding" Value="8,0" />
+    <Setter Property="CornerRadius" Value="6" /><Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="Transparent" /><Setter Property="Foreground" Value="{DynamicResource DockText}" />
+  </Style>
+  <Style Selector="Window.editor"><Setter Property="Background" Value="{DynamicResource DockSurface}" /></Style>
+  <Style Selector="TextBlock.note"><Setter Property="Foreground" Value="{DynamicResource DockMuted}" /></Style>
+  <Style Selector="Button.layout.active"><Setter Property="Background" Value="{DynamicResource DockSelection}" /><Setter Property="Foreground" Value="{DynamicResource DockAccent}" /></Style>
+  <Style Selector="Button.primary">
+    <Setter Property="Background" Value="{DynamicResource DockAccent}" /><Setter Property="Foreground" Value="{DynamicResource DockAccentInk}" />
+  </Style>
+  <Style Selector="Button.secondary"><Setter Property="Background" Value="{DynamicResource DockRaised}" /></Style>
+  <Style Selector="Button.menu-action"><Setter Property="Background" Value="{DynamicResource DockRaised}" /></Style>
+  <Style Selector="Button.menu-action:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource DockSelection}" /></Style>
+  <Style Selector="Button.menu-action:focus-visible /template/ ContentPresenter"><Setter Property="BorderBrush" Value="{DynamicResource DockAccent}" /><Setter Property="BorderThickness" Value="1" /></Style>
+  <Style Selector="Button.tab"><Setter Property="Padding" Value="10,0" /><Setter Property="Foreground" Value="{DynamicResource DockMuted}" /></Style>
+  <Style Selector="Button.tab.active"><Setter Property="Background" Value="{DynamicResource DockRaised}" /><Setter Property="Foreground" Value="{DynamicResource DockText}" /></Style>
+  <Style Selector="Button.magnet.active"><Setter Property="Background" Value="{DynamicResource DockSelection}" /><Setter Property="Foreground" Value="{DynamicResource DockAccent}" /></Style>
+  <Style Selector="TextBox"><Setter Property="MinHeight" Value="30" /><Setter Property="CornerRadius" Value="6" /></Style>
+  <Style Selector="ComboBox"><Setter Property="MinHeight" Value="30" /><Setter Property="CornerRadius" Value="6" /></Style>
+  <Style Selector="ListBox"><Setter Property="Background" Value="Transparent" /></Style>
+  <Style Selector="ListBoxItem"><Setter Property="MinHeight" Value="30" /><Setter Property="Padding" Value="8,5" /></Style>
+  <Style Selector="MenuItem"><Setter Property="MinHeight" Value="28" /></Style>
+  <Style Selector="ScrollBar"><Setter Property="MinWidth" Value="5" /><Setter Property="Width" Value="5" /></Style>
+  <Style Selector="Border.tile"><Setter Property="Background" Value="{DynamicResource DockSurface}" /><Setter Property="BorderBrush" Value="{DynamicResource DockBorder}" /><Setter Property="BorderThickness" Value="1" /><Setter Property="CornerRadius" Value="8" /></Style>
+  <Style Selector="Border.tile.selected"><Setter Property="BorderBrush" Value="{DynamicResource DockAccent}" /></Style>
+  <Style Selector="RadioButton.appearance">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="Plate" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="1" CornerRadius="8" Padding="12">
+          <Grid ColumnDefinitions="18,*" ColumnSpacing="8">
+            <Grid Width="14" Height="14" VerticalAlignment="Center">
+              <Ellipse Stroke="{TemplateBinding Foreground}" StrokeThickness="1" />
+              <Ellipse Name="Dot" Width="6" Height="6" Fill="Transparent" />
+            </Grid>
+            <ContentPresenter Grid.Column="1" Name="PART_ContentPresenter" Content="{TemplateBinding Content}" VerticalAlignment="Center" />
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="RadioButton.appearance:checked /template/ Border#Plate"><Setter Property="BorderBrush" Value="{DynamicResource DockAccent}" /></Style>
+  <Style Selector="RadioButton.appearance:checked /template/ Ellipse#Dot"><Setter Property="Fill" Value="{DynamicResource DockAccent}" /></Style>
+</Styles>

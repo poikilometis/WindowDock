@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><RootNamespace>WindowDock</RootNamespace><NeutralLanguage>en</NeutralLanguage></PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\WindowDock.integration.json" Link="WindowDock.integration.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <InternalsVisibleTo Include="WindowDock" />
+    <InternalsVisibleTo Include="WindowDock.Platform.Windows" />
+    <InternalsVisibleTo Include="WindowDock.Tests" />
+  </ItemGroup>
+</Project>

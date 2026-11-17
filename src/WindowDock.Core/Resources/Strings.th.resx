@@ -1,0 +1,1203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="AgentIntegrations.WorkingPermissionRequestsCompletionAndErrorsRestart" xml:space="preserve">
+    <value>สถานะการทำงาน คำขอสิทธิ์ การเสร็จสิ้น และข้อผิดพลาด หลังตั้งค่าให้เริ่มเอเจนต์ใหม่ โดยโปรเจกต์ต้องได้รับความเชื่อถือ</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.WorkingPermissionRequestsAndCompletionRestartCodex" xml:space="preserve">
+    <value>สถานะการทำงาน คำขอสิทธิ์ และการเสร็จสิ้น หลังตั้งค่าให้เริ่ม Codex ใหม่และเปิดใช้ฮุกผ่าน /hooks การตรวจสอบความเชื่อถือยังคงเดิม</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.WorkingPermissionRequestsAndCompletionRestartThe" xml:space="preserve">
+    <value>สถานะการทำงาน คำขอสิทธิ์ และการเสร็จสิ้น หลังตั้งค่าให้เริ่มเอเจนต์ใหม่ โปรดใช้ Gemini CLI รุ่นปัจจุบัน</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsRootMustBeAJSON" xml:space="preserve">
+    <value>ส่วนรากของการตั้งค่าต้องเป็นออบเจ็กต์ JSON</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheHooksFieldMustBeAnObject" xml:space="preserve">
+    <value>ฟิลด์ hooks ต้องเป็นออบเจ็กต์ ไฟล์ต้นฉบับไม่ได้ถูกแก้ไข</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.EventMustContainAHooksArrayThe" xml:space="preserve">
+    <value>อีเวนต์ “{0}” ต้องมีอาร์เรย์ hooks ไฟล์ต้นฉบับไม่ได้ถูกแก้ไข</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsFileIsTooLarge" xml:space="preserve">
+    <value>ไฟล์การตั้งค่าใหญ่เกินไป: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SelectAProjectFolder" xml:space="preserve">
+    <value>เลือกโฟลเดอร์โปรเจกต์</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.ProjectFolderNotFound" xml:space="preserve">
+    <value>ไม่พบโฟลเดอร์โปรเจกต์: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsPathIsOutsideTheProject" xml:space="preserve">
+    <value>เส้นทางการตั้งค่าอยู่นอกโปรเจกต์</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsPathContainsASymbolicLink" xml:space="preserve">
+    <value>เส้นทางการตั้งค่ามีลิงก์สัญลักษณ์หรือจุดเชื่อมต่อ: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.InvalidProjectPath" xml:space="preserve">
+    <value>เส้นทางโปรเจกต์ไม่ถูกต้อง</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheIntegrationJournalDoesNotMatchThe" xml:space="preserve">
+    <value>บันทึกการเชื่อมต่อไม่ตรงกับโปรเจกต์ที่เลือก</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SetupIsAlreadyRunningForThisProject" xml:space="preserve">
+    <value>กำลังตั้งค่าโปรเจกต์นี้อยู่แล้ว โปรดลองอีกครั้งหลังเสร็จสิ้น</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsChangedDuringPreparationTryAgain" xml:space="preserve">
+    <value>การตั้งค่าถูกเปลี่ยนระหว่างการเตรียม โปรดลองอีกครั้ง</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SelectAtLeastOneAgent" xml:space="preserve">
+    <value>เลือกเอเจนต์อย่างน้อยหนึ่งตัว</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheBackupWasModifiedTheSettingsWere" xml:space="preserve">
+    <value>ข้อมูลสำรองถูกแก้ไข จึงไม่ได้แทนที่การตั้งค่า</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheBackupPathDoesNotBelongTo" xml:space="preserve">
+    <value>เส้นทางข้อมูลสำรองไม่ได้อยู่ในโปรเจกต์นี้</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="HookPayload.TheAgentIsRequestingPermission" xml:space="preserve">
+    <value>เอเจนต์กำลังขอสิทธิ์</value>
+    <comment>Context: HookPayload</comment>
+  </data>
+  <data name="HookPayload.AgentError" xml:space="preserve">
+    <value>ข้อผิดพลาดของเอเจนต์</value>
+    <comment>Context: HookPayload</comment>
+  </data>
+  <data name="JsonSyntax.TheJSONFileIsTooLarge" xml:space="preserve">
+    <value>ไฟล์ JSON ใหญ่เกินไป</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnexpectedDataAfterJSON" xml:space="preserve">
+    <value>มีข้อมูลที่ไม่คาดคิดหลัง JSON</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnterminatedJSONComment" xml:space="preserve">
+    <value>ความคิดเห็น JSON ยังไม่สิ้นสุด</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidOrExcessivelyNestedJSON" xml:space="preserve">
+    <value>JSON ไม่ถูกต้องหรือซ้อนกันลึกเกินไป</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.DuplicateJSONKey" xml:space="preserve">
+    <value>คีย์ JSON ซ้ำ: {0}</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidJSONValue" xml:space="preserve">
+    <value>ค่า JSON ไม่ถูกต้อง</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.ControlCharacterInAJSONString" xml:space="preserve">
+    <value>มีอักขระควบคุมในสตริง JSON</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidUnicodeEscapeInJSON" xml:space="preserve">
+    <value>รหัสหลีก Unicode ใน JSON ไม่ถูกต้อง</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidEscapeSequenceInJSON" xml:space="preserve">
+    <value>ลำดับหลีกใน JSON ไม่ถูกต้อง</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnterminatedJSONString" xml:space="preserve">
+    <value>สตริง JSON ยังไม่สิ้นสุด</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.ExpectedInJSON" xml:space="preserve">
+    <value>ต้องมี “{0}” ใน JSON</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="Models.Agents" xml:space="preserve">
+    <value>เอเจนต์</value>
+    <comment>Context: Models</comment>
+  </data>
+  <data name="Models.Tab" xml:space="preserve">
+    <value>แท็บ</value>
+    <comment>Context: Models</comment>
+  </data>
+  <data name="ProjectModels.NewProject" xml:space="preserve">
+    <value>โปรเจกต์ใหม่</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="ProjectModels.Project" xml:space="preserve">
+    <value>โปรเจกต์</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="ProjectModels.Terminal" xml:space="preserve">
+    <value>เทอร์มินัล</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="RuntimePanel.Working" xml:space="preserve">
+    <value>กำลังทำงาน</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.NeedsInput" xml:space="preserve">
+    <value>รอข้อมูล</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Done" xml:space="preserve">
+    <value>เสร็จแล้ว</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Error" xml:space="preserve">
+    <value>ข้อผิดพลาด</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Attention" xml:space="preserve">
+    <value>ต้องตรวจสอบ</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePaths.CouldNotDetermineTheApplicationPath" xml:space="preserve">
+    <value>ระบุเส้นทางแอปพลิเคชันไม่ได้</value>
+    <comment>Context: RuntimePaths</comment>
+  </data>
+  <data name="WindowRules.NewRule" xml:space="preserve">
+    <value>กฎใหม่</value>
+    <comment>Context: WindowRules</comment>
+  </data>
+  <data name="WindowRules.Rule" xml:space="preserve">
+    <value>กฎ</value>
+    <comment>Context: WindowRules</comment>
+  </data>
+  <data name="WorkspaceSession.SettingsWereNotSaved" xml:space="preserve">
+    <value>บันทึกการตั้งค่าไม่ได้: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.ThisWindowIsAlreadyDocked" xml:space="preserve">
+    <value>หน้าต่างนี้ถูกจัดเข้าแอปแล้ว</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.ThisTabHasNoFreeSlots" xml:space="preserve">
+    <value>แท็บนี้ไม่มีที่ว่าง</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.AddWindow" xml:space="preserve">
+    <value>เพิ่มหน้าต่าง</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.NewTab" xml:space="preserve">
+    <value>แท็บใหม่</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TabName" xml:space="preserve">
+    <value>ชื่อแท็บ</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CloseTab" xml:space="preserve">
+    <value>ปิดแท็บ</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSelectedTabDoesNotHaveEnough" xml:space="preserve">
+    <value>แท็บที่เลือกมีที่ว่างไม่เพียงพอ</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MoveWindows" xml:space="preserve">
+    <value>ย้ายหน้าต่าง</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSelectionExceedsTheNewTabS" xml:space="preserve">
+    <value>จำนวนหน้าต่างที่เลือกเกินขีดจำกัดของแท็บใหม่</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MoveToANewTab" xml:space="preserve">
+    <value>ย้ายไปแท็บใหม่</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.PanelOrder" xml:space="preserve">
+    <value>ลำดับแผง</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TabOrder" xml:space="preserve">
+    <value>ลำดับแท็บ</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LayoutProportions" xml:space="preserve">
+    <value>สัดส่วนเค้าโครง</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.PanelName" xml:space="preserve">
+    <value>ชื่อแผง</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.UndockWindows" xml:space="preserve">
+    <value>แยกหน้าต่างออก</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheWindowWasNotUndocked" xml:space="preserve">
+    <value>แยกหน้าต่างออกไม่ได้</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CollectDesktopWindows" xml:space="preserve">
+    <value>รวบรวมหน้าต่างบนเดสก์ท็อป</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.WindowsAdded" xml:space="preserve">
+    <value>เพิ่มหน้าต่างแล้ว: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MinimizedWindowsSkipped" xml:space="preserve">
+    <value> ข้ามหน้าต่างที่ย่อแล้ว: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.NoFreeSlots" xml:space="preserve">
+    <value> ไม่มีที่ว่าง: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CouldNotDock" xml:space="preserve">
+    <value> จัดเข้าแอปไม่ได้: {0} {1}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.Tab" xml:space="preserve">
+    <value>แท็บ {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSavedPanelSTabIsFull" xml:space="preserve">
+    <value>แท็บของแผงที่บันทึกไว้เต็มแล้ว</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LinkSavedPanel" xml:space="preserve">
+    <value>เชื่อมโยงแผงที่บันทึกไว้</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.Undone" xml:space="preserve">
+    <value>เลิกทำแล้ว: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.FolderNotFound" xml:space="preserve">
+    <value>ไม่พบโฟลเดอร์: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.AutomaticSetupForTheseHookProfilesIs" xml:space="preserve">
+    <value>ขณะนี้รองรับการตั้งค่าโปรไฟล์ฮุกเหล่านี้อัตโนมัติบน Windows</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.SelectAnAgentForAutomaticHookSetup" xml:space="preserve">
+    <value>เลือกเอเจนต์เพื่อตั้งค่าฮุกอัตโนมัติ</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CouldNotStart" xml:space="preserve">
+    <value>เริ่ม {0} ไม่ได้</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LaunchedButNoWindowWasFound" xml:space="preserve">
+    <value>เริ่มแล้วแต่ไม่พบหน้าต่าง: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceState.TheGroupsFileIsDamagedABackup" xml:space="preserve">
+    <value>ไฟล์กลุ่มเสียหาย ใช้ข้อมูลสำรองแล้วหากมี</value>
+    <comment>Context: WorkspaceState</comment>
+  </data>
+  <data name="Appaxaml.SecondTab" xml:space="preserve">
+    <value>แท็บที่สอง</value>
+    <comment>Context: App.axaml</comment>
+  </data>
+  <data name="Appaxaml.TheInterfaceIsAvailableDockingOtherApplications" xml:space="preserve">
+    <value>ใช้งานส่วนติดต่อได้ การจัดแอปอื่นเข้าในระบบปฏิบัติการนี้ต้องใช้แบ็กเอนด์แบบเนทีฟแยกต่างหาก ซึ่งอยู่ในแผนพัฒนา</value>
+    <comment>Context: App.axaml</comment>
+  </data>
+  <data name="BackgroundWindow.TabBackground" xml:space="preserve">
+    <value>พื้นหลังแท็บ</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Save" xml:space="preserve">
+    <value>บันทึก</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Color" xml:space="preserve">
+    <value>สี</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImageGIF" xml:space="preserve">
+    <value>รูปภาพ / GIF</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Transparent" xml:space="preserve">
+    <value>โปร่งใส</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.BackgroundType" xml:space="preserve">
+    <value>ประเภทพื้นหลัง</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Browse" xml:space="preserve">
+    <value>เรียกดู…</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImageOrGIFFile" xml:space="preserve">
+    <value>ไฟล์รูปภาพหรือ GIF</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImagesAndAnimatedGIFsUpToMB" xml:space="preserve">
+    <value>รองรับรูปภาพและ GIF เคลื่อนไหวสูงสุด 80 MB ธีมกระจกจะทำให้พื้นหลังเบลอเล็กน้อย</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.TheDesktopShowsThroughEmptyTabSpace" xml:space="preserve">
+    <value>มองเห็นเดสก์ท็อปผ่านพื้นที่ว่างในแท็บ หน้าต่างแอปยังคงทึบแสง</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.TheSelectedFileWasNotFound" xml:space="preserve">
+    <value>ไม่พบไฟล์ที่เลือก</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImagesAndGIFs" xml:space="preserve">
+    <value>รูปภาพและ GIF</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BasicDialogs.AddOpenWindows" xml:space="preserve">
+    <value>เพิ่มหน้าต่างที่เปิดอยู่</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Add" xml:space="preserve">
+    <value>เพิ่ม</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.FreeSlotsInThisTabUseCtrl" xml:space="preserve">
+    <value>ที่ว่างในแท็บนี้: {0} ใช้ Ctrl / Shift เพื่อเลือกหลายหน้าต่าง</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowOrApplicationName" xml:space="preserve">
+    <value>ชื่อหน้าต่างหรือแอปพลิเคชัน</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Minimized" xml:space="preserve">
+    <value> · ย่ออยู่</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.NoAvailableWindowsDockedAndSystemWindows" xml:space="preserve">
+    <value>ไม่มีหน้าต่างที่ใช้ได้ หน้าต่างที่จัดเข้าแอปแล้วและหน้าต่างระบบจะไม่แสดงในรายการนี้</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheSelectionExceedsTheFreeSlotsUse" xml:space="preserve">
+    <value>จำนวนที่เลือกเกินที่ว่าง ใช้ “รวบรวมหน้าต่าง” เพื่อกระจายหน้าต่างอัตโนมัติ</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.FindWindow" xml:space="preserve">
+    <value>ค้นหาหน้าต่าง</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.GoTo" xml:space="preserve">
+    <value>ไปที่</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.PanelApplicationOrTab" xml:space="preserve">
+    <value>แผง แอป หรือแท็บ</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.NoMatches" xml:space="preserve">
+    <value>ไม่พบรายการที่ตรงกัน</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.SelectAWindow" xml:space="preserve">
+    <value>เลือกหน้าต่าง</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowSizesAndLimit" xml:space="preserve">
+    <value>ขนาดและขีดจำกัดหน้าต่าง</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.MinimumWidth" xml:space="preserve">
+    <value>ความกว้างต่ำสุด</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.MinimumHeight" xml:space="preserve">
+    <value>ความสูงต่ำสุด</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowsPerTab" xml:space="preserve">
+    <value>หน้าต่างต่อแท็บ</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheGridFitsTheAvailableWidthA" xml:space="preserve">
+    <value>ตารางจะปรับให้พอดีกับความกว้างที่มี หากต้องการความสูงเพิ่มจะแสดงแถบเลื่อนแนวตั้ง</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheLimitMustBeBetweenAnd" xml:space="preserve">
+    <value>ขีดจำกัดต้องอยู่ระหว่าง 1 ถึง 25</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Close" xml:space="preserve">
+    <value>ปิด</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CompactWorkspacesForExistingWindowsNETLTS" xml:space="preserve">
+    <value>พื้นที่ทำงานกะทัดรัดสำหรับหน้าต่างที่มีอยู่ .NET 10 LTS · C# 14 · Avalonia</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.AddWindowsSelectsExistingApplicationsCollectWindows" xml:space="preserve">
+    <value>“เพิ่มหน้าต่าง” ใช้เลือกแอปที่มีอยู่ “รวบรวมหน้าต่าง” จะกระจายหน้าต่างที่ใช้ได้ไปยังแท็บตามขีดจำกัดและข้อยกเว้น</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.DoubleClickAPanelHeaderToZoom" xml:space="preserve">
+    <value>ดับเบิลคลิกหัวแผงเพื่อขยายหรือกลับไปตาราง ลากหัวแผงเพื่อจัดลำดับใหม่หรือย้ายไปแท็บอื่น</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlShiftClickHeadersToSelectPanels" xml:space="preserve">
+    <value>กด Ctrl / Shift แล้วคลิกหัวแผงเพื่อเลือกแผง เมนูแผงมีคำสั่งย้ายและจัดกลุ่ม กด Ctrl + Alt + Z เพื่อเลิกทำ</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlAltTabsCtrlAltEnterZoom" xml:space="preserve">
+    <value>Ctrl + Alt + 1…9: สลับแท็บ; Ctrl + Alt + Enter: ขยาย; Ctrl + Alt + A: เพิ่มหน้าต่าง; Ctrl + Alt + K: ค้นหา</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlAltDMinimizeTheGroupCtrl" xml:space="preserve">
+    <value>Ctrl + Alt + D: ย่อกลุ่ม; Ctrl + Alt + G: แสดงกลุ่ม ส่วนติดต่อยังรองรับ Ctrl + N, Ctrl + K และ Esc</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.RulesProjectsGroupRestoreAndAgentIntegrations" xml:space="preserve">
+    <value>กฎ โปรเจกต์ การคืนค่ากลุ่ม และการเชื่อมต่อเอเจนต์อยู่ในเมนู … เมื่อปิด WindowDock หน้าต่างจะกลับไปเดสก์ท็อป โดยเซสชันยังอยู่ในโพรเซสของตัวเอง</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="ColorPickerView.Hue" xml:space="preserve">
+    <value>เฉดสี</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.Opacity" xml:space="preserve">
+    <value>ความทึบ</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.Color" xml:space="preserve">
+    <value>สี {0}</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.HEXColor" xml:space="preserve">
+    <value>สี HEX</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.ColorModel" xml:space="preserve">
+    <value>โมเดลสี</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.SaturationAndBrightness" xml:space="preserve">
+    <value>ความอิ่มตัวและความสว่าง</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.ArrowKeysChangeSaturationAndBrightnessShift" xml:space="preserve">
+    <value>ปุ่มลูกศรใช้ปรับความอิ่มตัวและความสว่าง กด Shift เพื่อเพิ่มระยะการปรับ</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.HEXEnterRGBDigitsOrARGBDigits" xml:space="preserve">
+    <value>HEX: ป้อน RGB 6 หลักหรือ ARGB 8 หลัก</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="EditorWindow.ThisSettingsPageIsAlreadyClosed" xml:space="preserve">
+    <value>หน้าการตั้งค่านี้ปิดแล้ว</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Back" xml:space="preserve">
+    <value>ย้อนกลับ</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.BackDiscardChangesOnThisPage" xml:space="preserve">
+    <value>ย้อนกลับ · ละทิ้งการเปลี่ยนแปลงในหน้านี้</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Cancel" xml:space="preserve">
+    <value>ยกเลิก</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.EnterAValueFor" xml:space="preserve">
+    <value>ป้อนค่าสำหรับ “{0}”</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.ProjectFolder" xml:space="preserve">
+    <value>โฟลเดอร์โปรเจกต์</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Name" xml:space="preserve">
+    <value>ชื่อ</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="MainWindowCommands.RenameTab" xml:space="preserve">
+    <value>เปลี่ยนชื่อแท็บ</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.FindWindow" xml:space="preserve">
+    <value>ค้นหาหน้าต่าง…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Workspaces" xml:space="preserve">
+    <value>พื้นที่ทำงาน</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SaveGroups" xml:space="preserve">
+    <value>บันทึกกลุ่ม</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RestoreAvailableWindows" xml:space="preserve">
+    <value>คืนค่าหน้าต่างที่ใช้ได้</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.PendingWindows" xml:space="preserve">
+    <value>หน้าต่างที่รอคืนค่า ({0})…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RestoreOnStartup" xml:space="preserve">
+    <value>คืนค่าเมื่อเริ่มแอป</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.NewTab" xml:space="preserve">
+    <value>แท็บใหม่…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RenameCurrentTab" xml:space="preserve">
+    <value>เปลี่ยนชื่อแท็บปัจจุบัน…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CloseCurrentTab" xml:space="preserve">
+    <value>ปิดแท็บปัจจุบัน</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CaptureRules" xml:space="preserve">
+    <value>กฎการรับหน้าต่าง…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.AgentIntegrations" xml:space="preserve">
+    <value>การเชื่อมต่อเอเจนต์…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Launch" xml:space="preserve">
+    <value>เริ่ม “{0}”</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CommandsLaunched" xml:space="preserve">
+    <value>คำสั่งที่เริ่มแล้ว: {0}</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ManageProjects" xml:space="preserve">
+    <value>จัดการโปรเจกต์…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Projects" xml:space="preserve">
+    <value>โปรเจกต์</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Selection" xml:space="preserve">
+    <value>ที่เลือก ({0})</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SelectAllPanels" xml:space="preserve">
+    <value>เลือกทุกแผง</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ClearSelection" xml:space="preserve">
+    <value>ล้างการเลือก</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndockSelected" xml:space="preserve">
+    <value>แยกรายการที่เลือก</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Undo" xml:space="preserve">
+    <value>เลิกทำ: {0}</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndoAction" xml:space="preserve">
+    <value>เลิกทำการกระทำ</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.View" xml:space="preserve">
+    <value>มุมมอง</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Appearance" xml:space="preserve">
+    <value>รูปลักษณ์…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.TabBackground" xml:space="preserve">
+    <value>พื้นหลังแท็บ…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ScrollOnHover" xml:space="preserve">
+    <value>เลื่อนเมื่อชี้เมาส์</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndockTabWindows" xml:space="preserve">
+    <value>แยกหน้าต่างในแท็บออก</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MinimizeGroup" xml:space="preserve">
+    <value>ย่อกลุ่ม</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Help" xml:space="preserve">
+    <value>ความช่วยเหลือ…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Grid" xml:space="preserve">
+    <value>ตาราง</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MainWindowOnTheLeft" xml:space="preserve">
+    <value>หน้าต่างหลักทางซ้าย</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.TwoMainWindowsOnTop" xml:space="preserve">
+    <value>สองหน้าต่างหลักด้านบน</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Automatic" xml:space="preserve">
+    <value>อัตโนมัติ</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Columns" xml:space="preserve">
+    <value>{0} คอลัมน์</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.GridColumns" xml:space="preserve">
+    <value>คอลัมน์ตาราง</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ResetProportions" xml:space="preserve">
+    <value>รีเซ็ตสัดส่วน</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SizesAndLimit" xml:space="preserve">
+    <value>ขนาดและขีดจำกัด…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Layout" xml:space="preserve">
+    <value>เค้าโครง</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MoveToNewTab" xml:space="preserve">
+    <value>ย้ายไปแท็บใหม่</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MoveToTab" xml:space="preserve">
+    <value>ย้ายไปแท็บ</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ReturnToGrid" xml:space="preserve">
+    <value>กลับไปตาราง</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Zoom" xml:space="preserve">
+    <value>ขยาย</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Rename" xml:space="preserve">
+    <value>เปลี่ยนชื่อ…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Undock" xml:space="preserve">
+    <value>แยกออก</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SelectPanel" xml:space="preserve">
+    <value>เลือกแผง</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ClearAttention" xml:space="preserve">
+    <value>ล้างการแจ้งเตือน</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SetUpHooks" xml:space="preserve">
+    <value>ตั้งค่าฮุก…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CloseTab" xml:space="preserve">
+    <value>ปิดแท็บ</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindow.CollectWindows" xml:space="preserve">
+    <value>รวบรวมหน้าต่าง</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CollectDesktopWindowsMinimizedWindowsAreSkipped" xml:space="preserve">
+    <value>รวบรวมหน้าต่างบนเดสก์ท็อป · ข้ามหน้าต่างที่ย่ออยู่</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.NewTabCtrlN" xml:space="preserve">
+    <value>แท็บใหม่ · Ctrl + N</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindowsCtrlAltA" xml:space="preserve">
+    <value>เพิ่มหน้าต่าง · Ctrl + Alt + A</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.GridShowAllWindowsAndResetThe" xml:space="preserve">
+    <value>ตาราง · แสดงทุกหน้าต่างและรีเซ็ตเค้าโครง</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CaptureWindowsAsYouDragThem" xml:space="preserve">
+    <value>รับหน้าต่างขณะลาก</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.WindowDockMenu" xml:space="preserve">
+    <value>เมนู WindowDock</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindowsToThisTab" xml:space="preserve">
+    <value>เพิ่มหน้าต่างในแท็บนี้</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindows" xml:space="preserve">
+    <value>เพิ่มหน้าต่าง</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.OrEnableTheMagnetAndDragA" xml:space="preserve">
+    <value>หรือเปิดแม่เหล็กแล้วลากหน้าต่างมาที่นี่</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CollectDesktopWindows" xml:space="preserve">
+    <value>รวบรวมหน้าต่างบนเดสก์ท็อป</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="PanelCard.ZoomWindowReturnToGrid" xml:space="preserve">
+    <value>ขยายหน้าต่าง / กลับไปตาราง</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.WindowActions" xml:space="preserve">
+    <value>การกระทำของหน้าต่าง</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.ReturnWindowToDesktop" xml:space="preserve">
+    <value>คืนหน้าต่างไปยังเดสก์ท็อป</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.ResizePanels" xml:space="preserve">
+    <value>ปรับขนาดแผง</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelDragPreview.MoveToTab" xml:space="preserve">
+    <value>ย้ายไปแท็บ “{0}”</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.ThisTabHasNoFreeSlots" xml:space="preserve">
+    <value>แท็บนี้ไม่มีที่ว่าง</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
+    <value>จัดลำดับแผงใหม่</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">
+    <value>วางบนแผงหรือแท็บ</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.MovingPanel" xml:space="preserve">
+    <value>กำลังย้ายแผง</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.MovingWindows" xml:space="preserve">
+    <value>หน้าต่างที่กำลังย้าย: {0}</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="ProjectDialogs.SavedCommandsRunOnlyWhenYouChoose" xml:space="preserve">
+    <value>คำสั่งที่บันทึกไว้จะทำงานเมื่อเลือก “เริ่มโปรเจกต์” เท่านั้น การแก้ไขโปรเจกต์จะไม่เริ่มโปรแกรมใด</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Commands" xml:space="preserve">
+    <value>คำสั่ง: {0} · </value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Edit" xml:space="preserve">
+    <value>แก้ไข</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Remove" xml:space="preserve">
+    <value>ลบ</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.EditProject" xml:space="preserve">
+    <value>แก้ไขโปรเจกต์</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.InitialTab" xml:space="preserve">
+    <value>แท็บเริ่มต้น</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AProjectCanContainUpToCommands" xml:space="preserve">
+    <value>หนึ่งโปรเจกต์มีคำสั่งได้สูงสุด 64 คำสั่ง</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AddCommand" xml:space="preserve">
+    <value>เพิ่มคำสั่ง</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.ProjectCommand" xml:space="preserve">
+    <value>คำสั่งโปรเจกต์</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.DoNotConfigure" xml:space="preserve">
+    <value>ไม่ตั้งค่า</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.DetectAgentAutomatically" xml:space="preserve">
+    <value>ตรวจหาเอเจนต์อัตโนมัติ</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Program" xml:space="preserve">
+    <value>โปรแกรม</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Arguments" xml:space="preserve">
+    <value>อาร์กิวเมนต์</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.WorkingFolder" xml:space="preserve">
+    <value>โฟลเดอร์ทำงาน</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.TitlePattern" xml:space="preserve">
+    <value>รูปแบบชื่อหน้าต่าง</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AutomaticHookSetup" xml:space="preserve">
+    <value>ตั้งค่าฮุกอัตโนมัติ</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Environment" xml:space="preserve">
+    <value>ตัวแปรสภาพแวดล้อม</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.OneKEYValueVariablePerLineAgentId" xml:space="preserve">
+    <value>หนึ่งตัวแปร KEY=value ต่อบรรทัด {agentId} ในอาร์กิวเมนต์และรูปแบบจะถูกแทนด้วยรหัสการเริ่ม สำหรับคำสั่งผสมให้ระบุเชลล์อย่างชัดเจน</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.HooksAreConfiguredBeforeLaunchExistingHooks" xml:space="preserve">
+    <value>ฮุกจะถูกตั้งค่าก่อนเริ่มโปรแกรม ฮุกเดิมจะคงอยู่ ต้องยืนยันความเชื่อถือฮุกในตัวเอเจนต์เอง</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.VariablesMustUseTheKEYValueFormat" xml:space="preserve">
+    <value>ตัวแปรต้องอยู่ในรูปแบบ KEY=value</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.InvalidOrDuplicateVariableName" xml:space="preserve">
+    <value>ชื่อตัวแปรไม่ถูกต้องหรือซ้ำกัน: {0}</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CaptureRules" xml:space="preserve">
+    <value>กฎการรับหน้าต่าง</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.AutomaticallyCaptureMatchingNewWindows" xml:space="preserve">
+    <value>รับหน้าต่างใหม่ที่ตรงตามกฎอัตโนมัติ</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.ExclusionsTakePriorityPreviewShowsTheResult" xml:space="preserve">
+    <value>ข้อยกเว้นมีลำดับความสำคัญสูงกว่า ตัวอย่างจะแสดงผลโดยไม่ย้ายหน้าต่าง</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Exclude" xml:space="preserve">
+    <value>ยกเว้น · </value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Disabled" xml:space="preserve">
+    <value> · ปิดใช้</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.AnyApplication" xml:space="preserve">
+    <value>แอปพลิเคชันใดก็ได้</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Check" xml:space="preserve">
+    <value>ตรวจสอบ</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CaptureRule" xml:space="preserve">
+    <value>กฎการรับหน้าต่าง</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.RuleEnabled" xml:space="preserve">
+    <value>เปิดใช้กฎ</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.ExcludeMatchingWindowsFromCapture" xml:space="preserve">
+    <value>ไม่รับหน้าต่างที่ตรงตามเงื่อนไข</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.TerminalsOnly" xml:space="preserve">
+    <value>เฉพาะเทอร์มินัล</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CreateTabsWhenFull" xml:space="preserve">
+    <value>สร้างแท็บใหม่เมื่อเต็ม</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Application" xml:space="preserve">
+    <value>แอปพลิเคชัน</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.WindowTitle" xml:space="preserve">
+    <value>ชื่อหน้าต่าง</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.PatternsMatchesAnyTextMatchesOneCharacter" xml:space="preserve">
+    <value>รูปแบบ: * ตรงกับข้อความใดก็ได้ ? ตรงกับหนึ่งอักขระ ช่องว่างตรงกับทุกค่า หากไม่มีอักขระตัวแทนจะค้นหาข้อความที่อยู่ในค่า</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.RulePreview" xml:space="preserve">
+    <value>ตัวอย่างผลของกฎ</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.WindowsStayWhereTheyAre" xml:space="preserve">
+    <value>หน้าต่างจะอยู่ที่เดิม</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Excluded" xml:space="preserve">
+    <value>ถูกยกเว้น</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.NoMatchingRule" xml:space="preserve">
+    <value>ไม่มีกฎที่ตรงกัน</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Tab" xml:space="preserve">
+    <value>แท็บ: {0}</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAPanel" xml:space="preserve">
+    <value>เลือกแผง</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Link" xml:space="preserve">
+    <value>เชื่อมโยง</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AmbiguousSessionsAreNotLinkedAutomatically" xml:space="preserve">
+    <value>เซสชันที่ระบุไม่ได้แน่ชัดจะไม่ถูกเชื่อมโยงอัตโนมัติ</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectADockedPanel" xml:space="preserve">
+    <value>เลือกแผงที่จัดเข้าแอปแล้ว</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.PendingWindows" xml:space="preserve">
+    <value>หน้าต่างที่รอคืนค่า</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.GroupsAreRetainedForUpToDays" xml:space="preserve">
+    <value>เก็บกลุ่มไว้นานสูงสุด 30 วัน หน้าต่างที่ตรงกันอย่างชัดเจนจะคืนค่าอัตโนมัติ หากมีหลายหน้าต่างตรงกันให้กำหนดบทบาทเอง</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Restore" xml:space="preserve">
+    <value>คืนค่า</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AssignToPanel" xml:space="preserve">
+    <value>กำหนดให้แผง…</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Forget" xml:space="preserve">
+    <value>ลืม</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AgentSessions" xml:space="preserve">
+    <value>เซสชันเอเจนต์</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AssignAnUnidentifiedSessionToAPanel" xml:space="preserve">
+    <value>กำหนดเซสชันที่ยังไม่ระบุให้แผง ข้อความคำสั่งและคำตอบของเอเจนต์จะไม่ถูกบันทึกที่นี่</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Agent" xml:space="preserve">
+    <value>เอเจนต์</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.NoPanelAssigned" xml:space="preserve">
+    <value>ยังไม่ได้กำหนดแผง</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AgentIntegrations" xml:space="preserve">
+    <value>การเชื่อมต่อเอเจนต์</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAProjectFolderAndAgentsWindowDock" xml:space="preserve">
+    <value>เลือกโฟลเดอร์โปรเจกต์และเอเจนต์ WindowDock จะเก็บฮุกเดิมและสำรองการเปลี่ยนแปลงของตัวเอง</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetupForPanelSelectTheProjectFolder" xml:space="preserve">
+    <value>ตั้งค่าสำหรับแผง “{0}” เลือกโฟลเดอร์โปรเจกต์ที่เอเจนต์ทำงานอยู่</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.CommandNotFoundInPATH" xml:space="preserve">
+    <value> · ไม่พบคำสั่งใน PATH</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Found" xml:space="preserve">
+    <value> · พบแล้ว</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.RestartTheAgentAfterSetupCodexRequires" xml:space="preserve">
+    <value>หลังตั้งค่าให้เริ่มเอเจนต์ใหม่ Codex ต้องได้รับการตรวจสอบและอนุมัติแยกผ่าน /hooks การตั้งค่าความเชื่อถือและสิทธิ์จะไม่เปลี่ยนแปลง</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetUp" xml:space="preserve">
+    <value>ตั้งค่า</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.RemoveSetup" xml:space="preserve">
+    <value>ลบการตั้งค่า</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Preview" xml:space="preserve">
+    <value>ดูตัวอย่าง</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Sessions" xml:space="preserve">
+    <value>เซสชัน…</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.FilesChanged" xml:space="preserve">
+    <value>{0}ไฟล์ที่เปลี่ยน: {1}{2}{3}</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAnAgent" xml:space="preserve">
+    <value>เลือกเอเจนต์</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="ThemePreview.GridAllWindowsAreShownWithEqual" xml:space="preserve">
+    <value>ตาราง: แสดงทุกหน้าต่างด้วยความสำคัญเท่ากัน</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.WorkspaceAppearance" xml:space="preserve">
+    <value>รูปลักษณ์พื้นที่ทำงาน</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.SelectAThemeToPreviewItImmediately" xml:space="preserve">
+    <value>เลือกธีมเพื่อดูตัวอย่างทันที บันทึกตัวเลือกหรือยกเลิกเพื่อกลับไปใช้ธีมเดิม</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.Graphite" xml:space="preserve">
+    <value>กราไฟต์</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.SolidDarkMaterial" xml:space="preserve">
+    <value>วัสดุสีเข้มทึบ</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.Light" xml:space="preserve">
+    <value>สว่าง</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.LightSurfaces" xml:space="preserve">
+    <value>พื้นผิวสีอ่อน</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.FrostedGlass" xml:space="preserve">
+    <value>กระจกฝ้า</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.BlurredTranslucentBackground" xml:space="preserve">
+    <value>พื้นหลังโปร่งแสงแบบเบลอ</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.ClearGlass" xml:space="preserve">
+    <value>กระจกใส</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.LightweightTransparentMaterial" xml:space="preserve">
+    <value>วัสดุโปร่งใสที่ดูเบา</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.ThemesChangeTheShellDockedApplicationsKeep" xml:space="preserve">
+    <value>ธีมจะเปลี่ยนกรอบแอป แอปที่จัดเข้าไว้ยังคงรูปลักษณ์ของตัวเอง</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="WallpaperView.BackgroundCouldNotBeLoaded" xml:space="preserve">
+    <value>โหลดพื้นหลังไม่ได้: {0}</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.CouldNotUpdateTheImage" xml:space="preserve">
+    <value>อัปเดตรูปภาพไม่ได้</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageExceedsMB" xml:space="preserve">
+    <value>รูปภาพมีขนาดเกิน 80 MB</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageFileIsUnavailable" xml:space="preserve">
+    <value>ไฟล์รูปภาพไม่พร้อมใช้งาน</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.UnsupportedImageFormat" xml:space="preserve">
+    <value>ไม่รองรับรูปแบบรูปภาพนี้</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageResolutionIsTooLarge" xml:space="preserve">
+    <value>ความละเอียดรูปภาพสูงเกินไป</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageFrameIsDamaged" xml:space="preserve">
+    <value>เฟรมรูปภาพเสียหาย</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.CouldNotResizeTheImage" xml:space="preserve">
+    <value>ปรับขนาดรูปภาพไม่ได้</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="Native.CouldNotRestoreTheWindowRegion" xml:space="preserve">
+    <value>คืนค่าขอบเขตหน้าต่างไม่ได้</value>
+    <comment>Context: Native</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheWindowDockWindowIsNotReadyYet" xml:space="preserve">
+    <value>หน้าต่าง WindowDock ยังไม่พร้อม</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheWindowWasClosedOrTheApplication" xml:space="preserve">
+    <value>หน้าต่างถูกปิดหรือแอปพลิเคชันไม่ตอบสนอง</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.WindowDockCannotDockItsOwnWindow" xml:space="preserve">
+    <value>WindowDock ไม่สามารถจัดหน้าต่างของตัวเองเข้าแอปได้</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.WindowsDidNotAllowTheWindowTo" xml:space="preserve">
+    <value>Windows ไม่อนุญาตให้เชื่อมโยงหน้าต่างกับคอนเทนเนอร์</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.AccessToTheWindowIsRestrictedRun" xml:space="preserve">
+    <value>การเข้าถึงหน้าต่างถูกจำกัด ให้เรียกใช้ WindowDock และแอปในสภาพแวดล้อมเดียวกันด้วยสิทธิ์ที่ตรงกัน</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheApplicationIsNotRespondingTryUndocking" xml:space="preserve">
+    <value>แอปพลิเคชันไม่ตอบสนอง ลองแยกหน้าต่างหลังแอปกลับมาตอบสนอง</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.CouldNotReturnTheWindowToThe" xml:space="preserve">
+    <value>คืนหน้าต่างไปเดสก์ท็อปไม่ได้ โปรดลองแยกอีกครั้ง</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="RuleDialogs.NotFound" xml:space="preserve">
+    <value>ไม่พบ</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetupComplete" xml:space="preserve">
+    <value>ตั้งค่าเสร็จแล้ว </value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.WindowDockHooksRemoved" xml:space="preserve">
+    <value>ลบฮุกของ WindowDock แล้ว </value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="Counts.Columns.One" xml:space="preserve">
+    <value>{0} คอลัมน์</value>
+  </data>
+  <data name="Counts.Columns.Few" xml:space="preserve">
+    <value>{0} คอลัมน์</value>
+  </data>
+</root>

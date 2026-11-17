@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><RootNamespace>WindowDock</RootNamespace><AllowUnsafeBlocks>true</AllowUnsafeBlocks></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowDock.Core\WindowDock.Core.csproj" />
+    <InternalsVisibleTo Include="WindowDock" />
+    <InternalsVisibleTo Include="WindowDock.Tests" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>WindowDock</AssemblyName>
+    <RootNamespace>WindowDock</RootNamespace>
+    <ApplicationIcon>..\..\app.ico</ApplicationIcon>
+    <ApplicationManifest>..\..\app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <ProjectReference Include="..\WindowDock.Core\WindowDock.Core.csproj" />
+    <ProjectReference Include="..\WindowDock.Platform.Windows\WindowDock.Platform.Windows.csproj" />
+    <AvaloniaResource Include="Assets\**" />
+    <EmbeddedResource Include="Fixtures\legacy-hook-v1.ps1" />
+    <None Include="..\..\agent-status.ps1" Link="agent-status.ps1" CopyToOutputDirectory="PreserveNewest" />
+    <InternalsVisibleTo Include="WindowDock.Tests" />
+  </ItemGroup>
+  <Target Name="GenerateWindowDockManifest" BeforeTargets="_SetEmbeddedWin32ManifestProperties" DependsOnTargets="GetAssemblyVersion">
+    <MakeDir Directories="$(IntermediateOutputPath)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\..\..\app.manifest" DestinationFiles="$(IntermediateOutputPath)WindowDock.app.manifest" />
+    <XmlPoke XmlInputPath="$(IntermediateOutputPath)WindowDock.app.manifest" Query="/*[local-name()='assembly']/*[local-name()='assemblyIdentity']/@version" Value="$(AssemblyVersion)" />
+    <PropertyGroup><ApplicationManifest>$(IntermediateOutputPath)WindowDock.app.manifest</ApplicationManifest></PropertyGroup>
+  </Target>
+</Project>

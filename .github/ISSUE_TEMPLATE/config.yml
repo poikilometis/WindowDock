@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security reporting
+    url: https://github.com/poikilometis/WindowDock/blob/main/SECURITY.md
+    about: Read the private reporting instructions before disclosing a vulnerability.
+  - name: Translation instructions
+    url: https://github.com/poikilometis/WindowDock/blob/main/docs/LOCALIZATION.md
+    about: How to improve an existing locale or add another language.

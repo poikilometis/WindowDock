@@ -1,0 +1,1203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="AgentIntegrations.WorkingPermissionRequestsCompletionAndErrorsRestart" xml:space="preserve">
+    <value>Working, permission requests, completion, and errors. Restart the agent after setup; the project must be trusted.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.WorkingPermissionRequestsAndCompletionRestartCodex" xml:space="preserve">
+    <value>Working, permission requests, and completion. Restart Codex after setup and enable hooks through /hooks. Trust checks stay unchanged.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.WorkingPermissionRequestsAndCompletionRestartThe" xml:space="preserve">
+    <value>Working, permission requests, and completion. Restart the agent after setup. Use a current version of Gemini CLI.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsRootMustBeAJSON" xml:space="preserve">
+    <value>The settings root must be a JSON object.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheHooksFieldMustBeAnObject" xml:space="preserve">
+    <value>The hooks field must be an object. The original file was not changed.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.EventMustContainAHooksArrayThe" xml:space="preserve">
+    <value>Event “{0}” must contain a hooks array. The original file was not changed.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsFileIsTooLarge" xml:space="preserve">
+    <value>The settings file is too large: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SelectAProjectFolder" xml:space="preserve">
+    <value>Select a project folder.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.ProjectFolderNotFound" xml:space="preserve">
+    <value>Project folder not found: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsPathIsOutsideTheProject" xml:space="preserve">
+    <value>The settings path is outside the project.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsPathContainsASymbolicLink" xml:space="preserve">
+    <value>The settings path contains a symbolic link or junction: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.InvalidProjectPath" xml:space="preserve">
+    <value>Invalid project path.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheIntegrationJournalDoesNotMatchThe" xml:space="preserve">
+    <value>The integration journal does not match the selected project.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SetupIsAlreadyRunningForThisProject" xml:space="preserve">
+    <value>Setup is already running for this project. Try again when it finishes.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsChangedDuringPreparationTryAgain" xml:space="preserve">
+    <value>The settings changed during preparation. Try again.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SelectAtLeastOneAgent" xml:space="preserve">
+    <value>Select at least one agent.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheBackupWasModifiedTheSettingsWere" xml:space="preserve">
+    <value>The backup was modified. The settings were not replaced.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheBackupPathDoesNotBelongTo" xml:space="preserve">
+    <value>The backup path does not belong to the project.</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="HookPayload.TheAgentIsRequestingPermission" xml:space="preserve">
+    <value>The agent is requesting permission</value>
+    <comment>Context: HookPayload</comment>
+  </data>
+  <data name="HookPayload.AgentError" xml:space="preserve">
+    <value>Agent error</value>
+    <comment>Context: HookPayload</comment>
+  </data>
+  <data name="JsonSyntax.TheJSONFileIsTooLarge" xml:space="preserve">
+    <value>The JSON file is too large.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnexpectedDataAfterJSON" xml:space="preserve">
+    <value>Unexpected data after JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnterminatedJSONComment" xml:space="preserve">
+    <value>Unterminated JSON comment.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidOrExcessivelyNestedJSON" xml:space="preserve">
+    <value>Invalid or excessively nested JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.DuplicateJSONKey" xml:space="preserve">
+    <value>Duplicate JSON key: {0}</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidJSONValue" xml:space="preserve">
+    <value>Invalid JSON value.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.ControlCharacterInAJSONString" xml:space="preserve">
+    <value>Control character in a JSON string.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidUnicodeEscapeInJSON" xml:space="preserve">
+    <value>Invalid Unicode escape in JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidEscapeSequenceInJSON" xml:space="preserve">
+    <value>Invalid escape sequence in JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnterminatedJSONString" xml:space="preserve">
+    <value>Unterminated JSON string.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.ExpectedInJSON" xml:space="preserve">
+    <value>Expected “{0}” in JSON.</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="Models.Agents" xml:space="preserve">
+    <value>Agents</value>
+    <comment>Context: Models</comment>
+  </data>
+  <data name="Models.Tab" xml:space="preserve">
+    <value>Tab</value>
+    <comment>Context: Models</comment>
+  </data>
+  <data name="ProjectModels.NewProject" xml:space="preserve">
+    <value>New project</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="ProjectModels.Project" xml:space="preserve">
+    <value>Project</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="ProjectModels.Terminal" xml:space="preserve">
+    <value>Terminal</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="RuntimePanel.Working" xml:space="preserve">
+    <value>Working</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.NeedsInput" xml:space="preserve">
+    <value>Needs input</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Done" xml:space="preserve">
+    <value>Done</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Error" xml:space="preserve">
+    <value>Error</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Attention" xml:space="preserve">
+    <value>Attention</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePaths.CouldNotDetermineTheApplicationPath" xml:space="preserve">
+    <value>Could not determine the application path.</value>
+    <comment>Context: RuntimePaths</comment>
+  </data>
+  <data name="WindowRules.NewRule" xml:space="preserve">
+    <value>New rule</value>
+    <comment>Context: WindowRules</comment>
+  </data>
+  <data name="WindowRules.Rule" xml:space="preserve">
+    <value>Rule</value>
+    <comment>Context: WindowRules</comment>
+  </data>
+  <data name="WorkspaceSession.SettingsWereNotSaved" xml:space="preserve">
+    <value>Settings were not saved: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.ThisWindowIsAlreadyDocked" xml:space="preserve">
+    <value>This window is already docked.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.ThisTabHasNoFreeSlots" xml:space="preserve">
+    <value>This tab has no free slots.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.AddWindow" xml:space="preserve">
+    <value>Add window</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.NewTab" xml:space="preserve">
+    <value>New tab</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TabName" xml:space="preserve">
+    <value>Tab name</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CloseTab" xml:space="preserve">
+    <value>Close tab</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSelectedTabDoesNotHaveEnough" xml:space="preserve">
+    <value>The selected tab does not have enough free slots.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MoveWindows" xml:space="preserve">
+    <value>Move windows</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSelectionExceedsTheNewTabS" xml:space="preserve">
+    <value>The selection exceeds the new tab’s window limit.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MoveToANewTab" xml:space="preserve">
+    <value>Move to a new tab</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.PanelOrder" xml:space="preserve">
+    <value>Panel order</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TabOrder" xml:space="preserve">
+    <value>Tab order</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LayoutProportions" xml:space="preserve">
+    <value>Layout proportions</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.PanelName" xml:space="preserve">
+    <value>Panel name</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.UndockWindows" xml:space="preserve">
+    <value>Undock windows</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheWindowWasNotUndocked" xml:space="preserve">
+    <value>The window was not undocked.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CollectDesktopWindows" xml:space="preserve">
+    <value>Collect desktop windows</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.WindowsAdded" xml:space="preserve">
+    <value>Windows added: {0}.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MinimizedWindowsSkipped" xml:space="preserve">
+    <value> Minimized windows skipped: {0}.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.NoFreeSlots" xml:space="preserve">
+    <value> No free slots: {0}.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CouldNotDock" xml:space="preserve">
+    <value> Could not dock: {0}. {1}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.Tab" xml:space="preserve">
+    <value>Tab {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSavedPanelSTabIsFull" xml:space="preserve">
+    <value>The saved panel’s tab is full.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LinkSavedPanel" xml:space="preserve">
+    <value>Link saved panel</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.Undone" xml:space="preserve">
+    <value>Undone: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.FolderNotFound" xml:space="preserve">
+    <value>Folder not found: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.AutomaticSetupForTheseHookProfilesIs" xml:space="preserve">
+    <value>Automatic setup for these hook profiles is currently available on Windows.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.SelectAnAgentForAutomaticHookSetup" xml:space="preserve">
+    <value>Select an agent for automatic hook setup.</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CouldNotStart" xml:space="preserve">
+    <value>Could not start {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LaunchedButNoWindowWasFound" xml:space="preserve">
+    <value>Launched, but no window was found: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceState.TheGroupsFileIsDamagedABackup" xml:space="preserve">
+    <value>The groups file is damaged. A backup was used if available.</value>
+    <comment>Context: WorkspaceState</comment>
+  </data>
+  <data name="Appaxaml.SecondTab" xml:space="preserve">
+    <value>Second tab</value>
+    <comment>Context: App.axaml</comment>
+  </data>
+  <data name="Appaxaml.TheInterfaceIsAvailableDockingOtherApplications" xml:space="preserve">
+    <value>The interface is available. Docking other applications on this OS requires a separate native backend, which is planned.</value>
+    <comment>Context: App.axaml</comment>
+  </data>
+  <data name="BackgroundWindow.TabBackground" xml:space="preserve">
+    <value>Tab background</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Save" xml:space="preserve">
+    <value>Save</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Color" xml:space="preserve">
+    <value>Color</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImageGIF" xml:space="preserve">
+    <value>Image / GIF</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Transparent" xml:space="preserve">
+    <value>Transparent</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.BackgroundType" xml:space="preserve">
+    <value>Background type</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Browse" xml:space="preserve">
+    <value>Browse…</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImageOrGIFFile" xml:space="preserve">
+    <value>Image or GIF file</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImagesAndAnimatedGIFsUpToMB" xml:space="preserve">
+    <value>Images and animated GIFs up to 80 MB. Glass themes apply a subtle background blur.</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.TheDesktopShowsThroughEmptyTabSpace" xml:space="preserve">
+    <value>The desktop shows through empty tab space. Application windows remain opaque.</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.TheSelectedFileWasNotFound" xml:space="preserve">
+    <value>The selected file was not found.</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImagesAndGIFs" xml:space="preserve">
+    <value>Images and GIFs</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BasicDialogs.AddOpenWindows" xml:space="preserve">
+    <value>Add open windows</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Add" xml:space="preserve">
+    <value>Add</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.FreeSlotsInThisTabUseCtrl" xml:space="preserve">
+    <value>Free slots in this tab: {0}. Use Ctrl / Shift to select multiple windows.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowOrApplicationName" xml:space="preserve">
+    <value>Window or application name</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Minimized" xml:space="preserve">
+    <value> · minimized</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.NoAvailableWindowsDockedAndSystemWindows" xml:space="preserve">
+    <value>No available windows. Docked and system windows are hidden from this list.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheSelectionExceedsTheFreeSlotsUse" xml:space="preserve">
+    <value>The selection exceeds the free slots. Use “Collect windows” to distribute windows automatically.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.FindWindow" xml:space="preserve">
+    <value>Find window</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.GoTo" xml:space="preserve">
+    <value>Go to</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.PanelApplicationOrTab" xml:space="preserve">
+    <value>Panel, application, or tab</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.NoMatches" xml:space="preserve">
+    <value>No matches.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.SelectAWindow" xml:space="preserve">
+    <value>Select a window.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowSizesAndLimit" xml:space="preserve">
+    <value>Window sizes and limit</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.MinimumWidth" xml:space="preserve">
+    <value>Minimum width</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.MinimumHeight" xml:space="preserve">
+    <value>Minimum height</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowsPerTab" xml:space="preserve">
+    <value>Windows per tab</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheGridFitsTheAvailableWidthA" xml:space="preserve">
+    <value>The grid fits the available width. A vertical scrollbar appears if more height is needed.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheLimitMustBeBetweenAnd" xml:space="preserve">
+    <value>The limit must be between 1 and 25.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Close" xml:space="preserve">
+    <value>Close</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CompactWorkspacesForExistingWindowsNETLTS" xml:space="preserve">
+    <value>Compact workspaces for existing windows. .NET 10 LTS · C# 14 · Avalonia.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.AddWindowsSelectsExistingApplicationsCollectWindows" xml:space="preserve">
+    <value>Add windows selects existing applications. Collect windows distributes available windows across tabs, respecting limits and exclusions.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.DoubleClickAPanelHeaderToZoom" xml:space="preserve">
+    <value>Double-click a panel header to zoom or return to the grid. Drag a header to reorder panels or move one to another tab.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlShiftClickHeadersToSelectPanels" xml:space="preserve">
+    <value>Ctrl / Shift + click headers to select panels. The panel menu offers move and group actions. Ctrl + Alt + Z undoes an action.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlAltTabsCtrlAltEnterZoom" xml:space="preserve">
+    <value>Ctrl + Alt + 1…9: tabs; Ctrl + Alt + Enter: zoom; Ctrl + Alt + A: add windows; Ctrl + Alt + K: search.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlAltDMinimizeTheGroupCtrl" xml:space="preserve">
+    <value>Ctrl + Alt + D: minimize the group; Ctrl + Alt + G: show it. The shell also supports Ctrl + N, Ctrl + K, and Esc.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.RulesProjectsGroupRestoreAndAgentIntegrations" xml:space="preserve">
+    <value>Rules, projects, group restore, and agent integrations are in the … menu. Closing WindowDock returns windows to the desktop; sessions stay in their own processes.</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="ColorPickerView.Hue" xml:space="preserve">
+    <value>Hue</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.Opacity" xml:space="preserve">
+    <value>Opacity</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.Color" xml:space="preserve">
+    <value>Color {0}</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.HEXColor" xml:space="preserve">
+    <value>HEX color</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.ColorModel" xml:space="preserve">
+    <value>Color model</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.SaturationAndBrightness" xml:space="preserve">
+    <value>Saturation and brightness</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.ArrowKeysChangeSaturationAndBrightnessShift" xml:space="preserve">
+    <value>Arrow keys change saturation and brightness; Shift increases the step.</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.HEXEnterRGBDigitsOrARGBDigits" xml:space="preserve">
+    <value>HEX: enter 6 RGB digits or 8 ARGB digits.</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="EditorWindow.ThisSettingsPageIsAlreadyClosed" xml:space="preserve">
+    <value>This settings page is already closed.</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Back" xml:space="preserve">
+    <value>Back</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.BackDiscardChangesOnThisPage" xml:space="preserve">
+    <value>Back · discard changes on this page</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.EnterAValueFor" xml:space="preserve">
+    <value>Enter a value for “{0}”.</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.ProjectFolder" xml:space="preserve">
+    <value>Project folder</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="MainWindowCommands.RenameTab" xml:space="preserve">
+    <value>Rename tab</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.FindWindow" xml:space="preserve">
+    <value>Find window…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Workspaces" xml:space="preserve">
+    <value>Workspaces</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SaveGroups" xml:space="preserve">
+    <value>Save groups</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RestoreAvailableWindows" xml:space="preserve">
+    <value>Restore available windows</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.PendingWindows" xml:space="preserve">
+    <value>Pending windows ({0})…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RestoreOnStartup" xml:space="preserve">
+    <value>Restore on startup</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.NewTab" xml:space="preserve">
+    <value>New tab…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RenameCurrentTab" xml:space="preserve">
+    <value>Rename current tab…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CloseCurrentTab" xml:space="preserve">
+    <value>Close current tab</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CaptureRules" xml:space="preserve">
+    <value>Capture rules…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.AgentIntegrations" xml:space="preserve">
+    <value>Agent integrations…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Launch" xml:space="preserve">
+    <value>Launch “{0}”</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CommandsLaunched" xml:space="preserve">
+    <value>Commands launched: {0}</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ManageProjects" xml:space="preserve">
+    <value>Manage projects…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Projects" xml:space="preserve">
+    <value>Projects</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Selection" xml:space="preserve">
+    <value>Selection ({0})</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SelectAllPanels" xml:space="preserve">
+    <value>Select all panels</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ClearSelection" xml:space="preserve">
+    <value>Clear selection</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndockSelected" xml:space="preserve">
+    <value>Undock selected</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Undo" xml:space="preserve">
+    <value>Undo: {0}</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndoAction" xml:space="preserve">
+    <value>Undo action</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.View" xml:space="preserve">
+    <value>View</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Appearance" xml:space="preserve">
+    <value>Appearance…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.TabBackground" xml:space="preserve">
+    <value>Tab background…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ScrollOnHover" xml:space="preserve">
+    <value>Scroll on hover</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndockTabWindows" xml:space="preserve">
+    <value>Undock tab windows</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MinimizeGroup" xml:space="preserve">
+    <value>Minimize group</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Help" xml:space="preserve">
+    <value>Help…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Grid" xml:space="preserve">
+    <value>Grid</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MainWindowOnTheLeft" xml:space="preserve">
+    <value>Main window on the left</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.TwoMainWindowsOnTop" xml:space="preserve">
+    <value>Two main windows on top</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Automatic" xml:space="preserve">
+    <value>Automatic</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Columns" xml:space="preserve">
+    <value>{0} columns</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.GridColumns" xml:space="preserve">
+    <value>Grid columns</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ResetProportions" xml:space="preserve">
+    <value>Reset proportions</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SizesAndLimit" xml:space="preserve">
+    <value>Sizes and limit…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Layout" xml:space="preserve">
+    <value>Layout</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MoveToNewTab" xml:space="preserve">
+    <value>Move to new tab</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MoveToTab" xml:space="preserve">
+    <value>Move to tab</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ReturnToGrid" xml:space="preserve">
+    <value>Return to grid</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Zoom" xml:space="preserve">
+    <value>Zoom</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Rename" xml:space="preserve">
+    <value>Rename…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Undock" xml:space="preserve">
+    <value>Undock</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SelectPanel" xml:space="preserve">
+    <value>Select panel</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ClearAttention" xml:space="preserve">
+    <value>Clear attention</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SetUpHooks" xml:space="preserve">
+    <value>Set up hooks…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CloseTab" xml:space="preserve">
+    <value>Close tab</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindow.CollectWindows" xml:space="preserve">
+    <value>Collect windows</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CollectDesktopWindowsMinimizedWindowsAreSkipped" xml:space="preserve">
+    <value>Collect desktop windows · minimized windows are skipped</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.NewTabCtrlN" xml:space="preserve">
+    <value>New tab · Ctrl + N</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindowsCtrlAltA" xml:space="preserve">
+    <value>Add windows · Ctrl + Alt + A</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.GridShowAllWindowsAndResetThe" xml:space="preserve">
+    <value>Grid · show all windows and reset the layout</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CaptureWindowsAsYouDragThem" xml:space="preserve">
+    <value>Capture windows as you drag them</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.WindowDockMenu" xml:space="preserve">
+    <value>WindowDock menu</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindowsToThisTab" xml:space="preserve">
+    <value>Add windows to this tab</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindows" xml:space="preserve">
+    <value>Add windows</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.OrEnableTheMagnetAndDragA" xml:space="preserve">
+    <value>Or enable the magnet and drag a window here</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CollectDesktopWindows" xml:space="preserve">
+    <value>Collect desktop windows</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="PanelCard.ZoomWindowReturnToGrid" xml:space="preserve">
+    <value>Zoom window / return to grid</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.WindowActions" xml:space="preserve">
+    <value>Window actions</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.ReturnWindowToDesktop" xml:space="preserve">
+    <value>Return window to desktop</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.ResizePanels" xml:space="preserve">
+    <value>Resize panels</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelDragPreview.MoveToTab" xml:space="preserve">
+    <value>Move to tab “{0}”</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.ThisTabHasNoFreeSlots" xml:space="preserve">
+    <value>This tab has no free slots</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
+    <value>Reorder panels</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">
+    <value>Drop onto a panel or tab</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.MovingPanel" xml:space="preserve">
+    <value>Moving panel</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.MovingWindows" xml:space="preserve">
+    <value>Moving windows: {0}</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="ProjectDialogs.SavedCommandsRunOnlyWhenYouChoose" xml:space="preserve">
+    <value>Saved commands run only when you choose Launch project. Editing a project does not start anything.</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Commands" xml:space="preserve">
+    <value>Commands: {0} · </value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Edit" xml:space="preserve">
+    <value>Edit</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Remove" xml:space="preserve">
+    <value>Remove</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.EditProject" xml:space="preserve">
+    <value>Edit project</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.InitialTab" xml:space="preserve">
+    <value>Initial tab</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AProjectCanContainUpToCommands" xml:space="preserve">
+    <value>A project can contain up to 64 commands.</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AddCommand" xml:space="preserve">
+    <value>Add command</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.ProjectCommand" xml:space="preserve">
+    <value>Project command</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.DoNotConfigure" xml:space="preserve">
+    <value>Do not configure</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.DetectAgentAutomatically" xml:space="preserve">
+    <value>Detect agent automatically</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Program" xml:space="preserve">
+    <value>Program</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Arguments" xml:space="preserve">
+    <value>Arguments</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.WorkingFolder" xml:space="preserve">
+    <value>Working folder</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.TitlePattern" xml:space="preserve">
+    <value>Title pattern</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AutomaticHookSetup" xml:space="preserve">
+    <value>Automatic hook setup</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Environment" xml:space="preserve">
+    <value>Environment</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.OneKEYValueVariablePerLineAgentId" xml:space="preserve">
+    <value>One KEY=value variable per line. {agentId} in arguments and patterns is replaced with the launch ID. Specify a shell explicitly for compound commands.</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.HooksAreConfiguredBeforeLaunchExistingHooks" xml:space="preserve">
+    <value>Hooks are configured before launch. Existing hooks are preserved. Hook trust is confirmed in the agent itself.</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.VariablesMustUseTheKEYValueFormat" xml:space="preserve">
+    <value>Variables must use the KEY=value format.</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.InvalidOrDuplicateVariableName" xml:space="preserve">
+    <value>Invalid or duplicate variable name: {0}</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CaptureRules" xml:space="preserve">
+    <value>Capture rules</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.AutomaticallyCaptureMatchingNewWindows" xml:space="preserve">
+    <value>Automatically capture matching new windows</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.ExclusionsTakePriorityPreviewShowsTheResult" xml:space="preserve">
+    <value>Exclusions take priority. Preview shows the result without moving windows.</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Exclude" xml:space="preserve">
+    <value>Exclude · </value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Disabled" xml:space="preserve">
+    <value> · disabled</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.AnyApplication" xml:space="preserve">
+    <value>Any application</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Check" xml:space="preserve">
+    <value>Check</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CaptureRule" xml:space="preserve">
+    <value>Capture rule</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.RuleEnabled" xml:space="preserve">
+    <value>Rule enabled</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.ExcludeMatchingWindowsFromCapture" xml:space="preserve">
+    <value>Exclude matching windows from capture</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.TerminalsOnly" xml:space="preserve">
+    <value>Terminals only</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CreateTabsWhenFull" xml:space="preserve">
+    <value>Create tabs when full</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Application" xml:space="preserve">
+    <value>Application</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.WindowTitle" xml:space="preserve">
+    <value>Window title</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.PatternsMatchesAnyTextMatchesOneCharacter" xml:space="preserve">
+    <value>Patterns: * matches any text; ? matches one character. An empty field matches any value. Without wildcards, a text occurrence is matched.</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.RulePreview" xml:space="preserve">
+    <value>Rule preview</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.WindowsStayWhereTheyAre" xml:space="preserve">
+    <value>Windows stay where they are.</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Excluded" xml:space="preserve">
+    <value>Excluded</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.NoMatchingRule" xml:space="preserve">
+    <value>No matching rule</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Tab" xml:space="preserve">
+    <value>Tab: {0}</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAPanel" xml:space="preserve">
+    <value>Select a panel</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Link" xml:space="preserve">
+    <value>Link</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AmbiguousSessionsAreNotLinkedAutomatically" xml:space="preserve">
+    <value>Ambiguous sessions are not linked automatically.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectADockedPanel" xml:space="preserve">
+    <value>Select a docked panel.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.PendingWindows" xml:space="preserve">
+    <value>Pending windows</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.GroupsAreRetainedForUpToDays" xml:space="preserve">
+    <value>Groups are retained for up to 30 days. Unambiguous matches restore automatically. Assign a role manually when several windows match.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Restore" xml:space="preserve">
+    <value>Restore</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AssignToPanel" xml:space="preserve">
+    <value>Assign to panel…</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Forget" xml:space="preserve">
+    <value>Forget</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AgentSessions" xml:space="preserve">
+    <value>Agent sessions</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AssignAnUnidentifiedSessionToAPanel" xml:space="preserve">
+    <value>Assign an unidentified session to a panel. Agent prompts and replies are not stored here.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Agent" xml:space="preserve">
+    <value>Agent</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.NoPanelAssigned" xml:space="preserve">
+    <value>No panel assigned</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AgentIntegrations" xml:space="preserve">
+    <value>Agent integrations</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAProjectFolderAndAgentsWindowDock" xml:space="preserve">
+    <value>Select a project folder and agents. WindowDock preserves existing hooks and backs up its own changes.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetupForPanelSelectTheProjectFolder" xml:space="preserve">
+    <value>Setup for panel “{0}”. Select the project folder where the agent runs.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.CommandNotFoundInPATH" xml:space="preserve">
+    <value> · command not found in PATH</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Found" xml:space="preserve">
+    <value> · found</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.RestartTheAgentAfterSetupCodexRequires" xml:space="preserve">
+    <value>Restart the agent after setup. Codex requires a separate review and approval through /hooks. Trust and permission settings are not changed.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetUp" xml:space="preserve">
+    <value>Set up</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.RemoveSetup" xml:space="preserve">
+    <value>Remove setup</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Preview" xml:space="preserve">
+    <value>Preview</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Sessions" xml:space="preserve">
+    <value>Sessions…</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.FilesChanged" xml:space="preserve">
+    <value>{0}Files changed: {1}{2}{3}</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAnAgent" xml:space="preserve">
+    <value>Select an agent.</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="ThemePreview.GridAllWindowsAreShownWithEqual" xml:space="preserve">
+    <value>Grid: all windows are shown with equal priority.</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.WorkspaceAppearance" xml:space="preserve">
+    <value>Workspace appearance</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.SelectAThemeToPreviewItImmediately" xml:space="preserve">
+    <value>Select a theme to preview it immediately. Save your choice or cancel to restore the previous theme.</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.Graphite" xml:space="preserve">
+    <value>Graphite</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.SolidDarkMaterial" xml:space="preserve">
+    <value>Solid dark material</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.Light" xml:space="preserve">
+    <value>Light</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.LightSurfaces" xml:space="preserve">
+    <value>Light surfaces</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.FrostedGlass" xml:space="preserve">
+    <value>Frosted glass</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.BlurredTranslucentBackground" xml:space="preserve">
+    <value>Blurred translucent background</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.ClearGlass" xml:space="preserve">
+    <value>Clear glass</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.LightweightTransparentMaterial" xml:space="preserve">
+    <value>Lightweight transparent material</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.ThemesChangeTheShellDockedApplicationsKeep" xml:space="preserve">
+    <value>Themes change the shell. Docked applications keep their own appearance.</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="WallpaperView.BackgroundCouldNotBeLoaded" xml:space="preserve">
+    <value>Background could not be loaded: {0}</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.CouldNotUpdateTheImage" xml:space="preserve">
+    <value>Could not update the image.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageExceedsMB" xml:space="preserve">
+    <value>The image exceeds 80 MB.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageFileIsUnavailable" xml:space="preserve">
+    <value>The image file is unavailable.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.UnsupportedImageFormat" xml:space="preserve">
+    <value>Unsupported image format.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageResolutionIsTooLarge" xml:space="preserve">
+    <value>The image resolution is too large.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageFrameIsDamaged" xml:space="preserve">
+    <value>The image frame is damaged.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.CouldNotResizeTheImage" xml:space="preserve">
+    <value>Could not resize the image.</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="Native.CouldNotRestoreTheWindowRegion" xml:space="preserve">
+    <value>Could not restore the window region.</value>
+    <comment>Context: Native</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheWindowDockWindowIsNotReadyYet" xml:space="preserve">
+    <value>The WindowDock window is not ready yet.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheWindowWasClosedOrTheApplication" xml:space="preserve">
+    <value>The window was closed or the application is not responding.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.WindowDockCannotDockItsOwnWindow" xml:space="preserve">
+    <value>WindowDock cannot dock its own window.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.WindowsDidNotAllowTheWindowTo" xml:space="preserve">
+    <value>Windows did not allow the window to be linked to the container.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.AccessToTheWindowIsRestrictedRun" xml:space="preserve">
+    <value>Access to the window is restricted. Run WindowDock and the application in the same environment with matching privileges.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheApplicationIsNotRespondingTryUndocking" xml:space="preserve">
+    <value>The application is not responding. Try undocking it after it responds again.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.CouldNotReturnTheWindowToThe" xml:space="preserve">
+    <value>Could not return the window to the desktop. Try undocking again.</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="RuleDialogs.NotFound" xml:space="preserve">
+    <value>not found</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetupComplete" xml:space="preserve">
+    <value>Setup complete. </value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.WindowDockHooksRemoved" xml:space="preserve">
+    <value>WindowDock hooks removed. </value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="Counts.Columns.One" xml:space="preserve">
+    <value>{0} column</value>
+  </data>
+  <data name="Counts.Columns.Few" xml:space="preserve">
+    <value>{0} columns</value>
+  </data>
+</root>

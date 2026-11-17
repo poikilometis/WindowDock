@@ -1,0 +1,40 @@
+name: Bug report
+description: Report a reproducible WindowDock problem.
+labels: [bug]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include what you expected instead. Redact private titles, paths, and agent data.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Prefer disposable applications and a separate WindowDock profile.
+      placeholder: |
+        1. Start WindowDock with ...
+        2. Add ...
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: WindowDock version or commit
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Windows version, affected app and version, display scaling/monitors, OS display language, and normal/admin privilege level.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Diagnostics or screenshots
+      description: Share only sanitized excerpts. Do not upload data/, hook backups, environment secrets, or agent conversations.

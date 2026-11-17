@@ -1,0 +1,1203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="AgentIntegrations.WorkingPermissionRequestsCompletionAndErrorsRestart" xml:space="preserve">
+    <value>作業中、権限要求、完了、エラーを通知します。設定後はエージェントを再起動してください。プロジェクトが信頼されている必要があります。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.WorkingPermissionRequestsAndCompletionRestartCodex" xml:space="preserve">
+    <value>作業中、権限要求、完了を通知します。設定後は Codex を再起動し、/hooks でフックを有効にしてください。信頼性の確認は変更されません。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.WorkingPermissionRequestsAndCompletionRestartThe" xml:space="preserve">
+    <value>作業中、権限要求、完了を通知します。設定後はエージェントを再起動してください。新しいバージョンの Gemini CLI を使用してください。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsRootMustBeAJSON" xml:space="preserve">
+    <value>設定のルートは JSON オブジェクトである必要があります。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheHooksFieldMustBeAnObject" xml:space="preserve">
+    <value>hooks フィールドはオブジェクトである必要があります。元のファイルは変更されていません。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.EventMustContainAHooksArrayThe" xml:space="preserve">
+    <value>イベント「{0}」には hooks 配列が必要です。元のファイルは変更されていません。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsFileIsTooLarge" xml:space="preserve">
+    <value>設定ファイルが大きすぎます: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SelectAProjectFolder" xml:space="preserve">
+    <value>プロジェクトフォルダーを選択してください。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.ProjectFolderNotFound" xml:space="preserve">
+    <value>プロジェクトフォルダーが見つかりません: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsPathIsOutsideTheProject" xml:space="preserve">
+    <value>設定のパスがプロジェクトの外にあります。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsPathContainsASymbolicLink" xml:space="preserve">
+    <value>設定のパスにシンボリックリンクまたはジャンクションが含まれています: {0}</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.InvalidProjectPath" xml:space="preserve">
+    <value>プロジェクトのパスが無効です。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheIntegrationJournalDoesNotMatchThe" xml:space="preserve">
+    <value>連携ログが選択したプロジェクトと一致しません。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SetupIsAlreadyRunningForThisProject" xml:space="preserve">
+    <value>このプロジェクトの設定は既に実行中です。完了後に再試行してください。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheSettingsChangedDuringPreparationTryAgain" xml:space="preserve">
+    <value>準備中に設定が変更されました。再試行してください。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.SelectAtLeastOneAgent" xml:space="preserve">
+    <value>エージェントを少なくとも 1 つ選択してください。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheBackupWasModifiedTheSettingsWere" xml:space="preserve">
+    <value>バックアップが変更されました。設定は置き換えられていません。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="AgentIntegrations.TheBackupPathDoesNotBelongTo" xml:space="preserve">
+    <value>バックアップのパスがプロジェクトに属していません。</value>
+    <comment>Context: AgentIntegrations</comment>
+  </data>
+  <data name="HookPayload.TheAgentIsRequestingPermission" xml:space="preserve">
+    <value>エージェントが権限を要求しています</value>
+    <comment>Context: HookPayload</comment>
+  </data>
+  <data name="HookPayload.AgentError" xml:space="preserve">
+    <value>エージェントのエラー</value>
+    <comment>Context: HookPayload</comment>
+  </data>
+  <data name="JsonSyntax.TheJSONFileIsTooLarge" xml:space="preserve">
+    <value>JSON ファイルが大きすぎます。</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnexpectedDataAfterJSON" xml:space="preserve">
+    <value>JSON の後に予期しないデータがあります。</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnterminatedJSONComment" xml:space="preserve">
+    <value>JSON コメントが閉じられていません。</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidOrExcessivelyNestedJSON" xml:space="preserve">
+    <value>JSON が無効か、入れ子が深すぎます。</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.DuplicateJSONKey" xml:space="preserve">
+    <value>JSON キーが重複しています: {0}</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidJSONValue" xml:space="preserve">
+    <value>JSON の値が無効です。</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.ControlCharacterInAJSONString" xml:space="preserve">
+    <value>JSON 文字列に制御文字があります。</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidUnicodeEscapeInJSON" xml:space="preserve">
+    <value>JSON の Unicode エスケープが無効です。</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.InvalidEscapeSequenceInJSON" xml:space="preserve">
+    <value>JSON のエスケープシーケンスが無効です。</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.UnterminatedJSONString" xml:space="preserve">
+    <value>JSON 文字列が閉じられていません。</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="JsonSyntax.ExpectedInJSON" xml:space="preserve">
+    <value>JSON に「{0}」が必要です。</value>
+    <comment>Context: JsonSyntax</comment>
+  </data>
+  <data name="Models.Agents" xml:space="preserve">
+    <value>エージェント</value>
+    <comment>Context: Models</comment>
+  </data>
+  <data name="Models.Tab" xml:space="preserve">
+    <value>タブ</value>
+    <comment>Context: Models</comment>
+  </data>
+  <data name="ProjectModels.NewProject" xml:space="preserve">
+    <value>新しいプロジェクト</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="ProjectModels.Project" xml:space="preserve">
+    <value>プロジェクト</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="ProjectModels.Terminal" xml:space="preserve">
+    <value>ターミナル</value>
+    <comment>Context: ProjectModels</comment>
+  </data>
+  <data name="RuntimePanel.Working" xml:space="preserve">
+    <value>作業中</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.NeedsInput" xml:space="preserve">
+    <value>入力待ち</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Done" xml:space="preserve">
+    <value>完了</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Error" xml:space="preserve">
+    <value>エラー</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePanel.Attention" xml:space="preserve">
+    <value>要確認</value>
+    <comment>Context: RuntimePanel</comment>
+  </data>
+  <data name="RuntimePaths.CouldNotDetermineTheApplicationPath" xml:space="preserve">
+    <value>アプリのパスを取得できませんでした。</value>
+    <comment>Context: RuntimePaths</comment>
+  </data>
+  <data name="WindowRules.NewRule" xml:space="preserve">
+    <value>新しいルール</value>
+    <comment>Context: WindowRules</comment>
+  </data>
+  <data name="WindowRules.Rule" xml:space="preserve">
+    <value>ルール</value>
+    <comment>Context: WindowRules</comment>
+  </data>
+  <data name="WorkspaceSession.SettingsWereNotSaved" xml:space="preserve">
+    <value>設定を保存できませんでした: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.ThisWindowIsAlreadyDocked" xml:space="preserve">
+    <value>このウィンドウは既にドッキングされています。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.ThisTabHasNoFreeSlots" xml:space="preserve">
+    <value>このタブに空きがありません。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.AddWindow" xml:space="preserve">
+    <value>ウィンドウを追加</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.NewTab" xml:space="preserve">
+    <value>新しいタブ</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TabName" xml:space="preserve">
+    <value>タブ名</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CloseTab" xml:space="preserve">
+    <value>タブを閉じる</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSelectedTabDoesNotHaveEnough" xml:space="preserve">
+    <value>選択したタブの空きが足りません。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MoveWindows" xml:space="preserve">
+    <value>ウィンドウを移動</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSelectionExceedsTheNewTabS" xml:space="preserve">
+    <value>選択したウィンドウ数が新しいタブの上限を超えています。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MoveToANewTab" xml:space="preserve">
+    <value>新しいタブに移動</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.PanelOrder" xml:space="preserve">
+    <value>パネルの順序</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TabOrder" xml:space="preserve">
+    <value>タブの順序</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LayoutProportions" xml:space="preserve">
+    <value>レイアウトの比率</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.PanelName" xml:space="preserve">
+    <value>パネル名</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.UndockWindows" xml:space="preserve">
+    <value>ウィンドウを切り離す</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheWindowWasNotUndocked" xml:space="preserve">
+    <value>ウィンドウを切り離せませんでした。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CollectDesktopWindows" xml:space="preserve">
+    <value>デスクトップのウィンドウを集める</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.WindowsAdded" xml:space="preserve">
+    <value>追加したウィンドウ: {0}。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.MinimizedWindowsSkipped" xml:space="preserve">
+    <value> 最小化されたウィンドウをスキップ: {0}。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.NoFreeSlots" xml:space="preserve">
+    <value> 空きなし: {0}。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CouldNotDock" xml:space="preserve">
+    <value> ドッキングできませんでした: {0}。{1}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.Tab" xml:space="preserve">
+    <value>タブ {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.TheSavedPanelSTabIsFull" xml:space="preserve">
+    <value>保存したパネルのタブがいっぱいです。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LinkSavedPanel" xml:space="preserve">
+    <value>保存したパネルを関連付ける</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.Undone" xml:space="preserve">
+    <value>元に戻しました: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.FolderNotFound" xml:space="preserve">
+    <value>フォルダーが見つかりません: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.AutomaticSetupForTheseHookProfilesIs" xml:space="preserve">
+    <value>これらのフック設定の自動構成は、現在 Windows で利用できます。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.SelectAnAgentForAutomaticHookSetup" xml:space="preserve">
+    <value>フックを自動設定するエージェントを選択してください。</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.CouldNotStart" xml:space="preserve">
+    <value>{0} を起動できませんでした</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceSession.LaunchedButNoWindowWasFound" xml:space="preserve">
+    <value>起動しましたが、ウィンドウが見つかりませんでした: {0}</value>
+    <comment>Context: WorkspaceSession</comment>
+  </data>
+  <data name="WorkspaceState.TheGroupsFileIsDamagedABackup" xml:space="preserve">
+    <value>グループファイルが破損しています。利用できる場合はバックアップを使用しました。</value>
+    <comment>Context: WorkspaceState</comment>
+  </data>
+  <data name="Appaxaml.SecondTab" xml:space="preserve">
+    <value>2 番目のタブ</value>
+    <comment>Context: App.axaml</comment>
+  </data>
+  <data name="Appaxaml.TheInterfaceIsAvailableDockingOtherApplications" xml:space="preserve">
+    <value>インターフェイスは利用できます。この OS で他のアプリをドッキングするには専用のネイティブバックエンドが必要で、今後の対応を予定しています。</value>
+    <comment>Context: App.axaml</comment>
+  </data>
+  <data name="BackgroundWindow.TabBackground" xml:space="preserve">
+    <value>タブの背景</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Save" xml:space="preserve">
+    <value>保存</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Color" xml:space="preserve">
+    <value>色</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImageGIF" xml:space="preserve">
+    <value>画像 / GIF</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Transparent" xml:space="preserve">
+    <value>透明</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.BackgroundType" xml:space="preserve">
+    <value>背景の種類</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.Browse" xml:space="preserve">
+    <value>参照…</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImageOrGIFFile" xml:space="preserve">
+    <value>画像または GIF ファイル</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImagesAndAnimatedGIFsUpToMB" xml:space="preserve">
+    <value>80 MB までの画像とアニメーション GIF に対応します。ガラステーマでは背景をわずかにぼかします。</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.TheDesktopShowsThroughEmptyTabSpace" xml:space="preserve">
+    <value>タブの空白部分からデスクトップが透けて見えます。アプリのウィンドウは不透明のままです。</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.TheSelectedFileWasNotFound" xml:space="preserve">
+    <value>選択したファイルが見つかりません。</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BackgroundWindow.ImagesAndGIFs" xml:space="preserve">
+    <value>画像と GIF</value>
+    <comment>Context: BackgroundWindow</comment>
+  </data>
+  <data name="BasicDialogs.AddOpenWindows" xml:space="preserve">
+    <value>開いているウィンドウを追加</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Add" xml:space="preserve">
+    <value>追加</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.FreeSlotsInThisTabUseCtrl" xml:space="preserve">
+    <value>このタブの空き: {0}。Ctrl / Shift で複数のウィンドウを選択できます。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowOrApplicationName" xml:space="preserve">
+    <value>ウィンドウ名またはアプリ名</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Minimized" xml:space="preserve">
+    <value> · 最小化</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.NoAvailableWindowsDockedAndSystemWindows" xml:space="preserve">
+    <value>利用できるウィンドウがありません。ドッキング済みのウィンドウとシステムウィンドウは一覧に表示されません。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheSelectionExceedsTheFreeSlotsUse" xml:space="preserve">
+    <value>選択数が空きを超えています。「ウィンドウを集める」で自動的に振り分けてください。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.FindWindow" xml:space="preserve">
+    <value>ウィンドウを検索</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.GoTo" xml:space="preserve">
+    <value>移動</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.PanelApplicationOrTab" xml:space="preserve">
+    <value>パネル、アプリ、タブ</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.NoMatches" xml:space="preserve">
+    <value>一致する項目がありません。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.SelectAWindow" xml:space="preserve">
+    <value>ウィンドウを選択してください。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowSizesAndLimit" xml:space="preserve">
+    <value>ウィンドウのサイズと上限</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.MinimumWidth" xml:space="preserve">
+    <value>最小幅</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.MinimumHeight" xml:space="preserve">
+    <value>最小高さ</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.WindowsPerTab" xml:space="preserve">
+    <value>タブごとのウィンドウ数</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheGridFitsTheAvailableWidthA" xml:space="preserve">
+    <value>グリッドは利用可能な幅に収まります。高さが足りない場合は縦スクロールバーが表示されます。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.TheLimitMustBeBetweenAnd" xml:space="preserve">
+    <value>上限は 1～25 にしてください。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.Close" xml:space="preserve">
+    <value>閉じる</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CompactWorkspacesForExistingWindowsNETLTS" xml:space="preserve">
+    <value>既存のウィンドウをまとめるコンパクトなワークスペース。.NET 10 LTS · C# 14 · Avalonia。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.AddWindowsSelectsExistingApplicationsCollectWindows" xml:space="preserve">
+    <value>「ウィンドウを追加」で既存のアプリを選べます。「ウィンドウを集める」は上限と除外設定に従ってウィンドウをタブに振り分けます。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.DoubleClickAPanelHeaderToZoom" xml:space="preserve">
+    <value>パネルのヘッダーをダブルクリックすると拡大またはグリッドに戻ります。ヘッダーをドラッグすると並べ替えや別のタブへの移動ができます。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlShiftClickHeadersToSelectPanels" xml:space="preserve">
+    <value>Ctrl / Shift を押しながらヘッダーをクリックするとパネルを選択できます。パネルメニューから移動やグループ操作ができます。Ctrl + Alt + Z で操作を元に戻します。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlAltTabsCtrlAltEnterZoom" xml:space="preserve">
+    <value>Ctrl + Alt + 1…9: タブ切り替え、Ctrl + Alt + Enter: 拡大、Ctrl + Alt + A: ウィンドウ追加、Ctrl + Alt + K: 検索。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.CtrlAltDMinimizeTheGroupCtrl" xml:space="preserve">
+    <value>Ctrl + Alt + D: グループを最小化、Ctrl + Alt + G: 表示。アプリの画面では Ctrl + N、Ctrl + K、Esc も使用できます。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="BasicDialogs.RulesProjectsGroupRestoreAndAgentIntegrations" xml:space="preserve">
+    <value>ルール、プロジェクト、グループの復元、エージェント連携は … メニューにあります。WindowDock を閉じるとウィンドウはデスクトップに戻り、セッションはそれぞれのプロセスで継続します。</value>
+    <comment>Context: BasicDialogs</comment>
+  </data>
+  <data name="ColorPickerView.Hue" xml:space="preserve">
+    <value>色相</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.Opacity" xml:space="preserve">
+    <value>不透明度</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.Color" xml:space="preserve">
+    <value>色 {0}</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.HEXColor" xml:space="preserve">
+    <value>HEX カラー</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.ColorModel" xml:space="preserve">
+    <value>カラーモデル</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.SaturationAndBrightness" xml:space="preserve">
+    <value>彩度と明度</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.ArrowKeysChangeSaturationAndBrightnessShift" xml:space="preserve">
+    <value>矢印キーで彩度と明度を調整します。Shift で変更幅が大きくなります。</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="ColorPickerView.HEXEnterRGBDigitsOrARGBDigits" xml:space="preserve">
+    <value>HEX: RGB は 6 桁、ARGB は 8 桁で入力してください。</value>
+    <comment>Context: ColorPickerView</comment>
+  </data>
+  <data name="EditorWindow.ThisSettingsPageIsAlreadyClosed" xml:space="preserve">
+    <value>この設定ページは既に閉じられています。</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Back" xml:space="preserve">
+    <value>戻る</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.BackDiscardChangesOnThisPage" xml:space="preserve">
+    <value>戻る · このページの変更を破棄</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.EnterAValueFor" xml:space="preserve">
+    <value>「{0}」の値を入力してください。</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.ProjectFolder" xml:space="preserve">
+    <value>プロジェクトフォルダー</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="EditorWindow.Name" xml:space="preserve">
+    <value>名前</value>
+    <comment>Context: EditorWindow</comment>
+  </data>
+  <data name="MainWindowCommands.RenameTab" xml:space="preserve">
+    <value>タブ名を変更</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.FindWindow" xml:space="preserve">
+    <value>ウィンドウを検索…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Workspaces" xml:space="preserve">
+    <value>ワークスペース</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SaveGroups" xml:space="preserve">
+    <value>グループを保存</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RestoreAvailableWindows" xml:space="preserve">
+    <value>利用可能なウィンドウを復元</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.PendingWindows" xml:space="preserve">
+    <value>未復元のウィンドウ ({0})…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RestoreOnStartup" xml:space="preserve">
+    <value>起動時に復元</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.NewTab" xml:space="preserve">
+    <value>新しいタブ…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.RenameCurrentTab" xml:space="preserve">
+    <value>現在のタブ名を変更…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CloseCurrentTab" xml:space="preserve">
+    <value>現在のタブを閉じる</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CaptureRules" xml:space="preserve">
+    <value>取り込みルール…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.AgentIntegrations" xml:space="preserve">
+    <value>エージェント連携…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Launch" xml:space="preserve">
+    <value>「{0}」を起動</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CommandsLaunched" xml:space="preserve">
+    <value>起動したコマンド: {0}</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ManageProjects" xml:space="preserve">
+    <value>プロジェクトを管理…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Projects" xml:space="preserve">
+    <value>プロジェクト</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Selection" xml:space="preserve">
+    <value>選択中 ({0})</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SelectAllPanels" xml:space="preserve">
+    <value>すべてのパネルを選択</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ClearSelection" xml:space="preserve">
+    <value>選択を解除</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndockSelected" xml:space="preserve">
+    <value>選択したウィンドウを切り離す</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Undo" xml:space="preserve">
+    <value>元に戻す: {0}</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndoAction" xml:space="preserve">
+    <value>操作を元に戻す</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.View" xml:space="preserve">
+    <value>表示</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Appearance" xml:space="preserve">
+    <value>外観…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.TabBackground" xml:space="preserve">
+    <value>タブの背景…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ScrollOnHover" xml:space="preserve">
+    <value>マウスを重ねてスクロール</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.UndockTabWindows" xml:space="preserve">
+    <value>タブのウィンドウを切り離す</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MinimizeGroup" xml:space="preserve">
+    <value>グループを最小化</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Help" xml:space="preserve">
+    <value>ヘルプ…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Grid" xml:space="preserve">
+    <value>グリッド</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MainWindowOnTheLeft" xml:space="preserve">
+    <value>メインウィンドウを左に</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.TwoMainWindowsOnTop" xml:space="preserve">
+    <value>2 つのメインウィンドウを上に</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Automatic" xml:space="preserve">
+    <value>自動</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Columns" xml:space="preserve">
+    <value>{0} 列</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.GridColumns" xml:space="preserve">
+    <value>グリッドの列数</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ResetProportions" xml:space="preserve">
+    <value>比率をリセット</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SizesAndLimit" xml:space="preserve">
+    <value>サイズと上限…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Layout" xml:space="preserve">
+    <value>レイアウト</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MoveToNewTab" xml:space="preserve">
+    <value>新しいタブに移動</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.MoveToTab" xml:space="preserve">
+    <value>タブに移動</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ReturnToGrid" xml:space="preserve">
+    <value>グリッドに戻る</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Zoom" xml:space="preserve">
+    <value>拡大</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Rename" xml:space="preserve">
+    <value>名前を変更…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.Undock" xml:space="preserve">
+    <value>切り離す</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SelectPanel" xml:space="preserve">
+    <value>パネルを選択</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.ClearAttention" xml:space="preserve">
+    <value>通知をクリア</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.SetUpHooks" xml:space="preserve">
+    <value>フックを設定…</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindowCommands.CloseTab" xml:space="preserve">
+    <value>タブを閉じる</value>
+    <comment>Context: MainWindow.Commands</comment>
+  </data>
+  <data name="MainWindow.CollectWindows" xml:space="preserve">
+    <value>ウィンドウを集める</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CollectDesktopWindowsMinimizedWindowsAreSkipped" xml:space="preserve">
+    <value>デスクトップのウィンドウを集める · 最小化されたウィンドウは除外</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.NewTabCtrlN" xml:space="preserve">
+    <value>新しいタブ · Ctrl + N</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindowsCtrlAltA" xml:space="preserve">
+    <value>ウィンドウを追加 · Ctrl + Alt + A</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.GridShowAllWindowsAndResetThe" xml:space="preserve">
+    <value>グリッド · すべてのウィンドウを表示してレイアウトをリセット</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CaptureWindowsAsYouDragThem" xml:space="preserve">
+    <value>ドラッグ中のウィンドウを取り込む</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.WindowDockMenu" xml:space="preserve">
+    <value>WindowDock メニュー</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindowsToThisTab" xml:space="preserve">
+    <value>このタブにウィンドウを追加</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.AddWindows" xml:space="preserve">
+    <value>ウィンドウを追加</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.OrEnableTheMagnetAndDragA" xml:space="preserve">
+    <value>またはマグネットを有効にして、ここにウィンドウをドラッグ</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="MainWindow.CollectDesktopWindows" xml:space="preserve">
+    <value>デスクトップのウィンドウを集める</value>
+    <comment>Context: MainWindow</comment>
+  </data>
+  <data name="PanelCard.ZoomWindowReturnToGrid" xml:space="preserve">
+    <value>ウィンドウを拡大 / グリッドに戻る</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.WindowActions" xml:space="preserve">
+    <value>ウィンドウの操作</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.ReturnWindowToDesktop" xml:space="preserve">
+    <value>ウィンドウをデスクトップに戻す</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelCard.ResizePanels" xml:space="preserve">
+    <value>パネルのサイズを変更</value>
+    <comment>Context: PanelCard</comment>
+  </data>
+  <data name="PanelDragPreview.MoveToTab" xml:space="preserve">
+    <value>タブ「{0}」に移動</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.ThisTabHasNoFreeSlots" xml:space="preserve">
+    <value>このタブに空きがありません</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
+    <value>パネルを並べ替え</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">
+    <value>パネルまたはタブにドロップ</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.MovingPanel" xml:space="preserve">
+    <value>パネルを移動中</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="PanelDragPreview.MovingWindows" xml:space="preserve">
+    <value>移動中のウィンドウ: {0}</value>
+    <comment>Context: PanelDragPreview</comment>
+  </data>
+  <data name="ProjectDialogs.SavedCommandsRunOnlyWhenYouChoose" xml:space="preserve">
+    <value>保存したコマンドは「プロジェクトを起動」を選んだときだけ実行されます。編集するだけでは何も起動しません。</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Commands" xml:space="preserve">
+    <value>コマンド: {0} · </value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Edit" xml:space="preserve">
+    <value>編集</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Remove" xml:space="preserve">
+    <value>削除</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.EditProject" xml:space="preserve">
+    <value>プロジェクトを編集</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.InitialTab" xml:space="preserve">
+    <value>最初のタブ</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AProjectCanContainUpToCommands" xml:space="preserve">
+    <value>1 つのプロジェクトには最大 64 個のコマンドを登録できます。</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AddCommand" xml:space="preserve">
+    <value>コマンドを追加</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.ProjectCommand" xml:space="preserve">
+    <value>プロジェクトのコマンド</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.DoNotConfigure" xml:space="preserve">
+    <value>設定しない</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.DetectAgentAutomatically" xml:space="preserve">
+    <value>エージェントを自動検出</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Program" xml:space="preserve">
+    <value>プログラム</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Arguments" xml:space="preserve">
+    <value>引数</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.WorkingFolder" xml:space="preserve">
+    <value>作業フォルダー</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.TitlePattern" xml:space="preserve">
+    <value>タイトルのパターン</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.AutomaticHookSetup" xml:space="preserve">
+    <value>フックの自動設定</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.Environment" xml:space="preserve">
+    <value>環境変数</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.OneKEYValueVariablePerLineAgentId" xml:space="preserve">
+    <value>1 行に 1 つの KEY=value 変数を入力します。引数やパターンの {agentId} は起動 ID に置き換えられます。複合コマンドはシェルを明示してください。</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.HooksAreConfiguredBeforeLaunchExistingHooks" xml:space="preserve">
+    <value>フックは起動前に設定されます。既存のフックは保持されます。フックの信頼はエージェント側で確認してください。</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.VariablesMustUseTheKEYValueFormat" xml:space="preserve">
+    <value>変数は KEY=value 形式で入力してください。</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="ProjectDialogs.InvalidOrDuplicateVariableName" xml:space="preserve">
+    <value>変数名が無効か、重複しています: {0}</value>
+    <comment>Context: ProjectDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CaptureRules" xml:space="preserve">
+    <value>取り込みルール</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.AutomaticallyCaptureMatchingNewWindows" xml:space="preserve">
+    <value>一致する新しいウィンドウを自動で取り込む</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.ExclusionsTakePriorityPreviewShowsTheResult" xml:space="preserve">
+    <value>除外ルールが優先されます。プレビューではウィンドウを移動せずに結果を確認できます。</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Exclude" xml:space="preserve">
+    <value>除外 · </value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Disabled" xml:space="preserve">
+    <value> · 無効</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.AnyApplication" xml:space="preserve">
+    <value>すべてのアプリ</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Check" xml:space="preserve">
+    <value>確認</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CaptureRule" xml:space="preserve">
+    <value>取り込みルール</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.RuleEnabled" xml:space="preserve">
+    <value>ルールを有効にする</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.ExcludeMatchingWindowsFromCapture" xml:space="preserve">
+    <value>一致するウィンドウを取り込みから除外</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.TerminalsOnly" xml:space="preserve">
+    <value>ターミナルのみ</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.CreateTabsWhenFull" xml:space="preserve">
+    <value>いっぱいになったら新しいタブを作成</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Application" xml:space="preserve">
+    <value>アプリ</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.WindowTitle" xml:space="preserve">
+    <value>ウィンドウタイトル</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.PatternsMatchesAnyTextMatchesOneCharacter" xml:space="preserve">
+    <value>パターン: * は任意の文字列、? は 1 文字に一致します。空欄はすべてに一致します。ワイルドカードがない場合は部分一致で検索します。</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.RulePreview" xml:space="preserve">
+    <value>ルールのプレビュー</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.WindowsStayWhereTheyAre" xml:space="preserve">
+    <value>ウィンドウは移動しません。</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Excluded" xml:space="preserve">
+    <value>除外済み</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.NoMatchingRule" xml:space="preserve">
+    <value>一致するルールなし</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="RuleDialogs.Tab" xml:space="preserve">
+    <value>タブ: {0}</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAPanel" xml:space="preserve">
+    <value>パネルを選択</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Link" xml:space="preserve">
+    <value>関連付け</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AmbiguousSessionsAreNotLinkedAutomatically" xml:space="preserve">
+    <value>特定できないセッションは自動で関連付けられません。</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectADockedPanel" xml:space="preserve">
+    <value>ドッキング済みのパネルを選択してください。</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.PendingWindows" xml:space="preserve">
+    <value>未復元のウィンドウ</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.GroupsAreRetainedForUpToDays" xml:space="preserve">
+    <value>グループは最大 30 日間保持されます。一意に一致するウィンドウは自動で復元されます。複数の候補がある場合は役割を手動で割り当ててください。</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Restore" xml:space="preserve">
+    <value>復元</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AssignToPanel" xml:space="preserve">
+    <value>パネルに割り当て…</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Forget" xml:space="preserve">
+    <value>登録を解除</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AgentSessions" xml:space="preserve">
+    <value>エージェントのセッション</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AssignAnUnidentifiedSessionToAPanel" xml:space="preserve">
+    <value>未識別のセッションをパネルに割り当てます。エージェントへの入力と応答はここには保存されません。</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Agent" xml:space="preserve">
+    <value>エージェント</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.NoPanelAssigned" xml:space="preserve">
+    <value>パネル未割り当て</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.AgentIntegrations" xml:space="preserve">
+    <value>エージェント連携</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAProjectFolderAndAgentsWindowDock" xml:space="preserve">
+    <value>プロジェクトフォルダーとエージェントを選択してください。既存のフックを保持し、WindowDock 自身の変更をバックアップします。</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetupForPanelSelectTheProjectFolder" xml:space="preserve">
+    <value>パネル「{0}」の設定です。エージェントを実行しているプロジェクトフォルダーを選択してください。</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.CommandNotFoundInPATH" xml:space="preserve">
+    <value> · PATH にコマンドが見つかりません</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Found" xml:space="preserve">
+    <value> · 検出済み</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.RestartTheAgentAfterSetupCodexRequires" xml:space="preserve">
+    <value>設定後はエージェントを再起動してください。Codex では /hooks による個別の確認と承認が必要です。信頼と権限の設定は変更しません。</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetUp" xml:space="preserve">
+    <value>設定</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.RemoveSetup" xml:space="preserve">
+    <value>設定を削除</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Preview" xml:space="preserve">
+    <value>プレビュー</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.Sessions" xml:space="preserve">
+    <value>セッション…</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.FilesChanged" xml:space="preserve">
+    <value>{0}変更したファイル: {1}{2}{3}</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SelectAnAgent" xml:space="preserve">
+    <value>エージェントを選択してください。</value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="ThemePreview.GridAllWindowsAreShownWithEqual" xml:space="preserve">
+    <value>グリッド: すべてのウィンドウを同じ優先度で表示します。</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.WorkspaceAppearance" xml:space="preserve">
+    <value>ワークスペースの外観</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.SelectAThemeToPreviewItImmediately" xml:space="preserve">
+    <value>テーマを選ぶとすぐにプレビューできます。保存するか、キャンセルして元のテーマに戻してください。</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.Graphite" xml:space="preserve">
+    <value>グラファイト</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.SolidDarkMaterial" xml:space="preserve">
+    <value>落ち着いたダーク素材</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.Light" xml:space="preserve">
+    <value>ライト</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.LightSurfaces" xml:space="preserve">
+    <value>明るいサーフェス</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.FrostedGlass" xml:space="preserve">
+    <value>すりガラス</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.BlurredTranslucentBackground" xml:space="preserve">
+    <value>ぼかした半透明の背景</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.ClearGlass" xml:space="preserve">
+    <value>クリアガラス</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.LightweightTransparentMaterial" xml:space="preserve">
+    <value>軽やかな透明素材</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="ThemePreview.ThemesChangeTheShellDockedApplicationsKeep" xml:space="preserve">
+    <value>テーマはアプリの外枠に適用されます。ドッキングしたアプリの外観は変わりません。</value>
+    <comment>Context: ThemePreview</comment>
+  </data>
+  <data name="WallpaperView.BackgroundCouldNotBeLoaded" xml:space="preserve">
+    <value>背景を読み込めませんでした: {0}</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.CouldNotUpdateTheImage" xml:space="preserve">
+    <value>画像を更新できませんでした。</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageExceedsMB" xml:space="preserve">
+    <value>画像が 80 MB を超えています。</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageFileIsUnavailable" xml:space="preserve">
+    <value>画像ファイルを利用できません。</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.UnsupportedImageFormat" xml:space="preserve">
+    <value>この画像形式には対応していません。</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageResolutionIsTooLarge" xml:space="preserve">
+    <value>画像の解像度が高すぎます。</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.TheImageFrameIsDamaged" xml:space="preserve">
+    <value>画像のフレームが破損しています。</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="WallpaperView.CouldNotResizeTheImage" xml:space="preserve">
+    <value>画像のサイズを変更できませんでした。</value>
+    <comment>Context: WallpaperView</comment>
+  </data>
+  <data name="Native.CouldNotRestoreTheWindowRegion" xml:space="preserve">
+    <value>ウィンドウの領域を復元できませんでした。</value>
+    <comment>Context: Native</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheWindowDockWindowIsNotReadyYet" xml:space="preserve">
+    <value>WindowDock のウィンドウはまだ準備できていません。</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheWindowWasClosedOrTheApplication" xml:space="preserve">
+    <value>ウィンドウが閉じられたか、アプリが応答していません。</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.WindowDockCannotDockItsOwnWindow" xml:space="preserve">
+    <value>WindowDock 自身のウィンドウはドッキングできません。</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.WindowsDidNotAllowTheWindowTo" xml:space="preserve">
+    <value>Windows がウィンドウとコンテナーの関連付けを許可しませんでした。</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.AccessToTheWindowIsRestrictedRun" xml:space="preserve">
+    <value>ウィンドウへのアクセスが制限されています。WindowDock と対象アプリを同じ環境で、同じ権限で実行してください。</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.TheApplicationIsNotRespondingTryUndocking" xml:space="preserve">
+    <value>アプリが応答していません。応答が戻ってから切り離しを再試行してください。</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="WindowsWindowBackend.CouldNotReturnTheWindowToThe" xml:space="preserve">
+    <value>ウィンドウをデスクトップに戻せませんでした。切り離しを再試行してください。</value>
+    <comment>Context: WindowsWindowBackend</comment>
+  </data>
+  <data name="RuleDialogs.NotFound" xml:space="preserve">
+    <value>見つかりません</value>
+    <comment>Context: RuleDialogs</comment>
+  </data>
+  <data name="SessionDialogs.SetupComplete" xml:space="preserve">
+    <value>設定が完了しました。 </value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="SessionDialogs.WindowDockHooksRemoved" xml:space="preserve">
+    <value>WindowDock のフックを削除しました。 </value>
+    <comment>Context: SessionDialogs</comment>
+  </data>
+  <data name="Counts.Columns.One" xml:space="preserve">
+    <value>{0} 列</value>
+  </data>
+  <data name="Counts.Columns.Few" xml:space="preserve">
+    <value>{0} 列</value>
+  </data>
+</root>

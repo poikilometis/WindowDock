@@ -1,0 +1,106 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+permissions:
+  contents: read
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+jobs:
+  windows:
+    name: Windows build and native tests
+    runs-on: windows-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore locked dependencies
+        run: dotnet restore WindowDock.sln --locked-mode
+      - name: Build, test and package
+        run: |
+          ./build.ps1 -Test -Publish -BundleInstalledRuntime -NoRestore
+          ./tools/Package-Windows.ps1
+          ./tools/Package-Source.ps1
+      - name: Test the extracted portable distribution
+        run: ./tools/Test-Portable.ps1 -RunDesktopChecks
+      - name: Attest tagged release archives
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: dist/*.zip
+      - name: Upload diagnostic reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: windows-test-reports
+          path: |
+            artifacts/*tests.txt
+            artifacts/locale-*.png
+            artifacts/portable-test-*/artifacts/*tests.txt
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Upload release assets
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-assets
+          path: |
+            dist/*.zip
+            dist/*.sha256
+          if-no-files-found: error
+          retention-days: 14
+  core:
+    name: Core (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore shared core tests
+        run: dotnet restore tests/WindowDock.Tests/WindowDock.Tests.csproj --locked-mode
+      - name: Run shared core tests
+        run: dotnet run --project tests/WindowDock.Tests -c Release --no-restore
+      - name: Upload core test report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: core-tests-${{ matrix.os }}
+          path: artifacts/modern-core-tests.txt
+          if-no-files-found: ignore
+          retention-days: 14
+  required:
+    name: Required checks
+    if: always()
+    needs: [windows, core]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Require every build and test job
+        env:
+          WINDOWS_RESULT: ${{ needs.windows.result }}
+          CORE_RESULT: ${{ needs.core.result }}
+        run: test "$WINDOWS_RESULT" = success && test "$CORE_RESULT" = success
