@@ -12,7 +12,7 @@ foreach ($directory in @('src', 'tests', 'tools', 'assets', 'docs', '.github')) 
     foreach ($file in Get-ChildItem -LiteralPath (Join-Path $sourceRoot $directory) -File -Recurse -Force) {
         $relative = [IO.Path]::GetRelativePath($sourceRoot, $file.FullName)
         if ($relative -match '(^|[\\/])(bin|obj)([\\/]|$)') { continue }
-        if ($file.Extension -notin '.cs', '.csproj', '.resx', '.axaml', '.ps1', '.png', '.svg', '.json', '.yml', '.yaml', '.md' -and $relative.Replace('\','/') -ne '.github/CODEOWNERS') { throw "Unexpected source file: $relative" }
+        if ($file.Extension -notin '.cs', '.csproj', '.resx', '.axaml', '.ps1', '.png', '.webp', '.svg', '.json', '.yml', '.yaml', '.md' -and $relative.Replace('\','/') -ne '.github/CODEOWNERS') { throw "Unexpected source file: $relative" }
         $files.Add($file)
     }
 }

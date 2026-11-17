@@ -18,6 +18,10 @@
 
 ---
 
+<p align="center">
+  <img src="docs/images/windowdock-promo.webp" width="960" height="540" alt="Animated demo of WindowDock grouping application windows into a tabbed workspace">
+</p>
+
 WindowDock groups **existing application windows** into a single workspace. Keep several agent sessions visible, enlarge the one you are working with, and move or minimize the group together. Each application continues to run in its own process.
 
 **Native window docking currently supports Windows x64.** The shared core and Avalonia interface are portable; Linux and macOS window backends are [planned](docs/ROADMAP.md).
@@ -32,14 +36,6 @@ WindowDock groups **existing application windows** into a single workspace. Keep
 - **Automate capture.** Match application names and window titles, limit a rule to terminals, choose a destination tab, and add exclusions that take priority.
 - **Launch project workspaces.** Save commands, arguments, working folders, and environment variables. Optional hooks report agent activity and permission requests.
 - **Stay compact.** A 30-DIP command row and 22-DIP panel headers leave room for your applications. Hover scrolling routes the wheel without deliberately changing keyboard focus, where the target app supports it.
-
-## Make it yours
-
-Graphite, Light, Frosted glass, and Clear glass themes include a live preview. Give each tab a color, image, animated GIF, or transparent background. A visual picker supports HEX, RGB, HSV, and opacity. Background appearance does not change the docked application's own theme.
-
-<p align="center">
-  <img src="docs/images/themes.png" width="680" alt="WindowDock's English appearance dialog with live previews of four themes">
-</p>
 
 ## Quick start
 
