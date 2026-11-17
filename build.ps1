@@ -30,8 +30,14 @@ if ($Test) {
     if ($LASTEXITCODE -ne 0) { throw "Core checks failed ($LASTEXITCODE)" }
     $nativeBuild = Join-Path $projectRoot 'src\WindowDock.Desktop\bin\Release\net10.0\WindowDock.exe'
     if ([Environment]::OSVersion.Platform -eq [PlatformID]::Win32NT) {
-        $probe = Start-Process -FilePath $nativeBuild -ArgumentList '--self-test' -WorkingDirectory $projectRoot -WindowStyle Hidden -Wait -PassThru
-        Get-Content -LiteralPath (Join-Path $projectRoot 'artifacts\avalonia-tests.txt')
+        $probe = Start-Process -FilePath $nativeBuild -ArgumentList '--self-test' -WorkingDirectory $projectRoot -WindowStyle Hidden -PassThru
+        if (-not $probe.WaitForExit(180000)) {
+            $probe.Kill($true)
+            $latest = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'artifacts') -Directory -Filter 'modern-ui-data-*' | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+            if ($latest) { Get-Content -LiteralPath (Join-Path $latest.FullName 'WindowDock.log') -ErrorAction SilentlyContinue }
+            throw 'Native desktop checks timed out after 180 seconds.'
+        }
+        Get-Content -LiteralPath (Join-Path $projectRoot 'artifacts\avalonia-tests.txt') -ErrorAction SilentlyContinue
         if ($probe.ExitCode -ne 0) { throw "Avalonia checks failed ($($probe.ExitCode))" }
     }
 }

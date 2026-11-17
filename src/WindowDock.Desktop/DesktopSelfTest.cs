@@ -16,11 +16,22 @@ internal static class DesktopSelfTest
     private static int assertions;
     private static string output = "";
     internal static void Check(bool condition, string message) { assertions++; if (!condition) throw new InvalidOperationException(message); }
-    internal static void Pass(string message) => report.Add("PASS " + message);
+    internal static void Pass(string message)
+    {
+        report.Add("PASS " + message);
+        if (output.Length > 0) File.WriteAllText(Path.Combine(output, "avalonia-tests.txt"), string.Join(Environment.NewLine, report), new UTF8Encoding(false));
+    }
+    internal static void FailStartup(Exception exception)
+    {
+        var directory = Path.Combine(Environment.CurrentDirectory, "artifacts"); Directory.CreateDirectory(directory);
+        File.WriteAllText(Path.Combine(directory, "avalonia-tests.txt"), "FAIL desktop initialization: " + exception, new UTF8Encoding(false));
+        if (Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) desktop.Shutdown(1);
+    }
     internal static async Task RunAsync(MainWindow main)
     {
         var result = 1; output = Path.Combine(Environment.CurrentDirectory, "artifacts"); Directory.CreateDirectory(output);
         report.Add("WindowDock Avalonia integration — " + DateTime.Now.ToString("s"));
+        File.WriteAllText(Path.Combine(output, "avalonia-tests.txt"), report[0], new UTF8Encoding(false));
         try
         {
             await Task.Delay(250);

@@ -74,19 +74,28 @@ internal static class DesktopAdvancedTests
     private static async Task ProjectAsync(MainWindow main)
     {
         var project = ProjectProfile.Create(main.Session.Current.Id); var command = ProjectCommand.Create(); command.Name = "Native PowerShell";
-        var token = "WindowDock-project-" + Guid.NewGuid().ToString("N")[..8];
-        command.Executable = Path.Combine(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe");
-        command.Arguments = "-NoExit -NoProfile -Command \"$host.UI.RawUI.WindowTitle='" + token + "'\"";
+        // Explicit conhost avoids inheriting the runner's hidden console. Correlate
+        // by the supported launch token: console-host ancestry varies across Windows.
+        var token = "WindowDock-project-{agentId}";
+        var existingHosts = Process.GetProcessesByName("conhost").Select(p => { using (p) return p.Id; }).ToHashSet();
+        command.Executable = Path.Combine(Environment.SystemDirectory, "conhost.exe");
+        command.Arguments = "\"" + Path.Combine(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe") + "\" -NoExit -NoProfile -Command \"$host.UI.RawUI.WindowTitle='" + token + "'\"";
+        command.TitlePattern = "*{agentId}*";
         command.Directory = Store.DirectoryPath; command.Environment.Add(new() { Key = "WD_TEST_MARKER", Value = "migration" }); project.Commands.Add(command);
         Check(main.Session.LaunchProject(project) == 1, "PowerShell project did not start.");
+        foreach (var candidate in Process.GetProcessesByName("conhost"))
+        {
+            if (!existingHosts.Contains(candidate.Id) && WindowsProcessInfo.Parents(candidate.Id).Any(p => p.Id == Environment.ProcessId)) subjects.Add(candidate);
+            else candidate.Dispose();
+        }
         var deadline = Stopwatch.StartNew(); RuntimePanel? panel = null;
         while (deadline.Elapsed < TimeSpan.FromSeconds(14))
         { main.Session.Poll(); panel = main.Session.Panels.FirstOrDefault(p => p.Alias == "Native PowerShell"); if (panel is not null) break; await Task.Delay(70); }
-        Check(panel is not null && !string.IsNullOrEmpty(panel.AgentId), "PowerShell project window / process ancestry was not matched.");
+        Check(panel is not null && !string.IsNullOrEmpty(panel.AgentId), "PowerShell project window was not matched by its launch token.");
         var process = Process.GetProcessById(panel!.Record.ProcessId); subjects.Add(process);
         Check(Native.IsWindow(panel.Record.Hwnd), "Launched PowerShell native window is missing.");
         main.Session.ReleasePanels([panel]); await Task.Delay(80); Check(!process.HasExited, "Releasing project window terminated the process.");
-        Pass("Saved project launch finds a real PowerShell console using process ancestry and preserves its agent identity and independent lifetime.");
+        Pass("Saved project launch finds an independent PowerShell console by its launch token and preserves its agent identity and lifetime.");
     }
     private static async Task GifAsync(MainWindow main)
     {

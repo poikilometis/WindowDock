@@ -123,7 +123,11 @@ internal sealed partial class MainWindow : Window
             if (Program.IsSelfTest) _ = DesktopSelfTest.RunAsync(this);
             else if (Program.PerformanceReport is not null && OperatingSystem.IsWindows()) _ = DesktopPerformanceTest.RunAsync(this, Program.PerformanceReport);
         }
-        catch (Exception exception) { SetStatus(exception.Message); Store.Log(exception.ToString()); }
+        catch (Exception exception)
+        {
+            SetStatus(exception.Message); Store.Log(exception.ToString());
+            if (Program.IsSelfTest && sender is MainWindow) DesktopSelfTest.FailStartup(exception);
+        }
     }
     private void OnClosing(object? sender, WindowClosingEventArgs args)
     {
