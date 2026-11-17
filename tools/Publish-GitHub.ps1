@@ -1,10 +1,14 @@
 param(
     [string]$Repository = 'poikilometis/WindowDock',
     [string]$GhConfigDirectory = '',
-    [switch]$Release
+    [switch]$Release,
+    [switch]$ValidateOnly
 )
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
+$gitDirectory = [IO.Path]::GetFullPath($root).Replace('\', '/')
+# This checked source directory may have been prepared by another local account.
+# Scope the trust exception to our Git invocations, never to global Git configuration.
 if ($GhConfigDirectory) { $env:GH_CONFIG_DIR = $GhConfigDirectory }
 $env:GIT_TERMINAL_PROMPT = '0'
 $stateDirectory = Join-Path $root 'artifacts\github-publish'
@@ -43,17 +47,28 @@ function Wait-Workflow([string]$Workflow, [string]$Sha, [string]$Event, [string]
     }
     throw "Timed out waiting for $Workflow. Check the repository Actions tab."
 }
-$login = & gh api user --jq .login
-Assert-Exit 'GitHub CLI is not authenticated; run gh auth login --scopes workflow first.'
+
 if ($Repository -notmatch '^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$') { throw 'Invalid repository name.' }
 $owner = $Repository.Split('/')[0]
-if ($login -ne $owner) { throw "Expected account $owner; active account is $login." }
-$sha = (& git -C $root rev-parse HEAD).Trim(); Assert-Exit 'Commit the reviewed source first.'
-if (& git -C $root status --porcelain) { throw 'Commit or save local changes before publication.' }
-$remote = (& git -C $root remote get-url origin).Trim(); Assert-Exit 'Configure origin before publication.'
+$sha = & git -c "safe.directory=$gitDirectory" -C $root rev-parse HEAD
+Assert-Exit 'Could not read the source commit. Commit the reviewed source first.'
+$sha = ($sha -join '').Trim()
+$dirty = & git -c "safe.directory=$gitDirectory" -C $root status --porcelain
+Assert-Exit 'Could not inspect the source working tree.'
+if ($dirty) { throw 'Commit or save local changes before publication.' }
+$remote = & git -c "safe.directory=$gitDirectory" -C $root remote get-url origin
+Assert-Exit 'Configure origin before publication.'
+$remote = ($remote -join '').Trim()
 if ($remote -ne "https://github.com/$Repository.git") { throw 'Origin does not match the requested repository.' }
 $version = ([xml](Get-Content (Join-Path $root 'Directory.Build.props') -Raw)).Project.PropertyGroup.Version
 $tag = "v$version"
+if ($ValidateOnly) {
+    Write-Host "PASS publication preflight: $Repository, commit $sha, release $tag"
+    return
+}
+$login = & gh api user --jq .login
+Assert-Exit 'GitHub CLI is not authenticated; run gh auth login --scopes workflow first.'
+if ($login -ne $owner) { throw "Expected account $owner; active account is $login." }
 & gh repo view $Repository --json nameWithOwner --jq .nameWithOwner 2>$null | Out-Null
 if ($LASTEXITCODE -ne 0) {
     & gh repo create $Repository --public --description 'Group existing terminals and desktop apps into compact, tabbed workspaces.'
@@ -64,7 +79,7 @@ if ($repo.private) { throw 'The existing repository is private; this script neve
 Api "repos/$Repository/actions/permissions" 'PUT' @{ enabled=$true; allowed_actions='selected' } | Out-Null
 Api "repos/$Repository/actions/permissions/selected-actions" 'PUT' @{ github_owned_allowed=$true; verified_allowed=$false; patterns_allowed=@() } | Out-Null
 Api "repos/$Repository/actions/permissions/workflow" 'PUT' @{ default_workflow_permissions='read'; can_approve_pull_request_reviews=$false } | Out-Null
-& git -C $root -c credential.helper= -c 'credential.helper=!gh auth git-credential' push --set-upstream origin main
+& git -c "safe.directory=$gitDirectory" -C $root -c credential.helper= -c 'credential.helper=!gh auth git-credential' push --set-upstream origin main
 Assert-Exit 'Push failed. Remote history was not overwritten.'
 Api "repos/$Repository" 'PATCH' @{ description='Group existing terminals and desktop apps into compact, tabbed workspaces.'; default_branch='main'; has_issues=$true; has_projects=$false; has_wiki=$false; has_discussions=$true; allow_squash_merge=$true; allow_merge_commit=$false; allow_rebase_merge=$false; delete_branch_on_merge=$true; allow_auto_merge=$true } | Out-Null
 Api "repos/$Repository/topics" 'PUT' @{ names=@('windows','window-manager','desktop','avalonia','dotnet','terminal','ai-agents') } | Out-Null
@@ -88,10 +103,10 @@ $existingTagRule = $existingRules | Where-Object name -eq $tagRules.name | Selec
 if ($existingTagRule) { Api "repos/$Repository/rulesets/$($existingTagRule.id)" 'PUT' $tagRules | Out-Null }
 else { Api "repos/$Repository/rulesets" 'POST' $tagRules | Out-Null }
 if ($Release) {
-    $existingTag = & git -C $root rev-parse --verify "refs/tags/$tag^{}" 2>$null
+    $existingTag = & git -c "safe.directory=$gitDirectory" -C $root rev-parse --verify "refs/tags/$tag^{}" 2>$null
     if ($LASTEXITCODE -eq 0) { if ($existingTag.Trim() -ne $sha) { throw 'The existing version tag points at another commit.' } }
-    else { & git -C $root tag -a $tag -m "WindowDock $version"; Assert-Exit 'Tag creation failed.' }
-    & git -C $root -c credential.helper= -c 'credential.helper=!gh auth git-credential' push origin "refs/tags/$tag"
+    else { & git -c "safe.directory=$gitDirectory" -C $root tag -a $tag -m "WindowDock $version"; Assert-Exit 'Tag creation failed.' }
+    & git -c "safe.directory=$gitDirectory" -C $root -c credential.helper= -c 'credential.helper=!gh auth git-credential' push origin "refs/tags/$tag"
     Assert-Exit 'Tag push failed; an existing remote tag was not overwritten.'
     $releaseRun = Wait-Workflow 'release.yml' $sha 'push' $tag
     $releaseInfo = & gh release view $tag --repo $Repository --json url,isDraft,assets
