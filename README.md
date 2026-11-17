@@ -2,7 +2,12 @@
   <img src="assets/windowdock.png" width="88" height="88" alt="WindowDock logo">
   <h1>WindowDock</h1>
   <p><strong>Your windows. One workspace.</strong></p>
-  <p>Bring independent terminals, AI agents, and desktop apps into compact, named tabs.</p>
+
+  <img src="docs/images/windowdock-promo.webp" width="960" height="540" alt="Animated demo of WindowDock grouping application windows into a tabbed workspace">
+
+  <p>Running several AI agents leaves you with a pile of terminal windows to find, move, and minimize one at a time.<br>WindowDock brings independent terminals, AI agents, and desktop apps into compact, named tabs.</p>
+
+  <a href="https://github.com/poikilometis/WindowDock/releases/latest"><img src="https://img.shields.io/badge/Download-Windows%20x64%20%C2%B7%20portable%20ZIP-0064DC?style=for-the-badge&labelColor=24252A" width="469" height="40" alt="Download WindowDock for Windows x64 (portable ZIP)"></a>
 
   [![Build](https://github.com/poikilometis/WindowDock/actions/workflows/ci.yml/badge.svg)](https://github.com/poikilometis/WindowDock/actions/workflows/ci.yml)
   [![Delivery](https://github.com/poikilometis/WindowDock/actions/workflows/release.yml/badge.svg)](https://github.com/poikilometis/WindowDock/actions/workflows/release.yml)
@@ -13,14 +18,10 @@
   [![Languages](https://img.shields.io/badge/languages-11-578778)](#languages)
   [![MIT](https://img.shields.io/badge/license-MIT-728e83)](LICENSE)
 
-  [Download](https://github.com/poikilometis/WindowDock/releases/latest) · [Quick start](#quick-start) · [Documentation](#documentation) · [Report a bug](https://github.com/poikilometis/WindowDock/issues/new/choose)
+  [Quick start](#quick-start) · [Documentation](#documentation) · [Report a bug](https://github.com/poikilometis/WindowDock/issues/new/choose)
 </div>
 
 ---
-
-<p align="center">
-  <img src="docs/images/windowdock-promo.webp" width="960" height="540" alt="Animated demo of WindowDock grouping application windows into a tabbed workspace">
-</p>
 
 WindowDock groups **existing application windows** into a single workspace. Keep several agent sessions visible, enlarge the one you are working with, and move or minimize the group together. Each application continues to run in its own process.
 
@@ -44,6 +45,9 @@ WindowDock groups **existing application windows** into a single workspace. Keep
 3. Choose **Add windows** to pick applications, or **Collect windows** to distribute visible desktop windows across tabs.
 4. Double-click a panel header to zoom it. Drag the header to change its position or move it to another tab.
 5. Open **…** for layouts, appearance, capture rules, projects, integrations, and group restoration.
+
+> [!NOTE]
+> **First launch.** `WindowDock.exe` is not code-signed yet, so Microsoft Defender SmartScreen may show “Windows protected your PC”. Choose **More info**, then **Run anyway**. To check the archive before you extract it, compare the output of `Get-FileHash` with the `.sha256` file published beside it.
 
 Closing WindowDock returns the docked windows to the desktop. It does not end their sessions. Back up the `data` folder before upgrading, close WindowDock, then replace the program files without overwriting your data.
 
