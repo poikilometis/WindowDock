@@ -135,6 +135,7 @@ internal static class DesktopAdvancedTests
     {
         var candidate = await SubjectAsync(main, "recovery-" + Guid.NewGuid().ToString("N")[..8]);
         var original = Native.GetLong(candidate.Handle, Native.GWL_STYLE);
+        var originalRegion = Native.CaptureRegion(candidate.Handle);
         var directory = Path.Combine(Store.DirectoryPath, "crash"); Directory.CreateDirectory(directory);
         var start = new ProcessStartInfo(RuntimePaths.Executable) { UseShellExecute = false, CreateNoWindow = true };
         foreach (var argument in new[] { "--crash-probe", directory, candidate.Handle.ToInt64().ToString(), candidate.ProcessId.ToString() }) start.ArgumentList.Add(argument);
@@ -150,7 +151,10 @@ internal static class DesktopAdvancedTests
         wait.Restart(); while (wait.Elapsed < TimeSpan.FromSeconds(10) && !Recovered()) await Task.Delay(75);
         Check(Native.IsWindow(candidate.Handle) && Native.GetWindow(candidate.Handle, 4) == 0, "Guardian did not restore original ownership after host termination.");
         Check((Native.GetLong(candidate.Handle, Native.GWL_STYLE) & Native.WS_CAPTION) == (original & Native.WS_CAPTION), "Guardian did not restore native frame styles.");
-        Check(!Directory.EnumerateFiles(directory, "session-*.json").Any(), "Guardian did not finish its recovery journal transaction.");
-        Pass("Guardian restores the native window and original frame after forced termination of an isolated Avalonia host.");
+        Check(!Directory.EnumerateFiles(directory, "session-*.json").Any(), "Guardian did not finish its recovery journal transaction. " +
+            (File.Exists(Path.Combine(directory, "WindowDock.log")) ? string.Join(" | ", File.ReadLines(Path.Combine(directory, "WindowDock.log")).TakeLast(8)) : "No guardian log."));
+        var recoveredRegion = Native.CaptureRegion(candidate.Handle);
+        Check(originalRegion is null ? recoveredRegion is null : recoveredRegion is not null && originalRegion.SequenceEqual(recoveredRegion), "Guardian did not remove the docking clip or restore the original window region.");
+        Pass("Guardian restores ownership, frame and clipping and removes its journal after forced termination of an isolated Avalonia host.");
     }
 }

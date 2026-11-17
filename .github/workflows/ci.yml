@@ -55,6 +55,8 @@ jobs:
             artifacts/locale-*.png
             artifacts/avalonia-*.png
             artifacts/modern-ui-data-*/WindowDock.log
+            artifacts/modern-ui-data-*/crash/WindowDock.log
+            artifacts/modern-ui-data-*/crash/session-*.json
             artifacts/portable-test-*/artifacts/*tests.txt
           if-no-files-found: ignore
           retention-days: 14

@@ -229,7 +229,7 @@ namespace WindowDock
             int error = Marshal.GetLastWin32Error();
             // GetLastError is meaningful only when the API's return value is zero.
             // Successful frame / owner changes can leave an error from nested native calls.
-            if (previous == IntPtr.Zero && error != 0) throw new System.ComponentModel.Win32Exception(error);
+            if (previous == IntPtr.Zero && error != 0) throw new System.ComponentModel.Win32Exception(error, $"SetWindowLongPtr index={index} requested={value} current={GetLong(hwnd, index)}: {new System.ComponentModel.Win32Exception(error).Message}");
         }
         public static string Title(IntPtr hwnd)
         {

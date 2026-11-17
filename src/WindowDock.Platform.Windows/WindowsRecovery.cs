@@ -28,9 +28,16 @@ namespace WindowDock { internal sealed partial class WindowsWindowBackend {
                 }
                 Native.SetLong(r.Hwnd, Native.GWL_STYLE, r.Style);
                 Native.SetLong(r.Hwnd, Native.GWL_EXSTYLE, r.ExStyle);
+                stage = "owner";
                 if (r.NativeTopLevel || parent == IntPtr.Zero)
-                    Native.SetLong(r.Hwnd, Native.GWLP_HWNDPARENT,
-                        r.Owner != 0 && Native.IsWindow(new IntPtr(r.Owner)) ? r.Owner : 0);
+                {
+                    var owner = r.Owner != 0 && Native.IsWindow(new IntPtr(r.Owner)) ? r.Owner : 0;
+                    // Windows can clear a dead host before the guardian runs. Reassigning
+                    // that already-cleared owner can report ERROR_INVALID_WINDOW_HANDLE.
+                    if (Native.GetWindow(r.Hwnd, 4).ToInt64() != owner)
+                        Native.SetLong(r.Hwnd, Native.GWLP_HWNDPARENT, owner);
+                }
+                stage = "placement";
                 Rectangle original = new Rectangle(r.X, r.Y, Math.Max(160, r.Width), Math.Max(100, r.Height));
                 bool visible = false;
                 foreach (Rectangle area in Native.WorkAreas())
