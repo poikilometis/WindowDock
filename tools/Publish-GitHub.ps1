@@ -97,7 +97,7 @@ $policies = Api "repos/$Repository/environments/github-release/deployment-branch
 if (-not ($policies.branch_policies | Where-Object { $_.name -eq 'v*' -and $_.type -eq 'tag' })) {
     Api "repos/$Repository/environments/github-release/deployment-branch-policies" 'POST' @{ name='v*'; type='tag' } | Out-Null
 }
-$tagRules = @{ name='Immutable version tags'; target='tag'; enforcement='active'; conditions=@{ ref_name=@{ include=@('refs/tags/v*'); exclude=@() } }; rules=@(@{ type='deletion' },@{ type='non_fast_forward' }); bypass_actors=@() }
+$tagRules = @{ name='Immutable version tags'; target='tag'; enforcement='active'; conditions=@{ ref_name=@{ include=@('refs/tags/v*'); exclude=@() } }; rules=@(@{ type='deletion' },@{ type='update' }); bypass_actors=@() }
 $existingRules = Api "repos/$Repository/rulesets"
 $existingTagRule = $existingRules | Where-Object name -eq $tagRules.name | Select-Object -First 1
 if ($existingTagRule) { Api "repos/$Repository/rulesets/$($existingTagRule.id)" 'PUT' $tagRules | Out-Null }

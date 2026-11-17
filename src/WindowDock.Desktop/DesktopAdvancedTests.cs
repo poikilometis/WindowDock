@@ -142,9 +142,15 @@ internal static class DesktopAdvancedTests
         var wait = Stopwatch.StartNew(); while (!File.Exists(Path.Combine(directory, "ready.txt")) && !host.HasExited && wait.Elapsed < TimeSpan.FromSeconds(12)) await Task.Delay(50);
         Check(File.Exists(Path.Combine(directory, "ready.txt")), "Crash host did not attach its disposable window.");
         host.Kill(); await host.WaitForExitAsync();
-        wait.Restart(); while (wait.Elapsed < TimeSpan.FromSeconds(6) && Native.GetWindow(candidate.Handle, 4) != 0) await Task.Delay(75);
+        // Windows clears the owner as soon as the host dies, before the guardian
+        // restores styles. Wait for the complete recovery transaction.
+        bool Recovered() => Native.IsWindow(candidate.Handle) && Native.GetWindow(candidate.Handle, 4) == 0 &&
+            (Native.GetLong(candidate.Handle, Native.GWL_STYLE) & Native.WS_CAPTION) == (original & Native.WS_CAPTION) &&
+            !Directory.EnumerateFiles(directory, "session-*.json").Any();
+        wait.Restart(); while (wait.Elapsed < TimeSpan.FromSeconds(10) && !Recovered()) await Task.Delay(75);
         Check(Native.IsWindow(candidate.Handle) && Native.GetWindow(candidate.Handle, 4) == 0, "Guardian did not restore original ownership after host termination.");
         Check((Native.GetLong(candidate.Handle, Native.GWL_STYLE) & Native.WS_CAPTION) == (original & Native.WS_CAPTION), "Guardian did not restore native frame styles.");
+        Check(!Directory.EnumerateFiles(directory, "session-*.json").Any(), "Guardian did not finish its recovery journal transaction.");
         Pass("Guardian restores the native window and original frame after forced termination of an isolated Avalonia host.");
     }
 }
