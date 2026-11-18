@@ -123,7 +123,11 @@ internal sealed class IntegrationWindow : EditorWindow
         actions.Children.Add(DockControls.Button(L10n.Get("SessionDialogs.Sessions"), "more", () => _ = host.UserActionAsync(async () => { await host.ShowEditorAsync(new HookSessionsWindow(host), this); })));
         AutomationProperties.SetLiveSetting(setupStatus, AutomationLiveSetting.Polite);
         Body.Children.Add(new StackPanel { Spacing = 4, Children = { actions, setupStatus } });
-        preview = Input("", true); preview.IsReadOnly = true; preview.MinHeight = 150; preview.FontFamily = new FontFamily("Consolas, monospace");
+        preview = Input("", true);
+        preview.IsReadOnly = true;
+        preview.IsVisible = false;
+        preview.MinHeight = 150;
+        preview.FontFamily = new FontFamily("Consolas, monospace");
         AutomationProperties.SetName(preview, L10n.Get("SessionDialogs.Preview"));
         Body.Children.Add(preview);
         if (!OperatingSystem.IsWindows()) { Note(L10n.Get("WorkspaceSession.AutomaticSetupForTheseHookProfilesIs")); actions.IsEnabled = false; }
@@ -161,6 +165,7 @@ internal sealed class IntegrationWindow : EditorWindow
                 var change = HookInstaller.Plan(root, provider, RuntimePaths.Executable, true);
                 return provider.Name + " · " + change.Before.PathName + Environment.NewLine + change.Before.Encoding.GetString(change.After) + Environment.NewLine + Environment.NewLine + HookCommands.Script(provider, provider.Events[0], RuntimePaths.Executable);
             }));
+            preview.IsVisible = true;
             Error.IsVisible = false;
         }
         catch (Exception exception) { Error.Text = exception.Message; Error.IsVisible = true; }
