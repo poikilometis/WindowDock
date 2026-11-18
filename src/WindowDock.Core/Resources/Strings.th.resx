@@ -1200,4 +1200,187 @@
   <data name="Counts.Columns.Few" xml:space="preserve">
     <value>{0} คอลัมน์</value>
   </data>
+  <data name="Workflow.Adaptive" xml:space="preserve">
+    <value>ตารางปรับตามพื้นที่</value>
+  </data>
+  <data name="Workflow.AgentActivity" xml:space="preserve">
+    <value>กิจกรรมของเอเจนต์</value>
+  </data>
+  <data name="Workflow.AgentActivityCount" xml:space="preserve">
+    <value>เซสชันที่ต้องดูแล: {0}</value>
+  </data>
+  <data name="Workflow.AgentCompleted" xml:space="preserve">
+    <value>เอเจนต์ทำงานรอบนี้เสร็จแล้ว</value>
+  </data>
+  <data name="Workflow.AgentNotifications" xml:space="preserve">
+    <value>การแจ้งเตือนเอเจนต์ใน Windows</value>
+  </data>
+  <data name="Workflow.Capture.Added" xml:space="preserve">
+    <value>เพิ่มแล้ว</value>
+  </data>
+  <data name="Workflow.Capture.AlreadyDocked" xml:space="preserve">
+    <value>อยู่ในกลุ่มแล้ว</value>
+  </data>
+  <data name="Workflow.Capture.Excluded" xml:space="preserve">
+    <value>ยกเว้นตามกฎ</value>
+  </data>
+  <data name="Workflow.Capture.Failed" xml:space="preserve">
+    <value>เพิ่มไม่ได้</value>
+  </data>
+  <data name="Workflow.Capture.Filtered" xml:space="preserve">
+    <value>ไม่ตรงตัวกรอง</value>
+  </data>
+  <data name="Workflow.Capture.Full" xml:space="preserve">
+    <value>ไม่มีพื้นที่ว่าง</value>
+  </data>
+  <data name="Workflow.Capture.Minimized" xml:space="preserve">
+    <value>ย่ออยู่</value>
+  </data>
+  <data name="Workflow.Capture.Ready" xml:space="preserve">
+    <value>จะเพิ่ม</value>
+  </data>
+  <data name="Workflow.CaptureDestination" xml:space="preserve">
+    <value>หน้าต่างที่ไม่มีกฎจะเริ่มที่ «{0}» รายการแสดงปลายทางของแต่ละหน้าต่าง</value>
+  </data>
+  <data name="Workflow.CaptureReport" xml:space="preserve">
+    <value>ผลการรวบรวมครั้งล่าสุด</value>
+  </data>
+  <data name="Workflow.CaptureSummary" xml:space="preserve">
+    <value>เพิ่มหน้าต่าง {0} ข้าม {1}</value>
+  </data>
+  <data name="Workflow.CollectOptions" xml:space="preserve">
+    <value>รวบรวมด้วยตัวกรอง</value>
+  </data>
+  <data name="Workflow.DisplayNumber" xml:space="preserve">
+    <value>จอภาพ {0}</value>
+  </data>
+  <data name="Workflow.ExcludeWindow" xml:space="preserve">
+    <value>สร้างข้อยกเว้นการรวบรวม…</value>
+  </data>
+  <data name="Workflow.IncludeMinimized" xml:space="preserve">
+    <value>รวมหน้าต่างที่ย่ออยู่</value>
+  </data>
+  <data name="Workflow.InvalidShortcut" xml:space="preserve">
+    <value>ใช้ทางลัดที่ถูกต้องและไม่ซ้ำสำหรับ «{0}»</value>
+  </data>
+  <data name="Workflow.LinkProjectRole" xml:space="preserve">
+    <value>เชื่อมกับคำสั่งโปรเจกต์</value>
+  </data>
+  <data name="Workflow.MoveToDisplay" xml:space="preserve">
+    <value>ย้าย WindowDock ไปยังจอภาพ</value>
+  </data>
+  <data name="Workflow.NextAgent" xml:space="preserve">
+    <value>เอเจนต์ถัดไปที่ต้องดูแล</value>
+  </data>
+  <data name="Workflow.NoAgentActivity" xml:space="preserve">
+    <value>ไม่พบกิจกรรมที่ตรงกัน สถานะจะปรากฏเมื่อ hook ที่ตั้งค่าไว้ส่งเหตุการณ์</value>
+  </data>
+  <data name="Workflow.NotifyOnCompletion" xml:space="preserve">
+    <value>แจ้งเตือนเมื่อเสร็จด้วย</value>
+  </data>
+  <data name="Workflow.Open" xml:space="preserve">
+    <value>เปิด</value>
+  </data>
+  <data name="Workflow.OpenProject" xml:space="preserve">
+    <value>เปิดโปรเจกต์ «{0}»</value>
+  </data>
+  <data name="Workflow.OverflowTab" xml:space="preserve">
+    <value>แท็บใหม่สำหรับหน้าต่างที่เหลือ</value>
+  </data>
+  <data name="Workflow.PinPanel" xml:space="preserve">
+    <value>ปักหมุดข้างกลุ่มซ้อน</value>
+  </data>
+  <data name="Workflow.PreviousWindow" xml:space="preserve">
+    <value>หน้าต่างที่ใช้ก่อนหน้า</value>
+  </data>
+  <data name="Workflow.Project.Ambiguous" xml:space="preserve">
+    <value>เลือกหน้าต่างที่ตรงกัน</value>
+  </data>
+  <data name="Workflow.Project.Connect" xml:space="preserve">
+    <value>เชื่อมหน้าต่างที่เปิดอยู่</value>
+  </data>
+  <data name="Workflow.Project.Failed" xml:space="preserve">
+    <value>เปิดไม่ได้</value>
+  </data>
+  <data name="Workflow.Project.Missing" xml:space="preserve">
+    <value>ไม่พบหน้าต่าง</value>
+  </data>
+  <data name="Workflow.Project.Open" xml:space="preserve">
+    <value>เชื่อมแล้ว</value>
+  </data>
+  <data name="Workflow.Project.Starting" xml:space="preserve">
+    <value>กำลังรอหน้าต่างปรากฏ</value>
+  </data>
+  <data name="Workflow.ProjectReport" xml:space="preserve">
+    <value>ผลการเปิดโปรเจกต์</value>
+  </data>
+  <data name="Workflow.ProjectSummary" xml:space="preserve">
+    <value>เชื่อมแล้ว: {0} กำลังเริ่ม: {1} ต้องตรวจสอบ: {2}</value>
+  </data>
+  <data name="Workflow.ResetShortcut" xml:space="preserve">
+    <value>ใช้ค่าเริ่มต้น</value>
+  </data>
+  <data name="Workflow.ResolveProjectRole" xml:space="preserve">
+    <value>ใช้เมนูของแผงที่เปิดอยู่เพื่อเชื่อมกับคำสั่ง หรือระบุเงื่อนไขการจับคู่ให้เจาะจงขึ้น</value>
+  </data>
+  <data name="Workflow.ResumeArguments" xml:space="preserve">
+    <value>อาร์กิวเมนต์สำหรับทำงานต่อ (ไม่บังคับ)</value>
+  </data>
+  <data name="Workflow.ReturnAllWindows" xml:space="preserve">
+    <value>คืนหน้าต่างทั้งหมดและพักการรวบรวม</value>
+  </data>
+  <data name="Workflow.ReuseHelp" xml:space="preserve">
+    <value>ระบุทั้งแอปที่กำลังทำงานและชื่อหน้าต่างที่ไม่ซ้ำเพื่อใช้หน้าต่างเดิม อาร์กิวเมนต์สำหรับทำงานต่อขึ้นอยู่กับคำสั่ง</value>
+  </data>
+  <data name="Workflow.ReuseProcess" xml:space="preserve">
+    <value>ชื่อแอปที่กำลังทำงาน</value>
+  </data>
+  <data name="Workflow.ReuseTitle" xml:space="preserve">
+    <value>ชื่อหน้าต่างที่เปิดอยู่</value>
+  </data>
+  <data name="Workflow.RoleAlreadyUsed" xml:space="preserve">
+    <value>คำสั่งนั้นมีหน้าต่างอยู่แล้วหรือกำลังเริ่ม</value>
+  </data>
+  <data name="Workflow.RuleFromWindow" xml:space="preserve">
+    <value>สร้างกฎจากหน้าต่าง…</value>
+  </data>
+  <data name="Workflow.Shortcut" xml:space="preserve">
+    <value>คีย์ลัด</value>
+  </data>
+  <data name="Workflow.ShortcutConflicts" xml:space="preserve">
+    <value>คีย์ลัดที่ใช้ไม่ได้: {0}</value>
+  </data>
+  <data name="Workflow.ShortcutHelp" xml:space="preserve">
+    <value>ใช้ Ctrl, Alt, Shift หรือ Win ร่วมกับตัวอักษร ตัวเลข หรือปุ่ม F1, Space, Enter เว้นว่างเพื่อปิดคีย์ลัด</value>
+  </data>
+  <data name="Workflow.Shortcuts" xml:space="preserve">
+    <value>คีย์ลัดทั้งระบบ</value>
+  </data>
+  <data name="Workflow.ShortcutUnavailable" xml:space="preserve">
+    <value>ใช้ไม่ได้ใน Windows</value>
+  </data>
+  <data name="Workflow.ShowDock" xml:space="preserve">
+    <value>แสดง WindowDock</value>
+  </data>
+  <data name="Workflow.Stack" xml:space="preserve">
+    <value>กลุ่มหน้าต่างซ้อน</value>
+  </data>
+  <data name="Workflow.StartMissing" xml:space="preserve">
+    <value>เริ่มคำสั่งที่ยังไม่เปิด</value>
+  </data>
+  <data name="Workflow.ToggleDock" xml:space="preserve">
+    <value>แสดงหรือย่อ WindowDock</value>
+  </data>
+  <data name="Workflow.UseResumeArguments" xml:space="preserve">
+    <value>ใช้อาร์กิวเมนต์ที่ตั้งไว้สำหรับทำงานต่อ</value>
+  </data>
+  <data name="Workflow.UseRules" xml:space="preserve">
+    <value>จัดหน้าต่างตามกฎการรวบรวม</value>
+  </data>
+  <data name="Workflow.WaitingOnly" xml:space="preserve">
+    <value>แสดงเซสชันที่ต้องดูแล</value>
+  </data>
+  <data name="Workflow.RetryUnmatched" xml:space="preserve">
+    <value>ลองเริ่มคำสั่งที่ยังไม่เชื่อมอีกครั้ง</value>
+  </data>
 </root>

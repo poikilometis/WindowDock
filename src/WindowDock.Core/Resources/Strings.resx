@@ -1200,4 +1200,187 @@
   <data name="Counts.Columns.Few" xml:space="preserve">
     <value>{0} columns</value>
   </data>
+  <data name="Workflow.Adaptive" xml:space="preserve">
+    <value>Adaptive grid</value>
+  </data>
+  <data name="Workflow.AgentActivity" xml:space="preserve">
+    <value>Agent activity</value>
+  </data>
+  <data name="Workflow.AgentActivityCount" xml:space="preserve">
+    <value>Agent sessions needing attention: {0}</value>
+  </data>
+  <data name="Workflow.AgentCompleted" xml:space="preserve">
+    <value>An agent turn finished.</value>
+  </data>
+  <data name="Workflow.AgentNotifications" xml:space="preserve">
+    <value>Agent notifications in Windows</value>
+  </data>
+  <data name="Workflow.Capture.Added" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="Workflow.Capture.AlreadyDocked" xml:space="preserve">
+    <value>Already docked</value>
+  </data>
+  <data name="Workflow.Capture.Excluded" xml:space="preserve">
+    <value>Excluded by rule</value>
+  </data>
+  <data name="Workflow.Capture.Failed" xml:space="preserve">
+    <value>Could not add</value>
+  </data>
+  <data name="Workflow.Capture.Filtered" xml:space="preserve">
+    <value>Outside the filter</value>
+  </data>
+  <data name="Workflow.Capture.Full" xml:space="preserve">
+    <value>No free slot</value>
+  </data>
+  <data name="Workflow.Capture.Minimized" xml:space="preserve">
+    <value>Minimized</value>
+  </data>
+  <data name="Workflow.Capture.Ready" xml:space="preserve">
+    <value>Will add</value>
+  </data>
+  <data name="Workflow.CaptureDestination" xml:space="preserve">
+    <value>Windows without a routing rule start in “{0}”. The list shows where each window will go.</value>
+  </data>
+  <data name="Workflow.CaptureReport" xml:space="preserve">
+    <value>Last collection results</value>
+  </data>
+  <data name="Workflow.CaptureSummary" xml:space="preserve">
+    <value>Windows added: {0}. Skipped: {1}.</value>
+  </data>
+  <data name="Workflow.CollectOptions" xml:space="preserve">
+    <value>Collect with filters</value>
+  </data>
+  <data name="Workflow.DisplayNumber" xml:space="preserve">
+    <value>Display {0}</value>
+  </data>
+  <data name="Workflow.ExcludeWindow" xml:space="preserve">
+    <value>Create capture exclusion…</value>
+  </data>
+  <data name="Workflow.IncludeMinimized" xml:space="preserve">
+    <value>Include minimized windows</value>
+  </data>
+  <data name="Workflow.InvalidShortcut" xml:space="preserve">
+    <value>Use a valid, unique shortcut for “{0}”.</value>
+  </data>
+  <data name="Workflow.LinkProjectRole" xml:space="preserve">
+    <value>Link to project command</value>
+  </data>
+  <data name="Workflow.MoveToDisplay" xml:space="preserve">
+    <value>Move WindowDock to display</value>
+  </data>
+  <data name="Workflow.NextAgent" xml:space="preserve">
+    <value>Next agent needing attention</value>
+  </data>
+  <data name="Workflow.NoAgentActivity" xml:space="preserve">
+    <value>No matching activity. Agent status appears after a configured hook sends an event.</value>
+  </data>
+  <data name="Workflow.NotifyOnCompletion" xml:space="preserve">
+    <value>Also notify on completion</value>
+  </data>
+  <data name="Workflow.Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Workflow.OpenProject" xml:space="preserve">
+    <value>Open project “{0}”</value>
+  </data>
+  <data name="Workflow.OverflowTab" xml:space="preserve">
+    <value>New overflow tab</value>
+  </data>
+  <data name="Workflow.PinPanel" xml:space="preserve">
+    <value>Pin beside the stack</value>
+  </data>
+  <data name="Workflow.PreviousWindow" xml:space="preserve">
+    <value>Previous active window</value>
+  </data>
+  <data name="Workflow.Project.Ambiguous" xml:space="preserve">
+    <value>Choose a matching window</value>
+  </data>
+  <data name="Workflow.Project.Connect" xml:space="preserve">
+    <value>Connect an existing window</value>
+  </data>
+  <data name="Workflow.Project.Failed" xml:space="preserve">
+    <value>Could not open</value>
+  </data>
+  <data name="Workflow.Project.Missing" xml:space="preserve">
+    <value>Window missing</value>
+  </data>
+  <data name="Workflow.Project.Open" xml:space="preserve">
+    <value>Already connected</value>
+  </data>
+  <data name="Workflow.Project.Starting" xml:space="preserve">
+    <value>Waiting for a window</value>
+  </data>
+  <data name="Workflow.ProjectReport" xml:space="preserve">
+    <value>Project results</value>
+  </data>
+  <data name="Workflow.ProjectSummary" xml:space="preserve">
+    <value>Connected: {0}. Starting: {1}. Need review: {2}.</value>
+  </data>
+  <data name="Workflow.ResetShortcut" xml:space="preserve">
+    <value>Use default</value>
+  </data>
+  <data name="Workflow.ResolveProjectRole" xml:space="preserve">
+    <value>Use an existing panel’s menu to link it to the matching command, or give the command a more specific match.</value>
+  </data>
+  <data name="Workflow.ResumeArguments" xml:space="preserve">
+    <value>Resume arguments (optional)</value>
+  </data>
+  <data name="Workflow.ReturnAllWindows" xml:space="preserve">
+    <value>Return all windows and pause capture</value>
+  </data>
+  <data name="Workflow.ReuseHelp" xml:space="preserve">
+    <value>Enter both the running app and a unique window title to reuse an open window. Resume arguments are optional and specific to that command.</value>
+  </data>
+  <data name="Workflow.ReuseProcess" xml:space="preserve">
+    <value>Running app name</value>
+  </data>
+  <data name="Workflow.ReuseTitle" xml:space="preserve">
+    <value>Existing window title</value>
+  </data>
+  <data name="Workflow.RoleAlreadyUsed" xml:space="preserve">
+    <value>That project command already has a window or is starting.</value>
+  </data>
+  <data name="Workflow.RuleFromWindow" xml:space="preserve">
+    <value>Create rule from window…</value>
+  </data>
+  <data name="Workflow.Shortcut" xml:space="preserve">
+    <value>Key combination</value>
+  </data>
+  <data name="Workflow.ShortcutConflicts" xml:space="preserve">
+    <value>Unavailable shortcuts: {0}</value>
+  </data>
+  <data name="Workflow.ShortcutHelp" xml:space="preserve">
+    <value>Use Ctrl, Alt, Shift or Win with a letter, number or key such as F1, Space or Enter. Leave empty to disable the shortcut.</value>
+  </data>
+  <data name="Workflow.Shortcuts" xml:space="preserve">
+    <value>Global shortcuts</value>
+  </data>
+  <data name="Workflow.ShortcutUnavailable" xml:space="preserve">
+    <value>Unavailable in Windows</value>
+  </data>
+  <data name="Workflow.ShowDock" xml:space="preserve">
+    <value>Show WindowDock</value>
+  </data>
+  <data name="Workflow.Stack" xml:space="preserve">
+    <value>Window stack</value>
+  </data>
+  <data name="Workflow.StartMissing" xml:space="preserve">
+    <value>Start missing commands</value>
+  </data>
+  <data name="Workflow.ToggleDock" xml:space="preserve">
+    <value>Show or minimize WindowDock</value>
+  </data>
+  <data name="Workflow.UseResumeArguments" xml:space="preserve">
+    <value>Use configured resume arguments</value>
+  </data>
+  <data name="Workflow.UseRules" xml:space="preserve">
+    <value>Route windows by capture rules</value>
+  </data>
+  <data name="Workflow.WaitingOnly" xml:space="preserve">
+    <value>Show sessions that need attention</value>
+  </data>
+  <data name="Workflow.RetryUnmatched" xml:space="preserve">
+    <value>Retry commands that did not connect</value>
+  </data>
 </root>

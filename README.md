@@ -29,13 +29,15 @@ WindowDock groups **existing application windows** into a single workspace. Keep
 
 ## Why WindowDock?
 
-- **Collect windows in one action.** Visible desktop windows fill the current tab; overflow creates more tabs automatically. Minimized windows are skipped.
-- **Keep text readable.** Use a grid, one main window on the left, or two main windows on top. Adjust proportions, minimum panel sizes, and the per-tab limit from 1 to 25.
+- **Collect windows in one action.** Capture rules route matching windows. The rest fill the current tab and its overflow tabs. Right-click **Collect windows** to filter by name, include minimized windows, or inspect the last result.
+- **Keep text readable.** Choose a grid, a main window with smaller panels, or a stack with an optional pinned panel. The adaptive grid switches to a stack when the grid would exceed the available height.
 - **Focus without losing context.** Double-click a panel header to enlarge it inside its tab. Return to the grid with one click.
 - **Organize freely.** Rename tabs and panels, drag to reorder or move across tabs, select several panels, search across workspaces, and undo supported actions.
 - **Restore groups.** Reconnect windows that are still running after restarting WindowDock. Ambiguous matches wait for a manual assignment.
 - **Automate capture.** Match application names and window titles, limit a rule to terminals, choose a destination tab, and add exclusions that take priority.
-- **Launch project workspaces.** Save commands, arguments, working folders, and environment variables. Optional hooks report agent activity and permission requests.
+- **Open project workspaces.** Preview which windows will reconnect and optionally start missing commands. Link an existing panel to a saved command from its menu.
+- **See what needs attention.** The bell shows waiting and failed agent sessions across all tabs. Open the exact panel from the list or enable Windows notifications in **View**.
+- **Return to your work.** Each tab remembers its last active panel. WindowDock also remembers its position and size for each display setup.
 - **Stay compact.** A 30-DIP command row and 22-DIP panel headers leave room for your applications. Hover scrolling routes the wheel without deliberately changing keyboard focus, where the target app supports it.
 
 ## Quick start
@@ -68,13 +70,16 @@ Closing WindowDock returns the docked windows to the desktop. It does not end th
 | Search all workspaces | `Ctrl + Alt + K` |
 | Undo | `Ctrl + Alt + Z` |
 | Minimize / show group | `Ctrl + Alt + D` / `Ctrl + Alt + G` |
+| Show or minimize the group | `Ctrl + Alt + Space` |
+| Return to the previous active window | `Ctrl + Alt + B` |
+| Go to the next agent needing attention | `Ctrl + Alt + J` |
 | New tab while the shell has focus | `Ctrl + N` |
 | Search while the shell has focus | `Ctrl + K` |
 | Cancel a drag or close a settings page | `Esc` |
 | Zoom panel / return to grid | Double-click its header |
 | Select multiple panels | `Ctrl` / `Shift` + click headers |
 
-Global shortcuts can conflict with shortcuts registered by other programs.
+Edit the default bindings in **View → Global shortcuts**. Windows may reserve a shortcut or another app may have registered it first. The settings list shows unavailable bindings.
 
 </details>
 

@@ -1200,4 +1200,187 @@
   <data name="Counts.Columns.Few" xml:space="preserve">
     <value>{0} cột</value>
   </data>
+  <data name="Workflow.Adaptive" xml:space="preserve">
+    <value>Lưới thích ứng</value>
+  </data>
+  <data name="Workflow.AgentActivity" xml:space="preserve">
+    <value>Hoạt động của tác nhân</value>
+  </data>
+  <data name="Workflow.AgentActivityCount" xml:space="preserve">
+    <value>Phiên cần chú ý: {0}</value>
+  </data>
+  <data name="Workflow.AgentCompleted" xml:space="preserve">
+    <value>Tác nhân đã hoàn tất lượt xử lý.</value>
+  </data>
+  <data name="Workflow.AgentNotifications" xml:space="preserve">
+    <value>Thông báo tác nhân trên Windows</value>
+  </data>
+  <data name="Workflow.Capture.Added" xml:space="preserve">
+    <value>Đã thêm</value>
+  </data>
+  <data name="Workflow.Capture.AlreadyDocked" xml:space="preserve">
+    <value>Đã ghim</value>
+  </data>
+  <data name="Workflow.Capture.Excluded" xml:space="preserve">
+    <value>Bị loại trừ theo quy tắc</value>
+  </data>
+  <data name="Workflow.Capture.Failed" xml:space="preserve">
+    <value>Không thể thêm</value>
+  </data>
+  <data name="Workflow.Capture.Filtered" xml:space="preserve">
+    <value>Không khớp bộ lọc</value>
+  </data>
+  <data name="Workflow.Capture.Full" xml:space="preserve">
+    <value>Hết chỗ trống</value>
+  </data>
+  <data name="Workflow.Capture.Minimized" xml:space="preserve">
+    <value>Đã thu nhỏ</value>
+  </data>
+  <data name="Workflow.Capture.Ready" xml:space="preserve">
+    <value>Sẽ thêm</value>
+  </data>
+  <data name="Workflow.CaptureDestination" xml:space="preserve">
+    <value>Cửa sổ không có quy tắc sẽ vào “{0}” trước. Danh sách hiển thị đích của từng cửa sổ.</value>
+  </data>
+  <data name="Workflow.CaptureReport" xml:space="preserve">
+    <value>Kết quả gom cửa sổ gần nhất</value>
+  </data>
+  <data name="Workflow.CaptureSummary" xml:space="preserve">
+    <value>Đã thêm {0} cửa sổ. Bỏ qua: {1}.</value>
+  </data>
+  <data name="Workflow.CollectOptions" xml:space="preserve">
+    <value>Gom theo bộ lọc</value>
+  </data>
+  <data name="Workflow.DisplayNumber" xml:space="preserve">
+    <value>Màn hình {0}</value>
+  </data>
+  <data name="Workflow.ExcludeWindow" xml:space="preserve">
+    <value>Tạo ngoại lệ khi gom…</value>
+  </data>
+  <data name="Workflow.IncludeMinimized" xml:space="preserve">
+    <value>Bao gồm cửa sổ đã thu nhỏ</value>
+  </data>
+  <data name="Workflow.InvalidShortcut" xml:space="preserve">
+    <value>Dùng phím tắt hợp lệ và không trùng cho “{0}”.</value>
+  </data>
+  <data name="Workflow.LinkProjectRole" xml:space="preserve">
+    <value>Liên kết với lệnh dự án</value>
+  </data>
+  <data name="Workflow.MoveToDisplay" xml:space="preserve">
+    <value>Chuyển WindowDock sang màn hình</value>
+  </data>
+  <data name="Workflow.NextAgent" xml:space="preserve">
+    <value>Tác nhân tiếp theo cần chú ý</value>
+  </data>
+  <data name="Workflow.NoAgentActivity" xml:space="preserve">
+    <value>Chưa có hoạt động phù hợp. Trạng thái xuất hiện khi hook đã cấu hình gửi sự kiện.</value>
+  </data>
+  <data name="Workflow.NotifyOnCompletion" xml:space="preserve">
+    <value>Thông báo cả khi hoàn tất</value>
+  </data>
+  <data name="Workflow.Open" xml:space="preserve">
+    <value>Mở</value>
+  </data>
+  <data name="Workflow.OpenProject" xml:space="preserve">
+    <value>Mở dự án “{0}”</value>
+  </data>
+  <data name="Workflow.OverflowTab" xml:space="preserve">
+    <value>Thẻ mới cho các cửa sổ còn lại</value>
+  </data>
+  <data name="Workflow.PinPanel" xml:space="preserve">
+    <value>Ghim cạnh ngăn xếp</value>
+  </data>
+  <data name="Workflow.PreviousWindow" xml:space="preserve">
+    <value>Cửa sổ hoạt động trước đó</value>
+  </data>
+  <data name="Workflow.Project.Ambiguous" xml:space="preserve">
+    <value>Chọn cửa sổ phù hợp</value>
+  </data>
+  <data name="Workflow.Project.Connect" xml:space="preserve">
+    <value>Kết nối cửa sổ đang mở</value>
+  </data>
+  <data name="Workflow.Project.Failed" xml:space="preserve">
+    <value>Không thể mở</value>
+  </data>
+  <data name="Workflow.Project.Missing" xml:space="preserve">
+    <value>Thiếu cửa sổ</value>
+  </data>
+  <data name="Workflow.Project.Open" xml:space="preserve">
+    <value>Đã kết nối</value>
+  </data>
+  <data name="Workflow.Project.Starting" xml:space="preserve">
+    <value>Đang chờ cửa sổ xuất hiện</value>
+  </data>
+  <data name="Workflow.ProjectReport" xml:space="preserve">
+    <value>Kết quả mở dự án</value>
+  </data>
+  <data name="Workflow.ProjectSummary" xml:space="preserve">
+    <value>Đã kết nối: {0}. Đang khởi động: {1}. Cần kiểm tra: {2}.</value>
+  </data>
+  <data name="Workflow.ResetShortcut" xml:space="preserve">
+    <value>Dùng mặc định</value>
+  </data>
+  <data name="Workflow.ResolveProjectRole" xml:space="preserve">
+    <value>Dùng menu của ô đang mở để liên kết với lệnh hoặc đặt điều kiện tìm kiếm cụ thể hơn cho lệnh.</value>
+  </data>
+  <data name="Workflow.ResumeArguments" xml:space="preserve">
+    <value>Tham số tiếp tục (không bắt buộc)</value>
+  </data>
+  <data name="Workflow.ReturnAllWindows" xml:space="preserve">
+    <value>Trả tất cả cửa sổ và tạm dừng thu thập</value>
+  </data>
+  <data name="Workflow.ReuseHelp" xml:space="preserve">
+    <value>Nhập ứng dụng đang chạy và tiêu đề duy nhất để dùng lại cửa sổ đang mở. Tham số tiếp tục tùy theo lệnh.</value>
+  </data>
+  <data name="Workflow.ReuseProcess" xml:space="preserve">
+    <value>Tên ứng dụng đang chạy</value>
+  </data>
+  <data name="Workflow.ReuseTitle" xml:space="preserve">
+    <value>Tiêu đề cửa sổ đã mở</value>
+  </data>
+  <data name="Workflow.RoleAlreadyUsed" xml:space="preserve">
+    <value>Lệnh dự án này đã có cửa sổ hoặc đang khởi động.</value>
+  </data>
+  <data name="Workflow.RuleFromWindow" xml:space="preserve">
+    <value>Tạo quy tắc từ cửa sổ…</value>
+  </data>
+  <data name="Workflow.Shortcut" xml:space="preserve">
+    <value>Tổ hợp phím</value>
+  </data>
+  <data name="Workflow.ShortcutConflicts" xml:space="preserve">
+    <value>Phím tắt không khả dụng: {0}</value>
+  </data>
+  <data name="Workflow.ShortcutHelp" xml:space="preserve">
+    <value>Dùng Ctrl, Alt, Shift hoặc Win cùng chữ, số hoặc phím như F1, Space hay Enter. Bỏ trống để tắt phím tắt.</value>
+  </data>
+  <data name="Workflow.Shortcuts" xml:space="preserve">
+    <value>Phím tắt toàn hệ thống</value>
+  </data>
+  <data name="Workflow.ShortcutUnavailable" xml:space="preserve">
+    <value>Không khả dụng trên Windows</value>
+  </data>
+  <data name="Workflow.ShowDock" xml:space="preserve">
+    <value>Hiện WindowDock</value>
+  </data>
+  <data name="Workflow.Stack" xml:space="preserve">
+    <value>Ngăn xếp cửa sổ</value>
+  </data>
+  <data name="Workflow.StartMissing" xml:space="preserve">
+    <value>Chạy các lệnh còn thiếu</value>
+  </data>
+  <data name="Workflow.ToggleDock" xml:space="preserve">
+    <value>Hiện hoặc thu nhỏ WindowDock</value>
+  </data>
+  <data name="Workflow.UseResumeArguments" xml:space="preserve">
+    <value>Dùng tham số tiếp tục đã cài đặt</value>
+  </data>
+  <data name="Workflow.UseRules" xml:space="preserve">
+    <value>Phân cửa sổ theo quy tắc gom</value>
+  </data>
+  <data name="Workflow.WaitingOnly" xml:space="preserve">
+    <value>Hiện phiên cần chú ý</value>
+  </data>
+  <data name="Workflow.RetryUnmatched" xml:space="preserve">
+    <value>Thử lại các lệnh chưa kết nối</value>
+  </data>
 </root>

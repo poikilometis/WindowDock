@@ -19,6 +19,7 @@ namespace WindowDock
         [DataMember] public int BackgroundColor;
         [DataMember] public string BackgroundPath;
         [DataMember] public string Layout, OverflowFor;
+        [DataMember(EmitDefaultValue = false)] public string ActivePanelId, PinnedPanelId, StackPanelId;
         [DataMember] public double MasterRatio, PrimaryRatio, DualRatio;
         [DataMember] public List<double> ColumnWeights, RowWeights;
         public static WorkspaceConfig Create(string name)
@@ -44,6 +45,9 @@ namespace WindowDock
         [DataMember] public List<WindowRule> Rules;
         [DataMember] public List<ProjectProfile> Projects;
         [DataMember] public string LastHookProject;
+        [DataMember(EmitDefaultValue = false)] public Dictionary<int, string> Shortcuts;
+        [DataMember(EmitDefaultValue = false)] public bool AgentNotifications, NotifyOnCompletion;
+        [DataMember(EmitDefaultValue = false)] public List<DisplayPlacement> DisplayPlacements;
         public static AppConfig Default()
         {
             WorkspaceConfig w = WorkspaceConfig.Create(L10n.Get("Models.Agents"));
@@ -57,6 +61,9 @@ namespace WindowDock
             if (Version < 4) { RestoreGroups = true; AutomaticRules = true; Version = 4; }
             if (Rules == null) Rules = new List<WindowRule>();
             if (Projects == null) Projects = new List<ProjectProfile>();
+            Shortcuts ??= new Dictionary<int, string>();
+            DisplayPlacements = (DisplayPlacements ?? new List<DisplayPlacement>())
+                .Where(p => p != null && p.IsValid).DistinctBy(p => p.Topology).TakeLast(12).ToList();
             Rules.RemoveAll(delegate(WindowRule rule) { return rule == null; });
             Projects.RemoveAll(delegate(ProjectProfile project) { return project == null; });
             foreach (WindowRule rule in Rules) rule.Validate();
@@ -76,7 +83,7 @@ namespace WindowDock
                 w.Name = w.Name.Trim(); if (w.Name.Length > 48) w.Name = w.Name.Substring(0, 48);
                 w.Capacity = Math.Max(1, Math.Min(25, w.Capacity));
                 w.Columns = Math.Max(0, Math.Min(6, w.Columns));
-                if (w.Layout != "grid" && w.Layout != "master" && w.Layout != "dual") w.Layout = "grid";
+                if (w.Layout is not ("grid" or "master" or "dual" or "stack" or "adaptive")) w.Layout = "grid";
                 w.MasterRatio = ConfigValues.Ratio(w.MasterRatio, .60); w.PrimaryRatio = ConfigValues.Ratio(w.PrimaryRatio, .58); w.DualRatio = ConfigValues.Ratio(w.DualRatio, .5);
                 w.ColumnWeights = ConfigValues.Weights(w.ColumnWeights); w.RowWeights = ConfigValues.Weights(w.RowWeights);
                 if (w.BackgroundMode != "solid" && w.BackgroundMode != "image" && w.BackgroundMode != "transparent") w.BackgroundMode = "solid";

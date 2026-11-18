@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Remember the last active panel per tab. Add recent-window navigation and configurable global shortcuts.
+- Show per-session agent activity with a jump to the owning window and optional Windows notifications.
+- Preview project opening, reconnect existing windows, and start missing commands with optional resume arguments.
+- Filter and preview collection, inspect results per window, and create capture rules from a panel.
+- Add adaptive and stacked layouts, display profiles, and a command to return all windows to the desktop.
+
 ## 0.1.0 — Initial public version
 
 WindowDock's public release history starts at 0.1.0. The earlier 2.x/3.x numbers belonged to private development builds; existing workspace data and integrations remain compatible.

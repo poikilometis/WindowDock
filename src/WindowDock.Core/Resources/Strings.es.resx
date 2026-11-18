@@ -1200,4 +1200,187 @@
   <data name="Counts.Columns.Few" xml:space="preserve">
     <value>{0} columnas</value>
   </data>
+  <data name="Workflow.Adaptive" xml:space="preserve">
+    <value>Cuadrícula adaptable</value>
+  </data>
+  <data name="Workflow.AgentActivity" xml:space="preserve">
+    <value>Actividad de agentes</value>
+  </data>
+  <data name="Workflow.AgentActivityCount" xml:space="preserve">
+    <value>Sesiones que requieren atención: {0}</value>
+  </data>
+  <data name="Workflow.AgentCompleted" xml:space="preserve">
+    <value>Un agente terminó su turno.</value>
+  </data>
+  <data name="Workflow.AgentNotifications" xml:space="preserve">
+    <value>Notificaciones de agentes en Windows</value>
+  </data>
+  <data name="Workflow.Capture.Added" xml:space="preserve">
+    <value>Añadida</value>
+  </data>
+  <data name="Workflow.Capture.AlreadyDocked" xml:space="preserve">
+    <value>Ya agrupada</value>
+  </data>
+  <data name="Workflow.Capture.Excluded" xml:space="preserve">
+    <value>Excluida por regla</value>
+  </data>
+  <data name="Workflow.Capture.Failed" xml:space="preserve">
+    <value>No se pudo añadir</value>
+  </data>
+  <data name="Workflow.Capture.Filtered" xml:space="preserve">
+    <value>Fuera del filtro</value>
+  </data>
+  <data name="Workflow.Capture.Full" xml:space="preserve">
+    <value>Sin espacio libre</value>
+  </data>
+  <data name="Workflow.Capture.Minimized" xml:space="preserve">
+    <value>Minimizada</value>
+  </data>
+  <data name="Workflow.Capture.Ready" xml:space="preserve">
+    <value>Se añadirá</value>
+  </data>
+  <data name="Workflow.CaptureDestination" xml:space="preserve">
+    <value>Las ventanas sin regla empiezan en «{0}». La lista indica el destino de cada una.</value>
+  </data>
+  <data name="Workflow.CaptureReport" xml:space="preserve">
+    <value>Resultado de la última agrupación</value>
+  </data>
+  <data name="Workflow.CaptureSummary" xml:space="preserve">
+    <value>Ventanas añadidas: {0}. Omitidas: {1}.</value>
+  </data>
+  <data name="Workflow.CollectOptions" xml:space="preserve">
+    <value>Agrupar con filtros</value>
+  </data>
+  <data name="Workflow.DisplayNumber" xml:space="preserve">
+    <value>Pantalla {0}</value>
+  </data>
+  <data name="Workflow.ExcludeWindow" xml:space="preserve">
+    <value>Crear excepción de captura…</value>
+  </data>
+  <data name="Workflow.IncludeMinimized" xml:space="preserve">
+    <value>Incluir ventanas minimizadas</value>
+  </data>
+  <data name="Workflow.InvalidShortcut" xml:space="preserve">
+    <value>Usa un atajo válido y único para «{0}».</value>
+  </data>
+  <data name="Workflow.LinkProjectRole" xml:space="preserve">
+    <value>Vincular con comando del proyecto</value>
+  </data>
+  <data name="Workflow.MoveToDisplay" xml:space="preserve">
+    <value>Mover WindowDock a otra pantalla</value>
+  </data>
+  <data name="Workflow.NextAgent" xml:space="preserve">
+    <value>Siguiente agente que requiere atención</value>
+  </data>
+  <data name="Workflow.NoAgentActivity" xml:space="preserve">
+    <value>No hay actividad que coincida. El estado aparece cuando un hook configurado envía un evento.</value>
+  </data>
+  <data name="Workflow.NotifyOnCompletion" xml:space="preserve">
+    <value>Avisar también al terminar</value>
+  </data>
+  <data name="Workflow.Open" xml:space="preserve">
+    <value>Abrir</value>
+  </data>
+  <data name="Workflow.OpenProject" xml:space="preserve">
+    <value>Abrir proyecto «{0}»</value>
+  </data>
+  <data name="Workflow.OverflowTab" xml:space="preserve">
+    <value>Nueva pestaña para las ventanas restantes</value>
+  </data>
+  <data name="Workflow.PinPanel" xml:space="preserve">
+    <value>Fijar junto a la pila</value>
+  </data>
+  <data name="Workflow.PreviousWindow" xml:space="preserve">
+    <value>Ventana activa anterior</value>
+  </data>
+  <data name="Workflow.Project.Ambiguous" xml:space="preserve">
+    <value>Elige una ventana que coincida</value>
+  </data>
+  <data name="Workflow.Project.Connect" xml:space="preserve">
+    <value>Conectar ventana existente</value>
+  </data>
+  <data name="Workflow.Project.Failed" xml:space="preserve">
+    <value>No se pudo abrir</value>
+  </data>
+  <data name="Workflow.Project.Missing" xml:space="preserve">
+    <value>Falta la ventana</value>
+  </data>
+  <data name="Workflow.Project.Open" xml:space="preserve">
+    <value>Ya conectada</value>
+  </data>
+  <data name="Workflow.Project.Starting" xml:space="preserve">
+    <value>Esperando a que aparezca una ventana</value>
+  </data>
+  <data name="Workflow.ProjectReport" xml:space="preserve">
+    <value>Resultado del proyecto</value>
+  </data>
+  <data name="Workflow.ProjectSummary" xml:space="preserve">
+    <value>Conectadas: {0}. Iniciándose: {1}. Por revisar: {2}.</value>
+  </data>
+  <data name="Workflow.ResetShortcut" xml:space="preserve">
+    <value>Usar predeterminado</value>
+  </data>
+  <data name="Workflow.ResolveProjectRole" xml:space="preserve">
+    <value>Vincula un panel existente con el comando desde su menú o precisa la búsqueda del comando.</value>
+  </data>
+  <data name="Workflow.ResumeArguments" xml:space="preserve">
+    <value>Argumentos para reanudar (opcionales)</value>
+  </data>
+  <data name="Workflow.ReturnAllWindows" xml:space="preserve">
+    <value>Devolver todas las ventanas y pausar la captura</value>
+  </data>
+  <data name="Workflow.ReuseHelp" xml:space="preserve">
+    <value>Indica la aplicación en ejecución y un título único para reutilizar una ventana abierta. Los argumentos de reanudación dependen del comando.</value>
+  </data>
+  <data name="Workflow.ReuseProcess" xml:space="preserve">
+    <value>Nombre de la aplicación en ejecución</value>
+  </data>
+  <data name="Workflow.ReuseTitle" xml:space="preserve">
+    <value>Título de la ventana existente</value>
+  </data>
+  <data name="Workflow.RoleAlreadyUsed" xml:space="preserve">
+    <value>Ese comando del proyecto ya tiene una ventana o se está iniciando.</value>
+  </data>
+  <data name="Workflow.RuleFromWindow" xml:space="preserve">
+    <value>Crear regla desde la ventana…</value>
+  </data>
+  <data name="Workflow.Shortcut" xml:space="preserve">
+    <value>Combinación de teclas</value>
+  </data>
+  <data name="Workflow.ShortcutConflicts" xml:space="preserve">
+    <value>Atajos no disponibles: {0}</value>
+  </data>
+  <data name="Workflow.ShortcutHelp" xml:space="preserve">
+    <value>Usa Ctrl, Alt, Shift o Win con una letra, un número o una tecla como F1, Space o Enter. Deja el campo vacío para desactivar el atajo.</value>
+  </data>
+  <data name="Workflow.Shortcuts" xml:space="preserve">
+    <value>Atajos globales</value>
+  </data>
+  <data name="Workflow.ShortcutUnavailable" xml:space="preserve">
+    <value>No disponible en Windows</value>
+  </data>
+  <data name="Workflow.ShowDock" xml:space="preserve">
+    <value>Mostrar WindowDock</value>
+  </data>
+  <data name="Workflow.Stack" xml:space="preserve">
+    <value>Pila de ventanas</value>
+  </data>
+  <data name="Workflow.StartMissing" xml:space="preserve">
+    <value>Iniciar comandos pendientes</value>
+  </data>
+  <data name="Workflow.ToggleDock" xml:space="preserve">
+    <value>Mostrar o minimizar WindowDock</value>
+  </data>
+  <data name="Workflow.UseResumeArguments" xml:space="preserve">
+    <value>Usar argumentos de reanudación configurados</value>
+  </data>
+  <data name="Workflow.UseRules" xml:space="preserve">
+    <value>Distribuir ventanas según las reglas de captura</value>
+  </data>
+  <data name="Workflow.WaitingOnly" xml:space="preserve">
+    <value>Mostrar sesiones que requieren atención</value>
+  </data>
+  <data name="Workflow.RetryUnmatched" xml:space="preserve">
+    <value>Reintentar comandos que no se conectaron</value>
+  </data>
 </root>

@@ -23,6 +23,7 @@ internal sealed class DockIcon : Control
         ["search"] = "M12 12 L18 18 M14 8 A6 6 0 1 1 2 8 A6 6 0 1 1 14 8",
         ["close"] = "M5 5 L15 15 M15 5 L5 15",
         ["check"] = "M4 10 L8 14 L16 6",
+        ["bell"] = "M4 14 H16 L14.5 11 V8 A4.5 4.5 0 0 0 5.5 8 V11 Z M8 17 Q10 19 12 17",
         ["settings"] = "M3 5 H17 M3 10 H17 M3 15 H17 M7 3 V7 M13 8 V12 M8 13 V17"
     };
     private static readonly Dictionary<string, Geometry> geometries = [];

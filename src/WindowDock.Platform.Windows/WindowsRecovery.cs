@@ -44,14 +44,18 @@ namespace WindowDock { internal sealed partial class WindowsWindowBackend {
                     if (Rectangle.Intersect(area, original).Width >= 80 && Rectangle.Intersect(area, original).Height >= 50) visible = true;
                 if (!visible) { Rectangle area = Native.PrimaryWorkArea(); original.Location = new Point(area.Left+40, area.Top+40); }
                 IntPtr z = (r.ExStyle & Native.WS_EX_TOPMOST) != 0 ? new IntPtr(-1) : new IntPtr(-2);
-                Native.SetWindowPos(r.Hwnd, z, original.X, original.Y, original.Width, original.Height,
-                    Native.SWP_NOACTIVATE | Native.SWP_FRAMECHANGED | Native.SWP_SHOWWINDOW);
+                if (!Native.SetWindowPos(r.Hwnd, z, original.X, original.Y, original.Width, original.Height,
+                    Native.SWP_NOACTIVATE | Native.SWP_FRAMECHANGED | Native.SWP_SHOWWINDOW))
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
                 Native.Placement p = new Native.Placement {
                     Length = Marshal.SizeOf(typeof(Native.Placement)), Flags = r.PlacementFlags, ShowCmd = r.ShowCmd,
                     Min = new Native.Point { X = r.MinX, Y = r.MinY }, Max = new Native.Point { X = r.MaxX, Y = r.MaxY },
                     Normal = new Native.Rect { Left = r.NormalLeft, Top = r.NormalTop, Right = r.NormalRight, Bottom = r.NormalBottom }
                 };
-                if (visible && p.Normal.Right > p.Normal.Left) Native.SetWindowPlacement(r.Hwnd, ref p);
+                if (visible && p.Normal.Right > p.Normal.Left)
+                {
+                    if (!Native.SetWindowPlacement(r.Hwnd, ref p)) throw new Win32Exception(Marshal.GetLastWin32Error());
+                }
                 else Native.ShowWindowAsync(r.Hwnd, r.ShowCmd == 3 ? 3 : 5);
                 stage = "region";
                 if (r.NativeTopLevel) Native.RestoreRegion(r.Hwnd, r.OriginalRegion);

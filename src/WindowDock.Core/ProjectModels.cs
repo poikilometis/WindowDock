@@ -31,6 +31,7 @@ namespace WindowDock
     [DataContract] public sealed class ProjectCommand
     {
         [DataMember] public string Id,Name,Executable,Arguments,Directory,TitlePattern,IntegrationId;
+        [DataMember(EmitDefaultValue = false)] public string ReuseProcess, ReuseTitle, ResumeArguments;
         [DataMember] public List<EnvironmentEntry> Environment;
         public static ProjectCommand Create()
         {
@@ -43,6 +44,9 @@ namespace WindowDock
             Name=String.IsNullOrWhiteSpace(Name)?L10n.Get("ProjectModels.Terminal"):Name.Trim();
             if(IntegrationId!="auto"&&HookProvider.Find(IntegrationId)==null) IntegrationId="";
             Executable=(Executable??"").Trim(); Arguments=Arguments??""; Directory=Directory??""; TitlePattern=TitlePattern??"";
+            ReuseProcess = (ReuseProcess ?? "").Trim();
+            ReuseTitle = (ReuseTitle ?? "").Trim();
+            ResumeArguments = ResumeArguments ?? "";
             if(Environment==null) Environment=new List<EnvironmentEntry>();
             Environment.RemoveAll(delegate(EnvironmentEntry e){return e==null||String.IsNullOrWhiteSpace(e.Key)||e.Key.IndexOf('=')>=0||e.Key.IndexOf('\0')>=0|| (e.Value??"").IndexOf('\0')>=0;});
         }

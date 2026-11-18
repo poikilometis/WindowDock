@@ -39,10 +39,7 @@ internal sealed partial class MainWindow
     private async Task SearchAsync()
     {
         var dialog = new SearchWindow(Session); if (!await ShowEditorAsync(dialog) || dialog.Selected is not { } panel) return;
-        Session.SelectedWorkspace = panel.WorkspaceId; activePanel = panel.Id;
-        if (Session.FocusedPanel is not null && Session.FocusedPanel != panel.Id) Session.FocusedPanel = null;
-        if (cards.TryGetValue(panel.Id, out var card)) card.BringIntoView();
-        Session.Backend.Activate(panel.Record);
+        ActivatePanel(panel);
     }
     private MenuItem Item(string title, Action action, bool enabled = true, bool? check = null)
     {
@@ -63,7 +60,18 @@ internal sealed partial class MainWindow
     }
     private void ShowAppMenu()
     {
-        List<Control> entries = [AsyncItem(L10n.Get("MainWindowCommands.FindWindow"), SearchAsync), LayoutMenu(Session.Current)];
+        List<Control> entries =
+        [
+            AsyncItem(L10n.Get("MainWindowCommands.FindWindow"), SearchAsync),
+            Item(L10n.Get("Workflow.PreviousWindow"), () =>
+            {
+                if (Session.PreviousPanel() is { } previous) ActivatePanel(previous);
+            }, Session.PreviousPanel() is not null),
+            AsyncItem(L10n.Get("Workflow.AgentActivity"), OpenAttentionAsync),
+            AsyncItem(L10n.Get("Workflow.CollectOptions"), CollectOptionsAsync, Session.Backend.Available),
+            AsyncItem(L10n.Get("Workflow.CaptureReport"), CaptureReportAsync, Session.LastCapture.Count > 0),
+            LayoutMenu(Session.Current)
+        ];
         entries.Add(Group(L10n.Get("MainWindowCommands.Workspaces"), [
             Item(L10n.Get("MainWindowCommands.SaveGroups"), () => Session.Save()),
             Item(L10n.Get("MainWindowCommands.RestoreAvailableWindows"), () => Session.Poll(true)),
@@ -74,7 +82,7 @@ internal sealed partial class MainWindow
         ]));
         entries.Add(AsyncItem(L10n.Get("MainWindowCommands.CaptureRules"), async () => { var dialog = new RulesWindow(this); if (await ShowEditorAsync(dialog)) { Session.Config.Rules = dialog.Result; Session.Config.AutomaticRules = dialog.Automatic; Session.Save(); } }));
         entries.Add(AsyncItem(L10n.Get("MainWindowCommands.AgentIntegrations"), async () => { await ShowEditorAsync(new IntegrationWindow(this)); }));
-        List<Control> projects = Session.Config.Projects.Select(profile => (Control)Item(L10n.Format("MainWindowCommands.Launch", profile.Name), () => { var count = Session.LaunchProject(profile); SetStatus(L10n.Format("MainWindowCommands.CommandsLaunched", count)); })).ToList();
+        List<Control> projects = Session.Config.Projects.Select(profile => (Control)AsyncItem(profile.Name, () => OpenProjectAsync(profile))).ToList();
         if (projects.Count > 0) projects.Add(new Separator());
         projects.Add(AsyncItem(L10n.Get("MainWindowCommands.ManageProjects"), async () => { var dialog = new ProjectsWindow(this); if (await ShowEditorAsync(dialog)) { Session.Config.Projects = dialog.Result; Session.Save(); } }));
         entries.Add(Group(L10n.Get("MainWindowCommands.Projects"), projects));
@@ -84,9 +92,30 @@ internal sealed partial class MainWindow
         entries.Add(Group(L10n.Get("MainWindowCommands.View"), [
             AsyncItem(L10n.Get("MainWindowCommands.Appearance"), ChangeAppearanceAsync),
             AsyncItem(L10n.Get("MainWindowCommands.TabBackground"), () => BackgroundAsync(Session.Current)),
-            Item(L10n.Get("MainWindowCommands.ScrollOnHover"), () => { Session.Config.HoverScroll = !Session.Config.HoverScroll; Session.Backend.HoverEnabled = Session.Config.HoverScroll; Session.Save(); }, check: Session.Config.HoverScroll)
+            Item(L10n.Get("MainWindowCommands.ScrollOnHover"), () => { Session.Config.HoverScroll = !Session.Config.HoverScroll; Session.Backend.HoverEnabled = Session.Config.HoverScroll; Session.Save(); }, check: Session.Config.HoverScroll),
+            DisplayMenu(),
+            AsyncItem(L10n.Get("Workflow.Shortcuts"), EditShortcutsAsync, OperatingSystem.IsWindows()),
+            Item(L10n.Get("Workflow.AgentNotifications"), () =>
+            {
+                Session.Config.AgentNotifications = !Session.Config.AgentNotifications;
+                UpdateAttentionCount();
+                Session.Save();
+            }, OperatingSystem.IsWindows(), Session.Config.AgentNotifications),
+            Item(L10n.Get("Workflow.NotifyOnCompletion"), () =>
+            {
+                Session.Config.NotifyOnCompletion = !Session.Config.NotifyOnCompletion;
+                Session.Save();
+            }, Session.Config.AgentNotifications, Session.Config.NotifyOnCompletion)
         ]));
         entries.Add(Item(L10n.Get("MainWindowCommands.UndockTabWindows"), () => Session.ReleasePanels(Session.CurrentPanels)));
+        entries.Add(Item(L10n.Get("Workflow.ReturnAllWindows"), () =>
+        {
+            Session.Config.Magnet = false;
+            Session.Config.AutomaticRules = false;
+            Session.ReleasePanels(Session.Panels.ToArray());
+            Refresh();
+            Session.Save();
+        }, Session.Panels.Count > 0));
         entries.Add(Item(L10n.Get("MainWindowCommands.MinimizeGroup"), () => WindowState = WindowState.Minimized));
         entries.Add(AsyncItem(L10n.Get("MainWindowCommands.Help"), async () => { await ShowEditorAsync(new HelpWindow()); }));
         OpenMenu(toolbar, entries, PlacementMode.BottomEdgeAlignedRight);
@@ -94,7 +123,12 @@ internal sealed partial class MainWindow
     private MenuItem LayoutMenu(WorkspaceConfig workspace)
     {
         List<Control> choices = [];
-        foreach (var (id, name) in new[] { ("grid", L10n.Get("MainWindowCommands.Grid")), ("master", L10n.Get("MainWindowCommands.MainWindowOnTheLeft")), ("dual", L10n.Get("MainWindowCommands.TwoMainWindowsOnTop")) })
+        foreach (var (id, name) in new[]
+        {
+            ("grid", L10n.Get("MainWindowCommands.Grid")), ("master", L10n.Get("MainWindowCommands.MainWindowOnTheLeft")),
+            ("dual", L10n.Get("MainWindowCommands.TwoMainWindowsOnTop")),
+            ("stack", L10n.Get("Workflow.Stack")), ("adaptive", L10n.Get("Workflow.Adaptive"))
+        })
             choices.Add(Item(name, () => { Session.BeginLayoutChange(); workspace.Layout = id; Session.LayoutChanged(); }, check: workspace.Layout == id));
         List<Control> columns = [];
         for (var index = 0; index <= 6; index++)
@@ -129,6 +163,10 @@ internal sealed partial class MainWindow
             AsyncItem(L10n.Get("MainWindowCommands.Rename"), async () => { var name = await AskNameAsync(L10n.Get("WorkspaceSession.PanelName"), panel.Caption); if (name is not null) Session.RenamePanel(panel, name); }),
             MoveMenu(selected), Item(L10n.Get("MainWindowCommands.Undock"), () => Session.ReleasePanels(selected)), new Separator(),
             Item(L10n.Get("MainWindowCommands.SelectPanel"), () => Session.Select(panel, true, false)), Item(L10n.Get("MainWindowCommands.ClearAttention"), () => { panel.Attention = false; RefreshTabs(); Session.Save(); }),
+            Item(L10n.Get("Workflow.PinPanel"), () => Session.TogglePinnedPanel(panel), check: Session.Current.PinnedPanelId == panel.Id),
+            LinkProjectMenu(panel),
+            AsyncItem(L10n.Get("Workflow.RuleFromWindow"), () => CreateRuleAsync(panel, false)),
+            AsyncItem(L10n.Get("Workflow.ExcludeWindow"), () => CreateRuleAsync(panel, true)),
             AsyncItem(L10n.Get("MainWindowCommands.SetUpHooks"), async () => { await ShowEditorAsync(new IntegrationWindow(this, panel)); })
         ]);
     }

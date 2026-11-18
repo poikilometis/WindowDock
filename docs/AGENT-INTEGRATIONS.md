@@ -21,15 +21,19 @@ Setup merges WindowDock-owned entries, preserves unrelated hooks, and creates pr
 
 Setup never changes an agent's trust decisions, approval policy, or permissions.
 
-## Launching through Projects
+## Opening a saved project
 
 A WindowDock project is a saved set of launch commands. Open **… → Projects → Manage projects**, add a project, and configure its commands. For each command you can choose the program, arguments, working folder, title pattern, environment variables, and an optional automatic hook adapter.
 
-**Launch** executes those saved commands. When automatic hook setup is enabled, WindowDock configures the selected adapter in that command's working folder immediately before starting it. Editing or saving the project does not execute it. Launching an agent independently requires the existing-workspace setup above.
+Select a project from **… → Projects** to preview its commands. WindowDock reuses linked panels and windows with a unique configured match. Enable **Start missing commands** to start roles without a running window. When automatic hook setup is enabled, WindowDock configures the selected adapter in that command's working folder immediately before starting it.
+
+To link a running window manually, select **Link to project command** in the panel menu. A command can also match a running application by process name and title. For resuming a saved conversation, configure the arguments supported by that agent and choose **Use configured resume arguments** when opening the project.
 
 Each launch receives `WINDOWDOCK_AGENT_ID` and `WINDOWDOCK_EXE`. The literal `{agentId}` in arguments and title patterns is replaced with that launch's ID. An explicit title pattern can help match a window when a terminal delegates creation to an existing terminal process. Compound commands require an explicit shell.
 
 ## Routing and privacy
+
+The bell lists recent agent activity and keeps each session's waiting or error state visible across tabs. Click a session to focus its panel. **View → Agent notifications in Windows** enables a notification area icon and alerts for waiting or failed sessions. Completion alerts are optional.
 
 Signals are associated using launch identity, persisted session bindings, console handles, or an unambiguous process ancestry match. If WindowDock cannot identify a panel safely, use **Agent integrations → Sessions** to assign it manually. It does not guess when several panels match.
 

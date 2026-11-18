@@ -60,9 +60,16 @@ internal static class Program
         if (option >= 0 && option + 1 < args.Length) return Path.GetFullPath(args[option + 1]);
         var explicitDirectory = Environment.GetEnvironmentVariable("WINDOWDOCK_DATA_DIR");
         if (!string.IsNullOrWhiteSpace(explicitDirectory)) return Path.GetFullPath(explicitDirectory);
-        // Developer builds use the existing portable settings instead of starting an empty profile.
+        // Only build output under src uses the developer profile. A portable build
+        // extracted below the repository must still get its own adjacent data folder.
         for (var directory = new DirectoryInfo(AppContext.BaseDirectory); directory is not null; directory = directory.Parent)
-            if (File.Exists(Path.Combine(directory.FullName, "WindowDock.sln"))) return Path.Combine(directory.FullName, "data");
+            if (File.Exists(Path.Combine(directory.FullName, "WindowDock.sln")))
+            {
+                var relative = Path.GetRelativePath(directory.FullName, AppContext.BaseDirectory).Replace('\\', '/');
+                if (relative.StartsWith("src/WindowDock.Desktop/bin/", StringComparison.OrdinalIgnoreCase))
+                    return Path.Combine(directory.FullName, "data");
+                break;
+            }
         return Path.Combine(AppContext.BaseDirectory, "data");
     }
     private static async Task<int> RunHookAsync(string[] args)
