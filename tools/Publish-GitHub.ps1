@@ -69,9 +69,11 @@ if ($ValidateOnly) {
 $login = & gh api user --jq .login
 Assert-Exit 'GitHub CLI is not authenticated; run gh auth login --scopes workflow first.'
 if ($login -ne $owner) { throw "Expected account $owner; active account is $login." }
+$repositoryDescription = 'Open-source window manager for Windows. Group live terminal windows, AI agents, and desktop apps into one tabbed workspace.'
+$repositoryHomepage = "https://github.com/$Repository/releases/latest"
 & gh repo view $Repository --json nameWithOwner --jq .nameWithOwner 2>$null | Out-Null
 if ($LASTEXITCODE -ne 0) {
-    & gh repo create $Repository --public --description 'Group existing terminals, AI agent sessions, and desktop apps into one tabbed workspace on Windows.'
+    & gh repo create $Repository --public --description $repositoryDescription --homepage $repositoryHomepage
     Assert-Exit 'Could not create the public repository.'
 }
 $repo = Api "repos/$Repository"
@@ -81,8 +83,29 @@ Api "repos/$Repository/actions/permissions/selected-actions" 'PUT' @{ github_own
 Api "repos/$Repository/actions/permissions/workflow" 'PUT' @{ default_workflow_permissions='read'; can_approve_pull_request_reviews=$false } | Out-Null
 & git -c "safe.directory=$gitDirectory" -C $root -c credential.helper= -c 'credential.helper=!gh auth git-credential' push --set-upstream origin main
 Assert-Exit 'Push failed. Remote history was not overwritten.'
-Api "repos/$Repository" 'PATCH' @{ description='Group existing terminals, AI agent sessions, and desktop apps into one tabbed workspace on Windows.'; default_branch='main'; has_issues=$true; has_projects=$false; has_wiki=$false; has_discussions=$true; allow_squash_merge=$true; allow_merge_commit=$false; allow_rebase_merge=$false; delete_branch_on_merge=$true; allow_auto_merge=$true } | Out-Null
-Api "repos/$Repository/topics" 'PUT' @{ names=@('windows','window-manager','desktop','avalonia','dotnet','terminal','ai-agents','claude-code','codex','gemini-cli') } | Out-Null
+$repoSettings = @{
+    default_branch='main'
+    has_issues=$true
+    has_projects=$false
+    has_wiki=$false
+    has_discussions=$true
+    allow_squash_merge=$true
+    allow_merge_commit=$false
+    allow_rebase_merge=$false
+    delete_branch_on_merge=$true
+    allow_auto_merge=$true
+}
+if (-not $repo.description) { $repoSettings.description = $repositoryDescription }
+if (-not $repo.homepage) { $repoSettings.homepage = $repositoryHomepage }
+Api "repos/$Repository" 'PATCH' $repoSettings | Out-Null
+if (-not $repo.topics) {
+    $topics = @(
+        'windows', 'window-manager', 'window-management', 'desktop', 'desktop-app',
+        'terminal', 'windows-terminal', 'workspace', 'productivity', 'ai-agents',
+        'claude-code', 'codex', 'gemini-cli', 'avalonia', 'dotnet'
+    )
+    Api "repos/$Repository/topics" 'PUT' @{ names=$topics } | Out-Null
+}
 Api "repos/$Repository/vulnerability-alerts" 'PUT' | Out-Null
 Api "repos/$Repository/automated-security-fixes" 'PUT' | Out-Null
 Api "repos/$Repository/private-vulnerability-reporting" 'PUT' | Out-Null

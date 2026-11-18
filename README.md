@@ -1,11 +1,11 @@
 <div align="center">
   <img src="assets/windowdock.png" width="88" height="88" alt="WindowDock logo">
   <h1>WindowDock</h1>
-  <p><strong>Your windows. One workspace.</strong></p>
+  <p><strong>One Windows workspace for your open terminals and apps</strong></p>
 
   <img src="docs/images/windowdock-promo.webp" width="960" height="540" alt="Animated demo of WindowDock grouping application windows into a tabbed workspace">
 
-  <p>Running several AI agents leaves you with a pile of terminal windows to find, move, and minimize one at a time.<br>WindowDock brings independent terminals, AI agents, and desktop apps into compact, named tabs.</p>
+  <p>Collect the windows you already have open into named tabs and readable grids.<br>With optional hooks, see which Codex, Claude Code, or Gemini CLI session is waiting for you.</p>
 
   <a href="https://github.com/poikilometis/WindowDock/releases/latest"><img src="https://img.shields.io/badge/Download-Windows%20x64%20%C2%B7%20portable%20ZIP-0064DC?style=for-the-badge&labelColor=24252A" width="469" height="40" alt="Download WindowDock for Windows x64 (portable ZIP)"></a>
 
@@ -18,7 +18,7 @@
   [![Languages](https://img.shields.io/badge/languages-11-578778)](#languages)
   [![MIT](https://img.shields.io/badge/license-MIT-728e83)](LICENSE)
 
-  [Quick start](#quick-start) · [Documentation](#documentation) · [Report a bug](https://github.com/poikilometis/WindowDock/issues/new/choose)
+  [Quick start](#quick-start) · [Documentation](#documentation) · [Report a bug](https://github.com/poikilometis/WindowDock/issues/new/choose) · [Follow releases](#follow-windowdock)
 </div>
 
 ---
@@ -138,6 +138,12 @@ Hooks retain status and routing metadata. With **Remember agent conversations fo
 ## Builds and releases
 
 Pushes and pull requests run CI across the shared core on Windows, Linux, and macOS, plus Windows native and localization checks. A matching version tag builds and publishes portable/source ZIPs with SHA-256 checksums and GitHub provenance attestations. See [publishing and delivery](docs/PUBLISHING.md).
+
+### Follow WindowDock
+
+Use **Watch → Custom → Releases** on GitHub to get notified when a new version ships. Read the [latest release notes](https://github.com/poikilometis/WindowDock/releases/latest) for the features in the current download.
+
+Tell us how you organize your terminals and apps in [Discussions](https://github.com/poikilometis/WindowDock/discussions). If an app is difficult to dock, include its name, your Windows version, and the layout you tried.
 
 ## Build from source
 
