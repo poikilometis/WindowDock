@@ -60,9 +60,6 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
         shellRegistered = Native.RegisterShellHookWindow(owner);
         subclass = Dispatch;
         if (!SetWindowSubclass(owner, subclass, 0x57444F43, 0)) throw new Win32Exception(Marshal.GetLastWin32Error());
-        for (var index = 1; index <= 9; index++) Register(100 + index, (uint)('0' + index));
-        uint[] keys = [0x0D, 0x41, 0x44, 0x47, 0x4B, 0x5A];
-        for (var index = 0; index < keys.Length; index++) Register(120 + index, keys[index]);
         events = (_, evt, window, objectId, childId, _, _) =>
         {
             if (window == 0 || disposed) return;
@@ -76,7 +73,23 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
         { var hook = Native.SetWinEventHook(id, id, 0, events, 0, 0, 0); if (hook != 0) eventHooks.Add(hook); }
         initialized = true;
     }
-    private void Register(int id, uint key) { if (Native.RegisterHotKey(host.Handle, id, 0x4003, key)) hotkeys.Add(id); }
+    internal IReadOnlyList<int> ConfigureShortcuts(AppConfig config)
+    {
+        foreach (var id in hotkeys) Native.UnregisterHotKey(host.Handle, id);
+        hotkeys.Clear();
+        List<int> unavailable = [];
+        foreach (var command in DockShortcuts.Commands)
+        {
+            var text = DockShortcuts.Value(config, command);
+            if (string.IsNullOrWhiteSpace(text)) continue;
+            if (DockShortcut.TryParse(text, out var shortcut) &&
+                Native.RegisterHotKey(host.Handle, command.Id, shortcut.Modifiers, shortcut.Key))
+                hotkeys.Add(command.Id);
+            else
+                unavailable.Add(command.Id);
+        }
+        return unavailable;
+    }
     private void SaveJournal() { if (journalPath is not null && journal is not null) Store.Write(journalPath, journal); }
     public IReadOnlyList<WindowCandidate> Enumerate() => WindowCatalog.List(windows.Select(r => r.Handle).ToArray(), false);
     public bool IsAlive(WindowRecord record)
@@ -104,8 +117,17 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
     }
     public void Activate(WindowRecord record)
     {
-        if (suspension > 0 || !IsAlive(record)) return;
-        Native.SetForegroundWindow(record.Hwnd); Native.FocusExternal(record.Hwnd);
+        if (suspension > 0 || !IsAlive(record) || !Native.IsWindowVisible(record.Hwnd) ||
+            !Native.IsWindowEnabled(record.Hwnd) || Native.IsHungAppWindow(record.Hwnd)) return;
+        Native.SetForegroundWindow(record.Hwnd);
+        if (Native.GetForegroundWindow() == record.Hwnd && Native.ForegroundFocus() == 0)
+            Native.FocusExternal(record.Hwnd);
+    }
+
+    internal bool GroupHasForeground()
+    {
+        var current = Native.GetForegroundWindow();
+        return current == host.Handle || attached.ContainsKey(current) || Native.GetWindow(current, 4) == host.Handle;
     }
     public WindowRecord Attach(WindowCandidate candidate, string workspace)
     {
@@ -299,6 +321,7 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
         if (shellRegistered && host.Handle != 0) Native.DeregisterShellHookWindow(host.Handle);
         if (host.Handle != 0)
         {
+            attentionTray?.Dispose();
             foreach (var id in hotkeys) Native.UnregisterHotKey(host.Handle, id);
             if (subclass is not null) RemoveWindowSubclass(host.Handle, subclass, 0x57444F43);
         }
@@ -315,6 +338,7 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
     public Func<AgentSignal, bool>? SignalHandler { get; set; }
     private nint Dispatch(nint window, uint message, nuint wParam, nint lParam, nuint id, nuint data)
     {
+        if (attentionTray?.HandleMessage(message, wParam, lParam) == true) return 0;
         if (message == shellMessage && ((uint)wParam == 1 || (uint)wParam == 2)) discoveryExpires = 0;
         if (message == shellMessage && (uint)wParam == 0x8006) { Changed?.Invoke(new("attention", lParam)); return 0; }
         if (message == 0x004A && lParam != 0)

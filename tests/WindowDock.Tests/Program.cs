@@ -16,7 +16,7 @@ internal static partial class Program
         Directory.CreateDirectory(root); Store.DirectoryPath = Path.Combine(root, "data");
         try
         {
-            Versioning(); Localizations(); Layouts(); Persistence(); SessionActions(); RestoreAndRules(); Signals(); SnapshotOrdering(); Hooks(); await TransportAsync();
+            Versioning(); Localizations(); Layouts(); Persistence(); SessionActions(); RestoreAndRules(); Signals(); Workflows(); SnapshotOrdering(); Hooks(); await TransportAsync();
             report.Add($"ALL CORE CHECKS PASSED ({checks} assertions)"); return 0;
         }
         catch (Exception exception) { report.Add("FAIL " + exception); return 1; }

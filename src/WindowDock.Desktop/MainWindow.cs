@@ -18,7 +18,7 @@ internal sealed partial class MainWindow : Window
     private readonly ScrollViewer tabScroll;
     private readonly ScrollViewer viewport;
     private readonly Canvas canvas = new();
-    private readonly Grid workspace = new();
+    private readonly Grid workspace = new() { RowDefinitions = new("Auto,*") };
     private readonly Border toolbar;
     private readonly TextBlock status = new() { FontSize = 11.5, Margin = new(8, 3), TextTrimming = TextTrimming.CharacterEllipsis, IsVisible = false };
     private readonly Grid root = new() { RowDefinitions = new("30,*") };
@@ -27,7 +27,7 @@ internal sealed partial class MainWindow : Window
     private readonly List<LayoutGrip> grips = [];
     private readonly WallpaperView wallpaper = new();
     private readonly Border empty;
-    private readonly Button collect, magnet, add, grid;
+    private readonly Button collect, magnet, add, grid, attention;
     private string? previewThemeId;
     private readonly DispatcherTimer timer;
     private readonly DispatcherTimer saveTimer = new() { Interval = TimeSpan.FromMilliseconds(250) };
@@ -35,7 +35,7 @@ internal sealed partial class MainWindow : Window
     private bool syncQueued, arranging, closing, nativeReady, layoutFrameQueued;
     private int dialogDepth;
     private string lastWorkspace = "", lastStatus = "", lastTheme = "";
-    private string? activePanel, draggedTab;
+    private string? draggedTab;
     private DateTime statusUntil;
     private Point? tabDragStart;
     private readonly Dictionary<string, double> offsets = [];
@@ -53,20 +53,32 @@ internal sealed partial class MainWindow : Window
         tabScroll = new ScrollViewer { Content = tabs, HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Hidden, VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled };
         tabScroll.PointerWheelChanged += (_, args) => { tabScroll.Offset = new(Math.Clamp(tabScroll.Offset.X - args.Delta.Y * 48, 0, Math.Max(0, tabScroll.Extent.Width - tabScroll.Viewport.Width)), 0); args.Handled = true; };
         var actions = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 3, Margin = new(3, 2, 5, 2) };
-        collect = DockControls.Button(L10n.Get("MainWindow.CollectWindows"), "collect", () => UserAction(() => { Session.Collect(Session.Backend.Enumerate()); Activate(); RefreshStatus(); }), tip: L10n.Get("MainWindow.CollectDesktopWindowsMinimizedWindowsAreSkipped"));
+        collect = DockControls.Button(L10n.Get("MainWindow.CollectWindows"), "collect", () => UserAction(() => CollectWindows(new())), tip: L10n.Get("MainWindow.CollectDesktopWindowsMinimizedWindowsAreSkipped"));
         collect.Classes.Add("secondary");
+        collect.PointerPressed += (_, args) =>
+        {
+            if (!args.GetCurrentPoint(collect).Properties.IsRightButtonPressed) return;
+            ShowCollectMenu();
+            args.Handled = true;
+        };
         var newTab = DockControls.Button("", "add", () => _ = NewWorkspaceAsync(), tip: L10n.Get("MainWindow.NewTabCtrlN"));
         add = DockControls.Button("", "addwindow", () => _ = AddWindowsAsync(), true, L10n.Get("MainWindow.AddWindowsCtrlAltA"));
         grid = DockControls.Button("", "grid", ReturnToGrid, tip: L10n.Get("MainWindow.GridShowAllWindowsAndResetThe")); grid.Classes.Add("layout");
         magnet = DockControls.Button("", "magnet", () => { Session.Config.Magnet = !Session.Config.Magnet; Session.Save(); Refresh(); }, tip: L10n.Get("MainWindow.CaptureWindowsAsYouDragThem")); magnet.Classes.Add("magnet");
+        attention = DockControls.Button("", "bell", () => _ = UserActionAsync(OpenAttentionAsync), tip: L10n.Get("Workflow.AgentActivity"));
+        ((StackPanel)attention.Content!).Children.Add(attentionCount);
         var menu = DockControls.Button("", "more", () => ShowAppMenu(), tip: L10n.Get("MainWindow.WindowDockMenu"));
-        foreach (var button in new[] { collect, newTab, add, grid, magnet, menu }) actions.Children.Add(button);
+        foreach (var button in new[] { collect, newTab, add, grid, magnet, attention, menu }) actions.Children.Add(button);
         status.MaxWidth = 220; status.VerticalAlignment = VerticalAlignment.Center;
         var commands = new Grid { ColumnDefinitions = new("*,Auto,Auto") }; commands.Children.Add(tabScroll);
         Grid.SetColumn(status, 1); commands.Children.Add(status); Grid.SetColumn(actions, 2); commands.Children.Add(actions);
         toolbar = new Border { Child = commands }; root.Children.Add(toolbar);
         viewport = new ScrollViewer { Content = canvas, HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled, VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Auto };
-        workspace.Children.Add(wallpaper); workspace.Children.Add(viewport);
+        Grid.SetRowSpan(wallpaper, 2);
+        workspace.Children.Add(wallpaper);
+        workspace.Children.Add(CreateStackBar());
+        Grid.SetRow(viewport, 1);
+        workspace.Children.Add(viewport);
         var instruction = new StackPanel { Spacing = 12, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, MaxWidth = 400 };
         instruction.Children.Add(new TextBlock { Text = L10n.Get("MainWindow.AddWindowsToThisTab"), TextWrapping = TextWrapping.Wrap, TextAlignment = TextAlignment.Center, FontWeight = FontWeight.Medium, HorizontalAlignment = HorizontalAlignment.Center });
         var emptyAdd = DockControls.Button(L10n.Get("MainWindow.AddWindows"), "addwindow", () => _ = AddWindowsAsync(), true);
@@ -74,13 +86,20 @@ internal sealed partial class MainWindow : Window
         instruction.Children.Add(emptyAdd);
         instruction.Children.Add(new TextBlock { Text = session.Backend.UnavailableReason ?? L10n.Get("MainWindow.OrEnableTheMagnetAndDragA"), FontSize = 11.5, TextWrapping = TextWrapping.Wrap, TextAlignment = TextAlignment.Center, Foreground = DockTheme.Muted });
         empty = new Border { Child = instruction, Background = Brushes.Transparent, IsVisible = true, Padding = new(20) };
-        workspace.Children.Add(empty); Grid.SetRow(workspace, 1); root.Children.Add(workspace); Content = root;
+        Grid.SetRow(empty, 1); workspace.Children.Add(empty); Grid.SetRow(workspace, 1); root.Children.Add(workspace); Content = root;
         viewport.ScrollChanged += (_, _) => QueueSync();
         viewport.PropertyChanged += (_, args) => { if (args.Property == ScrollViewer.ViewportProperty) ArrangePanels(); };
-        PositionChanged += (_, _) => QueueSync();
+        PositionChanged += (_, _) => { QueueSync(); SchedulePlacementSave(); };
         ScalingChanged += (_, _) => QueueSync();
-        SizeChanged += (_, _) => UpdateCollectCaption();
-        PropertyChanged += (_, args) => { if (args.Property == WindowStateProperty || args.Property == IsVisibleProperty) { wallpaper.SetRunning(IsVisible && WindowState != WindowState.Minimized); QueueSync(); } };
+        SizeChanged += (_, _) => { UpdateCollectCaption(); SchedulePlacementSave(); };
+        PropertyChanged += (_, args) =>
+        {
+            if (args.Property != WindowStateProperty && args.Property != IsVisibleProperty) return;
+            if (WindowState != WindowState.Minimized) lastVisibleState = WindowState;
+            wallpaper.SetRunning(IsVisible && WindowState != WindowState.Minimized);
+            SchedulePlacementSave();
+            QueueSync();
+        };
         LayoutUpdated += (_, _) => FlushSync();
         Session.StructureChanged += Refresh;
         Session.PanelChanged += RefreshPanel;
@@ -89,6 +108,8 @@ internal sealed partial class MainWindow : Window
         saveTimer.Tick += (_, _) => { saveTimer.Stop(); if (!closing) Session.SaveInBackground(); };
         Session.PropertyChanged += (_, args) => { if (args.PropertyName == nameof(WorkspaceSession.Status)) RefreshStatus(); };
         Session.Backend.Changed += BackendChanged;
+        Session.AgentActivityChanged += QueueAttentionUpdate;
+        Session.AgentStatusTransition += OnAgentStatusTransition;
         timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(850) }; timer.Tick += (_, _) => Poll();
         Opened += OnOpened; Closing += OnClosing; Closed += (_, _) => OnClosed();
         KeyDown += OnKeyDown;
@@ -106,13 +127,18 @@ internal sealed partial class MainWindow : Window
         {
             if (TryGetPlatformHandle() is { } platform) { Session.Backend.Initialize(platform.Handle); nativeReady = true; }
             Session.Backend.HoverEnabled = Session.Config.HoverScroll;
-            if (OperatingSystem.IsWindows() && Session.Backend is WindowsWindowBackend windows) windows.SignalHandler = Session.ReceiveAgentSignal;
+            if (OperatingSystem.IsWindows() && Session.Backend is WindowsWindowBackend windows)
+            {
+                windows.SignalHandler = Session.ReceiveAgentSignal;
+                UpdateShortcuts();
+                UpdateAttentionCount();
+            }
             if (Program.CrashTarget == 0) signals = new(async signal =>
             {
                 if (closing) return false;
                 return await Dispatcher.UIThread.InvokeAsync(() => !closing && Session.ReceiveAgentSignal(signal));
             });
-            if (Session.Config.Maximized) WindowState = WindowState.Maximized;
+            StartDisplayTracking();
             ApplyAppearance(); UpdateCollectCaption(); Poll(); timer.Start(); QueueSync();
             if (Program.CrashTarget != 0)
             {
@@ -133,13 +159,16 @@ internal sealed partial class MainWindow : Window
     {
         if (closing) return;
         closing = true; EndPanelDrag(); timer.Stop(); saveTimer.Stop();
-        Session.Config.Maximized = WindowState == WindowState.Maximized;
+        StopDisplayTracking();
+        Session.Config.Maximized = lastVisibleState == WindowState.Maximized;
         if (WindowState == WindowState.Normal) { Session.Config.WindowWidth = (int)Width; Session.Config.WindowHeight = (int)Height; Session.Config.WindowX = Position.X; Session.Config.WindowY = Position.Y; }
         Session.Dispose();
     }
     private void OnClosed()
     {
         Session.StructureChanged -= Refresh; Session.PanelChanged -= RefreshPanel; Session.SaveRequested -= QueueSave; Session.SelectionChanged -= RefreshSelection; Session.LayoutInvalidated -= InvalidateLayout; Session.Backend.Changed -= BackendChanged; wallpaper.Dispose();
+        Session.AgentActivityChanged -= QueueAttentionUpdate;
+        Session.AgentStatusTransition -= OnAgentStatusTransition;
         if (signals is not null) _ = signals.DisposeAsync();
     }
     private void QueueSave() { if (closing) return; saveTimer.Stop(); saveTimer.Start(); }
@@ -180,7 +209,7 @@ internal sealed partial class MainWindow : Window
             offsets[lastWorkspace] = viewport.Offset.Y; lastWorkspace = Session.SelectedWorkspace;
             viewport.Offset = new(0, offsets.GetValueOrDefault(lastWorkspace));
         }
-        RefreshTabs();
+        RefreshTabs(); QueueAttentionUpdate();
         var current = Session.CurrentPanels.ToList();
         var currentIds = current.Select(panel => panel.Id).ToHashSet(); var allIds = Session.Panels.Select(panel => panel.Id).ToHashSet();
         foreach (var (id, card) in cards.ToArray())
@@ -240,7 +269,7 @@ internal sealed partial class MainWindow : Window
                 var count = new TextBlock { FontSize = 11, Margin = new(6, 0, 0, 0), VerticalAlignment = VerticalAlignment.Center };
                 var row = new StackPanel { Orientation = Orientation.Horizontal }; row.Children.Add(name); row.Children.Add(count);
                 var button = new Button { Content = row, Height = 26, MinHeight = 0 }; button.Classes.Add("dock"); button.Classes.Add("tab");
-                button.Click += (_, _) => Session.SelectedWorkspace = config.Id;
+                button.Click += (_, _) => OpenWorkspace(config);
                 button.AddHandler(Avalonia.Input.InputElement.PointerPressedEvent, (_, args) =>
                 {
                     if (args.GetCurrentPoint(button).Properties.IsRightButtonPressed) { ShowTabMenu(config, button); args.Handled = true; return; }
@@ -303,6 +332,7 @@ internal sealed partial class MainWindow : Window
             var panels = Session.CurrentPanels.ToList(); var width = Math.Max(1, (int)viewport.Viewport.Width); var height = Math.Max(1, (int)viewport.Viewport.Height);
             if (width < 10) { width = Math.Max(1, (int)workspace.Bounds.Width - 8); height = Math.Max(1, (int)workspace.Bounds.Height); }
             var plan = FlexibleLayout.Plan(panels.Count, new DrawingSize(width, height), Session.Config.MinWidth, Session.Config.MinHeight, Session.Current, 4);
+            var stack = ShowStack(panels, width);
             if (Session.FocusedPanel is { } focused)
             {
                 foreach (var panel in panels)
@@ -311,6 +341,12 @@ internal sealed partial class MainWindow : Window
                     if (card.IsVisible) Place(card, new(4, 4, Math.Max(1, width - 8), Math.Max(1, height - 8)));
                 }
                 canvas.Height = height; foreach (var grip in grips) grip.IsVisible = false;
+            }
+            else if (stack)
+            {
+                ArrangeStack(panels, width, height);
+                canvas.Height = height;
+                foreach (var grip in grips) grip.IsVisible = false;
             }
             else
             {
@@ -374,6 +410,7 @@ internal sealed partial class MainWindow : Window
         areas.Add(new(platform.Handle, platform.Handle, viewportBounds, false));
         areas.Add(new(platform.Handle, platform.Handle, BoundsOnScreen(tabScroll), false));
         Session.Backend.Synchronize(new(platform.Handle, visible), placements);
+        CompletePanelActivation(placements, visible);
         Session.Backend.UpdateHoverTargets(visible ? areas : []);
     }
     internal void ToggleFocus(RuntimePanel panel)
@@ -406,14 +443,20 @@ internal sealed partial class MainWindow : Window
                 var panel = Session.Panels.FirstOrDefault(p => p.Record.Handle == change.Handle);
                 // Native activation events can arrive after a menu/dialog or for a hidden owner.
                 // Only an explicit user navigation command is allowed to choose another workspace.
-                if (panel is not null && panel.WorkspaceId == Session.SelectedWorkspace)
-                { activePanel = panel.Id; panel.Attention = false; RefreshPanel(panel); }
+                if (panel is not null && panel.WorkspaceId == Session.SelectedWorkspace &&
+                    cards.TryGetValue(panel.Id, out var card) && card.IsVisible)
+                {
+                    Session.RememberActivation(panel);
+                    if (panel.AgentStatus is not ("waiting" or "error")) panel.Attention = false;
+                    RefreshPanel(panel);
+                }
             }
             else if (change.Kind == "attention")
             {
                 var panel = Session.Panels.FirstOrDefault(p => p.Record.Handle == change.Handle);
                 if (panel is not null) { panel.Attention = true; RefreshPanel(panel); }
             }
+            else if (change.Kind == "agent-tray") _ = UserActionAsync(OpenAttentionAsync);
             else if (change.Kind == "title")
             {
                 var panel = Session.Panels.FirstOrDefault(p => p.Record.Handle == change.Handle);
@@ -431,20 +474,22 @@ internal sealed partial class MainWindow : Window
     {
         if (id is >= 101 and <= 109)
         {
-            var index = id - 101; if (index < Session.Config.Workspaces.Count) Session.SelectedWorkspace = Session.Config.Workspaces[index].Id;
-            if (Session.CurrentPanels.FirstOrDefault() is { } panel) Session.Backend.Activate(panel.Record);
+            var index = id - 101;
+            if (index < Session.Config.Workspaces.Count) OpenWorkspace(Session.Config.Workspaces[index]);
         }
         else switch (id)
         {
-            case 120: if ((Session.CurrentPanels.FirstOrDefault(p => p.Id == activePanel) ?? Session.CurrentPanels.FirstOrDefault()) is { } focused) ToggleFocus(focused); break;
+            case 120: if (Session.ActivePanel(Session.Current) is { } focused) { RestoreHost(); ToggleFocus(focused); } break;
             case 121: RestoreHost(); _ = AddWindowsAsync(); break;
             case 122: WindowState = WindowState.Minimized; break;
             case 123: RestoreHost(); break;
             case 124: RestoreHost(); _ = SearchAsync(); break;
             case 125: Session.Undo(); break;
+            case 126: ToggleHost(); break;
+            case 127: if (Session.PreviousPanel() is { } previous) ActivatePanel(previous); break;
+            case 128: NextAgent(); break;
         }
     }
-    private void RestoreHost() { Show(); if (WindowState == WindowState.Minimized) WindowState = WindowState.Normal; Activate(); }
     private void OnKeyDown(object? sender, KeyEventArgs args)
     {
         if (dialogDepth > 0) return;

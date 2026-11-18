@@ -32,20 +32,25 @@ internal sealed class RuntimePanel(WindowRecord record, string? savedId = null) 
     public bool Attention { get => attention; set { if (Set(ref attention, value)) Notify(nameof(StatusText)); } }
     public string StatusText => AgentStatus switch { "working" => L10n.Get("RuntimePanel.Working"), "waiting" => L10n.Get("RuntimePanel.NeedsInput"), "done" => L10n.Get("RuntimePanel.Done"), "error" => L10n.Get("RuntimePanel.Error"), _ => Attention ? L10n.Get("RuntimePanel.Attention") : "" };
     public string AgentId { get; set; } = "";
+    public string ProjectId { get; set; } = "";
+    public string CommandId { get; set; } = "";
+    public long ActivatedUtc { get; set; }
     public List<string> HookSessions { get; set; } = [];
     public long AgentSignalUtcTicks { get; set; }
     public SavedPanel Capture(int order) => new()
     {
         Id = Id, WorkspaceId = WorkspaceId, Alias = Alias, Title = Title, ProcessName = Record.ProcessName,
         ClassName = Record.ClassName, Handle = Record.Handle, ProcessId = Record.ProcessId, ProcessStartTicks = Record.ProcessStartTicks,
-        AgentId = AgentId, HookSessions = [..HookSessions], Order = order, LastSeenUtc = DateTime.UtcNow.Ticks
+        AgentId = AgentId, HookSessions = [..HookSessions], Order = order, LastSeenUtc = DateTime.UtcNow.Ticks,
+        ProjectId = ProjectId, CommandId = CommandId, ActivatedUtc = ActivatedUtc
     };
     public void Restore(SavedPanel saved)
     {
         Alias = saved.Alias ?? ""; AgentId = saved.AgentId ?? ""; HookSessions = [..saved.HookSessions ?? []];
+        ProjectId = saved.ProjectId ?? ""; CommandId = saved.CommandId ?? ""; ActivatedUtc = saved.ActivatedUtc;
     }
 }
 
-internal sealed record PendingHookSession(AgentSignal Signal, DateTime LastSeen, string? PanelId = null);
+internal sealed record PendingHookSession(AgentSignal Signal, DateTime LastSeen, string? PanelId = null, DateTime? StateSince = null);
 internal sealed record PanelHistory(SavedPanel Saved, WindowRecord Record, string Status, string Message, bool Attention);
 internal sealed record WorkspaceHistory(string Name, List<WorkspaceConfig> Workspaces, string Selected, List<PanelHistory> Panels, List<SavedPanel> Pending);

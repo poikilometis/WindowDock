@@ -1200,4 +1200,187 @@
   <data name="Counts.Columns.Few" xml:space="preserve">
     <value>{0}열</value>
   </data>
+  <data name="Workflow.Adaptive" xml:space="preserve">
+    <value>반응형 격자</value>
+  </data>
+  <data name="Workflow.AgentActivity" xml:space="preserve">
+    <value>에이전트 활동</value>
+  </data>
+  <data name="Workflow.AgentActivityCount" xml:space="preserve">
+    <value>확인이 필요한 세션: {0}</value>
+  </data>
+  <data name="Workflow.AgentCompleted" xml:space="preserve">
+    <value>에이전트가 이번 작업을 마쳤습니다.</value>
+  </data>
+  <data name="Workflow.AgentNotifications" xml:space="preserve">
+    <value>Windows 에이전트 알림</value>
+  </data>
+  <data name="Workflow.Capture.Added" xml:space="preserve">
+    <value>추가됨</value>
+  </data>
+  <data name="Workflow.Capture.AlreadyDocked" xml:space="preserve">
+    <value>이미 도킹됨</value>
+  </data>
+  <data name="Workflow.Capture.Excluded" xml:space="preserve">
+    <value>규칙으로 제외됨</value>
+  </data>
+  <data name="Workflow.Capture.Failed" xml:space="preserve">
+    <value>추가하지 못함</value>
+  </data>
+  <data name="Workflow.Capture.Filtered" xml:space="preserve">
+    <value>필터에 해당하지 않음</value>
+  </data>
+  <data name="Workflow.Capture.Full" xml:space="preserve">
+    <value>빈 자리가 없음</value>
+  </data>
+  <data name="Workflow.Capture.Minimized" xml:space="preserve">
+    <value>최소화됨</value>
+  </data>
+  <data name="Workflow.Capture.Ready" xml:space="preserve">
+    <value>추가 예정</value>
+  </data>
+  <data name="Workflow.CaptureDestination" xml:space="preserve">
+    <value>배치 규칙이 없는 창은 “{0}”부터 채웁니다. 목록에서 각 창의 위치를 확인할 수 있습니다.</value>
+  </data>
+  <data name="Workflow.CaptureReport" xml:space="preserve">
+    <value>최근 창 모으기 결과</value>
+  </data>
+  <data name="Workflow.CaptureSummary" xml:space="preserve">
+    <value>창 {0}개 추가, {1}개 건너뜀.</value>
+  </data>
+  <data name="Workflow.CollectOptions" xml:space="preserve">
+    <value>필터로 창 모으기</value>
+  </data>
+  <data name="Workflow.DisplayNumber" xml:space="preserve">
+    <value>디스플레이 {0}</value>
+  </data>
+  <data name="Workflow.ExcludeWindow" xml:space="preserve">
+    <value>창 모으기 제외 규칙 만들기…</value>
+  </data>
+  <data name="Workflow.IncludeMinimized" xml:space="preserve">
+    <value>최소화된 창 포함</value>
+  </data>
+  <data name="Workflow.InvalidShortcut" xml:space="preserve">
+    <value>“{0}”에 유효하고 중복되지 않는 단축키를 지정하세요.</value>
+  </data>
+  <data name="Workflow.LinkProjectRole" xml:space="preserve">
+    <value>프로젝트 명령에 연결</value>
+  </data>
+  <data name="Workflow.MoveToDisplay" xml:space="preserve">
+    <value>WindowDock을 디스플레이로 이동</value>
+  </data>
+  <data name="Workflow.NextAgent" xml:space="preserve">
+    <value>다음 확인 대상 에이전트</value>
+  </data>
+  <data name="Workflow.NoAgentActivity" xml:space="preserve">
+    <value>해당하는 활동이 없습니다. 설정한 훅에서 이벤트를 보내면 상태가 표시됩니다.</value>
+  </data>
+  <data name="Workflow.NotifyOnCompletion" xml:space="preserve">
+    <value>완료 시에도 알리기</value>
+  </data>
+  <data name="Workflow.Open" xml:space="preserve">
+    <value>열기</value>
+  </data>
+  <data name="Workflow.OpenProject" xml:space="preserve">
+    <value>프로젝트 “{0}” 열기</value>
+  </data>
+  <data name="Workflow.OverflowTab" xml:space="preserve">
+    <value>남은 창을 위한 새 탭</value>
+  </data>
+  <data name="Workflow.PinPanel" xml:space="preserve">
+    <value>스택 옆에 고정</value>
+  </data>
+  <data name="Workflow.PreviousWindow" xml:space="preserve">
+    <value>직전에 사용한 창</value>
+  </data>
+  <data name="Workflow.Project.Ambiguous" xml:space="preserve">
+    <value>일치하는 창 선택</value>
+  </data>
+  <data name="Workflow.Project.Connect" xml:space="preserve">
+    <value>열려 있는 창 연결</value>
+  </data>
+  <data name="Workflow.Project.Failed" xml:space="preserve">
+    <value>열지 못함</value>
+  </data>
+  <data name="Workflow.Project.Missing" xml:space="preserve">
+    <value>창이 없음</value>
+  </data>
+  <data name="Workflow.Project.Open" xml:space="preserve">
+    <value>이미 연결됨</value>
+  </data>
+  <data name="Workflow.Project.Starting" xml:space="preserve">
+    <value>창이 열리기를 기다리는 중</value>
+  </data>
+  <data name="Workflow.ProjectReport" xml:space="preserve">
+    <value>프로젝트 열기 결과</value>
+  </data>
+  <data name="Workflow.ProjectSummary" xml:space="preserve">
+    <value>연결됨: {0}. 시작 중: {1}. 확인 필요: {2}.</value>
+  </data>
+  <data name="Workflow.ResetShortcut" xml:space="preserve">
+    <value>기본값 사용</value>
+  </data>
+  <data name="Workflow.ResolveProjectRole" xml:space="preserve">
+    <value>기존 패널 메뉴에서 해당 명령에 연결하거나 명령의 일치 조건을 더 구체적으로 지정하세요.</value>
+  </data>
+  <data name="Workflow.ResumeArguments" xml:space="preserve">
+    <value>재개 인수(선택 사항)</value>
+  </data>
+  <data name="Workflow.ReturnAllWindows" xml:space="preserve">
+    <value>모든 창을 돌려보내고 자동 모으기 중지</value>
+  </data>
+  <data name="Workflow.ReuseHelp" xml:space="preserve">
+    <value>열린 창을 다시 사용하려면 실행 중인 앱과 고유한 창 제목을 입력하세요. 재개 인수는 명령에 따라 다릅니다.</value>
+  </data>
+  <data name="Workflow.ReuseProcess" xml:space="preserve">
+    <value>실행 중인 앱 이름</value>
+  </data>
+  <data name="Workflow.ReuseTitle" xml:space="preserve">
+    <value>열려 있는 창 제목</value>
+  </data>
+  <data name="Workflow.RoleAlreadyUsed" xml:space="preserve">
+    <value>해당 프로젝트 명령에 이미 창이 연결되어 있거나 시작 중입니다.</value>
+  </data>
+  <data name="Workflow.RuleFromWindow" xml:space="preserve">
+    <value>이 창으로 규칙 만들기…</value>
+  </data>
+  <data name="Workflow.Shortcut" xml:space="preserve">
+    <value>키 조합</value>
+  </data>
+  <data name="Workflow.ShortcutConflicts" xml:space="preserve">
+    <value>사용할 수 없는 단축키: {0}</value>
+  </data>
+  <data name="Workflow.ShortcutHelp" xml:space="preserve">
+    <value>Ctrl, Alt, Shift 또는 Win을 문자, 숫자, F1, Space, Enter 등의 키와 조합하세요. 비워 두면 비활성화됩니다.</value>
+  </data>
+  <data name="Workflow.Shortcuts" xml:space="preserve">
+    <value>전역 단축키</value>
+  </data>
+  <data name="Workflow.ShortcutUnavailable" xml:space="preserve">
+    <value>Windows에서 사용할 수 없음</value>
+  </data>
+  <data name="Workflow.ShowDock" xml:space="preserve">
+    <value>WindowDock 표시</value>
+  </data>
+  <data name="Workflow.Stack" xml:space="preserve">
+    <value>창 스택</value>
+  </data>
+  <data name="Workflow.StartMissing" xml:space="preserve">
+    <value>누락된 명령 시작</value>
+  </data>
+  <data name="Workflow.ToggleDock" xml:space="preserve">
+    <value>WindowDock 표시 또는 최소화</value>
+  </data>
+  <data name="Workflow.UseResumeArguments" xml:space="preserve">
+    <value>설정된 재개 인수 사용</value>
+  </data>
+  <data name="Workflow.UseRules" xml:space="preserve">
+    <value>창 모으기 규칙으로 배치</value>
+  </data>
+  <data name="Workflow.WaitingOnly" xml:space="preserve">
+    <value>확인이 필요한 세션 표시</value>
+  </data>
+  <data name="Workflow.RetryUnmatched" xml:space="preserve">
+    <value>연결되지 않은 명령 다시 시도</value>
+  </data>
 </root>

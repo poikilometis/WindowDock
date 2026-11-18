@@ -61,18 +61,28 @@ internal sealed class CommandEditor : EditorWindow
     public CommandEditor(ProjectCommand command) : base(L10n.Get("ProjectDialogs.ProjectCommand"), 760, 680)
     {
         var name = Input(command.Name); var executable = Input(command.Executable); var arguments = Input(command.Arguments); var directory = Input(command.Directory); var title = Input(command.TitlePattern);
+        var reuseProcess = Input(command.ReuseProcess ?? "");
+        var reuseTitle = Input(command.ReuseTitle ?? "");
+        var resumeArguments = Input(command.ResumeArguments ?? "");
         var environment = Input(string.Join(Environment.NewLine, command.Environment.Select(e => e.Key + "=" + e.Value)), true);
         var integrations = new List<Choice<string>> { new("", L10n.Get("ProjectDialogs.DoNotConfigure")), new("auto", L10n.Get("ProjectDialogs.DetectAgentAutomatically")) };
         integrations.AddRange(HookProvider.All.Select(p => new Choice<string>(p.Id, p.Name)));
         var integration = Choices(integrations, id => id == command.IntegrationId); integration.SelectedItem ??= integrations[0];
         Field(L10n.Get("WorkspaceSession.PanelName"), name); Field(L10n.Get("ProjectDialogs.Program"), executable); Field(L10n.Get("ProjectDialogs.Arguments"), arguments); Field(L10n.Get("ProjectDialogs.WorkingFolder"), FolderInput(directory));
         Field(L10n.Get("ProjectDialogs.TitlePattern"), title); Field(L10n.Get("ProjectDialogs.AutomaticHookSetup"), integration); Field(L10n.Get("ProjectDialogs.Environment"), environment);
+        Field(L10n.Get("Workflow.ReuseProcess"), reuseProcess);
+        Field(L10n.Get("Workflow.ReuseTitle"), reuseTitle);
+        Field(L10n.Get("Workflow.ResumeArguments"), resumeArguments);
+        Note(L10n.Get("Workflow.ReuseHelp"));
         Note(L10n.Get("ProjectDialogs.OneKEYValueVariablePerLineAgentId"));
         Note(L10n.Get("ProjectDialogs.HooksAreConfiguredBeforeLaunchExistingHooks"));
         Commit = () =>
         {
             command.Name = Required(name, L10n.Get("WorkspaceSession.PanelName")); command.Executable = Required(executable, L10n.Get("ProjectDialogs.Program")); command.Arguments = arguments.Text ?? "";
             command.Directory = directory.Text?.Trim() ?? ""; command.TitlePattern = title.Text ?? ""; command.IntegrationId = Value<string>(integration);
+            command.ReuseProcess = reuseProcess.Text?.Trim() ?? "";
+            command.ReuseTitle = reuseTitle.Text?.Trim() ?? "";
+            command.ResumeArguments = resumeArguments.Text ?? "";
             List<EnvironmentEntry> parsed = []; HashSet<string> keys = new(OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal);
             foreach (var line in (environment.Text ?? "").Split('\n').Select(s => s.TrimEnd('\r')).Where(s => !string.IsNullOrWhiteSpace(s)))
             {

@@ -1200,4 +1200,187 @@
   <data name="Counts.Columns.Few" xml:space="preserve">
     <value>{0} 列</value>
   </data>
+  <data name="Workflow.Adaptive" xml:space="preserve">
+    <value>自動調整グリッド</value>
+  </data>
+  <data name="Workflow.AgentActivity" xml:space="preserve">
+    <value>エージェントの状況</value>
+  </data>
+  <data name="Workflow.AgentActivityCount" xml:space="preserve">
+    <value>対応が必要なセッション: {0}</value>
+  </data>
+  <data name="Workflow.AgentCompleted" xml:space="preserve">
+    <value>エージェントの処理が完了しました。</value>
+  </data>
+  <data name="Workflow.AgentNotifications" xml:space="preserve">
+    <value>Windows でエージェント通知を表示</value>
+  </data>
+  <data name="Workflow.Capture.Added" xml:space="preserve">
+    <value>追加済み</value>
+  </data>
+  <data name="Workflow.Capture.AlreadyDocked" xml:space="preserve">
+    <value>ドッキング済み</value>
+  </data>
+  <data name="Workflow.Capture.Excluded" xml:space="preserve">
+    <value>ルールで除外</value>
+  </data>
+  <data name="Workflow.Capture.Failed" xml:space="preserve">
+    <value>追加できませんでした</value>
+  </data>
+  <data name="Workflow.Capture.Filtered" xml:space="preserve">
+    <value>フィルターの対象外</value>
+  </data>
+  <data name="Workflow.Capture.Full" xml:space="preserve">
+    <value>空きがありません</value>
+  </data>
+  <data name="Workflow.Capture.Minimized" xml:space="preserve">
+    <value>最小化済み</value>
+  </data>
+  <data name="Workflow.Capture.Ready" xml:space="preserve">
+    <value>追加予定</value>
+  </data>
+  <data name="Workflow.CaptureDestination" xml:space="preserve">
+    <value>振り分けルールがないウィンドウは「{0}」に優先して追加されます。一覧で追加先を確認できます。</value>
+  </data>
+  <data name="Workflow.CaptureReport" xml:space="preserve">
+    <value>前回の取り込み結果</value>
+  </data>
+  <data name="Workflow.CaptureSummary" xml:space="preserve">
+    <value>追加: {0} 件。スキップ: {1} 件。</value>
+  </data>
+  <data name="Workflow.CollectOptions" xml:space="preserve">
+    <value>条件を指定して取り込む</value>
+  </data>
+  <data name="Workflow.DisplayNumber" xml:space="preserve">
+    <value>ディスプレイ {0}</value>
+  </data>
+  <data name="Workflow.ExcludeWindow" xml:space="preserve">
+    <value>取り込みの除外ルールを作成…</value>
+  </data>
+  <data name="Workflow.IncludeMinimized" xml:space="preserve">
+    <value>最小化したウィンドウも含める</value>
+  </data>
+  <data name="Workflow.InvalidShortcut" xml:space="preserve">
+    <value>「{0}」に有効で重複しないショートカットを設定してください。</value>
+  </data>
+  <data name="Workflow.LinkProjectRole" xml:space="preserve">
+    <value>プロジェクトのコマンドに関連付ける</value>
+  </data>
+  <data name="Workflow.MoveToDisplay" xml:space="preserve">
+    <value>WindowDock を別の画面に移動</value>
+  </data>
+  <data name="Workflow.NextAgent" xml:space="preserve">
+    <value>次に対応が必要なエージェント</value>
+  </data>
+  <data name="Workflow.NoAgentActivity" xml:space="preserve">
+    <value>該当するアクティビティはありません。設定済みのフックがイベントを送ると状態が表示されます。</value>
+  </data>
+  <data name="Workflow.NotifyOnCompletion" xml:space="preserve">
+    <value>完了時も通知する</value>
+  </data>
+  <data name="Workflow.Open" xml:space="preserve">
+    <value>開く</value>
+  </data>
+  <data name="Workflow.OpenProject" xml:space="preserve">
+    <value>プロジェクト「{0}」を開く</value>
+  </data>
+  <data name="Workflow.OverflowTab" xml:space="preserve">
+    <value>残りのウィンドウ用の新規タブ</value>
+  </data>
+  <data name="Workflow.PinPanel" xml:space="preserve">
+    <value>スタックの横に固定</value>
+  </data>
+  <data name="Workflow.PreviousWindow" xml:space="preserve">
+    <value>直前に使ったウィンドウ</value>
+  </data>
+  <data name="Workflow.Project.Ambiguous" xml:space="preserve">
+    <value>該当するウィンドウを選択</value>
+  </data>
+  <data name="Workflow.Project.Connect" xml:space="preserve">
+    <value>開いているウィンドウに接続</value>
+  </data>
+  <data name="Workflow.Project.Failed" xml:space="preserve">
+    <value>開けませんでした</value>
+  </data>
+  <data name="Workflow.Project.Missing" xml:space="preserve">
+    <value>ウィンドウが見つかりません</value>
+  </data>
+  <data name="Workflow.Project.Open" xml:space="preserve">
+    <value>接続済み</value>
+  </data>
+  <data name="Workflow.Project.Starting" xml:space="preserve">
+    <value>ウィンドウの表示を待っています</value>
+  </data>
+  <data name="Workflow.ProjectReport" xml:space="preserve">
+    <value>プロジェクトを開いた結果</value>
+  </data>
+  <data name="Workflow.ProjectSummary" xml:space="preserve">
+    <value>接続済み: {0}。起動中: {1}。要確認: {2}。</value>
+  </data>
+  <data name="Workflow.ResetShortcut" xml:space="preserve">
+    <value>既定値に戻す</value>
+  </data>
+  <data name="Workflow.ResolveProjectRole" xml:space="preserve">
+    <value>既存パネルのメニューからコマンドに関連付けるか、コマンドの照合条件を絞り込んでください。</value>
+  </data>
+  <data name="Workflow.ResumeArguments" xml:space="preserve">
+    <value>再開用の引数（任意）</value>
+  </data>
+  <data name="Workflow.ReturnAllWindows" xml:space="preserve">
+    <value>すべてのウィンドウを戻して取り込みを一時停止</value>
+  </data>
+  <data name="Workflow.ReuseHelp" xml:space="preserve">
+    <value>開いているウィンドウを再利用するには、実行中のアプリ名と一意のタイトルを指定します。再開用の引数はコマンドによって異なります。</value>
+  </data>
+  <data name="Workflow.ReuseProcess" xml:space="preserve">
+    <value>実行中のアプリ名</value>
+  </data>
+  <data name="Workflow.ReuseTitle" xml:space="preserve">
+    <value>既存ウィンドウのタイトル</value>
+  </data>
+  <data name="Workflow.RoleAlreadyUsed" xml:space="preserve">
+    <value>このコマンドのウィンドウは既に存在するか、起動中です。</value>
+  </data>
+  <data name="Workflow.RuleFromWindow" xml:space="preserve">
+    <value>このウィンドウからルールを作成…</value>
+  </data>
+  <data name="Workflow.Shortcut" xml:space="preserve">
+    <value>キーの組み合わせ</value>
+  </data>
+  <data name="Workflow.ShortcutConflicts" xml:space="preserve">
+    <value>使用できないショートカット: {0}</value>
+  </data>
+  <data name="Workflow.ShortcutHelp" xml:space="preserve">
+    <value>Ctrl、Alt、Shift、Win と、文字、数字、F1、Space、Enter などを組み合わせます。空欄で無効になります。</value>
+  </data>
+  <data name="Workflow.Shortcuts" xml:space="preserve">
+    <value>グローバルショートカット</value>
+  </data>
+  <data name="Workflow.ShortcutUnavailable" xml:space="preserve">
+    <value>Windows で使用できません</value>
+  </data>
+  <data name="Workflow.ShowDock" xml:space="preserve">
+    <value>WindowDock を表示</value>
+  </data>
+  <data name="Workflow.Stack" xml:space="preserve">
+    <value>ウィンドウスタック</value>
+  </data>
+  <data name="Workflow.StartMissing" xml:space="preserve">
+    <value>不足しているコマンドを起動</value>
+  </data>
+  <data name="Workflow.ToggleDock" xml:space="preserve">
+    <value>WindowDock を表示または最小化</value>
+  </data>
+  <data name="Workflow.UseResumeArguments" xml:space="preserve">
+    <value>設定済みの再開用引数を使う</value>
+  </data>
+  <data name="Workflow.UseRules" xml:space="preserve">
+    <value>取り込みルールで振り分ける</value>
+  </data>
+  <data name="Workflow.WaitingOnly" xml:space="preserve">
+    <value>対応が必要なセッションを表示</value>
+  </data>
+  <data name="Workflow.RetryUnmatched" xml:space="preserve">
+    <value>未接続のコマンドを再試行</value>
+  </data>
 </root>

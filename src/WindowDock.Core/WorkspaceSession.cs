@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace WindowDock;
 
-internal sealed class WorkspaceSession : ObservableObject, IDisposable
+internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
 {
     public AppConfig Config { get; }
     public IWindowBackend Backend { get; }
@@ -63,7 +63,6 @@ internal sealed class WorkspaceSession : ObservableObject, IDisposable
         {
             if (value == selectedWorkspace || !Config.Workspaces.Any(w => w.Id == value)) return;
             selectedWorkspace = Config.SelectedWorkspace = value; focusedPanel = null;
-            foreach (var panel in CurrentPanels) panel.Attention = false;
             Notify(); RaiseStructureChanged(); RequestSave();
         }
     }
@@ -93,8 +92,17 @@ internal sealed class WorkspaceSession : ObservableObject, IDisposable
     }
     private SessionSnapshotWriter.Snapshot CaptureSnapshot()
     {
+        var reserved = Pending.GroupBy(panel => panel.WorkspaceId)
+            .ToDictionary(group => group.Key, group => group.Select(panel => panel.Order).ToHashSet());
         var order = new Dictionary<string,int>(); var saved = new List<SavedPanel>(Panels.Count + Pending.Count);
-        foreach (var panel in Panels) { var index = order.GetValueOrDefault(panel.WorkspaceId); saved.Add(panel.Capture(index)); order[panel.WorkspaceId] = index + 1; }
+        foreach (var panel in Panels)
+        {
+            var index = order.GetValueOrDefault(panel.WorkspaceId);
+            if (reserved.TryGetValue(panel.WorkspaceId, out var gaps))
+                while (gaps.Contains(index)) index++;
+            saved.Add(panel.Capture(index));
+            order[panel.WorkspaceId] = index + 1;
+        }
         var ids = saved.Select(panel => panel.Id).ToHashSet(); var workspaces = Config.Workspaces.Select(w => w.Id).ToHashSet();
         saved.AddRange(Pending.Where(panel => !ids.Contains(panel.Id) && workspaces.Contains(panel.WorkspaceId)));
         return snapshotWriter.Capture(Config, new() { Panels = saved, Suppressed = suppressed.TakeLast(1000).ToList() });
@@ -123,9 +131,20 @@ internal sealed class WorkspaceSession : ObservableObject, IDisposable
         var record = Backend.Attach(candidate, workspace.Id);
         var panel = new RuntimePanel(record, saved?.Id);
         if (saved is not null) { panel.Restore(saved); Pending.RemoveAll(p => p.Id == saved.Id); }
-        Panels.Add(panel); suppressed.Remove(WindowMatching.Identity(candidate));
+        if (saved is null)
+            Panels.Add(panel);
+        else
+        {
+            var siblings = Panels.Where(p => p.WorkspaceId == workspace.Id).ToArray();
+            var index = RestoreIndex(saved, workspace, siblings.Length);
+            Panels.Insert(index < siblings.Length ? Panels.IndexOf(siblings[index]) : Panels.Count, panel);
+        }
+        suppressed.Remove(WindowMatching.Identity(candidate));
         ApplyEarlySignals(panel); RaiseStructureChanged(); RequestSave(); return panel;
     }
+    private int RestoreIndex(SavedPanel saved, WorkspaceConfig workspace, int panelCount) =>
+        Math.Clamp(saved.Order - Pending.Count(role => role.Id != saved.Id &&
+            role.WorkspaceId == workspace.Id && role.Order < saved.Order), 0, panelCount);
     public WorkspaceConfig NewWorkspace(string name, WorkspaceConfig? inherit = null, bool checkpoint = true)
     {
         if (checkpoint) Checkpoint(L10n.Get("WorkspaceSession.NewTab"));
@@ -133,6 +152,8 @@ internal sealed class WorkspaceSession : ObservableObject, IDisposable
         if (inherit is not null)
         {
             workspace.Capacity = inherit.Capacity; workspace.Columns = inherit.Columns; workspace.Layout = inherit.Layout;
+            workspace.MasterRatio = inherit.MasterRatio; workspace.PrimaryRatio = inherit.PrimaryRatio; workspace.DualRatio = inherit.DualRatio;
+            workspace.ColumnWeights = [..inherit.ColumnWeights]; workspace.RowWeights = [..inherit.RowWeights];
             workspace.BackgroundMode = inherit.BackgroundMode; workspace.BackgroundColor = inherit.BackgroundColor; workspace.BackgroundPath = inherit.BackgroundPath;
         }
         Config.Workspaces.Add(workspace); RaiseStructureChanged(); RequestSave(); return workspace;
@@ -226,30 +247,6 @@ internal sealed class WorkspaceSession : ObservableObject, IDisposable
         }
         RaiseStructureChanged(); RequestSave();
     }
-    public int Collect(IEnumerable<WindowCandidate> source)
-    {
-        using var update = BeginUpdate();
-        var candidates = source.ToArray(); var minimized = candidates.Count(c => c.IsMinimized && !RuleEngine.Evaluate(Config.Rules, c).Excluded);
-        var eligible = candidates.Where(c => !c.IsMinimized && !Panels.Any(p => p.Record.Handle == c.Handle) && !RuleEngine.Evaluate(Config.Rules, c).Excluded).ToArray();
-        if (eligible.Length > 0) Checkpoint(L10n.Get("WorkspaceSession.CollectDesktopWindows"));
-        var added = 0; var failed = 0; var noSpace = 0; var firstError = "";
-        foreach (var candidate in eligible)
-        {
-            var decision = RuleEngine.Evaluate(Config.Rules, candidate);
-            var preferred = decision.Rule is not null ? Config.Workspaces.FirstOrDefault(w => w.Id == decision.Rule.WorkspaceId) : null;
-            var previous = Config.Workspaces.Select(w => w.Id).ToHashSet();
-            var workspace = Destination(preferred, decision.Rule?.Overflow != false); if (workspace is null) { noSpace++; continue; }
-            try { Attach(candidate, workspace, checkpoint: false); added++; }
-            catch (Exception exception)
-            {
-                failed++; if (firstError.Length == 0) firstError = candidate.ProcessName + ": " + exception.Message;
-                Store.Log("Collect " + candidate.ProcessName + ": " + exception); RemoveFailedDestination(workspace, previous);
-            }
-        }
-        Status = L10n.Format("WorkspaceSession.WindowsAdded", added) + (minimized > 0 ? L10n.Format("WorkspaceSession.MinimizedWindowsSkipped", minimized) : "") +
-            (noSpace > 0 ? L10n.Format("WorkspaceSession.NoFreeSlots", noSpace) : "") + (failed > 0 ? L10n.Format("WorkspaceSession.CouldNotDock", failed, firstError) : "");
-        RaiseStructureChanged(); RequestSave(); return added;
-    }
     private WorkspaceConfig? Destination(WorkspaceConfig? preferred, bool overflow)
     {
         if (preferred is not null && Panels.Count(p => p.WorkspaceId == preferred.Id) < preferred.Capacity) return preferred;
@@ -278,17 +275,18 @@ internal sealed class WorkspaceSession : ObservableObject, IDisposable
             Config.AutomaticRules && Config.Rules.Any(rule => rule.Enabled && !rule.Exclude);
         if (!Backend.Available || !needsCatalog) { if (changed) { RaiseStructureChanged(); RequestSave(); } return; }
         var candidates = Backend.Discover();
+        DiscoverLaunches(candidates);
         if (Config.RestoreGroups || forceRestore)
         {
             foreach (var saved in Pending.OrderBy(p => p.Order).ToArray())
             {
+                if (launches.Any(launch => launch.SavedId == saved.Id)) continue;
                 var match = WindowMatching.UniqueMatch(saved, candidates.Where(c => !Panels.Any(p => p.Record.Handle == c.Handle)));
                 var workspace = Config.Workspaces.FirstOrDefault(w => w.Id == saved.WorkspaceId);
                 if (match is null || workspace is null || Panels.Count(p => p.WorkspaceId == workspace.Id) >= workspace.Capacity) continue;
                 try { Attach(match, workspace, saved, false); changed = true; } catch (Exception exception) { Store.Log(exception.Message); }
             }
         }
-        DiscoverLaunches(candidates);
         if (Config.AutomaticRules)
         {
             foreach (var candidate in candidates)
@@ -316,10 +314,11 @@ internal sealed class WorkspaceSession : ObservableObject, IDisposable
         Backend.Reassign(panel.Record, target.Id); panel.WorkspaceId = target.Id; panel.AssignRoleId(saved.Id);
         if (!string.IsNullOrWhiteSpace(saved.Alias)) panel.Alias = saved.Alias;
         if (string.IsNullOrEmpty(panel.AgentId)) panel.AgentId = saved.AgentId ?? "";
+        if (string.IsNullOrEmpty(panel.ProjectId)) { panel.ProjectId = saved.ProjectId ?? ""; panel.CommandId = saved.CommandId ?? ""; }
         panel.HookSessions = panel.HookSessions.Concat(saved.HookSessions ?? []).Distinct().ToList();
         foreach (var (key, entry) in HookSessions.ToArray()) if (entry.PanelId == oldId) HookSessions[key] = entry with { PanelId = panel.Id };
         Panels.Remove(panel); var siblings = Panels.Where(p => p.WorkspaceId == target.Id).ToList();
-        var index = Math.Clamp(saved.Order, 0, siblings.Count);
+        var index = RestoreIndex(saved, target, siblings.Count);
         Panels.Insert(index < siblings.Count ? Panels.IndexOf(siblings[index]) : siblings.Count > 0 ? Panels.IndexOf(siblings[^1]) + 1 : Panels.Count, panel);
         Pending.Remove(saved); SelectedWorkspace = target.Id; focusedPanel = null; RaiseStructureChanged(); RequestSave(); return true;
     }
@@ -358,118 +357,10 @@ internal sealed class WorkspaceSession : ObservableObject, IDisposable
     }
     public static WindowCandidate Candidate(WindowRecord record) => new()
     { Handle = record.Hwnd, ProcessId = record.ProcessId, ProcessStartTicks = record.ProcessStartTicks, Title = record.Title, ClassName = record.ClassName, ProcessName = record.ProcessName };
-    public IReadOnlyList<RuntimePanel> Search(string query) => Panels.Where(p => string.IsNullOrWhiteSpace(query) || (p.Caption + " " + p.Title + " " + p.Record.ProcessName + " " + Config.Workspaces.First(w => w.Id == p.WorkspaceId).Name).Contains(query, StringComparison.CurrentCultureIgnoreCase)).ToArray();
     public void Dispose()
     {
         if (disposed) return; disposed = true;
         Save(); Backend.Dispose();
     }
 
-    private readonly Dictionary<string, AgentSignal> early = [];
-    public bool ReceiveAgentSignal(AgentSignal signal)
-    {
-        if (!AgentBridge.ValidStatus(signal.Status)) return false;
-        if (signal.Status == "probe") return true;
-        var panel = Resolve(signal);
-        if (panel is null)
-        {
-            if (!string.IsNullOrEmpty(signal.AgentId) && (!early.TryGetValue(signal.AgentId, out var previous) || signal.EventUtcTicks == 0 || previous.EventUtcTicks <= signal.EventUtcTicks)) early[signal.AgentId] = signal;
-            if (!string.IsNullOrEmpty(signal.SessionKey) && (!HookSessions.TryGetValue(signal.SessionKey, out var previousSession) || signal.EventUtcTicks == 0 || previousSession.Signal.EventUtcTicks <= signal.EventUtcTicks)) HookSessions[signal.SessionKey] = new(signal, DateTime.UtcNow);
-            return false;
-        }
-        ApplySignal(panel, signal); return true;
-    }
-    private RuntimePanel? Resolve(AgentSignal signal)
-    {
-        if (signal.Handle != 0) return Panels.FirstOrDefault(p => p.Record.Handle == signal.Handle);
-        if (!string.IsNullOrEmpty(signal.AgentId)) return Panels.FirstOrDefault(p => p.AgentId == signal.AgentId);
-        if (!string.IsNullOrEmpty(signal.SessionKey))
-        {
-            var bound = Panels.Where(p => p.HookSessions.Contains(signal.SessionKey)).ToArray();
-            if (bound.Length > 0) return bound.Length == 1 ? bound[0] : null;
-        }
-        if (signal.ConsoleHandle != 0 && Panels.FirstOrDefault(p => p.Record.Handle == signal.ConsoleHandle) is { } console) return console;
-        var matches = Panels.Where(p => signal.ProcessChain?.Any(process => process.Id == p.Record.ProcessId && process.StartTicks != 0 && process.StartTicks == p.Record.ProcessStartTicks) == true).ToArray();
-        return matches.Length == 1 ? matches[0] : null;
-    }
-    private void ApplySignal(RuntimePanel panel, AgentSignal signal)
-    {
-        if (signal.EventUtcTicks > 0 && panel.AgentSignalUtcTicks > signal.EventUtcTicks) return;
-        panel.AgentSignalUtcTicks = Math.Max(panel.AgentSignalUtcTicks, signal.EventUtcTicks);
-        panel.AgentStatus = signal.Status == "clear" ? "" : signal.Status; panel.AgentMessage = signal.Message ?? "";
-        panel.Attention = signal.Status is "waiting" or "done" or "error";
-        var bindingAdded = false;
-        if (!string.IsNullOrEmpty(signal.SessionKey))
-        {
-            if (!panel.HookSessions.Contains(signal.SessionKey)) { panel.HookSessions.Add(signal.SessionKey); bindingAdded = true; }
-            HookSessions[signal.SessionKey] = new(signal, DateTime.UtcNow, panel.Id);
-        }
-        // Status, message and attention are live state, not saved group metadata.
-        // Notify one panel; persist only a newly established session binding.
-        if (updateDepth == 0) PanelChanged?.Invoke(panel); else pendingPanels.Add(panel);
-        if (bindingAdded) RequestSave();
-    }
-    public void BindHook(string sessionKey, RuntimePanel panel)
-    {
-        using var update = BeginUpdate();
-        if (!HookSessions.TryGetValue(sessionKey, out var session)) return;
-        foreach (var item in Panels) item.HookSessions.Remove(sessionKey);
-        panel.HookSessions.Add(sessionKey); ApplySignal(panel, session.Signal); RequestSave();
-    }
-    private void ApplyEarlySignals(RuntimePanel panel)
-    {
-        if (!string.IsNullOrEmpty(panel.AgentId) && early.Remove(panel.AgentId, out var signal)) ApplySignal(panel, signal);
-        foreach (var session in HookSessions.Values.Where(s => s.PanelId is null).ToArray()) if (Resolve(session.Signal) == panel) ApplySignal(panel, session.Signal);
-    }
-    public int LaunchProject(ProjectProfile profile)
-    {
-        var preferred = Config.Workspaces.FirstOrDefault(w => w.Id == profile.WorkspaceId) ?? Current;
-        var previous = Backend.Enumerate().Select(c => c.Handle.ToInt64()).ToHashSet();
-        var launched = 0;
-        foreach (var command in profile.Commands)
-        {
-            command.Validate();
-            if (string.IsNullOrWhiteSpace(command.Executable)) continue;
-            var directory = Environment.ExpandEnvironmentVariables(command.Directory);
-            if (!string.IsNullOrWhiteSpace(directory) && !Directory.Exists(directory)) throw new DirectoryNotFoundException(L10n.Format("WorkspaceSession.FolderNotFound", directory));
-            if (!string.IsNullOrEmpty(command.IntegrationId))
-            {
-                if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(L10n.Get("WorkspaceSession.AutomaticSetupForTheseHookProfilesIs"));
-                var provider = command.IntegrationId == "auto" ? HookProvider.Detect(command) : HookProvider.Find(command.IntegrationId);
-                if (provider is null) throw new InvalidOperationException(L10n.Get("WorkspaceSession.SelectAnAgentForAutomaticHookSetup"));
-                HookInstaller.Install(directory, [provider], RuntimePaths.Executable);
-            }
-            var token = Guid.NewGuid().ToString("N");
-            var start = new ProcessStartInfo(Environment.ExpandEnvironmentVariables(command.Executable), command.Arguments.Replace("{agentId}", token))
-            { UseShellExecute = false, WorkingDirectory = string.IsNullOrWhiteSpace(directory) ? Environment.CurrentDirectory : directory };
-            foreach (var variable in command.Environment) start.Environment[variable.Key] = variable.Value ?? "";
-            start.Environment["WINDOWDOCK_AGENT_ID"] = token; start.Environment["WINDOWDOCK_EXE"] = RuntimePaths.Executable;
-            start.Environment["WINDOWDOCK_STATUS_SCRIPT"] = Path.Combine(AppContext.BaseDirectory, "agent-status.ps1");
-            using var process = Process.Start(start) ?? throw new InvalidOperationException(L10n.Format("WorkspaceSession.CouldNotStart", command.Name));
-            launches.Add(new(token, preferred.Id, command.Name, command.TitlePattern.Replace("{agentId}", token), process.Id, WindowMatching.StartTicks(process.Id), previous, DateTime.UtcNow.AddSeconds(60)));
-            launched++;
-        }
-        return launched;
-    }
-    private void DiscoverLaunches(IReadOnlyList<WindowCandidate> candidates)
-    {
-        foreach (var launch in launches.ToArray())
-        {
-            if (launch.Deadline < DateTime.UtcNow) { launches.Remove(launch); Status = L10n.Format("WorkspaceSession.LaunchedButNoWindowWasFound", launch.Alias); continue; }
-            var matches = candidates.Where(c => !Panels.Any(p => p.Record.Handle == c.Handle) &&
-                (!launch.Previous.Contains(c.Handle.ToInt64()) || c.ProcessId == launch.ProcessId) &&
-                (c.ProcessId == launch.ProcessId && c.ProcessStartTicks == launch.StartTicks || c.Title.Contains(launch.Token, StringComparison.OrdinalIgnoreCase) ||
-                 Backend.ProcessChain(c.ProcessId).Any(p => p.Id == launch.ProcessId && p.StartTicks == launch.StartTicks)) &&
-                (string.IsNullOrWhiteSpace(launch.Pattern) || Wildcard.Matches(launch.Pattern, c.Title))).ToArray();
-            if (matches.Length != 1) continue;
-            var workspace = Destination(Config.Workspaces.FirstOrDefault(w => w.Id == launch.Workspace), true)!;
-            try
-            {
-                var panel = Attach(matches[0], workspace, checkpoint: false); panel.AgentId = launch.Token; panel.Alias = launch.Alias;
-                launches.Remove(launch); ApplyEarlySignals(panel); RaiseStructureChanged(); RequestSave();
-            }
-            catch (Exception exception) { Store.Log(exception.Message); }
-        }
-    }
-    private sealed record LaunchRequest(string Token, string Workspace, string Alias, string Pattern, int ProcessId, long StartTicks, HashSet<long> Previous, DateTime Deadline);
 }

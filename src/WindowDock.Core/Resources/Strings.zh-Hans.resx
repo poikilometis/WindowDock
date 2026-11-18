@@ -1200,4 +1200,187 @@
   <data name="Counts.Columns.Few" xml:space="preserve">
     <value>{0} 列</value>
   </data>
+  <data name="Workflow.Adaptive" xml:space="preserve">
+    <value>自适应网格</value>
+  </data>
+  <data name="Workflow.AgentActivity" xml:space="preserve">
+    <value>代理活动</value>
+  </data>
+  <data name="Workflow.AgentActivityCount" xml:space="preserve">
+    <value>需要处理的会话：{0}</value>
+  </data>
+  <data name="Workflow.AgentCompleted" xml:space="preserve">
+    <value>代理已完成一轮处理。</value>
+  </data>
+  <data name="Workflow.AgentNotifications" xml:space="preserve">
+    <value>在 Windows 中显示代理通知</value>
+  </data>
+  <data name="Workflow.Capture.Added" xml:space="preserve">
+    <value>已添加</value>
+  </data>
+  <data name="Workflow.Capture.AlreadyDocked" xml:space="preserve">
+    <value>已停靠</value>
+  </data>
+  <data name="Workflow.Capture.Excluded" xml:space="preserve">
+    <value>按规则排除</value>
+  </data>
+  <data name="Workflow.Capture.Failed" xml:space="preserve">
+    <value>无法添加</value>
+  </data>
+  <data name="Workflow.Capture.Filtered" xml:space="preserve">
+    <value>不符合筛选条件</value>
+  </data>
+  <data name="Workflow.Capture.Full" xml:space="preserve">
+    <value>没有空位</value>
+  </data>
+  <data name="Workflow.Capture.Minimized" xml:space="preserve">
+    <value>已最小化</value>
+  </data>
+  <data name="Workflow.Capture.Ready" xml:space="preserve">
+    <value>将添加</value>
+  </data>
+  <data name="Workflow.CaptureDestination" xml:space="preserve">
+    <value>没有分配规则的窗口会优先加入“{0}”。列表显示每个窗口的去向。</value>
+  </data>
+  <data name="Workflow.CaptureReport" xml:space="preserve">
+    <value>上次收集结果</value>
+  </data>
+  <data name="Workflow.CaptureSummary" xml:space="preserve">
+    <value>已添加窗口：{0}。已跳过：{1}。</value>
+  </data>
+  <data name="Workflow.CollectOptions" xml:space="preserve">
+    <value>按筛选条件收集</value>
+  </data>
+  <data name="Workflow.DisplayNumber" xml:space="preserve">
+    <value>显示器 {0}</value>
+  </data>
+  <data name="Workflow.ExcludeWindow" xml:space="preserve">
+    <value>创建收集排除规则…</value>
+  </data>
+  <data name="Workflow.IncludeMinimized" xml:space="preserve">
+    <value>包含已最小化的窗口</value>
+  </data>
+  <data name="Workflow.InvalidShortcut" xml:space="preserve">
+    <value>请为“{0}”设置有效且不重复的快捷键。</value>
+  </data>
+  <data name="Workflow.LinkProjectRole" xml:space="preserve">
+    <value>关联到项目命令</value>
+  </data>
+  <data name="Workflow.MoveToDisplay" xml:space="preserve">
+    <value>将 WindowDock 移到显示器</value>
+  </data>
+  <data name="Workflow.NextAgent" xml:space="preserve">
+    <value>下一个需要处理的代理</value>
+  </data>
+  <data name="Workflow.NoAgentActivity" xml:space="preserve">
+    <value>没有符合条件的活动。已配置的 hook 发送事件后会显示状态。</value>
+  </data>
+  <data name="Workflow.NotifyOnCompletion" xml:space="preserve">
+    <value>完成时也通知</value>
+  </data>
+  <data name="Workflow.Open" xml:space="preserve">
+    <value>打开</value>
+  </data>
+  <data name="Workflow.OpenProject" xml:space="preserve">
+    <value>打开项目“{0}”</value>
+  </data>
+  <data name="Workflow.OverflowTab" xml:space="preserve">
+    <value>为剩余窗口创建新标签页</value>
+  </data>
+  <data name="Workflow.PinPanel" xml:space="preserve">
+    <value>固定在堆叠旁</value>
+  </data>
+  <data name="Workflow.PreviousWindow" xml:space="preserve">
+    <value>上一个使用的窗口</value>
+  </data>
+  <data name="Workflow.Project.Ambiguous" xml:space="preserve">
+    <value>请选择匹配的窗口</value>
+  </data>
+  <data name="Workflow.Project.Connect" xml:space="preserve">
+    <value>连接已打开的窗口</value>
+  </data>
+  <data name="Workflow.Project.Failed" xml:space="preserve">
+    <value>无法打开</value>
+  </data>
+  <data name="Workflow.Project.Missing" xml:space="preserve">
+    <value>找不到窗口</value>
+  </data>
+  <data name="Workflow.Project.Open" xml:space="preserve">
+    <value>已连接</value>
+  </data>
+  <data name="Workflow.Project.Starting" xml:space="preserve">
+    <value>正在等待窗口出现</value>
+  </data>
+  <data name="Workflow.ProjectReport" xml:space="preserve">
+    <value>项目打开结果</value>
+  </data>
+  <data name="Workflow.ProjectSummary" xml:space="preserve">
+    <value>已连接：{0}。启动中：{1}。待检查：{2}。</value>
+  </data>
+  <data name="Workflow.ResetShortcut" xml:space="preserve">
+    <value>使用默认值</value>
+  </data>
+  <data name="Workflow.ResolveProjectRole" xml:space="preserve">
+    <value>在现有面板的菜单中将其关联到匹配的命令，或缩小命令的匹配范围。</value>
+  </data>
+  <data name="Workflow.ResumeArguments" xml:space="preserve">
+    <value>恢复参数（可选）</value>
+  </data>
+  <data name="Workflow.ReturnAllWindows" xml:space="preserve">
+    <value>还原所有窗口并暂停收集</value>
+  </data>
+  <data name="Workflow.ReuseHelp" xml:space="preserve">
+    <value>输入正在运行的应用和可区分的窗口标题以复用打开的窗口。恢复参数取决于该命令。</value>
+  </data>
+  <data name="Workflow.ReuseProcess" xml:space="preserve">
+    <value>正在运行的应用名称</value>
+  </data>
+  <data name="Workflow.ReuseTitle" xml:space="preserve">
+    <value>已打开窗口的标题</value>
+  </data>
+  <data name="Workflow.RoleAlreadyUsed" xml:space="preserve">
+    <value>该项目命令已有窗口或正在启动。</value>
+  </data>
+  <data name="Workflow.RuleFromWindow" xml:space="preserve">
+    <value>从窗口创建规则…</value>
+  </data>
+  <data name="Workflow.Shortcut" xml:space="preserve">
+    <value>组合键</value>
+  </data>
+  <data name="Workflow.ShortcutConflicts" xml:space="preserve">
+    <value>不可用的快捷键：{0}</value>
+  </data>
+  <data name="Workflow.ShortcutHelp" xml:space="preserve">
+    <value>搭配 Ctrl、Alt、Shift 或 Win 与字母、数字或 F1、Space、Enter 等键。留空则禁用。</value>
+  </data>
+  <data name="Workflow.Shortcuts" xml:space="preserve">
+    <value>全局快捷键</value>
+  </data>
+  <data name="Workflow.ShortcutUnavailable" xml:space="preserve">
+    <value>Windows 中不可用</value>
+  </data>
+  <data name="Workflow.ShowDock" xml:space="preserve">
+    <value>显示 WindowDock</value>
+  </data>
+  <data name="Workflow.Stack" xml:space="preserve">
+    <value>窗口堆叠</value>
+  </data>
+  <data name="Workflow.StartMissing" xml:space="preserve">
+    <value>启动缺少的命令</value>
+  </data>
+  <data name="Workflow.ToggleDock" xml:space="preserve">
+    <value>显示或最小化 WindowDock</value>
+  </data>
+  <data name="Workflow.UseResumeArguments" xml:space="preserve">
+    <value>使用配置的恢复参数</value>
+  </data>
+  <data name="Workflow.UseRules" xml:space="preserve">
+    <value>按收集规则分配窗口</value>
+  </data>
+  <data name="Workflow.WaitingOnly" xml:space="preserve">
+    <value>显示需要处理的会话</value>
+  </data>
+  <data name="Workflow.RetryUnmatched" xml:space="preserve">
+    <value>重试未连接的命令</value>
+  </data>
 </root>

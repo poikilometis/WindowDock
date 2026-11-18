@@ -82,7 +82,8 @@ internal static class DesktopAdvancedTests
         command.Arguments = "\"" + Path.Combine(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe") + "\" -NoExit -NoProfile -Command \"$host.UI.RawUI.WindowTitle='" + token + "'\"";
         command.TitlePattern = "*{agentId}*";
         command.Directory = Store.DirectoryPath; command.Environment.Add(new() { Key = "WD_TEST_MARKER", Value = "migration" }); project.Commands.Add(command);
-        Check(main.Session.LaunchProject(project) == 1, "PowerShell project did not start.");
+        Check(main.Session.OpenProject(project, startMissing: true, useResumeArguments: false).Single().State == ProjectRoleState.Starting,
+            "PowerShell project did not start.");
         foreach (var candidate in Process.GetProcessesByName("conhost"))
         {
             if (!existingHosts.Contains(candidate.Id) && WindowsProcessInfo.Parents(candidate.Id).Any(p => p.Id == Environment.ProcessId)) subjects.Add(candidate);
@@ -94,6 +95,9 @@ internal static class DesktopAdvancedTests
         Check(panel is not null && !string.IsNullOrEmpty(panel.AgentId), "PowerShell project window was not matched by its launch token.");
         var process = Process.GetProcessById(panel!.Record.ProcessId); subjects.Add(process);
         Check(Native.IsWindow(panel.Record.Hwnd), "Launched PowerShell native window is missing.");
+        var reopened = main.Session.OpenProject(project, startMissing: true, useResumeArguments: false);
+        Check(reopened.Count == 1 && reopened[0].State == ProjectRoleState.Open && reopened[0].Panel == panel,
+            "A second project open failed to reuse the existing PowerShell window.");
         main.Session.ReleasePanels([panel]); await Task.Delay(80); Check(!process.HasExited, "Releasing project window terminated the process.");
         Pass("Saved project launch finds an independent PowerShell console by its launch token and preserves its agent identity and lifetime.");
     }

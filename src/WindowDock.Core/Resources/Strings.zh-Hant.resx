@@ -1200,4 +1200,187 @@
   <data name="Counts.Columns.Few" xml:space="preserve">
     <value>{0} 欄</value>
   </data>
+  <data name="Workflow.Adaptive" xml:space="preserve">
+    <value>自適應格線</value>
+  </data>
+  <data name="Workflow.AgentActivity" xml:space="preserve">
+    <value>代理程式活動</value>
+  </data>
+  <data name="Workflow.AgentActivityCount" xml:space="preserve">
+    <value>需要處理的工作階段：{0}</value>
+  </data>
+  <data name="Workflow.AgentCompleted" xml:space="preserve">
+    <value>代理程式已完成一輪處理。</value>
+  </data>
+  <data name="Workflow.AgentNotifications" xml:space="preserve">
+    <value>在 Windows 顯示代理程式通知</value>
+  </data>
+  <data name="Workflow.Capture.Added" xml:space="preserve">
+    <value>已加入</value>
+  </data>
+  <data name="Workflow.Capture.AlreadyDocked" xml:space="preserve">
+    <value>已停駐</value>
+  </data>
+  <data name="Workflow.Capture.Excluded" xml:space="preserve">
+    <value>依規則排除</value>
+  </data>
+  <data name="Workflow.Capture.Failed" xml:space="preserve">
+    <value>無法加入</value>
+  </data>
+  <data name="Workflow.Capture.Filtered" xml:space="preserve">
+    <value>不符合篩選條件</value>
+  </data>
+  <data name="Workflow.Capture.Full" xml:space="preserve">
+    <value>沒有空位</value>
+  </data>
+  <data name="Workflow.Capture.Minimized" xml:space="preserve">
+    <value>已最小化</value>
+  </data>
+  <data name="Workflow.Capture.Ready" xml:space="preserve">
+    <value>將加入</value>
+  </data>
+  <data name="Workflow.CaptureDestination" xml:space="preserve">
+    <value>沒有分配規則的視窗會優先加入「{0}」。清單會顯示各視窗的去向。</value>
+  </data>
+  <data name="Workflow.CaptureReport" xml:space="preserve">
+    <value>上次收集結果</value>
+  </data>
+  <data name="Workflow.CaptureSummary" xml:space="preserve">
+    <value>已加入視窗：{0}。已略過：{1}。</value>
+  </data>
+  <data name="Workflow.CollectOptions" xml:space="preserve">
+    <value>依條件收集</value>
+  </data>
+  <data name="Workflow.DisplayNumber" xml:space="preserve">
+    <value>顯示器 {0}</value>
+  </data>
+  <data name="Workflow.ExcludeWindow" xml:space="preserve">
+    <value>建立收集排除規則…</value>
+  </data>
+  <data name="Workflow.IncludeMinimized" xml:space="preserve">
+    <value>包含已最小化的視窗</value>
+  </data>
+  <data name="Workflow.InvalidShortcut" xml:space="preserve">
+    <value>請為「{0}」設定有效且不重複的快捷鍵。</value>
+  </data>
+  <data name="Workflow.LinkProjectRole" xml:space="preserve">
+    <value>連結至專案指令</value>
+  </data>
+  <data name="Workflow.MoveToDisplay" xml:space="preserve">
+    <value>將 WindowDock 移至顯示器</value>
+  </data>
+  <data name="Workflow.NextAgent" xml:space="preserve">
+    <value>下一個需要處理的代理程式</value>
+  </data>
+  <data name="Workflow.NoAgentActivity" xml:space="preserve">
+    <value>沒有符合條件的活動。已設定的 hook 送出事件後會顯示狀態。</value>
+  </data>
+  <data name="Workflow.NotifyOnCompletion" xml:space="preserve">
+    <value>完成時也通知</value>
+  </data>
+  <data name="Workflow.Open" xml:space="preserve">
+    <value>開啟</value>
+  </data>
+  <data name="Workflow.OpenProject" xml:space="preserve">
+    <value>開啟專案「{0}」</value>
+  </data>
+  <data name="Workflow.OverflowTab" xml:space="preserve">
+    <value>為其餘視窗建立新分頁</value>
+  </data>
+  <data name="Workflow.PinPanel" xml:space="preserve">
+    <value>釘選在堆疊旁</value>
+  </data>
+  <data name="Workflow.PreviousWindow" xml:space="preserve">
+    <value>上一個使用的視窗</value>
+  </data>
+  <data name="Workflow.Project.Ambiguous" xml:space="preserve">
+    <value>請選擇相符的視窗</value>
+  </data>
+  <data name="Workflow.Project.Connect" xml:space="preserve">
+    <value>連結已開啟的視窗</value>
+  </data>
+  <data name="Workflow.Project.Failed" xml:space="preserve">
+    <value>無法開啟</value>
+  </data>
+  <data name="Workflow.Project.Missing" xml:space="preserve">
+    <value>找不到視窗</value>
+  </data>
+  <data name="Workflow.Project.Open" xml:space="preserve">
+    <value>已連結</value>
+  </data>
+  <data name="Workflow.Project.Starting" xml:space="preserve">
+    <value>正在等待視窗出現</value>
+  </data>
+  <data name="Workflow.ProjectReport" xml:space="preserve">
+    <value>專案開啟結果</value>
+  </data>
+  <data name="Workflow.ProjectSummary" xml:space="preserve">
+    <value>已連結：{0}。啟動中：{1}。需檢查：{2}。</value>
+  </data>
+  <data name="Workflow.ResetShortcut" xml:space="preserve">
+    <value>使用預設值</value>
+  </data>
+  <data name="Workflow.ResolveProjectRole" xml:space="preserve">
+    <value>在現有面板的選單將它連結至相符指令，或縮小指令的比對範圍。</value>
+  </data>
+  <data name="Workflow.ResumeArguments" xml:space="preserve">
+    <value>續接引數（選填）</value>
+  </data>
+  <data name="Workflow.ReturnAllWindows" xml:space="preserve">
+    <value>還原所有視窗並暫停收集</value>
+  </data>
+  <data name="Workflow.ReuseHelp" xml:space="preserve">
+    <value>輸入執行中的應用程式和可辨識的視窗標題，以重用已開啟的視窗。續接引數依指令而異。</value>
+  </data>
+  <data name="Workflow.ReuseProcess" xml:space="preserve">
+    <value>執行中的應用程式名稱</value>
+  </data>
+  <data name="Workflow.ReuseTitle" xml:space="preserve">
+    <value>已開啟視窗的標題</value>
+  </data>
+  <data name="Workflow.RoleAlreadyUsed" xml:space="preserve">
+    <value>該專案指令已有視窗或正在啟動。</value>
+  </data>
+  <data name="Workflow.RuleFromWindow" xml:space="preserve">
+    <value>從視窗建立規則…</value>
+  </data>
+  <data name="Workflow.Shortcut" xml:space="preserve">
+    <value>按鍵組合</value>
+  </data>
+  <data name="Workflow.ShortcutConflicts" xml:space="preserve">
+    <value>無法使用的快捷鍵：{0}</value>
+  </data>
+  <data name="Workflow.ShortcutHelp" xml:space="preserve">
+    <value>搭配 Ctrl、Alt、Shift 或 Win 與字母、數字或 F1、Space、Enter 等按鍵。留白則停用。</value>
+  </data>
+  <data name="Workflow.Shortcuts" xml:space="preserve">
+    <value>全域快捷鍵</value>
+  </data>
+  <data name="Workflow.ShortcutUnavailable" xml:space="preserve">
+    <value>Windows 無法使用</value>
+  </data>
+  <data name="Workflow.ShowDock" xml:space="preserve">
+    <value>顯示 WindowDock</value>
+  </data>
+  <data name="Workflow.Stack" xml:space="preserve">
+    <value>視窗堆疊</value>
+  </data>
+  <data name="Workflow.StartMissing" xml:space="preserve">
+    <value>啟動缺少的指令</value>
+  </data>
+  <data name="Workflow.ToggleDock" xml:space="preserve">
+    <value>顯示或最小化 WindowDock</value>
+  </data>
+  <data name="Workflow.UseResumeArguments" xml:space="preserve">
+    <value>使用已設定的續接引數</value>
+  </data>
+  <data name="Workflow.UseRules" xml:space="preserve">
+    <value>依收集規則分配視窗</value>
+  </data>
+  <data name="Workflow.WaitingOnly" xml:space="preserve">
+    <value>顯示需要處理的工作階段</value>
+  </data>
+  <data name="Workflow.RetryUnmatched" xml:space="preserve">
+    <value>重試未能連結的指令</value>
+  </data>
 </root>

@@ -1200,4 +1200,187 @@
   <data name="Counts.Columns.Few" xml:space="preserve">
     <value>{0} sütun</value>
   </data>
+  <data name="Workflow.Adaptive" xml:space="preserve">
+    <value>Uyarlanabilir ızgara</value>
+  </data>
+  <data name="Workflow.AgentActivity" xml:space="preserve">
+    <value>Aracı etkinliği</value>
+  </data>
+  <data name="Workflow.AgentActivityCount" xml:space="preserve">
+    <value>İlgi bekleyen oturum: {0}</value>
+  </data>
+  <data name="Workflow.AgentCompleted" xml:space="preserve">
+    <value>Bir aracının turu tamamlandı.</value>
+  </data>
+  <data name="Workflow.AgentNotifications" xml:space="preserve">
+    <value>Windows'ta aracı bildirimleri</value>
+  </data>
+  <data name="Workflow.Capture.Added" xml:space="preserve">
+    <value>Eklendi</value>
+  </data>
+  <data name="Workflow.Capture.AlreadyDocked" xml:space="preserve">
+    <value>Zaten yerleştirildi</value>
+  </data>
+  <data name="Workflow.Capture.Excluded" xml:space="preserve">
+    <value>Kuralla hariç tutuldu</value>
+  </data>
+  <data name="Workflow.Capture.Failed" xml:space="preserve">
+    <value>Eklenemedi</value>
+  </data>
+  <data name="Workflow.Capture.Filtered" xml:space="preserve">
+    <value>Filtre dışında</value>
+  </data>
+  <data name="Workflow.Capture.Full" xml:space="preserve">
+    <value>Boş yer yok</value>
+  </data>
+  <data name="Workflow.Capture.Minimized" xml:space="preserve">
+    <value>Simge durumunda</value>
+  </data>
+  <data name="Workflow.Capture.Ready" xml:space="preserve">
+    <value>Eklenecek</value>
+  </data>
+  <data name="Workflow.CaptureDestination" xml:space="preserve">
+    <value>Yönlendirme kuralı olmayan pencereler önce “{0}” sekmesine eklenir. Liste her pencerenin hedefini gösterir.</value>
+  </data>
+  <data name="Workflow.CaptureReport" xml:space="preserve">
+    <value>Son toplama sonucu</value>
+  </data>
+  <data name="Workflow.CaptureSummary" xml:space="preserve">
+    <value>Eklenen pencere: {0}. Atlanan: {1}.</value>
+  </data>
+  <data name="Workflow.CollectOptions" xml:space="preserve">
+    <value>Filtreyle topla</value>
+  </data>
+  <data name="Workflow.DisplayNumber" xml:space="preserve">
+    <value>Ekran {0}</value>
+  </data>
+  <data name="Workflow.ExcludeWindow" xml:space="preserve">
+    <value>Toplama istisnası oluştur…</value>
+  </data>
+  <data name="Workflow.IncludeMinimized" xml:space="preserve">
+    <value>Simge durumundaki pencereleri dahil et</value>
+  </data>
+  <data name="Workflow.InvalidShortcut" xml:space="preserve">
+    <value>“{0}” için geçerli ve benzersiz bir kısayol kullan.</value>
+  </data>
+  <data name="Workflow.LinkProjectRole" xml:space="preserve">
+    <value>Proje komutuna bağla</value>
+  </data>
+  <data name="Workflow.MoveToDisplay" xml:space="preserve">
+    <value>WindowDock'u ekrana taşı</value>
+  </data>
+  <data name="Workflow.NextAgent" xml:space="preserve">
+    <value>İlgi bekleyen sonraki aracı</value>
+  </data>
+  <data name="Workflow.NoAgentActivity" xml:space="preserve">
+    <value>Eşleşen etkinlik yok. Yapılandırılmış bir hook olay gönderdiğinde durum görünür.</value>
+  </data>
+  <data name="Workflow.NotifyOnCompletion" xml:space="preserve">
+    <value>Tamamlanınca da bildir</value>
+  </data>
+  <data name="Workflow.Open" xml:space="preserve">
+    <value>Aç</value>
+  </data>
+  <data name="Workflow.OpenProject" xml:space="preserve">
+    <value>“{0}” projesini aç</value>
+  </data>
+  <data name="Workflow.OverflowTab" xml:space="preserve">
+    <value>Kalan pencereler için yeni sekme</value>
+  </data>
+  <data name="Workflow.PinPanel" xml:space="preserve">
+    <value>Yığının yanına sabitle</value>
+  </data>
+  <data name="Workflow.PreviousWindow" xml:space="preserve">
+    <value>Önceki etkin pencere</value>
+  </data>
+  <data name="Workflow.Project.Ambiguous" xml:space="preserve">
+    <value>Eşleşen pencereyi seç</value>
+  </data>
+  <data name="Workflow.Project.Connect" xml:space="preserve">
+    <value>Açık pencereyi bağla</value>
+  </data>
+  <data name="Workflow.Project.Failed" xml:space="preserve">
+    <value>Açılamadı</value>
+  </data>
+  <data name="Workflow.Project.Missing" xml:space="preserve">
+    <value>Pencere eksik</value>
+  </data>
+  <data name="Workflow.Project.Open" xml:space="preserve">
+    <value>Zaten bağlı</value>
+  </data>
+  <data name="Workflow.Project.Starting" xml:space="preserve">
+    <value>Pencerenin açılması bekleniyor</value>
+  </data>
+  <data name="Workflow.ProjectReport" xml:space="preserve">
+    <value>Proje açma sonucu</value>
+  </data>
+  <data name="Workflow.ProjectSummary" xml:space="preserve">
+    <value>Bağlı: {0}. Başlatılıyor: {1}. İnceleme bekleyen: {2}.</value>
+  </data>
+  <data name="Workflow.ResetShortcut" xml:space="preserve">
+    <value>Varsayılanı kullan</value>
+  </data>
+  <data name="Workflow.ResolveProjectRole" xml:space="preserve">
+    <value>Mevcut panelin menüsünden uygun komuta bağla veya komutun eşleştirme koşullarını daralt.</value>
+  </data>
+  <data name="Workflow.ResumeArguments" xml:space="preserve">
+    <value>Sürdürme bağımsız değişkenleri (isteğe bağlı)</value>
+  </data>
+  <data name="Workflow.ReturnAllWindows" xml:space="preserve">
+    <value>Tüm pencereleri geri ver ve toplamayı duraklat</value>
+  </data>
+  <data name="Workflow.ReuseHelp" xml:space="preserve">
+    <value>Açık bir pencereyi kullanmak için çalışan uygulamayı ve ayırt edici pencere başlığını gir. Sürdürme bağımsız değişkenleri komuta özgüdür.</value>
+  </data>
+  <data name="Workflow.ReuseProcess" xml:space="preserve">
+    <value>Çalışan uygulama adı</value>
+  </data>
+  <data name="Workflow.ReuseTitle" xml:space="preserve">
+    <value>Mevcut pencerenin başlığı</value>
+  </data>
+  <data name="Workflow.RoleAlreadyUsed" xml:space="preserve">
+    <value>Bu proje komutunun zaten bir penceresi var veya komut başlatılıyor.</value>
+  </data>
+  <data name="Workflow.RuleFromWindow" xml:space="preserve">
+    <value>Pencereden kural oluştur…</value>
+  </data>
+  <data name="Workflow.Shortcut" xml:space="preserve">
+    <value>Tuş bileşimi</value>
+  </data>
+  <data name="Workflow.ShortcutConflicts" xml:space="preserve">
+    <value>Kullanılamayan kısayollar: {0}</value>
+  </data>
+  <data name="Workflow.ShortcutHelp" xml:space="preserve">
+    <value>Ctrl, Alt, Shift veya Win ile bir harf, rakam ya da F1, Space, Enter gibi bir tuş kullan. Devre dışı bırakmak için boş bırak.</value>
+  </data>
+  <data name="Workflow.Shortcuts" xml:space="preserve">
+    <value>Genel kısayollar</value>
+  </data>
+  <data name="Workflow.ShortcutUnavailable" xml:space="preserve">
+    <value>Windows'ta kullanılamıyor</value>
+  </data>
+  <data name="Workflow.ShowDock" xml:space="preserve">
+    <value>WindowDock'u göster</value>
+  </data>
+  <data name="Workflow.Stack" xml:space="preserve">
+    <value>Pencere yığını</value>
+  </data>
+  <data name="Workflow.StartMissing" xml:space="preserve">
+    <value>Eksik komutları başlat</value>
+  </data>
+  <data name="Workflow.ToggleDock" xml:space="preserve">
+    <value>WindowDock'u göster veya simge durumuna küçült</value>
+  </data>
+  <data name="Workflow.UseResumeArguments" xml:space="preserve">
+    <value>Yapılandırılmış sürdürme bağımsız değişkenlerini kullan</value>
+  </data>
+  <data name="Workflow.UseRules" xml:space="preserve">
+    <value>Pencereleri toplama kurallarına göre yönlendir</value>
+  </data>
+  <data name="Workflow.WaitingOnly" xml:space="preserve">
+    <value>İlgi bekleyen oturumları göster</value>
+  </data>
+  <data name="Workflow.RetryUnmatched" xml:space="preserve">
+    <value>Bağlanmayan komutları yeniden dene</value>
+  </data>
 </root>

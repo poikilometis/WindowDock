@@ -15,6 +15,8 @@ namespace WindowDock
         [DataMember] public long Handle, ProcessStartTicks, LastSeenUtc;
         [DataMember] public int ProcessId, Order;
         [DataMember] public List<string> HookSessions;
+        [DataMember(EmitDefaultValue = false)] public string ProjectId, CommandId;
+        [DataMember(EmitDefaultValue = false)] public long ActivatedUtc;
     }
     [DataContract] public sealed class GroupState
     {

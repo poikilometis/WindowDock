@@ -64,7 +64,8 @@ internal sealed class RulePreview : EditorWindow
         {
             var decision = RuleEngine.Evaluate(rules, candidate);
             var result = decision.Excluded ? L10n.Get("RuleDialogs.Excluded") : decision.Rule is null ? L10n.Get("RuleDialogs.NoMatchingRule") : L10n.Format("RuleDialogs.Tab", (workspaces.FirstOrDefault(w => w.Id == decision.Rule.WorkspaceId)?.Name ?? L10n.Get("RuleDialogs.NotFound")));
-            return new Choice<WindowCandidate>(candidate, result + " · " + candidate.Display);
+            return new Choice<WindowCandidate>(candidate, string.Join(" · ",
+                new[] { result, decision.Rule?.Name, candidate.Display }.Where(text => !string.IsNullOrWhiteSpace(text))));
         }).ToArray();
         Body.Children.Add(new ListBox { ItemsSource = rows, Height = 300 });
     }

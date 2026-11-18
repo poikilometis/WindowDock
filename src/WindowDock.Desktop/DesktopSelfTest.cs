@@ -123,12 +123,22 @@ internal static class DesktopSelfTest
         Native.SetForegroundWindow(first.Record.Hwnd); Native.FocusExternal(editor); await Task.Delay(100);
         Native.GetWindowRect(secondEditor, out var rect);
         var point = new Native.Point { X = rect.Left + 20, Y = rect.Top + 20 };
-        var active = Native.GetForegroundWindow(); var focus = Native.ForegroundFocus();
-        var wheelBefore = Message(secondEditor, 0x8061);
-        Check(backend.TestHover(point, -120), "Scoped wheel forwarding rejected an inactive pane: " + backend.DescribeHover(point)); await Task.Delay(120);
-        Check(Message(secondEditor, 0x8061) == wheelBefore + 1, "Inactive pane did not receive one wheel message.");
-        Check(Native.GetForegroundWindow() == active && Native.ForegroundFocus() == focus, "Hover scroll changed keyboard focus.");
-        Check(Message(secondEditor, 0x00CE) > 0, "Inactive editor did not scroll.");
+        // Only the disposable target is raised. The live hit test must remain valid when
+        // developers run this suite on a desktop with unrelated windows already open.
+        const uint orderOnly = Native.SWP_NOMOVE | Native.SWP_NOSIZE | Native.SWP_NOACTIVATE;
+        Native.SetWindowPos(second.Record.Hwnd, new nint(-1), 0, 0, 0, 0, orderOnly);
+        try
+        {
+            var active = Native.GetForegroundWindow();
+            var focus = Native.ForegroundFocus();
+            var wheelBefore = Message(secondEditor, 0x8061);
+            Check(backend.TestHover(point, -120), "Scoped wheel forwarding rejected an inactive pane: " + backend.DescribeHover(point));
+            await Task.Delay(120);
+            Check(Message(secondEditor, 0x8061) == wheelBefore + 1, "Inactive pane did not receive one wheel message: " + backend.DescribeHover(point));
+            Check(Native.GetForegroundWindow() == active && Native.ForegroundFocus() == focus, "Hover scroll changed keyboard focus.");
+            Check(Message(secondEditor, 0x00CE) > 0, "Inactive editor did not scroll.");
+        }
+        finally { Native.SetWindowPos(second.Record.Hwnd, new nint(-2), 0, 0, 0, 0, orderOnly); }
         Pass("Native character input and hover scrolling work; inactive editor scrolls without changing foreground / keyboard focus.");
         var hidden = 0;
         Native.WinEventProc observer = (_, evt, window, objectId, childId, _, _) => { if (window == first.Record.Hwnd && evt == 0x8003 && objectId == 0 && childId == 0) hidden++; };
@@ -166,6 +176,7 @@ internal static class DesktopSelfTest
         Snapshot(main, "avalonia-grid.png");
         await DesktopAdvancedTests.RunAsync(main, first);
         await DesktopInteractionTests.RunAsync(main);
+        await DesktopWorkflowTests.RunAsync(main);
     }
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     private static long Message(nint window, uint message, long wParam = 0, long lParam = 0)

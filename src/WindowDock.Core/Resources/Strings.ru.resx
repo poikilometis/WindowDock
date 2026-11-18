@@ -1200,4 +1200,187 @@
   <data name="Counts.Columns.Few" xml:space="preserve">
     <value>{0} столбца</value>
   </data>
+  <data name="Workflow.Adaptive" xml:space="preserve">
+    <value>Адаптивная сетка</value>
+  </data>
+  <data name="Workflow.AgentActivity" xml:space="preserve">
+    <value>Активность агентов</value>
+  </data>
+  <data name="Workflow.AgentActivityCount" xml:space="preserve">
+    <value>Сессий требуют внимания: {0}</value>
+  </data>
+  <data name="Workflow.AgentCompleted" xml:space="preserve">
+    <value>Агент завершил работу над запросом.</value>
+  </data>
+  <data name="Workflow.AgentNotifications" xml:space="preserve">
+    <value>Уведомления агентов в Windows</value>
+  </data>
+  <data name="Workflow.Capture.Added" xml:space="preserve">
+    <value>Добавлено</value>
+  </data>
+  <data name="Workflow.Capture.AlreadyDocked" xml:space="preserve">
+    <value>Уже добавлено</value>
+  </data>
+  <data name="Workflow.Capture.Excluded" xml:space="preserve">
+    <value>Исключено правилом</value>
+  </data>
+  <data name="Workflow.Capture.Failed" xml:space="preserve">
+    <value>Не удалось добавить</value>
+  </data>
+  <data name="Workflow.Capture.Filtered" xml:space="preserve">
+    <value>За пределами фильтра</value>
+  </data>
+  <data name="Workflow.Capture.Full" xml:space="preserve">
+    <value>Нет свободного места</value>
+  </data>
+  <data name="Workflow.Capture.Minimized" xml:space="preserve">
+    <value>Свёрнуто</value>
+  </data>
+  <data name="Workflow.Capture.Ready" xml:space="preserve">
+    <value>Будет добавлено</value>
+  </data>
+  <data name="Workflow.CaptureDestination" xml:space="preserve">
+    <value>Окна без правила начнут заполнять вкладку «{0}». В списке видно, куда попадёт каждое окно.</value>
+  </data>
+  <data name="Workflow.CaptureReport" xml:space="preserve">
+    <value>Результат последнего сбора</value>
+  </data>
+  <data name="Workflow.CaptureSummary" xml:space="preserve">
+    <value>Добавлено окон: {0}. Пропущено: {1}.</value>
+  </data>
+  <data name="Workflow.CollectOptions" xml:space="preserve">
+    <value>Собрать с фильтром</value>
+  </data>
+  <data name="Workflow.DisplayNumber" xml:space="preserve">
+    <value>Монитор {0}</value>
+  </data>
+  <data name="Workflow.ExcludeWindow" xml:space="preserve">
+    <value>Создать исключение…</value>
+  </data>
+  <data name="Workflow.IncludeMinimized" xml:space="preserve">
+    <value>Включить свёрнутые окна</value>
+  </data>
+  <data name="Workflow.InvalidShortcut" xml:space="preserve">
+    <value>Укажи допустимое сочетание для «{0}», свободное от повторов.</value>
+  </data>
+  <data name="Workflow.LinkProjectRole" xml:space="preserve">
+    <value>Привязать к команде проекта</value>
+  </data>
+  <data name="Workflow.MoveToDisplay" xml:space="preserve">
+    <value>Перенести WindowDock на монитор</value>
+  </data>
+  <data name="Workflow.NextAgent" xml:space="preserve">
+    <value>Следующий ожидающий агент</value>
+  </data>
+  <data name="Workflow.NoAgentActivity" xml:space="preserve">
+    <value>Здесь пока ничего нет. Статус появится, когда настроенный hook отправит событие.</value>
+  </data>
+  <data name="Workflow.NotifyOnCompletion" xml:space="preserve">
+    <value>Уведомлять и о завершении</value>
+  </data>
+  <data name="Workflow.Open" xml:space="preserve">
+    <value>Открыть</value>
+  </data>
+  <data name="Workflow.OpenProject" xml:space="preserve">
+    <value>Открыть проект «{0}»</value>
+  </data>
+  <data name="Workflow.OverflowTab" xml:space="preserve">
+    <value>Новая вкладка для оставшихся окон</value>
+  </data>
+  <data name="Workflow.PinPanel" xml:space="preserve">
+    <value>Закрепить рядом со стеком</value>
+  </data>
+  <data name="Workflow.PreviousWindow" xml:space="preserve">
+    <value>Предыдущее активное окно</value>
+  </data>
+  <data name="Workflow.Project.Ambiguous" xml:space="preserve">
+    <value>Укажите подходящее окно</value>
+  </data>
+  <data name="Workflow.Project.Connect" xml:space="preserve">
+    <value>Подключить открытое окно</value>
+  </data>
+  <data name="Workflow.Project.Failed" xml:space="preserve">
+    <value>Не удалось открыть</value>
+  </data>
+  <data name="Workflow.Project.Missing" xml:space="preserve">
+    <value>Окно отсутствует</value>
+  </data>
+  <data name="Workflow.Project.Open" xml:space="preserve">
+    <value>Уже подключено</value>
+  </data>
+  <data name="Workflow.Project.Starting" xml:space="preserve">
+    <value>Ожидается появление окна</value>
+  </data>
+  <data name="Workflow.ProjectReport" xml:space="preserve">
+    <value>Результат открытия проекта</value>
+  </data>
+  <data name="Workflow.ProjectSummary" xml:space="preserve">
+    <value>Подключено: {0}. Запускается: {1}. Требуют проверки: {2}.</value>
+  </data>
+  <data name="Workflow.ResetShortcut" xml:space="preserve">
+    <value>Вернуть исходное сочетание</value>
+  </data>
+  <data name="Workflow.ResolveProjectRole" xml:space="preserve">
+    <value>Привяжите открытое окно к команде через меню панели или уточните условия поиска в настройках команды.</value>
+  </data>
+  <data name="Workflow.ResumeArguments" xml:space="preserve">
+    <value>Аргументы возобновления</value>
+  </data>
+  <data name="Workflow.ReturnAllWindows" xml:space="preserve">
+    <value>Вернуть все окна и приостановить захват</value>
+  </data>
+  <data name="Workflow.ReuseHelp" xml:space="preserve">
+    <value>Для подключения открытого окна укажите процесс приложения и отличимый заголовок. Аргументы возобновления зависят от команды.</value>
+  </data>
+  <data name="Workflow.ReuseProcess" xml:space="preserve">
+    <value>Имя процесса открытого окна</value>
+  </data>
+  <data name="Workflow.ReuseTitle" xml:space="preserve">
+    <value>Заголовок открытого окна</value>
+  </data>
+  <data name="Workflow.RoleAlreadyUsed" xml:space="preserve">
+    <value>У этой команды проекта уже есть окно или выполняется запуск.</value>
+  </data>
+  <data name="Workflow.RuleFromWindow" xml:space="preserve">
+    <value>Создать правило по окну…</value>
+  </data>
+  <data name="Workflow.Shortcut" xml:space="preserve">
+    <value>Сочетание клавиш</value>
+  </data>
+  <data name="Workflow.ShortcutConflicts" xml:space="preserve">
+    <value>Недоступные сочетания клавиш: {0}</value>
+  </data>
+  <data name="Workflow.ShortcutHelp" xml:space="preserve">
+    <value>Используйте Ctrl, Alt, Shift или Win вместе с буквой, цифрой или клавишей вроде F1, Space или Enter. Пустое поле отключает сочетание.</value>
+  </data>
+  <data name="Workflow.Shortcuts" xml:space="preserve">
+    <value>Глобальные сочетания клавиш</value>
+  </data>
+  <data name="Workflow.ShortcutUnavailable" xml:space="preserve">
+    <value>Недоступно в Windows</value>
+  </data>
+  <data name="Workflow.ShowDock" xml:space="preserve">
+    <value>Показать WindowDock</value>
+  </data>
+  <data name="Workflow.Stack" xml:space="preserve">
+    <value>Стек окон</value>
+  </data>
+  <data name="Workflow.StartMissing" xml:space="preserve">
+    <value>Запустить недостающие команды</value>
+  </data>
+  <data name="Workflow.ToggleDock" xml:space="preserve">
+    <value>Показать или свернуть WindowDock</value>
+  </data>
+  <data name="Workflow.UseResumeArguments" xml:space="preserve">
+    <value>Использовать аргументы возобновления</value>
+  </data>
+  <data name="Workflow.UseRules" xml:space="preserve">
+    <value>Распределять окна по правилам захвата</value>
+  </data>
+  <data name="Workflow.WaitingOnly" xml:space="preserve">
+    <value>Показать сессии, требующие внимания</value>
+  </data>
+  <data name="Workflow.RetryUnmatched" xml:space="preserve">
+    <value>Повторить запуск неподключённых команд</value>
+  </data>
 </root>

@@ -17,9 +17,9 @@
     <Setter Property="Background" Value="{DynamicResource DockAccent}" /><Setter Property="Foreground" Value="{DynamicResource DockAccentInk}" />
   </Style>
   <Style Selector="Button.secondary"><Setter Property="Background" Value="{DynamicResource DockRaised}" /></Style>
+  <Style Selector="Button.dock:focus-visible /template/ ContentPresenter"><Setter Property="BorderBrush" Value="{DynamicResource DockAccent}" /><Setter Property="BorderThickness" Value="1" /></Style>
   <Style Selector="Button.menu-action"><Setter Property="Background" Value="{DynamicResource DockRaised}" /></Style>
   <Style Selector="Button.menu-action:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource DockSelection}" /></Style>
-  <Style Selector="Button.menu-action:focus-visible /template/ ContentPresenter"><Setter Property="BorderBrush" Value="{DynamicResource DockAccent}" /><Setter Property="BorderThickness" Value="1" /></Style>
   <Style Selector="Button.tab"><Setter Property="Padding" Value="10,0" /><Setter Property="Foreground" Value="{DynamicResource DockMuted}" /></Style>
   <Style Selector="Button.tab.active"><Setter Property="Background" Value="{DynamicResource DockRaised}" /><Setter Property="Foreground" Value="{DynamicResource DockText}" /></Style>
   <Style Selector="Button.magnet.active"><Setter Property="Background" Value="{DynamicResource DockSelection}" /><Setter Property="Foreground" Value="{DynamicResource DockAccent}" /></Style>

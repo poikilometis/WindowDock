@@ -76,7 +76,7 @@ namespace WindowDock
         [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hwnd, int cmd);
         [DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr hwnd, int cmd);
         [DllImport("user32.dll")] public static extern bool GetWindowPlacement(IntPtr hwnd, ref Placement placement);
-        [DllImport("user32.dll")] public static extern bool SetWindowPlacement(IntPtr hwnd, ref Placement placement);
+        [DllImport("user32.dll", SetLastError = true)] public static extern bool SetWindowPlacement(IntPtr hwnd, ref Placement placement);
         [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
         [DllImport("user32.dll")] public static extern IntPtr GetFocus();
         [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hwnd);
