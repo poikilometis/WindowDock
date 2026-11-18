@@ -1,15 +1,12 @@
 <div align="center">
   <img src="assets/windowdock.png" width="88" height="88" alt="WindowDock logo">
-
-<pre title="WindowDock">
-██╗    ██╗██╗███╗   ██╗██████╗  ██████╗ ██╗    ██╗██████╗  ██████╗  ██████╗██╗  ██╗
-██║    ██║██║████╗  ██║██╔══██╗██╔═══██╗██║    ██║██╔══██╗██╔═══██╗██╔════╝██║ ██╔╝
-██║ █╗ ██║██║██╔██╗ ██║██║  ██║██║   ██║██║ █╗ ██║██║  ██║██║   ██║██║     █████╔╝ 
-██║███╗██║██║██║╚██╗██║██║  ██║██║   ██║██║███╗██║██║  ██║██║   ██║██║     ██╔═██╗ 
-╚███╔███╔╝██║██║ ╚████║██████╔╝╚██████╔╝╚███╔███╔╝██████╔╝╚██████╔╝╚██████╗██║  ██╗
- ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═════╝  ╚═════╝  ╚═════╝╚═╝  ╚═╝
-</pre>
-
+  <h1>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/images/windowdock-banner-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="docs/images/windowdock-banner-light.svg">
+      <img src="docs/images/windowdock-banner-light.svg" width="640" alt="WindowDock">
+    </picture>
+  </h1>
   <p><strong>One Windows workspace for your open terminals and apps</strong></p>
 
   https://github.com/user-attachments/assets/dac915fa-7a5e-4306-9e56-d02eb4614c44
