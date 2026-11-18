@@ -257,6 +257,7 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
             wanted.Add(record.Handle);
             if (Native.IsHungAppWindow(record.Hwnd)) continue;
             if (!ChangeOwner(record, placement.Owner == 0 ? host.Handle : placement.Owner)) continue;
+            ApplyDockedOpacity(record, placement.Opacity);
             if (audit && Native.ClassName(record.Hwnd) != record.ClassName) { Forget(record); continue; }
             if (audit && (clips.TryGetValue(record.Handle, out var clip) && !Native.HasRegionBox(record.Hwnd, clip) ||
                 fitted.TryGetValue(record.Handle, out var fit) && Native.GetWindowRect(record.Hwnd, out var actual) && actual.Rectangle != fit.Bounds))

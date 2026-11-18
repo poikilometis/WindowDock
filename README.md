@@ -103,6 +103,11 @@ Agent status comes from configured hooks. Sessions in a shared Windows Terminal 
 - Right-click a WindowDock tab and choose **Open tab on display**. Its separate window retains live input and can stay open while the main window is minimized. A bound display that disconnects makes the tab available in the main window again.
 - To bind a tab to a virtual desktop, open WindowDock on that desktop and select **Bind to this virtual desktop** from the same menu. Use Windows Task View to switch desktops.
 
+### Customize colors and keep work running
+
+- Open **… → View → Color and opacity** to style every window, the toolbar, or the tabs. Choose a solid color, a static gradient, or a flowing gradient. You can override the defaults in a panel's menu or by right-clicking a tab. Panel styles also include a title text color. The body opacity slider works with compatible docked windows.
+- Choose **… → Prevent sleep** to keep Windows awake while WindowDock is open, while any docked window remains, or while a connected agent reports that it is working through its hooks. Windows can still turn off the display.
+
 ## Languages
 
 The interface follows your **OS display language at startup**. Unsupported languages fall back to English. Number and date formats continue to follow your regional preferences. Existing tab names, panel aliases, and project names are your data and are not translated.
@@ -138,6 +143,8 @@ Hooks retain status and routing metadata. With **Remember agent conversations fo
 ## Builds and releases
 
 Pushes and pull requests run CI across the shared core on Windows, Linux, and macOS, plus Windows native and localization checks. A matching version tag builds and publishes portable/source ZIPs with SHA-256 checksums and GitHub provenance attestations. See [publishing and delivery](docs/PUBLISHING.md).
+
+WindowDock checks GitHub for new stable Windows x64 releases. Use **Update** in the toolbar to check on demand. The update card links to the changelog and returns after 24 hours or the next launch if dismissed. Installing verifies the ZIP checksum, restarts WindowDock in the same folder, and opens **What's new** in a new tab. Your saved groups and settings stay with the existing profile.
 
 ### Follow WindowDock
 

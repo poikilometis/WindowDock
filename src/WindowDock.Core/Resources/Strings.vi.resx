@@ -1506,4 +1506,97 @@
   <data name="Recovery.AutomaticHistory" xml:space="preserve">
     <value>Tự động lưu lịch sử thiết bị đầu cuối</value>
   </data>
+  <data name="Surface.Colors" xml:space="preserve">
+    <value>Màu sắc và độ trong suốt</value>
+  </data>
+  <data name="Surface.AllWindows" xml:space="preserve">
+    <value>Tất cả cửa sổ</value>
+  </data>
+  <data name="Surface.Header" xml:space="preserve">
+    <value>Thanh công cụ WindowDock</value>
+  </data>
+  <data name="Surface.AllTabs" xml:space="preserve">
+    <value>Tất cả thẻ</value>
+  </data>
+  <data name="Surface.Inherit" xml:space="preserve">
+    <value>Dùng cài đặt chung</value>
+  </data>
+  <data name="Surface.FromTheme" xml:space="preserve">
+    <value>Dùng chủ đề</value>
+  </data>
+  <data name="Surface.StaticGradient" xml:space="preserve">
+    <value>Chuyển màu tĩnh</value>
+  </data>
+  <data name="Surface.FlowGradient" xml:space="preserve">
+    <value>Chuyển màu động</value>
+  </data>
+  <data name="Surface.TitleColor" xml:space="preserve">
+    <value>Màu tiêu đề riêng</value>
+  </data>
+  <data name="Surface.StartColor" xml:space="preserve">
+    <value>Màu đầu</value>
+  </data>
+  <data name="Surface.EndColor" xml:space="preserve">
+    <value>Màu cuối</value>
+  </data>
+  <data name="Surface.CustomOpacity" xml:space="preserve">
+    <value>Độ đục riêng</value>
+  </data>
+  <data name="Surface.Reset" xml:space="preserve">
+    <value>Đặt lại</value>
+  </data>
+  <data name="Surface.NativeOpacityUnsupported" xml:space="preserve">
+    <value>Cửa sổ này tự điều chỉnh độ trong suốt.</value>
+  </data>
+  <data name="Power.PreventSleep" xml:space="preserve">
+    <value>Ngăn máy ngủ</value>
+  </data>
+  <data name="Power.Off" xml:space="preserve">
+    <value>Tắt</value>
+  </data>
+  <data name="Power.WhileOpen" xml:space="preserve">
+    <value>Khi WindowDock đang mở</value>
+  </data>
+  <data name="Power.WhileAgentsWork" xml:space="preserve">
+    <value>Khi tác nhân có hook đang chạy</value>
+  </data>
+  <data name="Power.WhileDocked" xml:space="preserve">
+    <value>Khi có cửa sổ đã ghim</value>
+  </data>
+  <data name="Update.Button" xml:space="preserve">
+    <value>Cập nhật</value>
+  </data>
+  <data name="Update.Available" xml:space="preserve">
+    <value>Đã có phiên bản {0}</value>
+  </data>
+  <data name="Update.Dismiss" xml:space="preserve">
+    <value>Ẩn thông báo cập nhật</value>
+  </data>
+  <data name="Update.Changelog" xml:space="preserve">
+    <value>Xem thay đổi</value>
+  </data>
+  <data name="Update.Install" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="Update.Downloading" xml:space="preserve">
+    <value>Đang tải bản cập nhật…</value>
+  </data>
+  <data name="Update.Failed" xml:space="preserve">
+    <value>Không thể cài đặt bản cập nhật.</value>
+  </data>
+  <data name="Update.Checking" xml:space="preserve">
+    <value>Đang kiểm tra bản cập nhật…</value>
+  </data>
+  <data name="Update.Current" xml:space="preserve">
+    <value>WindowDock đang ở phiên bản mới nhất.</value>
+  </data>
+  <data name="Update.CheckFailed" xml:space="preserve">
+    <value>Không thể kiểm tra bản cập nhật.</value>
+  </data>
+  <data name="Update.WhatsNew" xml:space="preserve">
+    <value>Có gì mới</value>
+  </data>
+  <data name="Update.WhatsNewVersion" xml:space="preserve">
+    <value>Có gì mới trong {0}</value>
+  </data>
 </root>

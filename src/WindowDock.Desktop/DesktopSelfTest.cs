@@ -162,6 +162,7 @@ internal static class DesktopSelfTest
         }
         Pass("Selected-tab clicks emit zero hide events; all five themes preserve host / external handles and render without GDI text.");
         session.Config.ThemeId = "frost"; main.TestRefresh();
+        await main.TestSurfaceAndUpdatesAsync(first);
         session.SelectedWorkspace = session.Config.Workspaces[1].Id; await Task.Delay(80);
         Check(!Native.IsWindowVisible(first.Record.Hwnd), "Inactive workspace remains visible.");
         session.SelectedWorkspace = session.Config.Workspaces[0].Id; await Task.Delay(100);

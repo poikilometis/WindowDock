@@ -1506,4 +1506,97 @@
   <data name="Recovery.AutomaticHistory" xml:space="preserve">
     <value>บันทึกประวัติเทอร์มินัลโดยอัตโนมัติ</value>
   </data>
+  <data name="Surface.Colors" xml:space="preserve">
+    <value>สีและความโปร่งใส</value>
+  </data>
+  <data name="Surface.AllWindows" xml:space="preserve">
+    <value>ทุกหน้าต่าง</value>
+  </data>
+  <data name="Surface.Header" xml:space="preserve">
+    <value>แถบเครื่องมือ WindowDock</value>
+  </data>
+  <data name="Surface.AllTabs" xml:space="preserve">
+    <value>ทุกแท็บ</value>
+  </data>
+  <data name="Surface.Inherit" xml:space="preserve">
+    <value>ใช้การตั้งค่าทั่วไป</value>
+  </data>
+  <data name="Surface.FromTheme" xml:space="preserve">
+    <value>ใช้สีธีม</value>
+  </data>
+  <data name="Surface.StaticGradient" xml:space="preserve">
+    <value>ไล่สีแบบคงที่</value>
+  </data>
+  <data name="Surface.FlowGradient" xml:space="preserve">
+    <value>ไล่สีแบบเคลื่อนไหว</value>
+  </data>
+  <data name="Surface.TitleColor" xml:space="preserve">
+    <value>กำหนดสีชื่อหน้าต่าง</value>
+  </data>
+  <data name="Surface.StartColor" xml:space="preserve">
+    <value>สีเริ่มต้น</value>
+  </data>
+  <data name="Surface.EndColor" xml:space="preserve">
+    <value>สีปลาย</value>
+  </data>
+  <data name="Surface.CustomOpacity" xml:space="preserve">
+    <value>กำหนดความทึบ</value>
+  </data>
+  <data name="Surface.Reset" xml:space="preserve">
+    <value>รีเซ็ต</value>
+  </data>
+  <data name="Surface.NativeOpacityUnsupported" xml:space="preserve">
+    <value>หน้าต่างนี้จัดการความโปร่งใสเอง</value>
+  </data>
+  <data name="Power.PreventSleep" xml:space="preserve">
+    <value>ป้องกันโหมดสลีป</value>
+  </data>
+  <data name="Power.Off" xml:space="preserve">
+    <value>ปิด</value>
+  </data>
+  <data name="Power.WhileOpen" xml:space="preserve">
+    <value>ขณะเปิด WindowDock</value>
+  </data>
+  <data name="Power.WhileAgentsWork" xml:space="preserve">
+    <value>ขณะเอเจนต์ที่มีฮุกทำงาน</value>
+  </data>
+  <data name="Power.WhileDocked" xml:space="preserve">
+    <value>ขณะมีหน้าต่างที่เชื่อมอยู่</value>
+  </data>
+  <data name="Update.Button" xml:space="preserve">
+    <value>อัปเดต</value>
+  </data>
+  <data name="Update.Available" xml:space="preserve">
+    <value>มีเวอร์ชัน {0} แล้ว</value>
+  </data>
+  <data name="Update.Dismiss" xml:space="preserve">
+    <value>ปิดการแจ้งเตือนอัปเดต</value>
+  </data>
+  <data name="Update.Changelog" xml:space="preserve">
+    <value>ดูสิ่งที่เปลี่ยนแปลง</value>
+  </data>
+  <data name="Update.Install" xml:space="preserve">
+    <value>ติดตั้ง</value>
+  </data>
+  <data name="Update.Downloading" xml:space="preserve">
+    <value>กำลังดาวน์โหลดอัปเดต…</value>
+  </data>
+  <data name="Update.Failed" xml:space="preserve">
+    <value>ติดตั้งอัปเดตไม่สำเร็จ</value>
+  </data>
+  <data name="Update.Checking" xml:space="preserve">
+    <value>กำลังตรวจสอบอัปเดต…</value>
+  </data>
+  <data name="Update.Current" xml:space="preserve">
+    <value>WindowDock เป็นเวอร์ชันล่าสุดแล้ว</value>
+  </data>
+  <data name="Update.CheckFailed" xml:space="preserve">
+    <value>ตรวจสอบอัปเดตไม่สำเร็จ</value>
+  </data>
+  <data name="Update.WhatsNew" xml:space="preserve">
+    <value>มีอะไรใหม่</value>
+  </data>
+  <data name="Update.WhatsNewVersion" xml:space="preserve">
+    <value>มีอะไรใหม่ใน {0}</value>
+  </data>
 </root>

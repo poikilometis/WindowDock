@@ -1506,4 +1506,97 @@
   <data name="Recovery.AutomaticHistory" xml:space="preserve">
     <value>터미널 기록 자동 저장</value>
   </data>
+  <data name="Surface.Colors" xml:space="preserve">
+    <value>색상 및 투명도</value>
+  </data>
+  <data name="Surface.AllWindows" xml:space="preserve">
+    <value>모든 창</value>
+  </data>
+  <data name="Surface.Header" xml:space="preserve">
+    <value>WindowDock 도구 모음</value>
+  </data>
+  <data name="Surface.AllTabs" xml:space="preserve">
+    <value>모든 탭</value>
+  </data>
+  <data name="Surface.Inherit" xml:space="preserve">
+    <value>공통 설정 사용</value>
+  </data>
+  <data name="Surface.FromTheme" xml:space="preserve">
+    <value>테마 사용</value>
+  </data>
+  <data name="Surface.StaticGradient" xml:space="preserve">
+    <value>고정 그라데이션</value>
+  </data>
+  <data name="Surface.FlowGradient" xml:space="preserve">
+    <value>움직이는 그라데이션</value>
+  </data>
+  <data name="Surface.TitleColor" xml:space="preserve">
+    <value>제목 색상 지정</value>
+  </data>
+  <data name="Surface.StartColor" xml:space="preserve">
+    <value>시작 색상</value>
+  </data>
+  <data name="Surface.EndColor" xml:space="preserve">
+    <value>끝 색상</value>
+  </data>
+  <data name="Surface.CustomOpacity" xml:space="preserve">
+    <value>불투명도 지정</value>
+  </data>
+  <data name="Surface.Reset" xml:space="preserve">
+    <value>재설정</value>
+  </data>
+  <data name="Surface.NativeOpacityUnsupported" xml:space="preserve">
+    <value>이 창은 투명도를 직접 관리합니다.</value>
+  </data>
+  <data name="Power.PreventSleep" xml:space="preserve">
+    <value>절전 방지</value>
+  </data>
+  <data name="Power.Off" xml:space="preserve">
+    <value>끔</value>
+  </data>
+  <data name="Power.WhileOpen" xml:space="preserve">
+    <value>WindowDock이 열려 있는 동안</value>
+  </data>
+  <data name="Power.WhileAgentsWork" xml:space="preserve">
+    <value>훅이 연결된 에이전트가 작업하는 동안</value>
+  </data>
+  <data name="Power.WhileDocked" xml:space="preserve">
+    <value>도킹된 창이 있는 동안</value>
+  </data>
+  <data name="Update.Button" xml:space="preserve">
+    <value>업데이트</value>
+  </data>
+  <data name="Update.Available" xml:space="preserve">
+    <value>버전 {0}이 출시되었습니다</value>
+  </data>
+  <data name="Update.Dismiss" xml:space="preserve">
+    <value>업데이트 알림 닫기</value>
+  </data>
+  <data name="Update.Changelog" xml:space="preserve">
+    <value>변경 사항 보기</value>
+  </data>
+  <data name="Update.Install" xml:space="preserve">
+    <value>설치</value>
+  </data>
+  <data name="Update.Downloading" xml:space="preserve">
+    <value>업데이트 다운로드 중…</value>
+  </data>
+  <data name="Update.Failed" xml:space="preserve">
+    <value>업데이트를 설치할 수 없습니다.</value>
+  </data>
+  <data name="Update.Checking" xml:space="preserve">
+    <value>업데이트 확인 중…</value>
+  </data>
+  <data name="Update.Current" xml:space="preserve">
+    <value>WindowDock이 최신 버전입니다.</value>
+  </data>
+  <data name="Update.CheckFailed" xml:space="preserve">
+    <value>업데이트를 확인할 수 없습니다.</value>
+  </data>
+  <data name="Update.WhatsNew" xml:space="preserve">
+    <value>새로운 기능</value>
+  </data>
+  <data name="Update.WhatsNewVersion" xml:space="preserve">
+    <value>{0}의 변경 사항</value>
+  </data>
 </root>

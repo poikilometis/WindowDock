@@ -12,7 +12,7 @@ internal sealed partial class MainWindow
     internal async Task<bool> ShowEditorAsync(EditorWindow editor, Window? owner = null)
     {
         if (owner is EditorWindow page) return await page.ShowNestedAsync(editor);
-        dialogDepth++; using var suspension = Session.Backend.Suspend();
+        dialogDepth++; HideUpdateCard(); using var suspension = Session.Backend.Suspend();
         void Raise(object? sender, EventArgs args) { if (editor.TryGetPlatformHandle() is { } handle) Session.Backend.RaiseOverlay(handle.Handle); }
         editor.Opened += Raise;
         try { await editor.ShowDialog<bool>(owner ?? this); return editor.Accepted; }
@@ -110,6 +110,11 @@ internal sealed partial class MainWindow
         entries.Add(Item(Session.CanUndo ? L10n.Format("MainWindowCommands.Undo", Session.UndoName) : L10n.Get("MainWindowCommands.UndoAction"), Session.Undo, Session.CanUndo)); entries.Add(new Separator());
         entries.Add(Group(L10n.Get("MainWindowCommands.View"), [
             AsyncItem(L10n.Get("MainWindowCommands.Appearance"), ChangeAppearanceAsync),
+            Group(L10n.Get("Surface.Colors"), [
+                AsyncItem(L10n.Get("Surface.AllWindows"), () => EditSurfaceAsync(SurfaceArea.Window)),
+                AsyncItem(L10n.Get("Surface.Header"), () => EditSurfaceAsync(SurfaceArea.Header)),
+                AsyncItem(L10n.Get("Surface.AllTabs"), () => EditSurfaceAsync(SurfaceArea.Tab))
+            ]),
             AsyncItem(L10n.Get("MainWindowCommands.TabBackground"), () => BackgroundAsync(Session.Current)),
             Item(L10n.Get("MainWindowCommands.ScrollOnHover"), () => { Session.Config.HoverScroll = !Session.Config.HoverScroll; Session.Backend.HoverEnabled = Session.Config.HoverScroll; Session.Save(); }, check: Session.Config.HoverScroll),
             DisplayMenu(),
@@ -121,6 +126,7 @@ internal sealed partial class MainWindow
                 () => SetAgentNotifications(Session.Config.AgentNotifications, !Session.Config.NotifyOnCompletion),
                 Session.Config.AgentNotifications, Session.Config.NotifyOnCompletion)
         ]));
+        entries.Add(SleepMenu());
         entries.Add(Item(L10n.Get("MainWindowCommands.UndockTabWindows"), () => Session.ReleasePanels(Session.CurrentPanels)));
         entries.Add(Item(L10n.Get("Workflow.ReturnAllWindows"), () =>
         {
@@ -177,6 +183,7 @@ internal sealed partial class MainWindow
             Item((Session.FocusedPanel == panel.Id || workspaceWindows.TryGetValue(panel.WorkspaceId, out var view) && view.Focuses(panel))
                 ? L10n.Get("MainWindowCommands.ReturnToGrid") : L10n.Get("MainWindowCommands.Zoom"), () => ToggleFocus(panel)),
             AsyncItem(L10n.Get("MainWindowCommands.Rename"), async () => { var name = await AskNameAsync(L10n.Get("WorkspaceSession.PanelName"), panel.Caption); if (name is not null) Session.RenamePanel(panel, name); }),
+            AsyncItem(L10n.Get("Surface.Colors"), () => EditSurfaceAsync(SurfaceArea.Window, panel)),
             MoveMenu(selected), Item(L10n.Get("MainWindowCommands.Undock"), () => Session.ReleasePanels(selected)), new Separator(),
             Item(L10n.Get("MainWindowCommands.SelectPanel"), () => Session.Select(panel, true, false)), Item(L10n.Get("MainWindowCommands.ClearAttention"), () => { panel.Attention = false; RefreshTabs(); Session.Save(); }),
             Item(L10n.Get("Workflow.PinPanel"), () => Session.TogglePinnedPanel(panel), check: Session.Current.PinnedPanelId == panel.Id),
@@ -200,6 +207,7 @@ internal sealed partial class MainWindow
     }
     private void ShowTabMenu(WorkspaceConfig workspace, Control anchor) => OpenMenu(anchor, [
         AsyncItem(L10n.Get("MainWindowCommands.Rename"), () => RenameWorkspaceAsync(workspace)), LayoutMenu(workspace), AsyncItem(L10n.Get("MainWindowCommands.TabBackground"), () => BackgroundAsync(workspace)),
+        AsyncItem(L10n.Get("Surface.Colors"), () => EditSurfaceAsync(SurfaceArea.Tab, tab: workspace)),
         PresentationMenu(workspace),
         Item(L10n.Get("MainWindowCommands.UndockTabWindows"), () => Session.ReleasePanels(Session.Panels.Where(p => p.WorkspaceId == workspace.Id))), Item(L10n.Get("MainWindowCommands.CloseTab"), () => Session.CloseWorkspace(workspace))
     ]);

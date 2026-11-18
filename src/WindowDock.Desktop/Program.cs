@@ -9,6 +9,7 @@ internal static class Program
     [STAThread]
     public static int Main(string[] args)
     {
+        if (args is ["--apply-update"] && OperatingSystem.IsWindows()) return PortableUpdate.Apply();
         if (args is ["--version"]) { Console.WriteLine(RuntimePaths.ProductVersion); return 0; }
         if (args is ["--console-wheel-worker", var owner])
             return OperatingSystem.IsWindows() && long.TryParse(owner, out var handle) ? ConsoleHoverInput.RunWorker((nint)handle) : 2;
@@ -21,6 +22,7 @@ internal static class Program
         IsSelfTest = args.FirstOrDefault() == "--self-test";
         if (args.FirstOrDefault() == "--perf-test" && args.Length > 1) PerformanceReport = Path.GetFullPath(args[1]);
         var languageOption = Array.IndexOf(args, "--language");
+        ExplicitLanguage = languageOption >= 0 && languageOption + 1 < args.Length ? args[languageOption + 1] : null;
         var language = languageOption >= 0 && languageOption + 1 < args.Length ? args[languageOption + 1] : Environment.GetEnvironmentVariable("WINDOWDOCK_LANGUAGE");
         L10n.Initialize(language ?? (IsSelfTest ? "ru" : null));
         Store.DirectoryPath = DataDirectory(args);
@@ -43,6 +45,7 @@ internal static class Program
         if (args.FirstOrDefault() == "--agent-hook") return RunHookAsync(args).GetAwaiter().GetResult();
         if (args.FirstOrDefault() == "--hover-probe" && args.Length == 2) { HoverProbeDirectory = Path.GetFullPath(args[1]); Directory.CreateDirectory(HoverProbeDirectory); return BuildAvaloniaApp().StartWithClassicDesktopLifetime(args); }
         if (args.FirstOrDefault() == "--test-window") { TestSubjectToken = args.ElementAtOrDefault(1) ?? "fixture"; return BuildAvaloniaApp().StartWithClassicDesktopLifetime(args); }
+        if (OperatingSystem.IsWindows() && !args.Contains("--update-restart") && PortableUpdate.InProgress()) return 0;
         Directory.CreateDirectory(Store.DirectoryPath);
         using var instance = new Mutex(true, (OperatingSystem.IsWindows() ? @"Local\" : "") + AgentBridge.PipeName, out var created);
         if (!created) return 0;
@@ -55,6 +58,7 @@ internal static class Program
     internal static string? HoverProbeDirectory { get; private set; }
     internal static string? PerformanceReport { get; private set; }
     internal static bool IsSelfTest { get; private set; }
+    internal static string? ExplicitLanguage { get; private set; }
     internal static string? TestSubjectToken { get; private set; }
     internal static AppBuilder BuildAvaloniaApp()
     {

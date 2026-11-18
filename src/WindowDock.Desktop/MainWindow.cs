@@ -55,6 +55,8 @@ internal sealed partial class MainWindow : Window
         tabScroll = new ScrollViewer { Content = tabs, HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Hidden, VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled };
         tabScroll.PointerWheelChanged += (_, args) => { tabScroll.Offset = new(Math.Clamp(tabScroll.Offset.X - args.Delta.Y * 48, 0, Math.Max(0, tabScroll.Extent.Width - tabScroll.Viewport.Width)), 0); args.Handled = true; };
         var actions = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 3, Margin = new(3, 2, 5, 2) };
+        updateButton = DockControls.Button(L10n.Get("Update.Button"), "update", () => _ = CheckForUpdateAsync(manual: true));
+        updateButton.IsVisible = UpdatesAvailable;
         collect = DockControls.Button(L10n.Get("MainWindow.CollectWindows"), "collect", () => UserAction(() => CollectWindows(new())), tip: L10n.Get("MainWindow.CollectDesktopWindowsMinimizedWindowsAreSkipped"));
         collect.Classes.Add("secondary");
         collect.PointerPressed += (_, args) =>
@@ -70,7 +72,7 @@ internal sealed partial class MainWindow : Window
         attention = DockControls.Button("", "bell", () => _ = UserActionAsync(OpenAttentionAsync), tip: L10n.Get("Workflow.AgentActivity"));
         ((StackPanel)attention.Content!).Children.Add(attentionCount);
         var menu = DockControls.Button("", "more", () => ShowAppMenu(), tip: L10n.Get("MainWindow.WindowDockMenu"));
-        foreach (var button in new[] { collect, newTab, add, grid, magnet, attention, menu }) actions.Children.Add(button);
+        foreach (var button in new[] { updateButton, collect, newTab, add, grid, magnet, attention, menu }) actions.Children.Add(button);
         status.MaxWidth = 220; status.VerticalAlignment = VerticalAlignment.Center;
         var commands = new Grid { ColumnDefinitions = new("*,Auto,Auto") }; commands.Children.Add(tabScroll);
         Grid.SetColumn(status, 1); commands.Children.Add(status); Grid.SetColumn(actions, 2); commands.Children.Add(actions);
@@ -92,14 +94,16 @@ internal sealed partial class MainWindow : Window
         Grid.SetRow(empty, 1); workspace.Children.Add(empty); Grid.SetRow(workspace, 1); root.Children.Add(workspace); Content = root;
         viewport.ScrollChanged += (_, _) => QueueSync();
         viewport.PropertyChanged += (_, args) => { if (args.Property == ScrollViewer.ViewportProperty) ArrangePanels(); };
-        PositionChanged += (_, _) => { QueueSync(); SchedulePlacementSave(); };
-        ScalingChanged += (_, _) => QueueSync();
-        SizeChanged += (_, _) => { UpdateCollectCaption(); SchedulePlacementSave(); };
+        PositionChanged += (_, _) => { QueueSync(); SchedulePlacementSave(); PositionUpdateCard(); };
+        ScalingChanged += (_, _) => { QueueSync(); PositionUpdateCard(); };
+        SizeChanged += (_, _) => { UpdateCollectCaption(); SchedulePlacementSave(); PositionUpdateCard(); };
         PropertyChanged += (_, args) =>
         {
             if (args.Property != WindowStateProperty && args.Property != IsVisibleProperty) return;
             if (WindowState != WindowState.Minimized) lastVisibleState = WindowState;
             wallpaper.SetRunning(IsVisible && WindowState != WindowState.Minimized);
+            RefreshSurfaceMotion();
+            ShowUpdateCardIfNeeded();
             SchedulePlacementSave();
             QueueSync();
         };
@@ -120,6 +124,8 @@ internal sealed partial class MainWindow : Window
     }
     private void UpdateCollectCaption()
     {
+        if (updateButton.Content is StackPanel updateContent && updateContent.Children.OfType<TextBlock>().FirstOrDefault() is { } updateLabel)
+            updateLabel.IsVisible = Bounds.Width >= 860;
         status.MaxWidth = Bounds.Width < 1000 ? 120 : 220;
         if (collect.Content is StackPanel row && row.Children.OfType<TextBlock>().LastOrDefault() is { } label)
             label.Text = Bounds.Width < 1000 ? L10n.Get("MainWindow.CollectWindows") : L10n.Get("MainWindow.CollectDesktopWindows");
@@ -143,6 +149,7 @@ internal sealed partial class MainWindow : Window
             });
             StartDisplayTracking();
             ApplyAppearance(); UpdateCollectCaption(); Poll(); timer.Start(); QueueSync();
+            InitializeUpdates();
             if (Program.CrashTarget != 0)
             {
                 var candidate = Session.Backend.Enumerate().First(c => c.Handle == Program.CrashTarget && c.ProcessId == Program.CrashTargetPid);
@@ -164,6 +171,9 @@ internal sealed partial class MainWindow : Window
     {
         if (closing) return;
         closing = true; EndPanelDrag(); timer.Stop(); saveTimer.Stop();
+        HideUpdateCard();
+        updateLifetime.Cancel();
+        UpdateWakefulness();
         StopDisplayTracking();
         Session.Config.Maximized = lastVisibleState == WindowState.Maximized;
         if (WindowState == WindowState.Normal) { Session.Config.WindowWidth = (int)Width; Session.Config.WindowHeight = (int)Height; Session.Config.WindowX = Position.X; Session.Config.WindowY = Position.Y; }
@@ -174,6 +184,8 @@ internal sealed partial class MainWindow : Window
     {
         Session.StructureChanged -= Refresh; Session.PanelChanged -= RefreshPanel; Session.SaveRequested -= QueueSave; Session.SelectionChanged -= RefreshSelection; Session.LayoutInvalidated -= InvalidateLayout; Session.Backend.Changed -= BackendChanged; wallpaper.Dispose();
         Session.AgentActivityChanged -= QueueAttentionUpdate;
+        surfaceBrushes.Dispose();
+        updateLifetime.Dispose();
         Session.AgentStatusTransition -= OnAgentStatusTransition;
         if (signals is not null) _ = signals.DisposeAsync();
     }
@@ -181,6 +193,8 @@ internal sealed partial class MainWindow : Window
     private void Poll()
     {
         if (closing) return;
+        UpdateWakefulness();
+        PollUpdates();
         if (dialogDepth > 0) { Session.Backend.Maintain(); return; }
         UserAction(() => { Session.Poll(); RefreshStatus(); Session.Backend.Maintain(); });
         if (OperatingSystem.IsWindows()) PollTerminalHistory();
@@ -213,12 +227,19 @@ internal sealed partial class MainWindow : Window
         if (closing) return; layoutFrameQueued = false; RefreshCount++;
         if (lastWorkspace != Session.SelectedWorkspace)
         {
+            if (releaseNotesSelected)
+            {
+                releaseNotesSelected = false;
+                if (releaseNotesPage is not null) releaseNotesPage.IsVisible = false;
+                releaseNotesLabel?.Classes.Set("active", false);
+            }
             offsets[lastWorkspace] = viewport.Offset; lastWorkspace = Session.SelectedWorkspace;
             viewport.Offset = offsets.GetValueOrDefault(lastWorkspace);
         }
         ApplyAppearance();
         RefreshTabs(); QueueAttentionUpdate();
         RefreshWorkspaceWindows();
+        RefreshSurfaceMotion();
         var presented = workspaceWindows.ContainsKey(Session.SelectedWorkspace);
         var current = presented ? [] : Session.CurrentPanels.ToList();
         var currentIds = current.Select(panel => panel.Id).ToHashSet(); var allIds = Session.Panels.Select(panel => panel.Id).ToHashSet();
@@ -307,7 +328,7 @@ internal sealed partial class MainWindow : Window
             controls.Name.Text = config.Name;
             var quantity = Session.Panels.Count(p => p.WorkspaceId == config.Id); var attention = Session.Panels.Any(p => p.WorkspaceId == config.Id && p.Attention);
             controls.Count.Text = quantity > 0 ? quantity.ToString() : ""; controls.Count.Foreground = attention ? DockTheme.Accent : DockTheme.Muted;
-            controls.Button.Classes.Set("active", config.Id == Session.SelectedWorkspace);
+            StyleTab(controls.Button, config.TabStyle, !releaseNotesSelected && config.Id == Session.SelectedWorkspace);
             ToolTip.SetTip(controls.Button, $"{config.Name} · {quantity} / {config.Capacity}");
         }
         for (var index = 0; index < Session.Config.Workspaces.Count; index++)
@@ -315,6 +336,15 @@ internal sealed partial class MainWindow : Window
             var button = tabButtons[Session.Config.Workspaces[index].Id].Button;
             if (tabs.Children.IndexOf(button) != index) { tabs.Children.Remove(button); tabs.Children.Insert(index, button); }
         }
+        if (releaseNotesLabel is not null) StyleTab(releaseNotesLabel, null, releaseNotesSelected);
+    }
+    private void StyleTab(Button button, SurfaceStyle? local, bool selected)
+    {
+        var style = SurfaceStyle.Resolve(Session.Config.TabStyle, local);
+        button.Classes.Set("active", selected);
+        button.Classes.Set("custom-fill", style.HasFill);
+        if (style.HasFill) button.Background = SurfaceFill(style, DockTheme.Raised);
+        else button.ClearValue(Button.BackgroundProperty);
     }
     private void ApplyAppearance()
     {
@@ -322,12 +352,15 @@ internal sealed partial class MainWindow : Window
         if (lastTheme != theme)
         {
             DockTheme.Apply(theme); lastTheme = theme;
+            surfaceBrushes.Reset();
             status.Foreground = DockTheme.Muted;
             foreach (var icon in this.GetVisualDescendants().OfType<DockIcon>()) icon.InvalidateVisual();
             foreach (var card in cards.Values) card.RefreshTheme();
         }
-        toolbar.Background = DockTheme.Surface;
-        var requested = Session.Current.BackgroundMode == "transparent" ? "transparent" : DockTheme.IsGlass ? "glass" : "solid";
+        var header = SurfaceStyle.Resolve(Session.Config.HeaderStyle, null);
+        toolbar.Background = SurfaceFill(header, DockTheme.Surface, header.OpacityPercent());
+        var requested = Session.Current.BackgroundMode == "transparent" ? "transparent" : DockTheme.IsGlass ? "glass"
+            : SurfaceBrushes.IsTranslucent(header) ? "transparent" : "solid";
         if (Tag as string != requested)
         {
             Tag = requested;
@@ -335,6 +368,7 @@ internal sealed partial class MainWindow : Window
         }
         TransparencyBackgroundFallback = DockTheme.Ground;
         wallpaper.Configure(Session.Current);
+        if (releaseNotesPage is not null) releaseNotesPage.Background = DockTheme.Ground;
         if (wallpaper.Error is { } error) SetStatus(error);
         if (IsVisible) Session.Backend.SetAppearance(DockTheme.IsDark);
     }
@@ -343,6 +377,12 @@ internal sealed partial class MainWindow : Window
         if (arranging || closing) return; arranging = true; LayoutCount++;
         try
         {
+            if (releaseNotesSelected)
+            {
+                empty.IsVisible = viewport.IsVisible = stackBar.IsVisible = false;
+                ShowPresentationNotice(false);
+                return;
+            }
             presetSlotBounds = [];
             if (workspaceWindows.ContainsKey(Session.SelectedWorkspace))
             {
@@ -434,7 +474,7 @@ internal sealed partial class MainWindow : Window
             if (panel.Record.Linked) continue;
             if (!cards.TryGetValue(panel.Id, out var card) || !card.IsVisible || card.Slot.Bounds.Width <= 0) continue;
             var bounds = BoundsOnScreen(card.Slot); var clip = DrawingRectangle.Intersect(bounds, viewportBounds); if (clip.Width <= 0 || clip.Height <= 0) continue;
-            placements.Add(new(panel.Record, bounds, clip, BoundsOnScreen(card), (int)Math.Round(7 * RenderScaling)));
+            placements.Add(new(panel.Record, bounds, clip, BoundsOnScreen(card), (int)Math.Round(7 * RenderScaling), Opacity: WindowOpacity(panel)));
             areas.Add(new(panel.Record.Handle, panel.Record.Handle, clip, true));
         }
         if (visible)
@@ -461,7 +501,11 @@ internal sealed partial class MainWindow : Window
     internal void ShowDropTarget(Point? point)
     {
         var target = point is { } p ? HitTab(p)?.Id : null;
-        foreach (var (id, tab) in tabButtons) { tab.Button.BorderThickness = id == target ? new(1) : new(0); tab.Button.BorderBrush = id == target ? DockTheme.Accent : Brushes.Transparent; }
+        foreach (var (id, tab) in tabButtons)
+        {
+            if (id == target) { tab.Button.BorderThickness = new(1); tab.Button.BorderBrush = DockTheme.Accent; }
+            else { tab.Button.ClearValue(Button.BorderThicknessProperty); tab.Button.ClearValue(Button.BorderBrushProperty); }
+        }
     }
     internal void DropPanel(RuntimePanel panel, Point point)
     {
@@ -488,6 +532,8 @@ internal sealed partial class MainWindow : Window
                     Session.RememberActivation(panel);
                     if (panel.AgentStatus is not ("waiting" or "error")) panel.Attention = false;
                     RefreshPanel(panel);
+                    if (!panel.Record.Linked && !workspaceWindows.ContainsKey(panel.WorkspaceId) &&
+                        OperatingSystem.IsWindows() && Native.GetForegroundWindow() == panel.Record.Hwnd) RaiseUpdateCard();
                 }
             }
             else if (change.Kind == "attention")

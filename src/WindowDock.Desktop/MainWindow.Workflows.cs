@@ -22,6 +22,7 @@ internal sealed partial class MainWindow
 
     private void OpenWorkspace(WorkspaceConfig workspace)
     {
+        SelectReleaseNotes(false);
         if (workspaceWindows.ContainsKey(workspace.Id))
         {
             ShowWorkspaceWindow(workspace);
@@ -40,6 +41,7 @@ internal sealed partial class MainWindow
     internal void ActivatePanel(RuntimePanel panel)
     {
         if (!Session.Panels.Contains(panel) || !Session.Backend.IsAlive(panel.Record)) return;
+        SelectReleaseNotes(false);
         if (OperatingSystem.IsWindows() && workspaceWindows.TryGetValue(panel.WorkspaceId, out var view))
         {
             if (!VirtualDesktops.OnCurrent(view.Handle)) { SetStatus(L10n.Get("Presentation.SwitchDesktop")); return; }

@@ -26,15 +26,19 @@ internal sealed class NotificationHighlight : Control
         ]
     };
     private readonly Pen edge, glow;
+    private readonly double radius;
+    private readonly bool persistent;
     private long startedAt;
     private double firstAngle, firstOpacity;
     private bool animate;
 
-    internal NotificationHighlight()
+    internal NotificationHighlight(double cornerRadius = 8, bool persistent = false)
     {
+        radius = cornerRadius - 1;
+        this.persistent = persistent;
         IsHitTestVisible = false;
         IsVisible = false;
-        Margin = new Thickness(-2);
+        Margin = new Thickness(persistent ? 0 : -2);
         edge = new(gradient, 2.6);
         glow = new(gradient, 6);
         timer.Tick += (_, _) => UpdateFrame();
@@ -50,7 +54,7 @@ internal sealed class NotificationHighlight : Control
         IsVisible = true;
         timer.Stop();
         timer.Interval = animate ? FrameInterval : Duration;
-        timer.Start();
+        if (animate || !persistent) timer.Start();
     }
 
     internal void Stop()
@@ -68,7 +72,7 @@ internal sealed class NotificationHighlight : Control
     private void UpdateFrame()
     {
         var elapsed = Stopwatch.GetElapsedTime(startedAt);
-        if (!animate || !IsEffectivelyVisible || elapsed >= Duration ||
+        if (!animate || !IsEffectivelyVisible || !persistent && elapsed >= Duration ||
             TopLevel.GetTopLevel(this) is Window { WindowState: WindowState.Minimized })
         {
             Stop();
@@ -77,7 +81,7 @@ internal sealed class NotificationHighlight : Control
 
         var seconds = elapsed.TotalSeconds;
         var enter = fade.GetSplineProgress(Math.Min(1, seconds / .14));
-        var exit = fade.GetSplineProgress(Math.Clamp((seconds - 3.78) / .22, 0, 1));
+        var exit = persistent ? 0 : fade.GetSplineProgress(Math.Clamp((seconds - 3.78) / .22, 0, 1));
         Opacity = (firstOpacity + (1 - firstOpacity) * enter) * (1 - exit);
         gradient.Angle = (firstAngle + 90 * seconds) % 360;
         InvalidateVisual();
@@ -88,7 +92,7 @@ internal sealed class NotificationHighlight : Control
         if (Bounds.Width <= 4 || Bounds.Height <= 4) return;
         var bounds = new Rect(Bounds.Size).Deflate(1.3);
         using (context.PushOpacity(.22))
-            context.DrawRectangle(null, glow, bounds, 7, 7);
-        context.DrawRectangle(null, edge, bounds, 7, 7);
+            context.DrawRectangle(null, glow, bounds, radius, radius);
+        context.DrawRectangle(null, edge, bounds, radius, radius);
     }
 }
