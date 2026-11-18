@@ -790,8 +790,11 @@
     <value>このタブに空きがありません</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>パネルを並べ替え</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>ウィンドウを入れ替え</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>空き枠に移動</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">

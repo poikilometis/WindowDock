@@ -18,6 +18,7 @@ internal sealed partial class MainWindow : Window
     private readonly ScrollViewer tabScroll;
     private readonly ScrollViewer viewport;
     private readonly Canvas canvas = new();
+    private IReadOnlyList<DrawingRectangle> presetSlotBounds = [];
     private readonly Grid workspace = new() { RowDefinitions = new("Auto,*") };
     private readonly Border toolbar;
     private readonly TextBlock status = new() { FontSize = 11.5, Margin = new(8, 3), TextTrimming = TextTrimming.CharacterEllipsis, IsVisible = false };
@@ -75,6 +76,7 @@ internal sealed partial class MainWindow : Window
         Grid.SetColumn(status, 1); commands.Children.Add(status); Grid.SetColumn(actions, 2); commands.Children.Add(actions);
         toolbar = new Border { Child = commands }; root.Children.Add(toolbar);
         viewport = new ScrollViewer { Content = canvas, HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled, VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Auto };
+        canvas.Children.Add(dropOutline);
         Grid.SetRowSpan(wallpaper, 2);
         workspace.Children.Add(wallpaper);
         workspace.Children.Add(CreateStackBar());
@@ -340,6 +342,7 @@ internal sealed partial class MainWindow : Window
         if (arranging || closing) return; arranging = true; LayoutCount++;
         try
         {
+            presetSlotBounds = [];
             if (workspaceWindows.ContainsKey(Session.SelectedWorkspace))
             {
                 ClearEmptyAreas();
@@ -360,8 +363,10 @@ internal sealed partial class MainWindow : Window
                 ArrangeCustomPanels(Session.Current, new(width, height));
                 return;
             }
-            var plan = FlexibleLayout.Plan(panels.Count, new DrawingSize(width, height), Session.Config.MinWidth, Session.Config.MinHeight, Session.Current, 4);
-            var stack = ShowStack(panels, width);
+            var tab = Session.Current;
+            var slotCount = panels.Count > 0 ? tab.LayoutSlotCount : 0;
+            var plan = FlexibleLayout.Plan(slotCount, new DrawingSize(width, height), Session.Config.MinWidth, Session.Config.MinHeight, tab, 4);
+            var stack = ShowStack(panels, plan.Extent.Height);
             if (Session.FocusedPanel is { } focused)
             {
                 foreach (var panel in panels)
@@ -379,7 +384,12 @@ internal sealed partial class MainWindow : Window
             }
             else
             {
-                for (var index = 0; index < panels.Count; index++) { var card = cards[panels[index].Id]; card.IsVisible = true; Place(card, plan.Tiles[index]); }
+                presetSlotBounds = plan.Tiles;
+                foreach (var panel in panels)
+                {
+                    var card = cards[panel.Id]; card.IsVisible = true;
+                    Place(card, plan.Tiles[panel.LayoutSlot]);
+                }
                 canvas.Height = Math.Max(height, plan.Extent.Height);
                 ArrangeGrips(canvas, grips, plan.Dividers, Session, Session.Current);
             }
@@ -454,16 +464,11 @@ internal sealed partial class MainWindow : Window
     }
     internal void DropPanel(RuntimePanel panel, Point point)
     {
-        if (HitTab(point) is { } workspace) { Session.Move(Session.ActionPanels(panel), workspace); return; }
-        var screen = this.PointToScreen(point);
-        foreach (var (area, control) in emptyAreas)
-            if (area.PanelId is null && ScreenBounds(control).Contains(screen.X, screen.Y))
-            {
-                Session.MovePanelToArea(panel, area);
-                return;
-            }
-        var target = cards.Values.FirstOrDefault(c => c.IsVisible && ScreenBounds(c).Contains(screen.X, screen.Y));
-        if (target is not null) Session.ReorderPanel(panel, target.Panel);
+        var target = FindDropDestination(panel, point);
+        if (target.Tab is { } workspace) Session.Move(Session.ActionPanels(panel), workspace);
+        else if (target.Card is { } card) Session.SwapPanels(panel, card.Panel);
+        else if (target.Area is { } area) Session.MovePanelToArea(panel, area);
+        else if (target.Slot is { } slot) Session.MovePanelToSlot(panel, slot);
     }
     private void BackendChanged(WindowSystemEvent change) => Dispatcher.UIThread.Post(() =>
     {

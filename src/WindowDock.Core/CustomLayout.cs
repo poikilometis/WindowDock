@@ -126,7 +126,7 @@ internal sealed partial class WorkspaceSession
 {
     internal SplitArea PrepareCustomLayout(WorkspaceConfig workspace)
     {
-        var live = Panels.Where(panel => panel.WorkspaceId == workspace.Id).Select(panel => panel.Id).ToArray();
+        var live = PanelsIn(workspace).Select(panel => panel.Id).ToArray();
         var known = live.Concat(Pending.Where(panel => panel.WorkspaceId == workspace.Id).Select(panel => panel.Id)).ToHashSet();
         var root = workspace.CustomLayout ??= SplitArea.Create(live);
         var leaves = root.Leaves().ToList();

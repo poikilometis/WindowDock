@@ -790,8 +790,11 @@
     <value>No quedan espacios libres en esta pestaña</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>Reordenar paneles</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>Intercambiar ventanas</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>Mover a un espacio libre</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">

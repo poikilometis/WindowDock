@@ -790,8 +790,11 @@
     <value>此分頁沒有空位</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>調整面板順序</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>交換視窗位置</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>移至空白位置</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">

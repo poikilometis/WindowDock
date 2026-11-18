@@ -790,8 +790,11 @@
     <value>이 탭에 빈자리가 없습니다</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>패널 순서 바꾸기</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>창 위치 바꾸기</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>빈 칸으로 이동</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">

@@ -32,7 +32,7 @@ WindowDock groups **existing application windows** into a single workspace. Keep
 - **Collect windows in one action.** Capture rules route matching windows. The rest fill the current tab and its overflow tabs. Right-click **Collect windows** to filter by name, include minimized windows, or inspect the last result.
 - **Keep text readable.** Choose a grid, a main window with smaller panels, or a stack with an optional pinned panel. Split individual areas to build and save a custom layout.
 - **Focus without losing context.** Double-click a panel header to enlarge it inside its tab. Return to the grid with one click.
-- **Organize freely.** Rename tabs and panels, drag to reorder or move across tabs, select several panels, search across workspaces, and undo supported actions.
+- **Organize freely.** Drag one panel onto another to swap their positions. Moving across tabs fills the first empty position. Rename, search, select several panels, and undo supported actions.
 - **Restore groups and projects.** Reconnect running windows. Opt in to reopening projects, resuming saved agent conversations, and opening the Windows Terminal layout when WindowDock starts.
 - **Find and capture similar windows.** Search both docked panels and desktop windows with `Ctrl+Alt+K`. Use the executable path or a project folder reported by hooks to narrow capture rules. Exclusions take priority.
 - **Open project workspaces.** Preview which windows will reconnect and optionally start missing commands. Link an existing panel to a saved command from its menu.

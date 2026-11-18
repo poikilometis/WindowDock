@@ -127,7 +127,7 @@ internal sealed class WorkspaceWindow : Window
         try
         {
             var config = main.Session.Config;
-            var ordered = main.Session.Panels.Where(panel => panel.WorkspaceId == Workspace.Id && cards.ContainsKey(panel.Id)).ToArray();
+            var ordered = main.Session.PanelsIn(Workspace).Where(panel => cards.ContainsKey(panel.Id)).ToArray();
             var width = Math.Max(1, (int)(viewport.Viewport.Width > 0 ? viewport.Viewport.Width : ClientSize.Width));
             var height = Math.Max(1, (int)(viewport.Viewport.Height > 0 ? viewport.Viewport.Height : ClientSize.Height));
             var size = new DrawingSize(width, height);
@@ -173,7 +173,8 @@ internal sealed class WorkspaceWindow : Window
             }
             else
             {
-                var plan = FlexibleLayout.Plan(ordered.Length, size, config.MinWidth, config.MinHeight, Workspace, 4);
+                var slotCount = ordered.Length > 0 ? Workspace.LayoutSlotCount : 0;
+                var plan = FlexibleLayout.Plan(slotCount, size, config.MinWidth, config.MinHeight, Workspace, 4);
                 if (ordered.Length > 0 && (Workspace.Layout == "stack" || Workspace.Layout == "adaptive" && plan.Extent.Height > height))
                 {
                     var active = main.Session.ActivePanel(Workspace) ?? ordered[0];
@@ -182,7 +183,7 @@ internal sealed class WorkspaceWindow : Window
                 }
                 else
                 {
-                    for (var index = 0; index < ordered.Length; index++) PlacePanel(cards[ordered[index].Id], plan.Tiles[index]);
+                    foreach (var panel in ordered) PlacePanel(cards[panel.Id], plan.Tiles[panel.LayoutSlot]);
                     SetExtent(new(width, Math.Max(height, plan.Extent.Height)), plan.Dividers);
                 }
             }

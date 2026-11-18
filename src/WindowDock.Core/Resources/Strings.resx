@@ -790,8 +790,11 @@
     <value>This tab has no free slots</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>Reorder panels</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>Swap windows</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>Move to empty slot</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">

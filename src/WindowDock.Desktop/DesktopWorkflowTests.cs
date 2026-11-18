@@ -1,4 +1,5 @@
 using System.Runtime.Versioning;
+using Avalonia;
 using Avalonia.Controls;
 
 namespace WindowDock;
@@ -65,6 +66,58 @@ internal static class DesktopWorkflowTests
         }
         await PresentationAsync(main, panels[0]);
         await CompatibilityAsync(main);
+        await SwapByDropAsync(main);
+    }
+
+    [SupportedOSPlatform("windows")]
+    private static async Task SwapByDropAsync(MainWindow main)
+    {
+        var session = main.Session;
+        var original = session.SelectedWorkspace;
+        var panels = session.CurrentPanels.Take(6).ToArray();
+        DesktopSelfTest.Check(panels.Length == 6, "A six-window grid is required for the swap regression.");
+        var tab = session.NewWorkspace("Grid drop fixture");
+        tab.Columns = 3;
+        var moved = false;
+        var swapped = false;
+        var width = main.Width;
+        var height = main.Height;
+        try
+        {
+            moved = session.Move(panels, tab);
+            DesktopSelfTest.Check(moved, "Could not put the six fixture windows in a dedicated grid.");
+            main.Width = 1160;
+            main.Height = 820;
+            await Task.Delay(180);
+            var before = panels.Select(Bounds).ToArray();
+            DesktopSelfTest.Check(before[1].X == before[4].X && before[1].Y < before[4].Y,
+                "The middle panels are not in the same column.");
+            var destination = main.TestCards.Single(card => card.Panel == panels[1]);
+            var point = destination.TranslatePoint(new Avalonia.Point(destination.Bounds.Width / 2, 11), main)!.Value;
+            main.DropPanel(panels[4], point);
+            swapped = panels[4].LayoutSlot == 1 && panels[1].LayoutSlot == 4;
+            await Task.Delay(160);
+            DesktopSelfTest.Check(swapped && Bounds(panels[4]) == before[1] && Bounds(panels[1]) == before[4],
+                "Dropping the lower middle window did not exchange the two native bounds.");
+            foreach (var index in new[] { 0, 2, 3, 5 })
+                DesktopSelfTest.Check(Bounds(panels[index]) == before[index], "Dropping one window moved an unrelated pane.");
+            DesktopSelfTest.Pass("Dropping the bottom middle panel on top middle swaps only those two real windows.");
+        }
+        finally
+        {
+            if (swapped) session.Undo();
+            if (moved) session.Undo();
+            session.CloseWorkspace(session.Config.Workspaces.Single(workspace => workspace.Id == tab.Id));
+            session.SelectedWorkspace = original;
+            main.Width = width;
+            main.Height = height;
+            main.TestRefresh();
+        }
+        static System.Drawing.Rectangle Bounds(RuntimePanel panel)
+        {
+            Native.GetWindowRect(panel.Record.Hwnd, out var bounds);
+            return bounds.Rectangle;
+        }
     }
 
     [SupportedOSPlatform("windows")]
@@ -78,7 +131,7 @@ internal static class DesktopWorkflowTests
         {
             main.Session.KeepOriginalWindow(panel);
             await Task.Delay(90);
-            DesktopSelfTest.Check(panel.Record.Linked && panel.Capture(0).Linked &&
+            DesktopSelfTest.Check(panel.Record.Linked && panel.Capture().Linked &&
                 Native.GetLong(candidate.Handle, Native.GWL_STYLE) == original && Native.GetWindow(candidate.Handle, 4) == owner,
                 "Linked mode changed the application's original native frame or owner.");
             DesktopSelfTest.Check(main.TestCards.First(card => card.Panel == panel).Slot.Child is Button &&

@@ -11,6 +11,7 @@ namespace WindowDock
 {
     [DataContract] public sealed class WorkspaceConfig
     {
+        internal const int MaxCapacity = 25;
         [DataMember] public string Id;
         [DataMember] public string Name;
         [DataMember] public int Capacity;
@@ -24,6 +25,7 @@ namespace WindowDock
         [DataMember] public List<double> ColumnWeights, RowWeights;
         [DataMember(EmitDefaultValue = false)] public SplitArea CustomLayout;
         [DataMember(EmitDefaultValue = false)] public string PresentationDisplay, VirtualDesktop;
+        [DataMember(EmitDefaultValue = false)] public int LayoutSlotCount;
         public static WorkspaceConfig Create(string name)
         {
             return new WorkspaceConfig { Id = Guid.NewGuid().ToString("N"), Name = name, Capacity = 15,
@@ -84,7 +86,8 @@ namespace WindowDock
                 if (String.IsNullOrEmpty(w.Id) || !ids.Add(w.Id)) { w.Id = Guid.NewGuid().ToString("N"); ids.Add(w.Id); }
                 if (String.IsNullOrWhiteSpace(w.Name)) w.Name = L10n.Get("Models.Tab");
                 w.Name = w.Name.Trim(); if (w.Name.Length > 48) w.Name = w.Name.Substring(0, 48);
-                w.Capacity = Math.Max(1, Math.Min(25, w.Capacity));
+                w.Capacity = Math.Clamp(w.Capacity, 1, WorkspaceConfig.MaxCapacity);
+                w.LayoutSlotCount = Math.Clamp(w.LayoutSlotCount, 0, WorkspaceConfig.MaxCapacity);
                 w.Columns = Math.Max(0, Math.Min(6, w.Columns));
                 if (w.CustomLayout?.Validate() == false) w.CustomLayout = null;
                 if (w.PresentationDisplay?.Length > 512) w.PresentationDisplay = null;

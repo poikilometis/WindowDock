@@ -790,8 +790,11 @@
     <value>แท็บนี้ไม่มีที่ว่าง</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>จัดลำดับแผงใหม่</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>สลับตำแหน่งหน้าต่าง</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>ย้ายไปยังช่องว่าง</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">

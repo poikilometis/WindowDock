@@ -5,7 +5,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Threading;
-using DrawingSize = System.Drawing.Size;
 
 namespace WindowDock;
 
@@ -286,13 +285,12 @@ internal sealed partial class MainWindow
         ? panel.Caption
         : $"{panel.Caption} · {panel.StatusText}";
 
-    private bool ShowStack(IReadOnlyList<RuntimePanel> panels, int width)
+    private bool ShowStack(IReadOnlyList<RuntimePanel> panels, int gridHeight)
     {
         var height = Math.Max(1, (int)workspace.Bounds.Height);
         var layout = Session.Current.Layout;
         var useStack = panels.Count > 0 && Session.FocusedPanel is null &&
-            (layout == "stack" || layout == "adaptive" && FlexibleLayout.Plan(panels.Count,
-                new DrawingSize(width, height), Session.Config.MinWidth, Session.Config.MinHeight, Session.Current, 4).Extent.Height > height);
+            (layout == "stack" || layout == "adaptive" && gridHeight > height);
         stackBar.IsVisible = useStack;
         if (useStack && Session.StackPanel() is { } active)
         {

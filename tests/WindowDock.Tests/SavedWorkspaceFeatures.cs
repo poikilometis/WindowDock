@@ -44,7 +44,7 @@ internal static partial class Program
         session.ReceiveAgentSignal(signal);
         Check(first.AgentSessions.Count == 0, "Conversation identifiers were retained without the recovery setting.");
         session.RememberAgentSessions(true);
-        var saved = first.Capture(0);
+        var saved = first.Capture();
         Check(saved.AgentSessions?.Single().Id == id && !File.ReadAllText(GroupPersistence.PathName).Contains("PRIVATE_DO_NOT_COPY"),
             "Recovery lost the session UUID or retained prompt contents.");
         var command = ProjectCommand.Create();

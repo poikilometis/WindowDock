@@ -21,6 +21,7 @@ internal sealed class RuntimePanel(WindowRecord record, string? savedId = null) 
     public string Id { get => id; private set => Set(ref id, value); }
     public void AssignRoleId(string value) => Id = value;
     public string WorkspaceId { get => Record.WorkspaceId; set { Record.WorkspaceId = value; Notify(); } }
+    internal int LayoutSlot { get; set; } = -1;
     private string alias = "", title = record.Title ?? "", status = "", message = "";
     private bool selected, attention;
     public string Alias { get => alias; set { if (Set(ref alias, value)) Notify(nameof(Caption)); } }
@@ -40,11 +41,11 @@ internal sealed class RuntimePanel(WindowRecord record, string? savedId = null) 
     public List<TerminalTarget> TerminalTargets { get; set; } = [];
     public bool KeepTerminalHistory { get; set; }
     public long AgentSignalUtcTicks { get; set; }
-    public SavedPanel Capture(int order) => new()
+    public SavedPanel Capture() => new()
     {
         Id = Id, WorkspaceId = WorkspaceId, Alias = Alias, Title = Title, ProcessName = Record.ProcessName,
         ClassName = Record.ClassName, Handle = Record.Handle, ProcessId = Record.ProcessId, ProcessStartTicks = Record.ProcessStartTicks,
-        AgentId = AgentId, HookSessions = [..HookSessions], Order = order, LastSeenUtc = DateTime.UtcNow.Ticks,
+        AgentId = AgentId, HookSessions = [..HookSessions], Order = LayoutSlot, LastSeenUtc = DateTime.UtcNow.Ticks,
         ProjectId = ProjectId, CommandId = CommandId, ActivatedUtc = ActivatedUtc, Linked = Record.Linked,
         ExecutablePath = Record.ExecutablePath, ProjectDirectory = Record.ProjectDirectory,
         AgentSessions = AgentSessions.Count == 0 ? null : [..AgentSessions],

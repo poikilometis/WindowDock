@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using DrawingRectangle = System.Drawing.Rectangle;
 
 namespace WindowDock;
 
@@ -9,6 +10,40 @@ internal sealed partial class MainWindow
 {
     private PanelDragPreview? dragPreview;
     private PanelCard? dragSource;
+    private readonly Border dropOutline = new()
+    {
+        BorderThickness = new(1), CornerRadius = new(8), IsVisible = false, IsHitTestVisible = false, ZIndex = 1
+    };
+
+    private readonly record struct DropDestination(WorkspaceConfig? Tab = null, PanelCard? Card = null,
+        SplitArea? Area = null, int? Slot = null, DrawingRectangle? Outline = null);
+
+    private DropDestination FindDropDestination(RuntimePanel source, Point point)
+    {
+        if (HitTab(point) is { } tab) return new(Tab: tab);
+        if (!viewport.IsVisible || source.WorkspaceId != Session.SelectedWorkspace ||
+            this.TranslatePoint(point, viewport) is not { } inside ||
+            !new Rect(viewport.Viewport).Contains(inside)) return default;
+
+        var at = this.PointToScreen(point);
+        var card = cards.Values.FirstOrDefault(candidate => candidate.Panel != source && candidate.IsVisible &&
+            ScreenBounds(candidate).Contains(at.X, at.Y));
+        if (card is not null) return new(Card: card);
+        foreach (var (area, control) in emptyAreas)
+            if (area.PanelId is null && ScreenBounds(control).Contains(at.X, at.Y))
+                return new(Area: area, Outline: new((int)Canvas.GetLeft(control), (int)Canvas.GetTop(control),
+                    (int)control.Bounds.Width, (int)control.Bounds.Height));
+
+        if (this.TranslatePoint(point, canvas) is not { } position) return default;
+        for (var slot = 0; slot < presetSlotBounds.Count; slot++)
+        {
+            var bounds = presetSlotBounds[slot];
+            if (position.X >= bounds.Left && position.X < bounds.Right && position.Y >= bounds.Top && position.Y < bounds.Bottom &&
+                !cards.Values.Any(candidate => candidate.IsVisible && candidate.Panel.LayoutSlot == slot))
+                return new(Slot: slot, Outline: bounds);
+        }
+        return default;
+    }
     internal bool HasDragPreview => dragPreview is not null;
     internal void UpdatePanelDrag(PanelCard source, Point point)
     {
@@ -20,20 +55,31 @@ internal sealed partial class MainWindow
             dragPreview.Show(this);
         }
         var at = this.PointToScreen(point); dragPreview.Position = new(at.X + 16, at.Y + 18);
-        var tab = HitTab(point);
-        var target = tab is null ? cards.Values.FirstOrDefault(c => c != source && c.IsVisible && ScreenBounds(c).Contains(at.X, at.Y)) : null;
-        foreach (var card in cards.Values) card.SetDragState(card == source, card == target);
+        var target = FindDropDestination(source.Panel, point);
+        var tab = target.Tab;
+        foreach (var card in cards.Values) card.SetDragState(card == source, card == target.Card);
+        dropOutline.IsVisible = target.Outline.HasValue;
+        if (target.Outline is { } outline)
+        {
+            dropOutline.BorderBrush = DockTheme.Accent;
+            Place(dropOutline, outline);
+        }
         ShowDropTarget(point);
         var incoming = Session.ActionPanels(source.Panel).Count(p => p.WorkspaceId != tab?.Id);
         var available = tab is null ? 0 : tab.Capacity - Session.Panels.Count(p => p.WorkspaceId == tab.Id);
         var valid = tab is null || incoming <= available;
-        dragPreview.SetDestination(tab is not null ? valid ? L10n.Format("PanelDragPreview.MoveToTab", tab.Name) : L10n.Get("PanelDragPreview.ThisTabHasNoFreeSlots") : target is not null ? L10n.Get("PanelDragPreview.ReorderPanels") : L10n.Get("PanelDragPreview.DropOntoAPanelOrTab"), valid);
+        var hint = tab is not null
+            ? valid ? L10n.Format("PanelDragPreview.MoveToTab", tab.Name) : L10n.Get("PanelDragPreview.ThisTabHasNoFreeSlots")
+            : L10n.Get(target.Card is not null ? "PanelDragPreview.SwapPanels" :
+                target.Outline.HasValue ? "PanelDragPreview.MoveToFreeSlot" : "PanelDragPreview.DropOntoAPanelOrTab");
+        dragPreview.SetDestination(hint, valid);
     }
     internal void EndPanelDrag()
     {
         var source = dragSource; dragSource = null;
         var preview = dragPreview; dragPreview = null; source?.CancelDrag(); preview?.Close();
         foreach (var card in cards.Values) card.SetDragState(false, false);
+        dropOutline.IsVisible = false;
         ShowDropTarget(null);
     }
 }

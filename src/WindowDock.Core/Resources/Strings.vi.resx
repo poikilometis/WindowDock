@@ -790,8 +790,11 @@
     <value>Thẻ này không còn chỗ trống</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>Sắp xếp lại khung</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>Hoán đổi cửa sổ</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>Chuyển vào ô trống</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">

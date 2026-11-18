@@ -78,10 +78,20 @@ internal static class DesktopAdvancedTests
         Native.VerticalScroll(candidate.Handle, out var scrollBefore);
         Native.GetWindowRect(candidate.Handle, out var consoleBounds);
         var active = Native.GetForegroundWindow(); var focus = Native.ForegroundFocus();
-        var routed = ((WindowsWindowBackend)main.Session.Backend).TestHover(new() { X = consoleBounds.Left + 40, Y = consoleBounds.Top + 50 }, 120);
-        await Task.Delay(100); Native.VerticalScroll(candidate.Handle, out var scrollAfter);
-        Check(routed && scrollAfter.Position < scrollBefore.Position, $"Inactive classic console did not scroll: routed={routed}, before={scrollBefore.Position}, after={scrollAfter.Position}, max={scrollBefore.Maximum}, page={scrollBefore.Page}");
-        Check(Native.GetForegroundWindow() == active && Native.ForegroundFocus() == focus, "Classic console hover changed focus.");
+        var backend = (WindowsWindowBackend)main.Session.Backend;
+        var point = new Native.Point { X = consoleBounds.Left + 40, Y = consoleBounds.Top + 50 };
+        // Isolate the fixture's hit target without activating it on a shared desktop.
+        const uint orderOnly = Native.SWP_NOMOVE | Native.SWP_NOSIZE | Native.SWP_NOACTIVATE;
+        Native.SetWindowPos(candidate.Handle, -1, 0, 0, 0, 0, orderOnly);
+        try
+        {
+            var routed = backend.TestHover(point, 120);
+            await Task.Delay(100);
+            Native.VerticalScroll(candidate.Handle, out var scrollAfter);
+            Check(routed && scrollAfter.Position < scrollBefore.Position, $"Inactive classic console did not scroll: routed={routed}, before={scrollBefore.Position}, after={scrollAfter.Position}, max={scrollBefore.Maximum}, page={scrollBefore.Page}. {backend.DescribeHover(point)}");
+            Check(Native.GetForegroundWindow() == active && Native.ForegroundFocus() == focus, "Classic console hover changed focus.");
+        }
+        finally { Native.SetWindowPos(candidate.Handle, -2, 0, 0, 0, 0, orderOnly); }
         await TerminalAccess.SaveHistoryAsync(panel);
         Check(File.ReadAllText(TerminalAccess.HistoryPath(panel.Id)).Contains("Disposable native console line 220", StringComparison.Ordinal),
             "Classic console history did not preserve existing scrollback.");

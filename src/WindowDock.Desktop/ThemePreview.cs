@@ -13,6 +13,7 @@ internal sealed partial class MainWindow
         Session.BeginLayoutChange();
         var workspace = Session.Current;
         workspace.Layout = "grid"; workspace.Columns = 0; workspace.ColumnWeights.Clear(); workspace.RowWeights.Clear();
+        Session.CompactLayout(workspace);
         Session.FocusedPanel = null; Session.LayoutChanged();
         SetStatus(L10n.Get("ThemePreview.GridAllWindowsAreShownWithEqual"));
     }

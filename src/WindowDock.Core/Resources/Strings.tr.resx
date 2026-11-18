@@ -790,8 +790,11 @@
     <value>Bu sekmede boş yer yok</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>Panelleri sırala</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>Pencerelerin yerini değiştir</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>Boş alana taşı</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">

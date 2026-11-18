@@ -790,8 +790,11 @@
     <value>Во вкладке нет свободных мест</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>Поменять порядок панелей</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>Поменять окна местами</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>Переместить в свободную ячейку</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">
