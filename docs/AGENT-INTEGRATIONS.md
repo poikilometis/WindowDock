@@ -47,7 +47,7 @@ The agent loads the conversation from its own storage. A missing or expired conv
 
 ## Routing and privacy
 
-The bell lists recent agent activity and keeps each session's waiting or error state visible across tabs. Click a session to focus its panel. Enable **Agent notifications in Windows** in the integrations dialog or under **View** for alerts about waiting or failed sessions. **Also notify on completion** adds alerts when an agent finishes a turn. Click a Windows notification to open the panel for that session and its assigned Windows Terminal tab or pane.
+The bell lists recent agent activity and keeps each session's waiting or error state visible across tabs. Click a session to focus its panel. Enable **Agent notifications in Windows** in the integrations dialog or under **View** for alerts about waiting or failed sessions. **Also notify on completion** adds alerts when an agent finishes a turn. Click a Windows notification to open the panel for that session and its assigned Windows Terminal tab or pane. An outline highlights the destination for four seconds.
 
 Signals are associated using launch identity, persisted session bindings, console handles, or an unambiguous process ancestry match. If WindowDock cannot identify a panel safely, use **Agent integrations → Sessions** to assign it manually. It does not guess when several panels match.
 

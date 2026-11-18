@@ -2,6 +2,7 @@ using System.Runtime.Versioning;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.VisualTree;
 
 namespace WindowDock;
 
@@ -120,6 +121,11 @@ internal static class DesktopWorkflowTests
             DesktopSelfTest.Check(main.WindowState != WindowState.Minimized && session.SelectedWorkspace == originalTab.Id &&
                 session.ActivePanel(originalTab) == first && Native.IsWindowVisible(first.Record.Hwnd),
                 "The first notification did not restore the workspace and reveal its own window.");
+            var firstCard = main.TestCards.Single(card => card.Panel.Id == first.Id);
+            var highlight = firstCard.GetVisualDescendants().OfType<NotificationHighlight>().SingleOrDefault();
+            DesktopSelfTest.Check(highlight is { IsEffectivelyVisible: true, IsHitTestVisible: false },
+                "The notification did not add a non-interactive highlight to its card.");
+            DesktopSelfTest.Snapshot(main, "avalonia-notification-highlight.png");
 
             var editor = new NameEditor("Notification click while editing", "Fixture");
             var dialog = main.ShowEditorAsync(editor);
@@ -135,11 +141,17 @@ internal static class DesktopWorkflowTests
             await Task.Delay(150);
             DesktopSelfTest.Check(session.SelectedWorkspace == otherTab.Id && session.ActivePanel(otherTab) == second &&
                 Native.IsWindowVisible(second.Record.Hwnd), "The completion notification did not reveal its window after moving it to another tab.");
+            var secondCard = main.TestCards.Single(card => card.Panel.Id == second.Id);
+            DesktopSelfTest.Check(highlight is { IsEffectivelyVisible: true } &&
+                secondCard.GetVisualDescendants().Contains(highlight) && !firstCard.GetVisualDescendants().Contains(highlight),
+                "A new notification did not move the highlight to its own card.");
             DesktopSelfTest.Check(Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop &&
                 !desktop.Windows.OfType<AgentAttentionWindow>().Any(window => window.IsVisible),
                 "Clicking a notification opened the generic agent activity dialog.");
             DesktopSelfTest.Check(shown.All(id => !icons.ContainsKey(id)), "Clicked notification icons were left registered.");
-            DesktopSelfTest.Pass("Older and completion notifications open their own native windows despite a status change, tab move, minimize or modal editor.");
+            await Task.Delay(4100);
+            DesktopSelfTest.Check(highlight is { IsVisible: false }, "The notification highlight stays visible after four seconds.");
+            DesktopSelfTest.Pass("Notification clicks reveal their native windows and transfer a four-second highlight to the target card.");
         }
         finally
         {

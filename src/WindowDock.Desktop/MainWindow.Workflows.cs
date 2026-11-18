@@ -257,13 +257,14 @@ internal sealed partial class MainWindow
 
             if (panel is null || !Session.Panels.Contains(panel) || !Session.Backend.IsAlive(panel.Record))
             {
+                notificationHighlight.Stop();
                 RestoreHost();
                 SetStatus(L10n.Get("SessionDialogs.NoPanelAssigned"));
                 return;
             }
 
             lastAgentKey = sessionKey.Length > 0 ? sessionKey : "panel:" + panel.Id;
-            await ActivateAgentAsync(panel, sessionKey);
+            await ActivateAgentAsync(panel, sessionKey, fromNotification: true);
         });
     }
 

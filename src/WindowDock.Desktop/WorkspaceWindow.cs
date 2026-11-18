@@ -102,6 +102,7 @@ internal sealed class WorkspaceWindow : Window
     }
 
     internal bool Focuses(RuntimePanel panel) => zoom == panel.Id;
+    internal PanelCard? CardFor(RuntimePanel panel) => cards.GetValueOrDefault(panel.Id);
 
     internal void ToggleZoom(RuntimePanel panel)
     {
