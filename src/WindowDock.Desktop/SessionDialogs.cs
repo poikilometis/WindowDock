@@ -1,6 +1,8 @@
+using Avalonia.Automation;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Layout;
+using Avalonia.Media;
 
 namespace WindowDock;
 
@@ -60,39 +62,69 @@ internal sealed class IntegrationWindow : EditorWindow
     private readonly TextBox folder;
     private readonly Dictionary<HookProvider, CheckBox> providers = [];
     private readonly TextBox preview;
+    private readonly TextBlock setupStatus = new() { FontSize = 12, IsVisible = false, TextWrapping = TextWrapping.Wrap };
     public IntegrationWindow(MainWindow host, RuntimePanel? panel = null) : base(L10n.Get("SessionDialogs.AgentIntegrations"), 800, 690, L10n.Get("BasicDialogs.Close"))
     {
         this.host = host;
         Note(panel is null ? L10n.Get("SessionDialogs.SelectAProjectFolderAndAgentsWindowDock") : L10n.Format("SessionDialogs.SetupForPanelSelectTheProjectFolder", panel.Caption));
         folder = Input(host.Session.Config.LastHookProject ?? ""); Field(L10n.Get("EditorWindow.ProjectFolder"), FolderInput(folder));
+        folder.TextChanged += (_, _) => setupStatus.IsVisible = false;
         foreach (var provider in HookProvider.All)
         {
             var installed = provider.FindCommand(); var check = Check(provider.Name + (installed is null ? L10n.Get("SessionDialogs.CommandNotFoundInPATH") : L10n.Get("SessionDialogs.Found")), installed is not null);
+            check.IsCheckedChanged += (_, _) => setupStatus.IsVisible = false;
             providers.Add(provider, check); Body.Children.Add(check); Note(provider.Help);
         }
         Note(L10n.Get("SessionDialogs.RestartTheAgentAfterSetupCodexRequires"));
-        var actions = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8 };
+        if (OperatingSystem.IsWindows())
+        {
+            var config = host.Session.Config;
+            var notifications = Check(L10n.Get("Workflow.AgentNotifications"), config.AgentNotifications);
+            var completion = Check(L10n.Get("Workflow.NotifyOnCompletion"), config.NotifyOnCompletion);
+            completion.IsEnabled = config.AgentNotifications;
+            void ApplyNotifications() => host.UserAction(() =>
+            {
+                var enabled = notifications.IsChecked == true;
+                completion.IsEnabled = enabled;
+                host.SetAgentNotifications(enabled, completion.IsChecked == true);
+            });
+            notifications.IsCheckedChanged += (_, _) => ApplyNotifications();
+            completion.IsCheckedChanged += (_, _) => ApplyNotifications();
+            Body.Children.Add(new WrapPanel { ItemSpacing = 12, Children = { notifications, completion } });
+        }
+        var actions = new WrapPanel { ItemSpacing = 8, LineSpacing = 6 };
         actions.Children.Add(DockControls.Button(L10n.Get("SessionDialogs.SetUp"), "check", () => Execute(true), true));
         actions.Children.Add(DockControls.Button(L10n.Get("SessionDialogs.RemoveSetup"), "close", () => Execute(false)));
         actions.Children.Add(DockControls.Button(L10n.Get("SessionDialogs.Preview"), "search", Preview));
         actions.Children.Add(DockControls.Button(L10n.Get("SessionDialogs.Sessions"), "more", () => _ = host.UserActionAsync(async () => { await host.ShowEditorAsync(new HookSessionsWindow(host), this); })));
-        Body.Children.Add(actions);
-        preview = Input("", true); preview.IsReadOnly = true; preview.MinHeight = 150; preview.FontFamily = new Avalonia.Media.FontFamily("Consolas, monospace"); Body.Children.Add(preview);
+        AutomationProperties.SetLiveSetting(setupStatus, AutomationLiveSetting.Polite);
+        Body.Children.Add(new StackPanel { Spacing = 4, Children = { actions, setupStatus } });
+        preview = Input("", true); preview.IsReadOnly = true; preview.MinHeight = 150; preview.FontFamily = new FontFamily("Consolas, monospace");
+        AutomationProperties.SetName(preview, L10n.Get("SessionDialogs.Preview"));
+        Body.Children.Add(preview);
         if (!OperatingSystem.IsWindows()) { Note(L10n.Get("WorkspaceSession.AutomaticSetupForTheseHookProfilesIs")); actions.IsEnabled = false; }
         Commit = () => { host.Session.Config.LastHookProject = folder.Text?.Trim() ?? ""; host.Session.Save(); };
     }
     private HookProvider[] Selected() => providers.Where(p => p.Value.IsChecked == true).Select(p => p.Key).ToArray();
     private void Execute(bool install)
     {
+        Error.IsVisible = false;
+        setupStatus.IsVisible = true;
         try
         {
             var selected = Selected(); if (selected.Length == 0) throw new InvalidOperationException(L10n.Get("AgentIntegrations.SelectAtLeastOneAgent"));
             var root = HookInstaller.NormalizeProject(folder.Text ?? "");
             var changed = install ? HookInstaller.Install(root, selected, RuntimePaths.Executable) : HookInstaller.Uninstall(root, selected, RuntimePaths.Executable);
-            preview.Text = L10n.Format("SessionDialogs.FilesChanged", (install ? L10n.Get("SessionDialogs.SetupComplete") : L10n.Get("SessionDialogs.WindowDockHooksRemoved")), changed, Environment.NewLine, string.Join(Environment.NewLine, selected.Select(p => p.Name + ": " + p.Help)));
-            host.Session.Config.LastHookProject = root; host.Session.Save(); Error.IsVisible = false;
+            host.Session.Config.LastHookProject = root; host.Session.Save();
+            setupStatus.Foreground = DockTheme.Muted;
+            setupStatus.Text = L10n.Format("SessionDialogs.FilesChanged",
+                L10n.Get(install ? "SessionDialogs.SetupComplete" : "SessionDialogs.WindowDockHooksRemoved"), changed);
         }
-        catch (Exception exception) { Error.Text = exception.Message; Error.IsVisible = true; }
+        catch (Exception exception)
+        {
+            setupStatus.Foreground = Error.Foreground;
+            setupStatus.Text = exception.Message;
+        }
     }
     private void Preview()
     {

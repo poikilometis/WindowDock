@@ -95,17 +95,12 @@ internal sealed partial class MainWindow
             Item(L10n.Get("MainWindowCommands.ScrollOnHover"), () => { Session.Config.HoverScroll = !Session.Config.HoverScroll; Session.Backend.HoverEnabled = Session.Config.HoverScroll; Session.Save(); }, check: Session.Config.HoverScroll),
             DisplayMenu(),
             AsyncItem(L10n.Get("Workflow.Shortcuts"), EditShortcutsAsync, OperatingSystem.IsWindows()),
-            Item(L10n.Get("Workflow.AgentNotifications"), () =>
-            {
-                Session.Config.AgentNotifications = !Session.Config.AgentNotifications;
-                UpdateAttentionCount();
-                Session.Save();
-            }, OperatingSystem.IsWindows(), Session.Config.AgentNotifications),
-            Item(L10n.Get("Workflow.NotifyOnCompletion"), () =>
-            {
-                Session.Config.NotifyOnCompletion = !Session.Config.NotifyOnCompletion;
-                Session.Save();
-            }, Session.Config.AgentNotifications, Session.Config.NotifyOnCompletion)
+            Item(L10n.Get("Workflow.AgentNotifications"),
+                () => SetAgentNotifications(!Session.Config.AgentNotifications, Session.Config.NotifyOnCompletion),
+                OperatingSystem.IsWindows(), Session.Config.AgentNotifications),
+            Item(L10n.Get("Workflow.NotifyOnCompletion"),
+                () => SetAgentNotifications(Session.Config.AgentNotifications, !Session.Config.NotifyOnCompletion),
+                Session.Config.AgentNotifications, Session.Config.NotifyOnCompletion)
         ]));
         entries.Add(Item(L10n.Get("MainWindowCommands.UndockTabWindows"), () => Session.ReleasePanels(Session.CurrentPanels)));
         entries.Add(Item(L10n.Get("Workflow.ReturnAllWindows"), () =>

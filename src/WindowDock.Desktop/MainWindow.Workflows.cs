@@ -173,6 +173,15 @@ internal sealed partial class MainWindow
         }, DispatcherPriority.Background);
     }
 
+    internal void SetAgentNotifications(bool enabled, bool onCompletion)
+    {
+        if (Session.Config.AgentNotifications == enabled && Session.Config.NotifyOnCompletion == onCompletion) return;
+        Session.Config.AgentNotifications = enabled;
+        Session.Config.NotifyOnCompletion = onCompletion;
+        UpdateAttentionCount();
+        Session.Save();
+    }
+
     private void UpdateAttentionCount()
     {
         var waiting = Session.AgentActivities().Where(activity => activity.NeedsAttention).ToArray();

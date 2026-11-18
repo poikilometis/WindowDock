@@ -1063,7 +1063,7 @@
     <comment>Context: SessionDialogs</comment>
   </data>
   <data name="SessionDialogs.FilesChanged" xml:space="preserve">
-    <value>{0}Geänderte Dateien: {1}{2}{3}</value>
+    <value>{0}Geänderte Dateien: {1}</value>
     <comment>Context: SessionDialogs</comment>
   </data>
   <data name="SessionDialogs.SelectAnAgent" xml:space="preserve">

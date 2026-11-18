@@ -33,7 +33,7 @@ Each launch receives `WINDOWDOCK_AGENT_ID` and `WINDOWDOCK_EXE`. The literal `{a
 
 ## Routing and privacy
 
-The bell lists recent agent activity and keeps each session's waiting or error state visible across tabs. Click a session to focus its panel. **View → Agent notifications in Windows** enables a notification area icon and alerts for waiting or failed sessions. Completion alerts are optional.
+The bell lists recent agent activity and keeps each session's waiting or error state visible across tabs. Click a session to focus its panel. Enable **Agent notifications in Windows** in the integrations dialog or under **View** for alerts about waiting or failed sessions. **Also notify on completion** adds alerts when an agent finishes a turn.
 
 Signals are associated using launch identity, persisted session bindings, console handles, or an unambiguous process ancestry match. If WindowDock cannot identify a panel safely, use **Agent integrations → Sessions** to assign it manually. It does not guess when several panels match.
 
