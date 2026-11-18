@@ -83,6 +83,19 @@ Edit the default bindings in **View → Global shortcuts**. Windows may reserve 
 
 </details>
 
+## Day-to-day workflows
+
+| When you want to… | Use this |
+| --- | --- |
+| Find the agent that needs a reply | Set up its project hooks, then open the bell in the toolbar. Select a session to focus its window, or use `Ctrl + Alt + J` to jump to the next one. Turn on **View → Agent notifications in Windows** for alerts in the background. |
+| Reopen a project | Select it in **… → Projects** and review the matches. Keep the running windows and choose whether to start missing commands. Use **Link to project command** in a panel menu to identify an existing window. |
+| Collect only the windows you need | Right-click **Collect windows → Collect with filters**. Filter by title or application, limit the list to terminals, or include minimized windows. **Last collection results** shows each outcome. |
+| Work on a smaller screen | Choose **Layout → Adaptive grid**. It switches to a stack when the tiles would exceed the available height. Use a panel’s **Pin beside the stack** action to keep a second window visible when there is room. |
+| Move the group to another screen | Choose **View → Move WindowDock to display**. WindowDock remembers its placement for each display setup. |
+| Put the windows back on the desktop | Choose **… → Return all windows and pause capture**. The returned applications keep running. |
+
+Agent status comes from configured hooks. If several sessions share a single terminal window, they appear separately in the activity list. Opening a session focuses the containing terminal window.
+
 ## Languages
 
 The interface follows your **OS display language at startup**. Unsupported languages fall back to English. Number and date formats continue to follow your regional preferences. Existing tab names, panel aliases, and project names are your data and are not translated.
@@ -105,13 +118,13 @@ For testing or a different display language, launch `WindowDock.exe --language d
 
 ## Versioning
 
-The public release series starts at **0.1.0**. New features advance `0.x.0`; compatible fixes advance `0.x.y`. Optional beta/RC suffixes identify test releases. See the [versioning policy](docs/VERSIONING.md) for compatibility and the separate Windows file counter.
+New features advance the minor version and compatible fixes advance the patch version. Optional beta and RC suffixes identify test releases. See the [changelog](docs/CHANGELOG.md) for release changes and the [versioning policy](docs/VERSIONING.md) for compatibility.
 
 ## Agent integrations
 
 WindowDock has project-scoped hook adapters for **Claude Code, Codex, and Gemini CLI**. From **… → Agent integrations**, choose a project folder and agents, preview the changes, then set them up. Existing hooks are preserved and owned changes are backed up. Restart the agent after setup.
 
-**Codex hooks still require review and approval through `/hooks`.** WindowDock does not grant trust or change an agent's approval policy. Automatic hook setup can also run immediately before a command launched from **Projects**; opening or editing a project does not execute commands.
+**Codex hooks require review and approval through `/hooks`.** You can enable automatic hook setup for a saved project command. WindowDock then applies it immediately before starting that command.
 
 The integration keeps status and routing metadata, not prompt or response content. Agent versions and hook formats can change. See [integrations and manual status reporting](docs/AGENT-INTEGRATIONS.md).
 

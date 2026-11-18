@@ -1,12 +1,20 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 — Agent activity and workspace controls
 
-- Remember the last active panel per tab. Add recent-window navigation and configurable global shortcuts.
-- Show per-session agent activity with a jump to the owning window and optional Windows notifications.
-- Preview project opening, reconnect existing windows, and start missing commands with optional resume arguments.
-- Filter and preview collection, inspect results per window, and create capture rules from a panel.
-- Add adaptive and stacked layouts, display profiles, and a command to return all windows to the desktop.
+When several agents are running in separate terminals, you can now see who needs a reply and jump straight to their window. WindowDock also remembers where you were working when you switch tabs, so you can pick up from the same panel.
+
+- **See which agent needs you.** The bell shows waiting sessions and errors across tabs, with an elapsed time for each session. Open an entry to focus its window, or press `Ctrl+Alt+J` to go to the next agent that needs attention. Enable Windows notifications from **View** if you want alerts while WindowDock is in the background.
+- **Get back to the right window faster.** Each tab remembers its last active panel. Use `Ctrl+Alt+B` for the previous window and `Ctrl+Alt+Space` to bring the group forward or minimize it. Edit the bindings under **View → Global shortcuts**.
+- **Reopen a project and keep its running sessions.** The preview shows which windows can be reused and which commands are missing. Review the matches, then choose whether to start the missing commands. Link an existing panel to a command from its menu. Commands can also use optional resume arguments supplied by their application.
+- **Choose which windows to collect.** Right-click **Collect windows** for a preview, text and terminal filters, and the option to include minimized windows. Review the last result to see where each window went or why it was skipped. Create a capture rule or exclusion directly from a panel.
+- **Keep windows readable when space is tight.** The adaptive grid switches to a stack when tiles would exceed the available height. Pin one window beside the stack when there is room. WindowDock remembers its placement for each display setup, and saved panels keep their positions when they reconnect in a different order.
+
+The new controls are available in all eleven interface languages. Use **Return all windows and pause capture** any time you want to put your applications back on the desktop while their processes keep running.
+
+### Upgrade from 0.1.0
+
+Close WindowDock and back up the `data` folder. Extract the whole Windows archive, then replace the program files in your current WindowDock folder and keep `data` in place. Using the same executable path keeps your configured agent callbacks pointed at WindowDock.
 
 ## 0.1.0 — Initial public version
 
