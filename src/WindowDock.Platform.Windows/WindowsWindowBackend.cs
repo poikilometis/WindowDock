@@ -222,7 +222,7 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
             if (!wanted.Contains(record.Handle)) Hide(record);
         }
         visibleHandles.Clear(); visibleHandles.UnionWith(wanted);
-                // Commit the whole group's bounds together. Do not ask each application to erase
+        // Commit the whole group's bounds together. Do not ask each application to erase
         // and paint intermediate layouts while its neighbours still have their old size.
         var moves = visible.Where(p => !fitted.TryGetValue(p.Record.Handle, out var previous) || previous.Bounds != p.Bounds || !Native.IsWindowVisible(p.Record.Hwnd)).ToArray();
         var moveStart = Stopwatch.GetTimestamp();
@@ -269,11 +269,21 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
             }
             if (Native.SetWindowRgn(record.Hwnd, region, false) != 0) clips[record.Handle] = local; else Native.DeleteObject(region);
         }
-        if (!visible) Native.ShowWindow(record.Hwnd, 4); // WM_SHOWWINDOW resumes renderers without activation.
+        if (!visible)
+        {
+            // Assigning an owner can leave the window below it in the previous Z order.
+            // Insert the pane directly above the host without raising the entire group.
+            var aboveHost = Native.GetWindow(host.Handle, Native.GW_HWNDPREV);
+            var insertAfter = aboveHost != 0 && (Native.GetLong(aboveHost, Native.GWL_EXSTYLE) & Native.WS_EX_TOPMOST) == 0 ? aboveHost : 0;
+            var flags = Native.SWP_SHOWWINDOW | Native.SWP_NOACTIVATE | Native.SWP_NOMOVE | Native.SWP_NOSIZE;
+            if (aboveHost == record.Hwnd) flags |= Native.SWP_NOZORDER;
+            Native.SetWindowPos(record.Hwnd, insertAfter, 0, 0, 0, 0, flags);
+        }
         fitted[record.Handle] = placement;
-        // Invalidate the application and its original input/rendering children once after reveal.
-        // Avoid WM_ERASEBKGND, which produces the solid flash over hardware-rendered content.
-        if (!visible || resized || regionChanged) Native.RedrawWindow(record.Hwnd, 0, 0, 0x0001 | 0x0080);
+        // Include the native frame and scrollbars in the repaint after a no-redraw resize.
+        // Let the application's own message loop paint without synchronously erasing the background.
+        if (!visible || resized || regionChanged)
+            Native.RedrawWindow(record.Hwnd, 0, 0, Native.RDW_INVALIDATE | Native.RDW_ALLCHILDREN | Native.RDW_FRAME);
     }
     private void ReconcileInput()
     {

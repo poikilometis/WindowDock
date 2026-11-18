@@ -57,9 +57,24 @@ internal static class DesktopAdvancedTests
         var start = new ProcessStartInfo(Path.Combine(Environment.SystemDirectory, "conhost.exe"), "\"" + Path.Combine(Environment.SystemDirectory, "cmd.exe") + "\" /d /q /k \"" + script + "\"") { UseShellExecute = false };
         var process = Process.Start(start)!; subjects.Add(process);
         var candidate = await WaitAsync(main, c => c.Title.Contains(token) && c.ClassName == "ConsoleWindowClass");
+        var owner = main.TryGetPlatformHandle()!.Handle;
+        bool ConsoleIsAboveOwner()
+        {
+            var foundConsole = false;
+            Native.EnumWindows((window, _) =>
+            {
+                if (window == candidate.Handle) foundConsole = true;
+                return window != owner && !foundConsole;
+            }, 0);
+            return foundConsole;
+        }
+        Check(Native.SetWindowPos(candidate.Handle, owner, 0, 0, 0, 0,
+            Native.SWP_NOACTIVATE | Native.SWP_NOMOVE | Native.SWP_NOSIZE) && !ConsoleIsAboveOwner(),
+            "The console fixture must begin behind WindowDock, as it can be at startup.");
         var panel = main.Session.Attach(candidate); await Task.Delay(100);
+        Check(ConsoleIsAboveOwner(), "A restored console stays behind WindowDock until the user clicks.");
         Check(Native.IsWindowVisible(panel.Record.Hwnd) && Native.GetAncestor(panel.Record.Hwnd, 2) == panel.Record.Hwnd, "Classic console did not remain an interactive top-level window.");
-        Native.SetForegroundWindow(main.TryGetPlatformHandle()!.Handle); await Task.Delay(80);
+        Native.SetForegroundWindow(owner); await Task.Delay(80);
         Native.VerticalScroll(candidate.Handle, out var scrollBefore);
         Native.GetWindowRect(candidate.Handle, out var consoleBounds);
         var active = Native.GetForegroundWindow(); var focus = Native.ForegroundFocus();
@@ -69,7 +84,7 @@ internal static class DesktopAdvancedTests
         Check(Native.GetForegroundWindow() == active && Native.ForegroundFocus() == focus, "Classic console hover changed focus.");
         main.Session.ReleasePanels([panel]); await Task.Delay(100);
         Check(Native.IsWindow(candidate.Handle) && !process.HasExited, "Detaching classic console destroyed its session.");
-        Pass("Real classic conhost / cmd window attaches and detaches with its native input root and process intact.");
+        Pass("A classic console initially behind WindowDock is revealed above it without a click; input and the independent process survive docking and undocking.");
     }
     [SupportedOSPlatform("windows")]
     private static async Task ProjectAsync(MainWindow main)
