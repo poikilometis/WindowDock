@@ -1,10 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <title>WindowDock — linked workspace</title>
+  <title>WindowDock — docked windows</title>
+  <defs>
+    <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="130" y2="0">
+      <stop offset="0" stop-color="#00CCB1"/>
+      <stop offset="0.4" stop-color="#1CA0FB"/>
+      <stop offset="0.8" stop-color="#7B61FF"/>
+      <stop offset="1" stop-color="#B79CFF"/>
+    </linearGradient>
+  </defs>
   <rect x="12" y="12" width="232" height="232" rx="58" fill="#24252A"/>
-  <defs><path id="link" d="M82 128V94C82 74 98 58 118 58H140C160 58 176 74 176 94V110"/></defs>
-  <g fill="none" stroke="#F3F1EB" stroke-width="21" stroke-linecap="round" stroke-linejoin="round">
-    <use href="#link"/><use href="#link" transform="rotate(90 128 128)"/>
-    <use href="#link" transform="rotate(180 128 128)"/><use href="#link" transform="rotate(270 128 128)"/>
+  <g transform="translate(59 57) scale(1.1)">
+    <path fill="url(#g)" d="M0 0h90v20.6h-90zM100 0h20v20.6h-20zM0 20h20v20.6h-20zM100 20h20v20.6h-20zM0 40h20v20.6h-20zM40 40h40v20.6h-40zM100 40h20v20.6h-20zM0 60h20v20.6h-20zM40 60h40v20h-40zM100 60h20v20.6h-20zM0 80h20v20.6h-20zM100 80h20v20.6h-20zM0 100h20v20h-20zM30 100h90v20h-90z"/>
+    <path fill="none" stroke="url(#g)" stroke-width="1.3" stroke-linecap="square" stroke-linejoin="miter" opacity=".8" d="M90 7.6L96.7 7.6L96.7 20M90 12.4L93.3 12.4L93.3 20M120 7.6L126.7 7.6L126.7 20M120 12.4L123.3 12.4L123.3 20M30 27.6L23.3 27.6L23.3 40M30 32.4L26.7 32.4L26.7 40M30 27.6L40 27.6M30 32.4L40 32.4M40 27.6L50 27.6M40 32.4L50 32.4M50 27.6L60 27.6M50 32.4L60 32.4M60 27.6L70 27.6M60 32.4L70 32.4M70 27.6L80 27.6M70 32.4L80 32.4M80 27.6L90 27.6M80 32.4L90 32.4M90 32.4L96.7 32.4L96.7 20M90 27.6L93.3 27.6L93.3 20M123.3 20L123.3 40M126.7 20L126.7 40M23.3 40L23.3 60M26.7 40L26.7 60M80 47.6L86.7 47.6L86.7 60M80 52.4L83.3 52.4L83.3 60M123.3 40L123.3 60M126.7 40L126.7 60M23.3 60L23.3 80M26.7 60L26.7 80M83.3 60L83.3 80M86.7 60L86.7 80M123.3 60L123.3 80M126.7 60L126.7 80M23.3 80L23.3 100M26.7 80L26.7 100M50 92.4L43.3 92.4L43.3 80M50 87.6L46.7 87.6L46.7 80M50 87.6L60 87.6M50 92.4L60 92.4M60 87.6L70 87.6M60 92.4L70 92.4M70 87.6L80 87.6M70 92.4L80 92.4M80 92.4L86.7 92.4L86.7 80M80 87.6L83.3 87.6L83.3 80M123.3 80L123.3 100M126.7 80L126.7 100M23.3 100L23.3 120M26.7 100L26.7 120M123.3 100L123.3 120M126.7 100L126.7 120M10 132.4L3.3 132.4L3.3 120M10 127.6L6.7 127.6L6.7 120M10 127.6L20 127.6M10 132.4L20 132.4M20 132.4L26.7 132.4L26.7 120M20 127.6L23.3 127.6L23.3 120M40 132.4L33.3 132.4L33.3 120M40 127.6L36.7 127.6L36.7 120M40 127.6L50 127.6M40 132.4L50 132.4M50 127.6L60 127.6M50 132.4L60 132.4M60 127.6L70 127.6M60 132.4L70 132.4M70 127.6L80 127.6M70 132.4L80 132.4M80 127.6L90 127.6M80 132.4L90 132.4M90 127.6L100 127.6M90 132.4L100 132.4M100 127.6L110 127.6M100 132.4L110 132.4M110 127.6L120 127.6M110 132.4L120 132.4M120 132.4L126.7 132.4L126.7 120M120 127.6L123.3 127.6L123.3 120"/>
   </g>
-  <g fill="#F3F1EB"><rect x="100" y="58" width="56" height="28" rx="12"/><rect x="100" y="58" width="56" height="28" rx="12" transform="rotate(90 128 128)"/><rect x="100" y="58" width="56" height="28" rx="12" transform="rotate(180 128 128)"/><rect x="100" y="58" width="56" height="28" rx="12" transform="rotate(270 128 128)"/></g>
 </svg>
