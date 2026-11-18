@@ -3,7 +3,7 @@
   <h1>WindowDock</h1>
   <p><strong>One Windows workspace for your open terminals and apps</strong></p>
 
-  <img src="docs/images/windowdock-promo.webp" width="960" height="540" alt="Animated demo of WindowDock grouping application windows into a tabbed workspace">
+  https://github.com/user-attachments/assets/dac915fa-7a5e-4306-9e56-d02eb4614c44
 
   <p>Collect the windows you already have open into named tabs and readable grids.<br>With optional hooks, see which Codex, Claude Code, or Gemini CLI session is waiting for you.</p>
 
@@ -53,6 +53,15 @@ WindowDock groups **existing application windows** into a single workspace. Keep
 > **First launch.** `WindowDock.exe` is not code-signed yet, so Microsoft Defender SmartScreen may show “Windows protected your PC”. Choose **More info**, then **Run anyway**. To check the archive before you extract it, compare the output of `Get-FileHash` with the `.sha256` file published beside it.
 
 Closing WindowDock returns the docked windows to the desktop. It does not end their sessions. Back up the `data` folder before upgrading, close WindowDock, then replace the program files without overwriting your data.
+
+### Install with Scoop
+
+```powershell
+scoop bucket add poikilometis https://github.com/poikilometis/scoop-bucket
+scoop install poikilometis/windowdock
+```
+
+[Scoop](https://scoop.sh) adds a Start menu shortcut and the `WindowDock` command, and keeps the `data` folder across updates. Update with `scoop update windowdock`.
 
 ### Requirements
 
