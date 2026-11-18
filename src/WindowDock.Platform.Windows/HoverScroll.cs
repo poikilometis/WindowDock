@@ -21,6 +21,7 @@ namespace WindowDock
         HoverTarget[] targets=new HoverTarget[0];
         readonly IntPtr owner;
         readonly uint wheelLines;
+        readonly ConsoleHoverInput consoleInput;
         readonly System.Collections.Generic.Dictionary<IntPtr,double> consoleRemainders=new();
         readonly ManualResetEvent ready=new ManualResetEvent(false);
         readonly Thread thread;
@@ -34,6 +35,7 @@ namespace WindowDock
         public HoverScroll(IntPtr owner)
         {
             this.owner=owner;
+            consoleInput = new(owner);
             wheelLines=Native.WheelScrollLines();
             // A dedicated pump keeps external application resize / paint work off the hook path.
             thread=new Thread(Run) { IsBackground=true, Name="WindowDock hover wheel" };
@@ -64,7 +66,7 @@ namespace WindowDock
         IntPtr Hook(int code,IntPtr message,IntPtr data)
         {
             int id=message.ToInt32();
-            if(code>=0 && enabled && (id==0x020A || id==0x020E))
+            if(code>=0 && enabled && (id==Native.VerticalWheel || id==Native.HorizontalWheel))
             {
                 Interlocked.Increment(ref WheelEvents);
                 Native.MouseHookData mouse=(Native.MouseHookData)Marshal.PtrToStructure(data,typeof(Native.MouseHookData));
@@ -85,7 +87,7 @@ namespace WindowDock
         }
         internal bool TryForward(uint message,Native.Point point,int delta,int modifiers,bool externalOnly=false)
         {
-            if(!enabled || disposed || (message!=0x020A && message!=0x020E) || delta==0) return false;
+            if(!enabled || disposed || (message!=Native.VerticalWheel && message!=Native.HorizontalWheel) || delta==0) return false;
             HoverTarget[] snapshot=targets;
             bool inScope=false;
             foreach(HoverTarget target in snapshot) if(target.Bounds.Contains(point.X,point.Y)) { inScope=true; break; }
@@ -111,14 +113,21 @@ namespace WindowDock
                     destination=target.Handle;
                 }
                 if(modifiers<0) modifiers=MouseModifiers();
-                if(target.External && message==0x020A && modifiers==0 && Native.GetForegroundWindow()!=target.Root &&
-                   Native.ClassName(target.Root)=="ConsoleWindowClass" && Native.VerticalScroll(target.Root,out var scroll) &&
-                   scroll.Page>0 && scroll.Maximum-scroll.Minimum+1>scroll.Page)
-                    return ScrollConsole(target.Root,delta);
-                int packed=((delta&0xFFFF)<<16)|(modifiers&0xFFFF);
-                int coordinates=((point.Y&0xFFFF)<<16)|(point.X&0xFFFF);
+                if (target.External && modifiers == 0 && Native.GetForegroundWindow() != target.Root)
+                {
+                    var windowClass = Native.ClassName(target.Root);
+                    // Windows Terminal has a wheel handler on its XAML host window.
+                    if (windowClass == Native.TerminalWindowClass) destination = target.Root;
+                    if (windowClass == Native.ConsoleWindowClass)
+                    {
+                        if (message == Native.VerticalWheel && Native.VerticalScroll(target.Root, out var scroll) &&
+                            scroll.Page > 0 && scroll.Maximum - scroll.Minimum + 1 > scroll.Page)
+                            return ScrollConsole(target.Root, delta);
+                        if (consoleInput.TrySend(target.Root, message, point, delta)) return true;
+                    }
+                }
                 // Posting wheel messages does not activate the target or change keyboard focus.
-                if(Native.PostMessage(destination,message,new IntPtr(packed),new IntPtr(coordinates))) return true;
+                if(Native.PostWheel(destination,message,point,delta,modifiers)) return true;
                 Interlocked.Exchange(ref LastPostError,Marshal.GetLastWin32Error());
                 return false; // Do not eat native input when UIPI or another restriction rejects it.
             }
@@ -152,6 +161,7 @@ namespace WindowDock
         {
             if(disposed) return;
             disposed=true; enabled=false; Update(null);
+            consoleInput.Dispose();
             if(threadId!=0) Native.PostThreadMessage(threadId,0x0012,IntPtr.Zero,IntPtr.Zero);
             if(Thread.CurrentThread!=thread) thread.Join(750);
             if(!thread.IsAlive) ready.Dispose();

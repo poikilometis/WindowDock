@@ -15,6 +15,7 @@ internal static class DesktopAdvancedTests
         await HookCallbacksAsync(first);
         await DesktopVersioningTests.RunAsync(first);
         await ConsoleAsync(main);
+        await DesktopConsoleWheelTest.RunAsync(main, first);
         await ProjectAsync(main);
         await GifAsync(main);
         await RecoveryAsync(main);

@@ -25,7 +25,7 @@ namespace WindowDock {
                 try { int cloaked; if (Native.DwmGetWindowAttribute(h, 14, out cloaked, 4) == 0 && cloaked != 0) return true; } catch { }
                 string name; long processStart=0;
                 try { using (Process p = Process.GetProcessById((int)id)) { name = p.ProcessName; try { processStart=p.StartTime.ToUniversalTime().Ticks; } catch { } } } catch { name = L10n.Get("RuleDialogs.Application"); }
-                bool term = cls == "ConsoleWindowClass" || cls == "CASCADIA_HOSTING_WINDOW_CLASS" ||
+                bool term = cls == Native.ConsoleWindowClass || cls == Native.TerminalWindowClass ||
                     name.IndexOf("terminal", StringComparison.OrdinalIgnoreCase) >= 0 ||
                     name.Equals("powershell", StringComparison.OrdinalIgnoreCase) || name.Equals("pwsh", StringComparison.OrdinalIgnoreCase) ||
                     name.Equals("cmd", StringComparison.OrdinalIgnoreCase) || name.Equals("conhost", StringComparison.OrdinalIgnoreCase) ||

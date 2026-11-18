@@ -10,6 +10,10 @@ internal static class Program
     public static int Main(string[] args)
     {
         if (args is ["--version"]) { Console.WriteLine(RuntimePaths.ProductVersion); return 0; }
+        if (args is ["--console-wheel-worker", var owner])
+            return OperatingSystem.IsWindows() && long.TryParse(owner, out var handle) ? ConsoleHoverInput.RunWorker((nint)handle) : 2;
+        if (OperatingSystem.IsWindows() && args is ["--test-console-wheel", var title, var resultPath])
+            return DesktopConsoleWheelTest.ReadWheel(title, resultPath);
         IsSelfTest = args.FirstOrDefault() == "--self-test";
         if (args.FirstOrDefault() == "--perf-test" && args.Length > 1) PerformanceReport = Path.GetFullPath(args[1]);
         var languageOption = Array.IndexOf(args, "--language");
