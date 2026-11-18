@@ -10,18 +10,23 @@ internal static class DesktopLocalizationTests
     {
         var language = L10n.Language;
         var selected = main.Session.SelectedWorkspace;
+        var rendered = 0;
         try
         {
             foreach (var locale in L10n.SupportedLanguages)
             {
                 L10n.Initialize(locale);
-                foreach (var dialog in new EditorWindow[] {
+                List<EditorWindow> dialogs = [
                     new AppearanceWindow(main.Session.Config.ThemeId), new BackgroundWindow(main.Session.Current),
                     new ProjectsWindow(main), new ProjectEditor(main, ProjectProfile.Create(main.Session.Current.Id)), new CommandEditor(ProjectCommand.Create()),
                     new RulesWindow(main), new RuleEditor(WindowRule.Create(main.Session.Current.Id), main.Session.Config.Workspaces),
                     new IntegrationWindow(main), new SettingsWindow(main.Session.Config, main.Session.Current), new HelpWindow(), new WindowPicker([], 10),
                     new CaptureOptionsWindow(main.Session, []), new CaptureReportWindow([]), new AgentAttentionWindow(main.Session),
-                    new ProjectOpenWindow(ProjectProfile.Create(main.Session.Current.Id), []), new ShortcutsWindow(main.Session.Config, new HashSet<int>()) })
+                    new ProjectOpenWindow(ProjectProfile.Create(main.Session.Current.Id), []), new ShortcutsWindow(main.Session.Config, new HashSet<int>()),
+                    new TerminalTargetWindow("fixture", ["Development", "Review"], null), new TerminalHistoryWindow("Development", "Output")
+                ];
+                if (OperatingSystem.IsWindows()) dialogs.Add(new TerminalRecoveryWindow(main.Session));
+                foreach (var dialog in dialogs)
                 {
                     var task = main.ShowEditorAsync(dialog);
                     await Task.Delay(45);
@@ -35,10 +40,11 @@ internal static class DesktopLocalizationTests
                             $"Clipped {locale} label in {dialog.GetType().Name}: {text.Text} ({text.TextLayout.Width:F1} > {text.Bounds.Width:F1})");
                     }
                     dialog.Close(false); await task;
+                    rendered++;
                     DesktopSelfTest.Check(main.Session.SelectedWorkspace == selected, "A localized dialog changed the selected tab.");
                 }
             }
-            DesktopSelfTest.Pass("176 localized editors render at their minimum widths, preserving the selected tab; English, German, Thai, Japanese and traditional Chinese screenshots captured.");
+            DesktopSelfTest.Pass($"{rendered} localized editors render at their minimum widths and preserve the selected tab.");
         }
         finally { L10n.Initialize(language); }
     }

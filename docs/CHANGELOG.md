@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- Reopen selected projects on startup and resume linked Codex, Claude Code, and Gemini CLI conversations from saved session IDs. Save Windows Terminal's own layout and keep opt-in local snapshots of terminal output.
+- Assign a session to a Windows Terminal tab and pane so the bell and next-agent shortcut reach the right place inside a shared terminal.
+- Open workspaces in separate windows on different displays or bind them to Windows virtual desktops.
+- Search open desktop windows and docked panels together. Use executable paths and reported project folders to distinguish similar windows in capture rules.
+- Split individual layout areas and preserve the resized dividers with the workspace.
+- Keep incompatible applications in their original windows while accessing them from WindowDock.
+
 ## 0.2.0 — Agent activity and workspace controls
 
 When several agents are running in separate terminals, you can now see who needs a reply and jump straight to their window. WindowDock also remembers where you were working when you switch tabs, so you can pick up from the same panel.

@@ -1383,4 +1383,118 @@
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Повторить запуск неподключённых команд</value>
   </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>Связать без встраивания</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>Открыть исходное окно</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>Своя раскладка</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>Убрать пустую область</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>Ожидается сохранённое окно</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>Разделить область</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>Добавить область снизу</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>Добавить область справа</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>Привязать к текущему виртуальному столу</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>Windows не смогла открыть выбранный виртуальный стол.</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>Не удалось открыть вкладку отдельным окном.</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>Открыть вкладку на мониторе</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>Вернуть вкладку в WindowDock</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>Вкладка открыта в отдельном окне.</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>Переключитесь на виртуальный стол этой вкладки через Win+Tab.</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>Дождитесь отклика приложений вкладки и повторите действие.</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>История терминала сохранена.</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>Сохранять вкладки и панели терминала при закрытии</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>В терминале нет доступного текста для сохранения.</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>Выберите сохранённый диалог для этой команды проекта.</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>Номер панели (0 — открыть только вкладку)</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>Видимые панели нумеруются сверху вниз, затем слева направо.</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>Возобновлять этот проект при запуске</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>Не удалось возобновить {0}. {1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>Запоминать диалоги агентов для восстановления</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>Открывать Windows Terminal при запуске</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>Сохранить историю терминала</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>История терминала</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>Восстановление терминала</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>Windows Terminal сохраняет свою раскладку. Историю вывода можно сохранить из карточки WindowDock.</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>Настройки Windows Terminal</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>Настройки Windows Terminal недоступны.</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>Выбрать вкладку и панель терминала</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>Не удалось обратиться к выбранному терминалу или панели.</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>Выберите вкладку с уникальным названием в этом терминале.</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>Рабочий стол · добавить окно</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>Путь к программе</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>Сохранять историю терминала автоматически</value>
+  </data>
 </root>

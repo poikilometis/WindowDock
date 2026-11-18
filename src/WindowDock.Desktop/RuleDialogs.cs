@@ -27,7 +27,7 @@ internal sealed class RulesWindow : EditorWindow
         actions.Children.Add(DockControls.Button(L10n.Get("BasicDialogs.Add"), "add", () => _ = host.UserActionAsync(() => Edit(true))));
         actions.Children.Add(DockControls.Button(L10n.Get("ProjectDialogs.Edit"), "settings", () => _ = host.UserActionAsync(() => Edit(false))));
         actions.Children.Add(DockControls.Button(L10n.Get("ProjectDialogs.Remove"), "close", () => { if (list.SelectedItem is WindowRule rule) { Result.Remove(rule); Update(); } }));
-        actions.Children.Add(DockControls.Button(L10n.Get("RuleDialogs.Check"), "search", () => _ = host.UserActionAsync(async () => { await host.ShowEditorAsync(new RulePreview(Result, host.Session.Backend.Enumerate(), host.Session.Config.Workspaces), this); })));
+        actions.Children.Add(DockControls.Button(L10n.Get("RuleDialogs.Check"), "search", () => _ = host.UserActionAsync(async () => { await host.ShowEditorAsync(new RulePreview(Result, host.Session.DesktopWindows(), host.Session.Config.Workspaces), this); })));
         Body.Children.Add(actions); Body.Children.Add(list); Update();
         list.DoubleTapped += (_, _) => _ = host.UserActionAsync(() => Edit(false));
         Commit = () => { foreach (var rule in Result) rule.Validate(); Automatic = enabled.IsChecked == true; };
@@ -39,16 +39,22 @@ internal sealed class RuleEditor : EditorWindow
     public RuleEditor(WindowRule rule, IReadOnlyList<WorkspaceConfig> workspaces) : base(L10n.Get("RuleDialogs.CaptureRule"), 680, 550)
     {
         var name = Input(rule.Name); var process = Input(rule.ProcessPattern); var title = Input(rule.TitlePattern);
+        var executable = Input(rule.ExecutablePattern ?? "");
+        var directory = Input(rule.DirectoryPattern ?? "");
         var target = Choices(workspaces.Select(w => new Choice<WorkspaceConfig>(w, w.Name)), w => w.Id == rule.WorkspaceId); target.SelectedItem ??= target.Items.Cast<object>().FirstOrDefault();
         var enabled = Check(L10n.Get("RuleDialogs.RuleEnabled"), rule.Enabled); var exclude = Check(L10n.Get("RuleDialogs.ExcludeMatchingWindowsFromCapture"), rule.Exclude);
         var terminal = Check(L10n.Get("RuleDialogs.TerminalsOnly"), rule.TerminalOnly); var overflow = Check(L10n.Get("RuleDialogs.CreateTabsWhenFull"), rule.Overflow);
         Field(L10n.Get("EditorWindow.Name"), name); Field(L10n.Get("RuleDialogs.Application"), process); Field(L10n.Get("RuleDialogs.WindowTitle"), title); Field(L10n.Get("Models.Tab"), target);
+        Field(L10n.Get("WindowSearch.Executable"), executable);
+        Field(L10n.Get("EditorWindow.ProjectFolder"), directory);
         Body.Children.Add(enabled); Body.Children.Add(exclude); Body.Children.Add(terminal); Body.Children.Add(overflow);
         Note(L10n.Get("RuleDialogs.PatternsMatchesAnyTextMatchesOneCharacter"));
         exclude.IsCheckedChanged += (_, _) => { target.IsEnabled = exclude.IsChecked != true; overflow.IsEnabled = exclude.IsChecked != true; };
         Commit = () =>
         {
             rule.Name = Required(name, L10n.Get("EditorWindow.Name")); rule.ProcessPattern = process.Text ?? ""; rule.TitlePattern = title.Text ?? "";
+            rule.ExecutablePattern = executable.Text ?? "";
+            rule.DirectoryPattern = directory.Text ?? "";
             rule.WorkspaceId = Value<WorkspaceConfig>(target).Id; rule.Enabled = enabled.IsChecked == true; rule.Exclude = exclude.IsChecked == true;
             rule.TerminalOnly = terminal.IsChecked == true; rule.Overflow = overflow.IsChecked == true; rule.Validate();
         };

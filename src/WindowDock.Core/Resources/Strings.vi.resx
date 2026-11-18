@@ -1383,4 +1383,118 @@
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Thử lại các lệnh chưa kết nối</value>
   </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>Liên kết mà không ghép</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>Mở cửa sổ gốc</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>Bố cục tùy chỉnh</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>Xóa vùng trống</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>Đang chờ cửa sổ đã lưu</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>Chia vùng</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>Thêm vùng bên dưới</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>Thêm vùng bên phải</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>Gắn với màn hình ảo này</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>Windows không mở được màn hình ảo đã chọn.</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>Không mở được thẻ trong cửa sổ riêng.</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>Mở thẻ trên màn hình</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>Đưa thẻ về WindowDock</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>Thẻ này đang mở trong cửa sổ riêng.</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>Dùng Win+Tab để sang màn hình ảo của thẻ này.</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>Chờ các ứng dụng trong thẻ phản hồi rồi thử lại.</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>Đã lưu lịch sử thiết bị đầu cuối.</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>Lưu thẻ và khung khi đóng thiết bị đầu cuối</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>Không có văn bản thiết bị đầu cuối để lưu.</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>Chọn một cuộc trò chuyện đã lưu cho lệnh dự án này.</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>Số khung (0 chỉ chọn thẻ)</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>Các khung hiển thị được đánh số từ trên xuống rồi từ trái sang phải.</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>Mở lại dự án này khi khởi động</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>Không mở lại được {0}. {1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>Ghi nhớ cuộc trò chuyện của tác tử để khôi phục</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>Mở lại Windows Terminal khi khởi động</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>Lưu lịch sử thiết bị đầu cuối</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>Lịch sử thiết bị đầu cuối</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>Khôi phục không gian thiết bị đầu cuối</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>Windows Terminal lưu bố cục riêng. Lưu đầu ra từ một khung WindowDock.</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>Cài đặt Windows Terminal</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>Không truy cập được cài đặt Windows Terminal.</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>Chọn thẻ và khung thiết bị đầu cuối</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>Không truy cập được thiết bị đầu cuối hoặc khung đã chọn.</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>Chọn thẻ có tiêu đề riêng trong thiết bị đầu cuối này.</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>Màn hình nền · thêm cửa sổ</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>Đường dẫn tệp thực thi</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>Tự động lưu lịch sử thiết bị đầu cuối</value>
+  </data>
 </root>

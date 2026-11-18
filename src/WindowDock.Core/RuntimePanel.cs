@@ -36,18 +36,32 @@ internal sealed class RuntimePanel(WindowRecord record, string? savedId = null) 
     public string CommandId { get; set; } = "";
     public long ActivatedUtc { get; set; }
     public List<string> HookSessions { get; set; } = [];
+    public List<SavedAgentSession> AgentSessions { get; set; } = [];
+    public List<TerminalTarget> TerminalTargets { get; set; } = [];
+    public bool KeepTerminalHistory { get; set; }
     public long AgentSignalUtcTicks { get; set; }
     public SavedPanel Capture(int order) => new()
     {
         Id = Id, WorkspaceId = WorkspaceId, Alias = Alias, Title = Title, ProcessName = Record.ProcessName,
         ClassName = Record.ClassName, Handle = Record.Handle, ProcessId = Record.ProcessId, ProcessStartTicks = Record.ProcessStartTicks,
         AgentId = AgentId, HookSessions = [..HookSessions], Order = order, LastSeenUtc = DateTime.UtcNow.Ticks,
-        ProjectId = ProjectId, CommandId = CommandId, ActivatedUtc = ActivatedUtc
+        ProjectId = ProjectId, CommandId = CommandId, ActivatedUtc = ActivatedUtc, Linked = Record.Linked,
+        ExecutablePath = Record.ExecutablePath, ProjectDirectory = Record.ProjectDirectory,
+        AgentSessions = AgentSessions.Count == 0 ? null : [..AgentSessions],
+        TerminalTargets = TerminalTargets.Count == 0 ? null : [..TerminalTargets],
+        KeepTerminalHistory = KeepTerminalHistory
     };
     public void Restore(SavedPanel saved)
     {
         Alias = saved.Alias ?? ""; AgentId = saved.AgentId ?? ""; HookSessions = [..saved.HookSessions ?? []];
         ProjectId = saved.ProjectId ?? ""; CommandId = saved.CommandId ?? ""; ActivatedUtc = saved.ActivatedUtc;
+        Record.ProjectDirectory ??= saved.ProjectDirectory;
+        AgentSessions = (saved.AgentSessions ?? []).Where(item => item is not null && AgentResume.ParseId(item.Id) is not null &&
+            HookProvider.Find(item.Provider) is not null && !string.IsNullOrWhiteSpace(item.Directory))
+            .DistinctBy(item => item.Key).Take(25).ToList();
+        TerminalTargets = (saved.TerminalTargets ?? []).Where(item => item is not null && item.Valid && HookSessions.Contains(item.Key))
+            .DistinctBy(item => item.Key).Take(25).ToList();
+        KeepTerminalHistory = saved.KeepTerminalHistory;
     }
 }
 

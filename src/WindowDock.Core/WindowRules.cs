@@ -9,6 +9,7 @@ namespace WindowDock
     [DataContract] public sealed class WindowRule
     {
         [DataMember] public string Id, Name, ProcessPattern, TitlePattern, WorkspaceId;
+        [DataMember(EmitDefaultValue = false)] public string ExecutablePattern, DirectoryPattern;
         [DataMember] public bool Enabled, Exclude, TerminalOnly, Overflow;
         public static WindowRule Create(string workspace)
         {
@@ -23,13 +24,23 @@ namespace WindowDock
             ProcessPattern = (ProcessPattern ?? "").Trim(); TitlePattern = (TitlePattern ?? "").Trim();
             if (ProcessPattern.Length > 256) ProcessPattern = ProcessPattern.Substring(0, 256);
             if (TitlePattern.Length > 512) TitlePattern = TitlePattern.Substring(0, 512);
+            ExecutablePattern = LimitedPattern(ExecutablePattern);
+            DirectoryPattern = LimitedPattern(DirectoryPattern);
         }
+        private static string LimitedPattern(string value)
+        {
+            var pattern = (value ?? "").Trim();
+            return pattern[..Math.Min(2048, pattern.Length)];
+        }
+        private static bool MatchesKnown(string pattern, string value) => string.IsNullOrWhiteSpace(pattern) ||
+            !string.IsNullOrWhiteSpace(value) && Wildcard.Matches(pattern, value);
         internal bool Matches(WindowCandidate candidate)
         {
             if (!Enabled || candidate == null || (TerminalOnly && !candidate.IsTerminal)) return false;
             string process = ProcessPattern ?? "";
             if (process.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)) process = process.Substring(0, process.Length - 4);
-            return Wildcard.Matches(process, candidate.ProcessName) && Wildcard.Matches(TitlePattern, candidate.Title);
+            return Wildcard.Matches(process, candidate.ProcessName) && Wildcard.Matches(TitlePattern, candidate.Title) &&
+                MatchesKnown(ExecutablePattern, candidate.ExecutablePath) && MatchesKnown(DirectoryPattern, candidate.ProjectDirectory);
         }
     }
     internal static class Wildcard

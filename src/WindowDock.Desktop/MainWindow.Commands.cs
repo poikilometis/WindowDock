@@ -30,16 +30,20 @@ internal sealed partial class MainWindow
     {
         var name = await AskNameAsync(L10n.Get("MainWindowCommands.RenameTab"), workspace.Name); if (name is not null) Session.RenameWorkspace(workspace, name);
     }
-    private async Task AddWindowsAsync() => await UserActionAsync(async () =>
+    private Task AddWindowsAsync() => AddWindowsAsync(Session.Current);
+    internal async Task AddWindowsAsync(WorkspaceConfig workspace, SplitArea? area = null, Window? owner = null) => await UserActionAsync(async () =>
     {
-        var dialog = new WindowPicker(Session.Backend.Enumerate(), Math.Max(0, Session.Current.Capacity - Session.CurrentPanels.Count()));
-        if (!await ShowEditorAsync(dialog)) return;
-        foreach (var candidate in dialog.Selected) UserAction(() => Session.Attach(candidate));
+        var capacity = Math.Max(0, workspace.Capacity - Session.Panels.Count(panel => panel.WorkspaceId == workspace.Id));
+        var dialog = new WindowPicker(Session.DesktopWindows(), area is null ? capacity : Math.Min(1, capacity));
+        if (!await ShowEditorAsync(dialog, owner)) return;
+        foreach (var candidate in dialog.Selected) UserAction(() => Session.Attach(candidate, workspace, area: area, link: dialog.Link));
     });
     private async Task SearchAsync()
     {
-        var dialog = new SearchWindow(Session); if (!await ShowEditorAsync(dialog) || dialog.Selected is not { } panel) return;
-        ActivatePanel(panel);
+        var dialog = new SearchWindow(Session);
+        if (!await ShowEditorAsync(dialog) || dialog.Selected is not { } item) return;
+        if (item.Panel is { } panel) ActivatePanel(panel);
+        else if (item.Window is { } window) UserAction(() => ActivatePanel(Session.AttachFromSearch(window, dialog.Link)));
     }
     private MenuItem Item(string title, Action action, bool enabled = true, bool? check = null)
     {
@@ -68,6 +72,10 @@ internal sealed partial class MainWindow
                 if (Session.PreviousPanel() is { } previous) ActivatePanel(previous);
             }, Session.PreviousPanel() is not null),
             AsyncItem(L10n.Get("Workflow.AgentActivity"), OpenAttentionAsync),
+            AsyncItem(L10n.Get("Recovery.TerminalLayout"), async () =>
+            {
+                if (OperatingSystem.IsWindows()) await ShowEditorAsync(new TerminalRecoveryWindow(Session));
+            }, OperatingSystem.IsWindows()),
             AsyncItem(L10n.Get("Workflow.CollectOptions"), CollectOptionsAsync, Session.Backend.Available),
             AsyncItem(L10n.Get("Workflow.CaptureReport"), CaptureReportAsync, Session.LastCapture.Count > 0),
             LayoutMenu(Session.Current)
@@ -122,7 +130,8 @@ internal sealed partial class MainWindow
         {
             ("grid", L10n.Get("MainWindowCommands.Grid")), ("master", L10n.Get("MainWindowCommands.MainWindowOnTheLeft")),
             ("dual", L10n.Get("MainWindowCommands.TwoMainWindowsOnTop")),
-            ("stack", L10n.Get("Workflow.Stack")), ("adaptive", L10n.Get("Workflow.Adaptive"))
+            ("stack", L10n.Get("Workflow.Stack")), ("adaptive", L10n.Get("Workflow.Adaptive")),
+            ("custom", L10n.Get("CustomLayout.Custom"))
         })
             choices.Add(Item(name, () => { Session.BeginLayoutChange(); workspace.Layout = id; Session.LayoutChanged(); }, check: workspace.Layout == id));
         List<Control> columns = [];
@@ -154,12 +163,25 @@ internal sealed partial class MainWindow
     {
         var panel = card.Panel; var selected = Session.ActionPanels(panel);
         OpenMenu(card, [
-            Item(Session.FocusedPanel == panel.Id ? L10n.Get("MainWindowCommands.ReturnToGrid") : L10n.Get("MainWindowCommands.Zoom"), () => ToggleFocus(panel)),
+            Item((Session.FocusedPanel == panel.Id || workspaceWindows.TryGetValue(panel.WorkspaceId, out var view) && view.Focuses(panel))
+                ? L10n.Get("MainWindowCommands.ReturnToGrid") : L10n.Get("MainWindowCommands.Zoom"), () => ToggleFocus(panel)),
             AsyncItem(L10n.Get("MainWindowCommands.Rename"), async () => { var name = await AskNameAsync(L10n.Get("WorkspaceSession.PanelName"), panel.Caption); if (name is not null) Session.RenamePanel(panel, name); }),
             MoveMenu(selected), Item(L10n.Get("MainWindowCommands.Undock"), () => Session.ReleasePanels(selected)), new Separator(),
             Item(L10n.Get("MainWindowCommands.SelectPanel"), () => Session.Select(panel, true, false)), Item(L10n.Get("MainWindowCommands.ClearAttention"), () => { panel.Attention = false; RefreshTabs(); Session.Save(); }),
             Item(L10n.Get("Workflow.PinPanel"), () => Session.TogglePinnedPanel(panel), check: Session.Current.PinnedPanelId == panel.Id),
+            Group(L10n.Get("CustomLayout.Split"), [
+                Item(L10n.Get("CustomLayout.SplitRight"), () => Session.SplitPanel(panel, true)),
+                Item(L10n.Get("CustomLayout.SplitBelow"), () => Session.SplitPanel(panel, false))
+            ]),
             LinkProjectMenu(panel),
+            Item(L10n.Get("Compatibility.LinkWindow"), () => Session.KeepOriginalWindow(panel),
+                OperatingSystem.IsWindows() && !panel.Record.Linked),
+            AsyncItem(L10n.Get("Recovery.SaveTerminalHistory"), () => SaveTerminalHistoryAsync(panel),
+                OperatingSystem.IsWindows() && TerminalAccess.IsTerminal(panel.Record)),
+            Item(L10n.Get("Recovery.AutomaticHistory"), () => SetAutomaticHistory(panel),
+                OperatingSystem.IsWindows() && TerminalAccess.IsTerminal(panel.Record), panel.KeepTerminalHistory),
+            AsyncItem(L10n.Get("Recovery.TerminalHistory"), () => ViewTerminalHistoryAsync(panel.Id, panel.Caption),
+                OperatingSystem.IsWindows() && File.Exists(TerminalAccess.HistoryPath(panel.Id))),
             AsyncItem(L10n.Get("Workflow.RuleFromWindow"), () => CreateRuleAsync(panel, false)),
             AsyncItem(L10n.Get("Workflow.ExcludeWindow"), () => CreateRuleAsync(panel, true)),
             AsyncItem(L10n.Get("MainWindowCommands.SetUpHooks"), async () => { await ShowEditorAsync(new IntegrationWindow(this, panel)); })
@@ -167,6 +189,7 @@ internal sealed partial class MainWindow
     }
     private void ShowTabMenu(WorkspaceConfig workspace, Control anchor) => OpenMenu(anchor, [
         AsyncItem(L10n.Get("MainWindowCommands.Rename"), () => RenameWorkspaceAsync(workspace)), LayoutMenu(workspace), AsyncItem(L10n.Get("MainWindowCommands.TabBackground"), () => BackgroundAsync(workspace)),
+        PresentationMenu(workspace),
         Item(L10n.Get("MainWindowCommands.UndockTabWindows"), () => Session.ReleasePanels(Session.Panels.Where(p => p.WorkspaceId == workspace.Id))), Item(L10n.Get("MainWindowCommands.CloseTab"), () => Session.CloseWorkspace(workspace))
     ]);
     private async Task SettingsAsync(WorkspaceConfig workspace)

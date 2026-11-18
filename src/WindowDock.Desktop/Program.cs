@@ -12,6 +12,10 @@ internal static class Program
         if (args is ["--version"]) { Console.WriteLine(RuntimePaths.ProductVersion); return 0; }
         if (args is ["--console-wheel-worker", var owner])
             return OperatingSystem.IsWindows() && long.TryParse(owner, out var handle) ? ConsoleHoverInput.RunWorker((nint)handle) : 2;
+        if (OperatingSystem.IsWindows() && args is ["--console-history", var targetWindow, var targetProcess, var targetStarted] &&
+            long.TryParse(targetWindow, out var historyWindow) && int.TryParse(targetProcess, out var historyProcess) &&
+            long.TryParse(targetStarted, out var historyStarted))
+            return ConsoleHoverInput.ReadHistory((nint)historyWindow, historyProcess, historyStarted);
         if (OperatingSystem.IsWindows() && args is ["--test-console-wheel", var title, var resultPath])
             return DesktopConsoleWheelTest.ReadWheel(title, resultPath);
         IsSelfTest = args.FirstOrDefault() == "--self-test";

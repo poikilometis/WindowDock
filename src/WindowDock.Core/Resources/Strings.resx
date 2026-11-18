@@ -1383,4 +1383,118 @@
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Retry commands that did not connect</value>
   </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>Link without docking</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>Open original window</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>Custom layout</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>Remove empty area</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>Waiting for saved window</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>Split area</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>Add area below</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>Add area to the right</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>Bind to this virtual desktop</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>Windows could not find the requested virtual desktop.</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>Could not open the tab in a separate window.</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>Open tab on display</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>Return tab to WindowDock</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>This tab is open in a separate window.</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>Open this tab from its virtual desktop using Win+Tab.</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>Wait for the tab's applications to respond, then reopen or return it.</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>Terminal history saved.</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>Save terminal tabs and panes on close</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>No terminal text is available to save.</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>Choose one saved conversation for this project command.</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>Pane number (0 selects the tab only)</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>Visible panes are numbered from top to bottom, then left to right.</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>Reopen this project at startup</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>Could not reopen {0}. {1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>Remember agent conversations for recovery</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>Reopen Windows Terminal at startup</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>Save terminal history</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>Terminal history</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>Restore terminal workspace</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>Windows Terminal saves its own layout. Save output separately from a WindowDock panel.</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>Windows Terminal settings</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>Windows Terminal settings are unavailable.</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>Choose terminal tab and pane</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>Could not access the selected terminal or pane.</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>Choose a tab with a unique title in this terminal.</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>Desktop · add window</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>Executable path</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>Save terminal history automatically</value>
+  </data>
 </root>

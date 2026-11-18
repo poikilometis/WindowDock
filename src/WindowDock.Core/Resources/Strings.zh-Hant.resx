@@ -1383,4 +1383,118 @@
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>重試未能連結的指令</value>
   </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>連結但不嵌入</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>開啟原始視窗</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>自訂配置</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>移除空白區域</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>正在等候已儲存的視窗</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>分割區域</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>在下方新增區域</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>在右側新增區域</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>綁定到此虛擬桌面</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>Windows 無法開啟指定的虛擬桌面。</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>無法在獨立視窗開啟分頁。</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>在螢幕上開啟分頁</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>將分頁移回 WindowDock</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>此分頁已在獨立視窗開啟。</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>按 Win+Tab 切換到此分頁的虛擬桌面。</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>等分頁內的應用程式回應後再試。</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>已儲存終端機歷史記錄。</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>關閉時儲存終端機分頁與窗格</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>沒有可儲存的終端機文字。</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>為此專案指令選擇一段已儲存的對話。</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>窗格編號（0 只切換分頁）</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>可見窗格先由上而下，再由左而右編號。</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>啟動時重新開啟此專案</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>無法重新開啟 {0}。{1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>記住代理程式的對話以便復原</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>啟動時重新開啟 Windows Terminal</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>儲存終端機歷史記錄</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>終端機歷史記錄</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>復原終端機工作區</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>Windows Terminal 會儲存配置。請從 WindowDock 面板另外儲存輸出。</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>Windows Terminal 設定</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>無法使用 Windows Terminal 設定。</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>選擇終端機分頁與窗格</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>無法存取所選的終端機或窗格。</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>在此終端機選擇標題唯一的分頁。</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>桌面 · 新增視窗</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>執行檔路徑</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>自動儲存終端機歷史記錄</value>
+  </data>
 </root>

@@ -17,6 +17,11 @@ namespace WindowDock
         [DataMember] public List<string> HookSessions;
         [DataMember(EmitDefaultValue = false)] public string ProjectId, CommandId;
         [DataMember(EmitDefaultValue = false)] public long ActivatedUtc;
+        [DataMember(EmitDefaultValue = false)] public bool Linked;
+        [DataMember(EmitDefaultValue = false)] public string ExecutablePath, ProjectDirectory;
+        [DataMember(EmitDefaultValue = false)] public List<SavedAgentSession> AgentSessions;
+        [DataMember(EmitDefaultValue = false)] public List<TerminalTarget> TerminalTargets;
+        [DataMember(EmitDefaultValue = false)] public bool KeepTerminalHistory;
     }
     [DataContract] public sealed class GroupState
     {
@@ -97,8 +102,12 @@ namespace WindowDock
             bool sameProcess = saved.ProcessId == candidate.ProcessId && saved.ProcessStartTicks != 0 &&
                 saved.ProcessStartTicks == (candidate.ProcessStartTicks!=0?candidate.ProcessStartTicks:StartTicks(candidate.ProcessId));
             if (sameProcess && saved.Handle == candidate.Handle.ToInt64()) return 1000;
+            if (!string.IsNullOrWhiteSpace(saved.ExecutablePath) && !string.IsNullOrWhiteSpace(candidate.ExecutablePath) &&
+                !string.Equals(saved.ExecutablePath, candidate.ExecutablePath, StringComparison.OrdinalIgnoreCase)) return 0;
             bool title = String.Equals(saved.Title, candidate.Title, StringComparison.Ordinal);
             if (sameProcess && title) return 900;
+            if (!string.IsNullOrWhiteSpace(saved.ProjectDirectory))
+                return AgentResume.SameDirectory(saved.ProjectDirectory, candidate.ProjectDirectory) ? title ? 800 : 700 : 0;
             return title && !String.IsNullOrWhiteSpace(saved.Title) ? 500 : 0;
         }
         public static WindowCandidate UniqueMatch(SavedPanel saved, IEnumerable<WindowCandidate> candidates)

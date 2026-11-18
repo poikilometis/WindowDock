@@ -22,6 +22,8 @@ namespace WindowDock
         [DataMember(EmitDefaultValue = false)] public string ActivePanelId, PinnedPanelId, StackPanelId;
         [DataMember] public double MasterRatio, PrimaryRatio, DualRatio;
         [DataMember] public List<double> ColumnWeights, RowWeights;
+        [DataMember(EmitDefaultValue = false)] public SplitArea CustomLayout;
+        [DataMember(EmitDefaultValue = false)] public string PresentationDisplay, VirtualDesktop;
         public static WorkspaceConfig Create(string name)
         {
             return new WorkspaceConfig { Id = Guid.NewGuid().ToString("N"), Name = name, Capacity = 15,
@@ -47,6 +49,7 @@ namespace WindowDock
         [DataMember] public string LastHookProject;
         [DataMember(EmitDefaultValue = false)] public Dictionary<int, string> Shortcuts;
         [DataMember(EmitDefaultValue = false)] public bool AgentNotifications, NotifyOnCompletion;
+        [DataMember(EmitDefaultValue = false)] public bool RememberAgentSessions, ReopenTerminal;
         [DataMember(EmitDefaultValue = false)] public List<DisplayPlacement> DisplayPlacements;
         public static AppConfig Default()
         {
@@ -83,7 +86,10 @@ namespace WindowDock
                 w.Name = w.Name.Trim(); if (w.Name.Length > 48) w.Name = w.Name.Substring(0, 48);
                 w.Capacity = Math.Max(1, Math.Min(25, w.Capacity));
                 w.Columns = Math.Max(0, Math.Min(6, w.Columns));
-                if (w.Layout is not ("grid" or "master" or "dual" or "stack" or "adaptive")) w.Layout = "grid";
+                if (w.CustomLayout?.Validate() == false) w.CustomLayout = null;
+                if (w.PresentationDisplay?.Length > 512) w.PresentationDisplay = null;
+                if (!Guid.TryParse(w.VirtualDesktop, out var desktop) || desktop == Guid.Empty) w.VirtualDesktop = null;
+                if (w.Layout is not ("grid" or "master" or "dual" or "stack" or "adaptive" or "custom")) w.Layout = "grid";
                 w.MasterRatio = ConfigValues.Ratio(w.MasterRatio, .60); w.PrimaryRatio = ConfigValues.Ratio(w.PrimaryRatio, .58); w.DualRatio = ConfigValues.Ratio(w.DualRatio, .5);
                 w.ColumnWeights = ConfigValues.Weights(w.ColumnWeights); w.RowWeights = ConfigValues.Weights(w.RowWeights);
                 if (w.BackgroundMode != "solid" && w.BackgroundMode != "image" && w.BackgroundMode != "transparent") w.BackgroundMode = "solid";
@@ -105,6 +111,8 @@ namespace WindowDock
     {
         [DataMember] public long Handle, Parent, Owner, Style, ExStyle;
         [DataMember] public bool NativeTopLevel;
+        [DataMember(EmitDefaultValue = false)] public bool Linked;
+        [DataMember(EmitDefaultValue = false)] public string ExecutablePath, ProjectDirectory;
         [DataMember(EmitDefaultValue = false)] public bool? Enabled;
         [DataMember] public byte[] OriginalRegion;
         [DataMember] public int ProcessId;

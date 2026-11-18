@@ -107,7 +107,18 @@ internal class EditorWindow : Window
     }
     protected static ComboBox Choices<T>(IEnumerable<Choice<T>> items, Func<T, bool> selected)
     {
-        var values = items.ToArray(); return new() { ItemsSource = values, SelectedItem = values.FirstOrDefault(c => selected(c.Value)), HorizontalAlignment = HorizontalAlignment.Stretch };
+        var values = items.ToArray();
+        return new()
+        {
+            ItemsSource = values, SelectedItem = values.FirstOrDefault(choice => selected(choice.Value)),
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            ItemTemplate = Rows.Template<Choice<T>>(choice =>
+            {
+                var text = new TextBlock { Text = choice.Label, TextTrimming = TextTrimming.CharacterEllipsis };
+                ToolTip.SetTip(text, choice.Label);
+                return text;
+            })
+        };
     }
     protected static T Value<T>(ComboBox combo) => ((Choice<T>)combo.SelectedItem!).Value;
     protected static string Required(TextBox input, string label)

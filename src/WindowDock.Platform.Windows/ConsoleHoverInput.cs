@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Channels;
 using Microsoft.Win32.SafeHandles;
 
@@ -112,7 +113,10 @@ internal sealed class ConsoleHoverInput(nint owner) : IDisposable
     private static bool IsDockedConsole(nint owner, WheelEvent wheel)
     {
         var window = (nint)wheel.Window;
-        return window != 0 && Native.GetWindow(window, 4) == owner && Native.IsWindowVisible(window) &&
+        var parent = Native.GetWindow(window, 4);
+        Native.GetWindowThreadProcessId(owner, out var ownerProcess);
+        Native.GetWindowThreadProcessId(parent, out var parentProcess);
+        return window != 0 && parent != 0 && ownerProcess != 0 && parentProcess == ownerProcess && Native.IsWindowVisible(window) &&
             Native.IsWindowEnabled(window) && Native.ClassName(window) == Native.ConsoleWindowClass &&
             Native.GetAncestor(Native.WindowFromPoint(wheel.Point), 2) == window;
     }
@@ -184,6 +188,34 @@ internal sealed class ConsoleHoverInput(nint owner) : IDisposable
         return false;
     }
 
+    internal static int ReadHistory(nint window, int processId, long startTicks)
+    {
+        Native.GetWindowThreadProcessId(window, out var currentProcess);
+        if (currentProcess != processId || Native.ClassName(window) != Native.ConsoleWindowClass ||
+            startTicks != WindowMatching.StartTicks(processId)) return 2;
+        using var destination = Console.OpenStandardOutput();
+        if (!AttachConsole(currentProcess)) return 3;
+        try
+        {
+            if (GetConsoleWindow() != window) return 3;
+            using var output = OpenConsoleDevice("CONOUT$", 0x80000000, 3, 0, 3, 0, 0);
+            if (output.IsInvalid || !GetConsoleScreenBufferInfo(output, out var buffer) || buffer.SizeX <= 0 || buffer.SizeY <= 0) return 3;
+            var last = Math.Clamp(Math.Max((int)buffer.CursorY, buffer.View.Bottom), 0, buffer.SizeY - 1);
+            var count = Math.Clamp(240000 / (buffer.SizeX + 1), 1, 4000);
+            var line = new char[buffer.SizeX];
+            var history = new StringBuilder();
+            for (var row = Math.Max(0, last - count + 1); row <= last; row++)
+            {
+                if (!ReadCharacters(output, line, (uint)buffer.SizeX, new() { Y = (short)row }, out var read)) break;
+                history.AppendLine(new string(line, 0, (int)read).TrimEnd(' ', '\0'));
+            }
+            var bytes = Encoding.UTF8.GetBytes(history.ToString().TrimEnd('\r', '\n'));
+            destination.Write(bytes);
+            return bytes.Length == 0 ? 4 : 0;
+        }
+        finally { FreeConsole(); }
+    }
+
     private static bool WriteVtWheel(SafeFileHandle input, WheelEvent wheel, int column, int row, Dictionary<(long Window, uint Message), int> remainders)
     {
         if (remainders.Count > 128) remainders.Clear();
@@ -212,6 +244,9 @@ internal sealed class ConsoleHoverInput(nint owner) : IDisposable
     [StructLayout(LayoutKind.Sequential)]
     private struct ScreenBuffer { public short SizeX, SizeY, CursorX, CursorY, Attributes; public ConsoleRect View; public short MaxWidth, MaxHeight; }
 
+    [StructLayout(LayoutKind.Sequential)]
+    private struct ConsoleCoordinate { public short X, Y; }
+
     [StructLayout(LayoutKind.Explicit, Size = 20)]
     private struct InputRecord
     {
@@ -234,6 +269,8 @@ internal sealed class ConsoleHoverInput(nint owner) : IDisposable
     private static extern SafeFileHandle OpenConsoleDevice(string name, uint access, uint share, nint security, uint disposition, uint flags, nint template);
     [DllImport("kernel32.dll")] private static extern bool GetConsoleMode(SafeFileHandle input, out uint mode);
     [DllImport("kernel32.dll")] private static extern bool GetConsoleScreenBufferInfo(SafeFileHandle output, out ScreenBuffer info);
+    [DllImport("kernel32.dll", EntryPoint = "ReadConsoleOutputCharacterW", CharSet = CharSet.Unicode)]
+    private static extern bool ReadCharacters(SafeFileHandle output, [Out] char[] buffer, uint count, ConsoleCoordinate first, out uint read);
     [DllImport("kernel32.dll")] private static extern uint GetConsoleProcessList([Out] uint[] processes, uint count);
     [DllImport("kernel32.dll", EntryPoint = "WriteConsoleInputW")]
     private static extern bool WriteConsoleInput(SafeFileHandle input, [In] InputRecord[] records, uint count, out uint written);

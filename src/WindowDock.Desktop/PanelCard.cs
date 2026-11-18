@@ -17,7 +17,7 @@ internal sealed class PanelCard : Border
     private Point? dragStart;
     private IPointer? dragPointer;
     private bool dragging, dropTarget;
-    public PanelCard(RuntimePanel panel, MainWindow window)
+    public PanelCard(RuntimePanel panel, MainWindow window, bool allowDrag = true)
     {
         Panel = panel; this.window = window; DataContext = panel; Classes.Add("tile"); ClipToBounds = true;
         var layout = new Grid { RowDefinitions = new("22,*") };
@@ -35,10 +35,17 @@ internal sealed class PanelCard : Border
         { actions[index].Width = 22; actions[index].Height = 20; actions[index].MinWidth = 0; actions[index].Padding = new(2); Grid.SetColumn(actions[index], index + 2); row.Children.Add(actions[index]); }
         header = new Border { Child = row, Height = 22, Cursor = new(StandardCursorType.SizeAll) };
         layout.Children.Add(header); Grid.SetRow(Slot, 1); layout.Children.Add(Slot); Child = layout; Padding = new(1);
-        header.PointerPressed += BeginDrag;
-        header.PointerMoved += ContinueDrag;
-        header.PointerReleased += EndDrag;
-        header.PointerCaptureLost += (_, _) => { dragStart = null; window.EndPanelDrag(); };
+        if (allowDrag)
+        {
+            header.PointerPressed += BeginDrag;
+            header.PointerMoved += ContinueDrag;
+            header.PointerReleased += EndDrag;
+            header.PointerCaptureLost += (_, _) => { dragStart = null; window.EndPanelDrag(); };
+        }
+        else header.PointerPressed += (_, args) =>
+        {
+            if (args.GetCurrentPoint(header).Properties.IsRightButtonPressed) window.ShowPanelMenu(this);
+        };
         RefreshTheme();
     }
     public void RefreshTheme()
@@ -46,6 +53,13 @@ internal sealed class PanelCard : Border
         Classes.Set("selected", Panel.Selected); header.Background = dragging || dropTarget ? DockTheme.Resource("DockSelection") : DockTheme.Surface; status.Foreground = DockTheme.Accent;
         BorderBrush = dragging || dropTarget || Panel.Selected || Panel.Attention ? DockTheme.Accent : DockTheme.Border;
         Slot.Background = DockTheme.Ground;
+        if (Panel.Record.Linked && Slot.Child is null)
+        {
+            var open = DockControls.Button(L10n.Get("Compatibility.OpenLinked"), "detach", () => window.ActivatePanel(Panel));
+            open.HorizontalAlignment = HorizontalAlignment.Center;
+            open.VerticalAlignment = VerticalAlignment.Center;
+            Slot.Child = open;
+        }
     }
     internal void CancelDrag() { dragStart = null; var pointer = dragPointer; dragPointer = null; if (pointer?.Captured == header) pointer.Capture(null); }
     internal void SetDragState(bool source, bool target) { dragging = source; dropTarget = target; RefreshTheme(); }
@@ -78,16 +92,17 @@ internal sealed class LayoutGrip : Border
 {
     private DividerSpec spec;
     private readonly WorkspaceSession session;
+    private WorkspaceConfig workspace;
     private Point? start;
     public bool IsDragging => start is not null;
-    public void Update(DividerSpec next)
+    public void Update(DividerSpec next, WorkspaceConfig target)
     {
         if (IsDragging) return;
-        spec = next; Cursor = new(spec.Vertical ? StandardCursorType.SizeWestEast : StandardCursorType.SizeNorthSouth);
+        spec = next; workspace = target; Cursor = new(spec.Vertical ? StandardCursorType.SizeWestEast : StandardCursorType.SizeNorthSouth);
     }
-    public LayoutGrip(DividerSpec spec, WorkspaceSession session)
+    public LayoutGrip(DividerSpec spec, WorkspaceSession session, WorkspaceConfig workspace)
     {
-        this.spec = spec; this.session = session; Background = Brushes.Transparent;
+        this.spec = spec; this.session = session; this.workspace = workspace; Background = Brushes.Transparent;
         Cursor = new(spec.Vertical ? StandardCursorType.SizeWestEast : StandardCursorType.SizeNorthSouth);
         Avalonia.Automation.AutomationProperties.SetName(this, L10n.Get("PanelCard.ResizePanels"));
         PointerEntered += (_, _) => Background = DockTheme.Accent;
@@ -103,7 +118,7 @@ internal sealed class LayoutGrip : Border
             var position = this.PointToScreen(args.GetPosition(this)).ToPoint(1);
             var scale = TopLevel.GetTopLevel(this)?.RenderScaling ?? 1;
             var delta = spec.Vertical ? position.X - origin.X : position.Y - origin.Y;
-            FlexibleLayout.Resize(session.Current, spec, (int)Math.Round(delta / scale)); session.LayoutChanged(false); args.Handled = true;
+            FlexibleLayout.Resize(workspace, spec, (int)Math.Round(delta / scale)); session.LayoutChanged(false); args.Handled = true;
         };
         PointerReleased += (_, args) => { if (start is null) return; start = null; args.Pointer.Capture(null); session.LayoutChanged(); args.Handled = true; };
     }

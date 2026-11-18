@@ -82,9 +82,12 @@ internal static class DesktopAdvancedTests
         await Task.Delay(100); Native.VerticalScroll(candidate.Handle, out var scrollAfter);
         Check(routed && scrollAfter.Position < scrollBefore.Position, $"Inactive classic console did not scroll: routed={routed}, before={scrollBefore.Position}, after={scrollAfter.Position}, max={scrollBefore.Maximum}, page={scrollBefore.Page}");
         Check(Native.GetForegroundWindow() == active && Native.ForegroundFocus() == focus, "Classic console hover changed focus.");
+        await TerminalAccess.SaveHistoryAsync(panel);
+        Check(File.ReadAllText(TerminalAccess.HistoryPath(panel.Id)).Contains("Disposable native console line 220", StringComparison.Ordinal),
+            "Classic console history did not preserve existing scrollback.");
         main.Session.ReleasePanels([panel]); await Task.Delay(100);
         Check(Native.IsWindow(candidate.Handle) && !process.HasExited, "Detaching classic console destroyed its session.");
-        Pass("A classic console initially behind WindowDock is revealed above it without a click; input and the independent process survive docking and undocking.");
+        Pass("Classic console reveals above its owner, scrolls without focus, and saves real scrollback before returning to the desktop.");
     }
     [SupportedOSPlatform("windows")]
     private static async Task ProjectAsync(MainWindow main)

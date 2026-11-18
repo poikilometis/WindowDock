@@ -1383,4 +1383,118 @@
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Nicht verbundene Befehle erneut starten</value>
   </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>Verknüpfen ohne Andocken</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>Originalfenster öffnen</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>Eigene Anordnung</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>Leeren Bereich entfernen</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>Gespeichertes Fenster wird erwartet</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>Bereich teilen</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>Bereich unten hinzufügen</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>Bereich rechts hinzufügen</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>An diesen virtuellen Desktop binden</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>Windows konnte den gewählten virtuellen Desktop nicht öffnen.</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>Der Tab konnte nicht in einem eigenen Fenster geöffnet werden.</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>Tab auf Bildschirm öffnen</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>Tab zu WindowDock zurückholen</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>Dieser Tab ist in einem eigenen Fenster geöffnet.</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>Mit Win+Tab zum virtuellen Desktop dieses Tabs wechseln.</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>Warten, bis die Anwendungen im Tab reagieren, und erneut versuchen.</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>Terminalverlauf gespeichert.</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>Terminaltabs und Bereiche beim Schließen speichern</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>Kein Terminaltext zum Speichern verfügbar.</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>Eine gespeicherte Unterhaltung für diesen Projektbefehl auswählen.</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>Bereichsnummer (0 wählt nur den Tab)</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>Sichtbare Bereiche werden von oben nach unten, dann von links nach rechts nummeriert.</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>Dieses Projekt beim Start wieder öffnen</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>{0} konnte nicht wieder geöffnet werden. {1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>Agentenunterhaltungen für die Wiederherstellung merken</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>Windows Terminal beim Start wieder öffnen</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>Terminalverlauf speichern</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>Terminalverlauf</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>Terminal-Arbeitsbereich wiederherstellen</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>Windows Terminal speichert seine Anordnung. Ausgaben lassen sich im WindowDock-Bereich separat speichern.</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>Windows-Terminal-Einstellungen</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>Die Windows-Terminal-Einstellungen sind nicht verfügbar.</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>Terminaltab und Bereich auswählen</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>Das gewählte Terminal oder der Bereich ist nicht erreichbar.</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>Einen Tab mit eindeutigem Titel in diesem Terminal auswählen.</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>Desktop · Fenster hinzufügen</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>Pfad zur Programmdatei</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>Terminalverlauf automatisch speichern</value>
+  </data>
 </root>

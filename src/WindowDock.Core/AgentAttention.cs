@@ -76,11 +76,14 @@ internal sealed partial class WorkspaceSession
     {
         if (!IsStale(signal, panel.AgentSignalUtcTicks))
         {
+            if (!string.IsNullOrWhiteSpace(signal.Directory)) panel.Record.ProjectDirectory = signal.Directory;
             panel.AgentSignalUtcTicks = Math.Max(panel.AgentSignalUtcTicks, signal.EventUtcTicks);
             panel.AgentStatus = signal.Status == "clear" ? "" : signal.Status;
             panel.AgentMessage = signal.Message ?? "";
             panel.Attention = signal.Status is "waiting" or "done" or "error";
         }
+
+        StoreAgentSession(panel, signal);
 
         if (!string.IsNullOrEmpty(signal.SessionKey))
         {

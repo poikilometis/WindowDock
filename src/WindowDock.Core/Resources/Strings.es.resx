@@ -1383,4 +1383,118 @@
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Reintentar comandos que no se conectaron</value>
   </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>Vincular sin acoplar</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>Abrir ventana original</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>Diseño personalizado</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>Quitar área vacía</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>Esperando la ventana guardada</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>Dividir área</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>Añadir área debajo</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>Añadir área a la derecha</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>Vincular a este escritorio virtual</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>Windows no pudo abrir el escritorio virtual elegido.</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>No se pudo abrir la pestaña en otra ventana.</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>Abrir pestaña en monitor</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>Devolver pestaña a WindowDock</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>Esta pestaña está abierta en otra ventana.</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>Usa Win+Tab para ir al escritorio virtual de esta pestaña.</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>Espera a que respondan las aplicaciones de la pestaña e inténtalo de nuevo.</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>Historial de la terminal guardado.</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>Guardar pestañas y paneles de la terminal al cerrar</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>No hay texto de la terminal disponible para guardar.</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>Elige una conversación guardada para este comando del proyecto.</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>Número de panel (0 selecciona solo la pestaña)</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>Los paneles visibles se numeran de arriba abajo y luego de izquierda a derecha.</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>Reabrir este proyecto al iniciar</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>No se pudo reabrir {0}. {1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>Recordar conversaciones de agentes para recuperarlas</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>Reabrir Windows Terminal al iniciar</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>Guardar historial de la terminal</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>Historial de la terminal</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>Restaurar espacio de la terminal</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>Windows Terminal guarda su diseño. Guarda la salida desde un panel de WindowDock.</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>Configuración de Windows Terminal</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>La configuración de Windows Terminal no está disponible.</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>Elegir pestaña y panel de la terminal</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>No se pudo acceder a la terminal o al panel seleccionado.</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>Elige una pestaña con un título único en esta terminal.</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>Escritorio · añadir ventana</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>Ruta del ejecutable</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>Guardar el historial automáticamente</value>
+  </data>
 </root>

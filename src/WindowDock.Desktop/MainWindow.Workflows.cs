@@ -22,6 +22,11 @@ internal sealed partial class MainWindow
 
     private void OpenWorkspace(WorkspaceConfig workspace)
     {
+        if (workspaceWindows.ContainsKey(workspace.Id))
+        {
+            ShowWorkspaceWindow(workspace);
+            return;
+        }
         if (Session.ActivePanel(workspace) is { } panel)
             ActivatePanel(panel);
         else
@@ -35,6 +40,15 @@ internal sealed partial class MainWindow
     internal void ActivatePanel(RuntimePanel panel)
     {
         if (!Session.Panels.Contains(panel) || !Session.Backend.IsAlive(panel.Record)) return;
+        if (OperatingSystem.IsWindows() && workspaceWindows.TryGetValue(panel.WorkspaceId, out var view))
+        {
+            if (!VirtualDesktops.OnCurrent(view.Handle)) { SetStatus(L10n.Get("Presentation.SwitchDesktop")); return; }
+            Session.RememberActivation(panel);
+            view.Reveal(panel);
+            if (panel.Record.Linked) Session.Backend.Activate(panel.Record);
+            else { pendingActivation = panel; QueueSync(); }
+            return;
+        }
         RestoreHost();
         Session.SelectedWorkspace = panel.WorkspaceId;
         if (Session.FocusedPanel is { } focus && focus != panel.Id) Session.FocusedPanel = null;
@@ -45,6 +59,12 @@ internal sealed partial class MainWindow
             if (!pinIsVisible) Session.SelectStackPanel(panel);
         }
         Session.RememberActivation(panel);
+        if (panel.Record.Linked)
+        {
+            pendingActivation = null;
+            Session.Backend.Activate(panel.Record);
+            return;
+        }
         pendingActivation = panel;
         if (stackBar.IsVisible || Session.Current.Layout is "stack" or "adaptive") ArrangePanels();
         Dispatcher.UIThread.Post(() =>
@@ -58,7 +78,7 @@ internal sealed partial class MainWindow
     private void CompletePanelActivation(IReadOnlyList<WindowPlacement> placements, bool visible)
     {
         if (pendingActivation is not { } panel) return;
-        if (panel.WorkspaceId != Session.SelectedWorkspace || !Session.Panels.Contains(panel))
+        if (panel.WorkspaceId != Session.SelectedWorkspace && !workspaceWindows.ContainsKey(panel.WorkspaceId) || !Session.Panels.Contains(panel))
         {
             pendingActivation = null;
             return;
@@ -116,13 +136,13 @@ internal sealed partial class MainWindow
 
     private void CollectWindows(CaptureOptions options, IReadOnlyList<WindowCandidate>? windows = null)
     {
-        Session.Collect(windows ?? Session.Backend.Enumerate(), options);
+        Session.Collect(windows ?? Session.DesktopWindows(), options);
         RefreshStatus();
     }
 
     private async Task CollectOptionsAsync()
     {
-        var windows = Session.Backend.Enumerate();
+        var windows = Session.DesktopWindows();
         var dialog = new CaptureOptionsWindow(Session, windows);
         if (await ShowEditorAsync(dialog)) CollectWindows(dialog.Options, windows);
     }
@@ -131,7 +151,7 @@ internal sealed partial class MainWindow
 
     private async Task OpenProjectAsync(ProjectProfile profile)
     {
-        var plan = Session.ProjectPlan(profile, Session.Backend.Enumerate());
+        var plan = Session.ProjectPlan(profile, Session.DesktopWindows());
         var dialog = new ProjectOpenWindow(profile, plan);
         if (!await ShowEditorAsync(dialog)) return;
         var result = Session.OpenProject(profile, dialog.StartMissing, dialog.Resume, dialog.RetryUnmatched);
@@ -156,6 +176,8 @@ internal sealed partial class MainWindow
         rule.Name = panel.Caption;
         rule.ProcessPattern = panel.Record.ProcessName;
         rule.TitlePattern = panel.Title;
+        rule.ExecutablePattern = panel.Record.ExecutablePath;
+        rule.DirectoryPattern = panel.Record.ProjectDirectory;
         rule.Exclude = exclude;
         if (!await ShowEditorAsync(new RuleEditor(rule, Session.Config.Workspaces))) return;
         Session.Config.Rules.Add(rule);
@@ -223,14 +245,14 @@ internal sealed partial class MainWindow
         if (selected.Panel is { } panel && Session.Panels.Contains(panel))
         {
             lastAgentKey = selected.Key;
-            ActivatePanel(panel);
+            await ActivateAgentAsync(panel, selected.Key);
         }
         else if (Session.HookSessions.ContainsKey(selected.Key))
         {
             var picker = new PanelPicker(Session);
             if (!await ShowEditorAsync(picker) || picker.Selected is not { } destination) return;
             Session.BindHook(selected.Key, destination);
-            ActivatePanel(destination);
+            await ActivateAgentAsync(destination, selected.Key);
         }
     }
 
@@ -245,7 +267,7 @@ internal sealed partial class MainWindow
         var last = Array.FindIndex(waiting, activity => activity.Key == lastAgentKey);
         var next = waiting[(last + 1) % waiting.Length];
         lastAgentKey = next.Key;
-        ActivatePanel(next.Panel!);
+        _ = UserActionAsync(() => ActivateAgentAsync(next.Panel!, next.Key));
     }
 
     private Border CreateStackBar()

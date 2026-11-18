@@ -1383,4 +1383,118 @@
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>重试未连接的命令</value>
   </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>链接但不嵌入</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>打开原窗口</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>自定义布局</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>移除空白区域</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>正在等待已保存的窗口</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>拆分区域</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>在下方添加区域</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>在右侧添加区域</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>绑定到此虚拟桌面</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>Windows 无法打开所选虚拟桌面。</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>无法在独立窗口打开标签页。</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>在显示器上打开标签页</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>将标签页移回 WindowDock</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>此标签页已在独立窗口打开。</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>按 Win+Tab 切换到此标签页的虚拟桌面。</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>等标签页内的应用响应后再试。</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>已保存终端历史记录。</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>关闭时保存终端标签页和窗格</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>没有可保存的终端文本。</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>为此项目命令选择一段已保存的对话。</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>窗格编号（0 仅切换标签页）</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>可见窗格先从上到下，再从左到右编号。</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>启动时重新打开此项目</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>无法重新打开 {0}。{1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>记住代理的对话以便恢复</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>启动时重新打开 Windows Terminal</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>保存终端历史记录</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>终端历史记录</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>恢复终端工作区</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>Windows Terminal 会保存布局。可从 WindowDock 面板另存输出。</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>Windows Terminal 设置</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>无法访问 Windows Terminal 设置。</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>选择终端标签页和窗格</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>无法访问所选终端或窗格。</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>在此终端选择标题唯一的标签页。</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>桌面 · 添加窗口</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>可执行文件路径</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>自动保存终端历史记录</value>
+  </data>
 </root>

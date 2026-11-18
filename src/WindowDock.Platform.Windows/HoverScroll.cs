@@ -9,11 +9,11 @@ namespace WindowDock
 {
     internal sealed class HoverTarget
     {
-        public readonly IntPtr Root, Handle;
+        public readonly IntPtr Root, Handle, Owner;
         public readonly Rectangle Bounds;
         public readonly bool External;
-        public HoverTarget(IntPtr root,IntPtr handle,Rectangle bounds,bool external)
-        { Root=root; Handle=handle; Bounds=bounds; External=external; }
+        public HoverTarget(IntPtr root,IntPtr handle,Rectangle bounds,bool external,IntPtr host=default)
+        { Root=root; Handle=handle; Bounds=bounds; External=external; Owner=host; }
     }
 
     internal sealed class HoverScroll : IDisposable
@@ -103,7 +103,7 @@ namespace WindowDock
                 IntPtr destination;
                 if(target.External)
                 {
-                    if(Native.GetWindow(target.Root,4)!=owner ||
+                    if(Native.GetWindow(target.Root,4)!=(target.Owner==0?owner:target.Owner) ||
                        (hit!=target.Root && !Native.IsChild(target.Root,hit))) continue;
                     destination=hit;
                 }

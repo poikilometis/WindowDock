@@ -8,6 +8,7 @@ namespace WindowDock {
         public static List<WindowCandidate> List(ICollection<long> excluded, bool includeOwn)
         {
             List<WindowCandidate> result = new List<WindowCandidate>();
+            Dictionary<uint, string> images = new Dictionary<uint, string>();
             int ownPid = Process.GetCurrentProcess().Id;
             Native.EnumWindows(delegate(IntPtr h, IntPtr data) {
                 uint id; Native.GetWindowThreadProcessId(h, out id);
@@ -31,7 +32,9 @@ namespace WindowDock {
                     name.Equals("cmd", StringComparison.OrdinalIgnoreCase) || name.Equals("conhost", StringComparison.OrdinalIgnoreCase) ||
                     name.Equals("wezterm-gui", StringComparison.OrdinalIgnoreCase) || name.Equals("mintty", StringComparison.OrdinalIgnoreCase);
                 if ((ex & Native.WS_EX_TOOLWINDOW) != 0 && !term) return true;
-                result.Add(new WindowCandidate { Handle = h, ProcessId = (int)id, ProcessStartTicks = processStart, Title = title, ProcessName = name, ClassName = cls, IsTerminal = term, IsMinimized = Native.IsIconic(h) });
+                if (!images.TryGetValue(id, out var image)) images[id] = image = WindowsImages.Path(id);
+                result.Add(new WindowCandidate { Handle = h, ProcessId = (int)id, ProcessStartTicks = processStart, Title = title,
+                    ProcessName = name, ClassName = cls, ExecutablePath = image, IsTerminal = term, IsMinimized = Native.IsIconic(h) });
                 return true;
             }, IntPtr.Zero);
             result.Sort(delegate(WindowCandidate a, WindowCandidate b) {

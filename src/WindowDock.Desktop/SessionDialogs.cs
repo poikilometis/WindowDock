@@ -32,7 +32,16 @@ internal sealed class PendingGroupsWindow : EditorWindow
             var picker = new PanelPicker(host.Session); if (await host.ShowEditorAsync(picker, this) && picker.Selected is { } panel) { host.Session.BindPending(saved, panel); Update(); }
         })));
         actions.Children.Add(DockControls.Button(L10n.Get("SessionDialogs.Forget"), "close", () => { if (list.SelectedItem is SavedPanel saved) { host.Session.Pending.Remove(saved); host.Session.Save(); Update(); } }));
+        var history = DockControls.Button(L10n.Get("Recovery.TerminalHistory"), "search", () => _ = host.UserActionAsync(async () =>
+        {
+            if (list.SelectedItem is SavedPanel saved) await host.ViewTerminalHistoryAsync(saved.Id, saved.Title, this);
+        }));
+        void UpdateHistory() => history.IsEnabled = OperatingSystem.IsWindows() && list.SelectedItem is SavedPanel saved &&
+            File.Exists(TerminalAccess.HistoryPath(saved.Id));
+        list.SelectionChanged += (_, _) => UpdateHistory();
+        actions.Children.Add(history);
         Body.Children.Add(actions); Body.Children.Add(list); Update();
+        UpdateHistory();
     }
 }
 
@@ -52,7 +61,19 @@ internal sealed class HookSessionsWindow : EditorWindow
             if (list.SelectedItem is not Choice<string> choice) return;
             var picker = new PanelPicker(host.Session); if (await host.ShowEditorAsync(picker, this) && picker.Selected is { } panel) { host.Session.BindHook(choice.Value, panel); Update(); }
         }));
-        Body.Children.Add(bind); Body.Children.Add(list); Update();
+        var target = DockControls.Button(L10n.Get("Recovery.TerminalTarget"), "focus", () => _ = host.UserActionAsync(async () =>
+        {
+            if (list.SelectedItem is not Choice<string> choice) return;
+            var bound = host.Session.HookSessions.GetValueOrDefault(choice.Value);
+            if (host.Session.Panels.FirstOrDefault(panel => panel.Id == bound?.PanelId) is { } panel)
+                await host.EditTerminalTargetAsync(panel, choice.Value, this);
+        }));
+        void UpdateTarget() => target.IsEnabled = OperatingSystem.IsWindows() && list.SelectedItem is Choice<string> selected &&
+            host.Session.HookSessions.TryGetValue(selected.Value, out var entry) &&
+            host.Session.Panels.Any(panel => panel.Id == entry.PanelId && panel.Record.ClassName == Native.TerminalWindowClass);
+        list.SelectionChanged += (_, _) => UpdateTarget();
+        Body.Children.Add(new WrapPanel { ItemSpacing = 8, Children = { bind, target } });
+        Body.Children.Add(list); Update(); UpdateTarget();
     }
 }
 
@@ -76,6 +97,9 @@ internal sealed class IntegrationWindow : EditorWindow
             providers.Add(provider, check); Body.Children.Add(check); Note(provider.Help);
         }
         Note(L10n.Get("SessionDialogs.RestartTheAgentAfterSetupCodexRequires"));
+        var remember = Check(L10n.Get("Recovery.RememberAgentSessions"), host.Session.Config.RememberAgentSessions);
+        remember.IsCheckedChanged += (_, _) => host.UserAction(() => host.Session.RememberAgentSessions(remember.IsChecked == true));
+        Body.Children.Add(remember);
         if (OperatingSystem.IsWindows())
         {
             var config = host.Session.Config;
