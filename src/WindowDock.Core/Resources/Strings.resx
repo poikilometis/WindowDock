@@ -1085,6 +1085,12 @@
     <value>Select a theme to preview it immediately. Save your choice or cancel to restore the previous theme.</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>Light Beams</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>Soft animated beams on a dark background</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>Graphite</value>
     <comment>Context: ThemePreview</comment>
@@ -1499,5 +1505,98 @@
   </data>
   <data name="Recovery.AutomaticHistory" xml:space="preserve">
     <value>Save terminal history automatically</value>
+  </data>
+  <data name="Surface.Colors" xml:space="preserve">
+    <value>Color and transparency</value>
+  </data>
+  <data name="Surface.AllWindows" xml:space="preserve">
+    <value>All windows</value>
+  </data>
+  <data name="Surface.Header" xml:space="preserve">
+    <value>WindowDock toolbar</value>
+  </data>
+  <data name="Surface.AllTabs" xml:space="preserve">
+    <value>All tabs</value>
+  </data>
+  <data name="Surface.Inherit" xml:space="preserve">
+    <value>Use defaults</value>
+  </data>
+  <data name="Surface.FromTheme" xml:space="preserve">
+    <value>Use theme</value>
+  </data>
+  <data name="Surface.StaticGradient" xml:space="preserve">
+    <value>Static gradient</value>
+  </data>
+  <data name="Surface.FlowGradient" xml:space="preserve">
+    <value>Animated gradient</value>
+  </data>
+  <data name="Surface.TitleColor" xml:space="preserve">
+    <value>Custom title color</value>
+  </data>
+  <data name="Surface.StartColor" xml:space="preserve">
+    <value>Start color</value>
+  </data>
+  <data name="Surface.EndColor" xml:space="preserve">
+    <value>End color</value>
+  </data>
+  <data name="Surface.CustomOpacity" xml:space="preserve">
+    <value>Custom opacity</value>
+  </data>
+  <data name="Surface.Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Surface.NativeOpacityUnsupported" xml:space="preserve">
+    <value>This window manages its own transparency.</value>
+  </data>
+  <data name="Power.PreventSleep" xml:space="preserve">
+    <value>Prevent sleep</value>
+  </data>
+  <data name="Power.Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="Power.WhileOpen" xml:space="preserve">
+    <value>While WindowDock is open</value>
+  </data>
+  <data name="Power.WhileAgentsWork" xml:space="preserve">
+    <value>While a hooked agent is working</value>
+  </data>
+  <data name="Power.WhileDocked" xml:space="preserve">
+    <value>While windows are docked</value>
+  </data>
+  <data name="Update.Button" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Update.Available" xml:space="preserve">
+    <value>Version {0} is available</value>
+  </data>
+  <data name="Update.Dismiss" xml:space="preserve">
+    <value>Dismiss update</value>
+  </data>
+  <data name="Update.Changelog" xml:space="preserve">
+    <value>What's changed</value>
+  </data>
+  <data name="Update.Install" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="Update.Downloading" xml:space="preserve">
+    <value>Downloading the update…</value>
+  </data>
+  <data name="Update.Failed" xml:space="preserve">
+    <value>Could not install the update.</value>
+  </data>
+  <data name="Update.Checking" xml:space="preserve">
+    <value>Checking for updates…</value>
+  </data>
+  <data name="Update.Current" xml:space="preserve">
+    <value>WindowDock is up to date.</value>
+  </data>
+  <data name="Update.CheckFailed" xml:space="preserve">
+    <value>Could not check for updates.</value>
+  </data>
+  <data name="Update.WhatsNew" xml:space="preserve">
+    <value>What's new</value>
+  </data>
+  <data name="Update.WhatsNewVersion" xml:space="preserve">
+    <value>What's new in {0}</value>
   </data>
 </root>

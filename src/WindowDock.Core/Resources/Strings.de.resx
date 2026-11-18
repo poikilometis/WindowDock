@@ -1085,6 +1085,12 @@
     <value>Wählen Sie ein Thema für die sofortige Vorschau. Speichern Sie die Auswahl oder brechen Sie ab, um das vorherige Thema wiederherzustellen.</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>Lichtstrahlen</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>Sanft bewegte Lichtstrahlen auf dunklem Hintergrund</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>Graphit</value>
     <comment>Context: ThemePreview</comment>
@@ -1499,5 +1505,98 @@
   </data>
   <data name="Recovery.AutomaticHistory" xml:space="preserve">
     <value>Terminalverlauf automatisch speichern</value>
+  </data>
+  <data name="Surface.Colors" xml:space="preserve">
+    <value>Farbe und Transparenz</value>
+  </data>
+  <data name="Surface.AllWindows" xml:space="preserve">
+    <value>Alle Fenster</value>
+  </data>
+  <data name="Surface.Header" xml:space="preserve">
+    <value>WindowDock-Leiste</value>
+  </data>
+  <data name="Surface.AllTabs" xml:space="preserve">
+    <value>Alle Tabs</value>
+  </data>
+  <data name="Surface.Inherit" xml:space="preserve">
+    <value>Globale Werte verwenden</value>
+  </data>
+  <data name="Surface.FromTheme" xml:space="preserve">
+    <value>Design verwenden</value>
+  </data>
+  <data name="Surface.StaticGradient" xml:space="preserve">
+    <value>Statischer Verlauf</value>
+  </data>
+  <data name="Surface.FlowGradient" xml:space="preserve">
+    <value>Animierter Verlauf</value>
+  </data>
+  <data name="Surface.TitleColor" xml:space="preserve">
+    <value>Eigene Titelfarbe</value>
+  </data>
+  <data name="Surface.StartColor" xml:space="preserve">
+    <value>Startfarbe</value>
+  </data>
+  <data name="Surface.EndColor" xml:space="preserve">
+    <value>Endfarbe</value>
+  </data>
+  <data name="Surface.CustomOpacity" xml:space="preserve">
+    <value>Eigene Deckkraft</value>
+  </data>
+  <data name="Surface.Reset" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="Surface.NativeOpacityUnsupported" xml:space="preserve">
+    <value>Dieses Fenster verwaltet seine Transparenz selbst.</value>
+  </data>
+  <data name="Power.PreventSleep" xml:space="preserve">
+    <value>Energiesparmodus verhindern</value>
+  </data>
+  <data name="Power.Off" xml:space="preserve">
+    <value>Aus</value>
+  </data>
+  <data name="Power.WhileOpen" xml:space="preserve">
+    <value>Solange WindowDock geöffnet ist</value>
+  </data>
+  <data name="Power.WhileAgentsWork" xml:space="preserve">
+    <value>Solange ein Agent mit Hooks arbeitet</value>
+  </data>
+  <data name="Power.WhileDocked" xml:space="preserve">
+    <value>Solange Fenster angedockt sind</value>
+  </data>
+  <data name="Update.Button" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="Update.Available" xml:space="preserve">
+    <value>Version {0} ist verfügbar</value>
+  </data>
+  <data name="Update.Dismiss" xml:space="preserve">
+    <value>Updatehinweis schließen</value>
+  </data>
+  <data name="Update.Changelog" xml:space="preserve">
+    <value>Änderungen ansehen</value>
+  </data>
+  <data name="Update.Install" xml:space="preserve">
+    <value>Installieren</value>
+  </data>
+  <data name="Update.Downloading" xml:space="preserve">
+    <value>Update wird heruntergeladen…</value>
+  </data>
+  <data name="Update.Failed" xml:space="preserve">
+    <value>Das Update konnte nicht installiert werden.</value>
+  </data>
+  <data name="Update.Checking" xml:space="preserve">
+    <value>Nach Updates suchen…</value>
+  </data>
+  <data name="Update.Current" xml:space="preserve">
+    <value>WindowDock ist auf dem neuesten Stand.</value>
+  </data>
+  <data name="Update.CheckFailed" xml:space="preserve">
+    <value>Updates konnten nicht geprüft werden.</value>
+  </data>
+  <data name="Update.WhatsNew" xml:space="preserve">
+    <value>Neuigkeiten</value>
+  </data>
+  <data name="Update.WhatsNewVersion" xml:space="preserve">
+    <value>Neu in Version {0}</value>
   </data>
 </root>

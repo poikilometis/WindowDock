@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace WindowDock;
 
-internal readonly record struct WindowPlacement(WindowRecord Record, Rectangle Bounds, Rectangle Clip, Rectangle Card, int Radius, nint Owner = 0);
+internal readonly record struct WindowPlacement(WindowRecord Record, Rectangle Bounds, Rectangle Clip, Rectangle Card, int Radius, nint Owner = 0, int Opacity = 100);
 internal readonly record struct WindowSystemEvent(string Kind, long Handle, int Command = 0);
 internal readonly record struct HostWindowState(nint Handle, bool Visible);
 internal readonly record struct NativeHoverArea(long Root, long Handle, Rectangle Bounds, bool External, nint Owner = 0);

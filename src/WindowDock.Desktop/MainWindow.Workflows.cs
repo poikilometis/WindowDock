@@ -15,12 +15,14 @@ internal sealed partial class MainWindow
     private readonly TextBlock stackLabel = new() { TextTrimming = TextTrimming.CharacterEllipsis, MaxWidth = 320 };
     private bool attentionUpdateQueued;
     private RuntimePanel? pendingActivation;
+    private (RuntimePanel? Panel, string SessionKey)? deferredAgentNotification;
     private string? lastAgentKey;
     private WindowState lastVisibleState = WindowState.Normal;
     private HashSet<int> unavailableShortcuts = [];
 
     private void OpenWorkspace(WorkspaceConfig workspace)
     {
+        SelectReleaseNotes(false);
         if (workspaceWindows.ContainsKey(workspace.Id))
         {
             ShowWorkspaceWindow(workspace);
@@ -39,6 +41,7 @@ internal sealed partial class MainWindow
     internal void ActivatePanel(RuntimePanel panel)
     {
         if (!Session.Panels.Contains(panel) || !Session.Backend.IsAlive(panel.Record)) return;
+        SelectReleaseNotes(false);
         if (OperatingSystem.IsWindows() && workspaceWindows.TryGetValue(panel.WorkspaceId, out var view))
         {
             if (!VirtualDesktops.OnCurrent(view.Handle)) { SetStatus(L10n.Get("Presentation.SwitchDesktop")); return; }
@@ -199,6 +202,7 @@ internal sealed partial class MainWindow
         if (Session.Config.AgentNotifications == enabled && Session.Config.NotifyOnCompletion == onCompletion) return;
         Session.Config.AgentNotifications = enabled;
         Session.Config.NotifyOnCompletion = onCompletion;
+        if (!enabled) deferredAgentNotification = null;
         UpdateAttentionCount();
         Session.Save();
     }
@@ -229,10 +233,41 @@ internal sealed partial class MainWindow
     {
         if (closing || !Session.Config.AgentNotifications || !nativeReady ||
             !OperatingSystem.IsWindows() || Session.Backend is not WindowsWindowBackend windows) return;
-        if (activity.NeedsAttention)
-            windows.NotifyAgent(L10n.Format("Workflow.AgentActivityCount", Session.AgentActivities().Count(item => item.NeedsAttention)));
-        else if (Session.Config.NotifyOnCompletion)
-            windows.NotifyAgent(L10n.Get("Workflow.AgentCompleted"));
+        if (!activity.NeedsAttention && !Session.Config.NotifyOnCompletion) return;
+
+        var message = activity.NeedsAttention
+            ? L10n.Format("Workflow.AgentActivityCount", Session.AgentActivities().Count(item => item.NeedsAttention))
+            : L10n.Get("Workflow.AgentCompleted");
+        var panel = activity.Panel;
+        var sessionKey = activity.Signal.SessionKey ?? "";
+        windows.NotifyAgent(message, () => Dispatcher.UIThread.Post(() => OpenAgentNotification(panel, sessionKey)));
+    }
+
+    private void OpenAgentNotification(RuntimePanel? panel, string sessionKey)
+    {
+        if (closing || !Session.Config.AgentNotifications) return;
+        ActiveMenu?.Close();
+        if (dialogDepth > 0)
+        {
+            deferredAgentNotification = (panel, sessionKey);
+            return;
+        }
+        _ = UserActionAsync(async () =>
+        {
+            if (sessionKey.Length > 0 && Session.HookSessions.TryGetValue(sessionKey, out var session))
+                panel = Session.Panels.FirstOrDefault(item => item.Id == session.PanelId && item.HookSessions.Contains(sessionKey));
+
+            if (panel is null || !Session.Panels.Contains(panel) || !Session.Backend.IsAlive(panel.Record))
+            {
+                notificationHighlight.Stop();
+                RestoreHost();
+                SetStatus(L10n.Get("SessionDialogs.NoPanelAssigned"));
+                return;
+            }
+
+            lastAgentKey = sessionKey.Length > 0 ? sessionKey : "panel:" + panel.Id;
+            await ActivateAgentAsync(panel, sessionKey, fromNotification: true);
+        });
     }
 
     private async Task OpenAttentionAsync()

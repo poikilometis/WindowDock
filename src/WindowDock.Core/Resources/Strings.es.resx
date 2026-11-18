@@ -1085,6 +1085,12 @@
     <value>Selecciona un tema para verlo al instante. Guarda tu elección o cancela para recuperar el tema anterior.</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>Haces de luz</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>Haces suaves en movimiento sobre un fondo oscuro</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>Grafito</value>
     <comment>Context: ThemePreview</comment>
@@ -1499,5 +1505,98 @@
   </data>
   <data name="Recovery.AutomaticHistory" xml:space="preserve">
     <value>Guardar el historial automáticamente</value>
+  </data>
+  <data name="Surface.Colors" xml:space="preserve">
+    <value>Color y transparencia</value>
+  </data>
+  <data name="Surface.AllWindows" xml:space="preserve">
+    <value>Todas las ventanas</value>
+  </data>
+  <data name="Surface.Header" xml:space="preserve">
+    <value>Barra de WindowDock</value>
+  </data>
+  <data name="Surface.AllTabs" xml:space="preserve">
+    <value>Todas las pestañas</value>
+  </data>
+  <data name="Surface.Inherit" xml:space="preserve">
+    <value>Usar valores globales</value>
+  </data>
+  <data name="Surface.FromTheme" xml:space="preserve">
+    <value>Usar el tema</value>
+  </data>
+  <data name="Surface.StaticGradient" xml:space="preserve">
+    <value>Degradado estático</value>
+  </data>
+  <data name="Surface.FlowGradient" xml:space="preserve">
+    <value>Degradado animado</value>
+  </data>
+  <data name="Surface.TitleColor" xml:space="preserve">
+    <value>Color del título personalizado</value>
+  </data>
+  <data name="Surface.StartColor" xml:space="preserve">
+    <value>Color inicial</value>
+  </data>
+  <data name="Surface.EndColor" xml:space="preserve">
+    <value>Color final</value>
+  </data>
+  <data name="Surface.CustomOpacity" xml:space="preserve">
+    <value>Opacidad personalizada</value>
+  </data>
+  <data name="Surface.Reset" xml:space="preserve">
+    <value>Restablecer</value>
+  </data>
+  <data name="Surface.NativeOpacityUnsupported" xml:space="preserve">
+    <value>Esta ventana gestiona su propia transparencia.</value>
+  </data>
+  <data name="Power.PreventSleep" xml:space="preserve">
+    <value>Evitar suspensión</value>
+  </data>
+  <data name="Power.Off" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="Power.WhileOpen" xml:space="preserve">
+    <value>Mientras WindowDock esté abierto</value>
+  </data>
+  <data name="Power.WhileAgentsWork" xml:space="preserve">
+    <value>Mientras trabaje un agente con hooks</value>
+  </data>
+  <data name="Power.WhileDocked" xml:space="preserve">
+    <value>Mientras haya ventanas acopladas</value>
+  </data>
+  <data name="Update.Button" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="Update.Available" xml:space="preserve">
+    <value>Ya está disponible la versión {0}</value>
+  </data>
+  <data name="Update.Dismiss" xml:space="preserve">
+    <value>Cerrar aviso de actualización</value>
+  </data>
+  <data name="Update.Changelog" xml:space="preserve">
+    <value>Ver los cambios</value>
+  </data>
+  <data name="Update.Install" xml:space="preserve">
+    <value>Instalar</value>
+  </data>
+  <data name="Update.Downloading" xml:space="preserve">
+    <value>Descargando la actualización…</value>
+  </data>
+  <data name="Update.Failed" xml:space="preserve">
+    <value>No se pudo instalar la actualización.</value>
+  </data>
+  <data name="Update.Checking" xml:space="preserve">
+    <value>Buscando actualizaciones…</value>
+  </data>
+  <data name="Update.Current" xml:space="preserve">
+    <value>WindowDock está actualizado.</value>
+  </data>
+  <data name="Update.CheckFailed" xml:space="preserve">
+    <value>No se pudieron buscar actualizaciones.</value>
+  </data>
+  <data name="Update.WhatsNew" xml:space="preserve">
+    <value>Novedades</value>
+  </data>
+  <data name="Update.WhatsNewVersion" xml:space="preserve">
+    <value>Novedades de {0}</value>
   </data>
 </root>

@@ -6,6 +6,7 @@ namespace WindowDock;
 internal sealed partial class MainWindow
 {
     private readonly HashSet<string> historyCaptures = [];
+    private readonly NotificationHighlight notificationHighlight = new();
     private long nextHistoryCapture = Environment.TickCount64 + 180_000;
     private bool savingHistories;
 
@@ -43,9 +44,17 @@ internal sealed partial class MainWindow
             Session.SaveTerminalTarget(panel, target);
     }
 
-    private async Task ActivateAgentAsync(RuntimePanel panel, string key)
+    private async Task ActivateAgentAsync(RuntimePanel panel, string key, bool fromNotification = false)
     {
         ActivatePanel(panel);
+        if (fromNotification)
+        {
+            var card = Session.SelectedWorkspace == panel.WorkspaceId ? cards.GetValueOrDefault(panel.Id) : null;
+            if (workspaceWindows.TryGetValue(panel.WorkspaceId, out var presented))
+                card = OperatingSystem.IsWindows() && VirtualDesktops.OnCurrent(presented.Handle) ? presented.CardFor(panel) : null;
+            if (card is { IsEffectivelyVisible: true }) card.ShowNotificationHighlight(notificationHighlight);
+            else notificationHighlight.Stop();
+        }
         if (!OperatingSystem.IsWindows() || panel.TerminalTargets.FirstOrDefault(target => target.Key == key) is not { } target) return;
         await Dispatcher.UIThread.InvokeAsync(() => { }, DispatcherPriority.Background);
         if (closing || !Session.Panels.Contains(panel) ||

@@ -257,6 +257,7 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
             wanted.Add(record.Handle);
             if (Native.IsHungAppWindow(record.Hwnd)) continue;
             if (!ChangeOwner(record, placement.Owner == 0 ? host.Handle : placement.Owner)) continue;
+            ApplyDockedOpacity(record, placement.Opacity);
             if (audit && Native.ClassName(record.Hwnd) != record.ClassName) { Forget(record); continue; }
             if (audit && (clips.TryGetValue(record.Handle, out var clip) && !Native.HasRegionBox(record.Hwnd, clip) ||
                 fitted.TryGetValue(record.Handle, out var fit) && Native.GetWindowRect(record.Hwnd, out var actual) && actual.Rectangle != fit.Bounds))
@@ -406,7 +407,7 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
             if (message == 0x0047 && !disposed) FollowHostTranslation(window);
             return response;
         }
-        if (attentionTray?.HandleMessage(message, wParam, lParam) == true) return 0;
+        if (attentionTray?.HandleMessage(message, lParam) == true) return 0;
         if (message == shellMessage && ((uint)wParam == 1 || (uint)wParam == 2)) discoveryExpires = 0;
         if (message == shellMessage && (uint)wParam == 0x8006) { Changed?.Invoke(new("attention", lParam)); return 0; }
         if (message == 0x004A && lParam != 0)

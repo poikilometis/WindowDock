@@ -74,6 +74,7 @@ internal static class DesktopDialogTests
             await Task.Delay(60);
             var inputs = editor.GetVisualDescendants().OfType<TextBox>().ToArray();
             var preview = inputs.Single(input => input.IsReadOnly);
+            DesktopSelfTest.Check(!preview.IsVisible, "The integration dialog initially shows an empty preview box.");
             inputs.Single(input => !input.IsReadOnly).Text = folder;
             var checks = editor.GetVisualDescendants().OfType<CheckBox>().ToArray();
             var agentNotifications = checks.Single(check => AutomationProperties.GetName(check) == L10n.Get("Workflow.AgentNotifications"));
@@ -90,24 +91,26 @@ internal static class DesktopDialogTests
             var setup = buttons.Single(button => AutomationProperties.GetName(button) == L10n.Get("SessionDialogs.SetUp"));
             void Click(string key) => buttons.Single(button => AutomationProperties.GetName(button) == L10n.Get(key))
                 .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-            Click("SessionDialogs.Preview");
-            var previewText = preview.Text;
-            DesktopSelfTest.Check(!string.IsNullOrWhiteSpace(previewText) && previewText.Contains("Codex", StringComparison.Ordinal),
-                "The integration preview did not show the selected agent.");
             setup.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             await Task.Delay(70);
             var status = editor.GetVisualDescendants().OfType<TextBlock>().Single(text => text.IsVisible &&
                 text.Text?.StartsWith(L10n.Get("SessionDialogs.SetupComplete").TrimEnd(), StringComparison.Ordinal) == true);
             DesktopSelfTest.Check(status.PointToScreen(default).Y >= setup.PointToScreen(new(0, setup.Bounds.Height)).Y,
                 "The hook result was not placed below the setup button.");
+            DesktopSelfTest.Check(!preview.IsVisible, "Installing hooks opened an empty preview box.");
+            DesktopSelfTest.Snapshot(editor, "avalonia-agent-integration-status.png");
+            Click("SessionDialogs.Preview");
+            var previewText = preview.Text;
+            DesktopSelfTest.Check(preview.IsVisible && !string.IsNullOrWhiteSpace(previewText) && previewText.Contains("Codex", StringComparison.Ordinal),
+                "Preview did not reveal the selected agent's configuration.");
+            setup.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             preview.SelectAll();
             DesktopSelfTest.Check(preview.Text == previewText && preview.SelectedText == previewText,
                 "Installing hooks changed the copyable preview.");
             Click("SessionDialogs.RemoveSetup");
             DesktopSelfTest.Check(status.Text?.StartsWith(L10n.Get("SessionDialogs.WindowDockHooksRemoved").TrimEnd(), StringComparison.Ordinal) == true &&
                 preview.Text == previewText, "Removing hooks did not update the inline result independently of the preview.");
-            DesktopSelfTest.Snapshot(editor, "avalonia-agent-integration-status.png");
-            DesktopSelfTest.Pass("The integration dialog controls Windows agent notifications and reports hook setup below the action buttons while retaining the copyable preview.");
+            DesktopSelfTest.Pass("Hook setup uses an inline result. The selectable preview only appears when requested and survives setup and removal.");
         }
         finally
         {

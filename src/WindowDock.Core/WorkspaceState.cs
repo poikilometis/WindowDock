@@ -22,6 +22,7 @@ namespace WindowDock
         [DataMember(EmitDefaultValue = false)] public List<SavedAgentSession> AgentSessions;
         [DataMember(EmitDefaultValue = false)] public List<TerminalTarget> TerminalTargets;
         [DataMember(EmitDefaultValue = false)] public bool KeepTerminalHistory;
+        [DataMember(EmitDefaultValue = false)] public SurfaceStyle Style;
     }
     [DataContract] public sealed class GroupState
     {

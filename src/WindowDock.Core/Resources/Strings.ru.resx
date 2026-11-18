@@ -1085,6 +1085,12 @@
     <value>Нажмите на тему — рабочее пространство сразу покажет её. Сохраните выбор или отмените изменения.</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>Световые лучи</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>Мягкие движущиеся лучи на тёмном фоне</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>Графит</value>
     <comment>Context: ThemePreview</comment>
@@ -1499,5 +1505,98 @@
   </data>
   <data name="Recovery.AutomaticHistory" xml:space="preserve">
     <value>Сохранять историю терминала автоматически</value>
+  </data>
+  <data name="Surface.Colors" xml:space="preserve">
+    <value>Цвет и прозрачность</value>
+  </data>
+  <data name="Surface.AllWindows" xml:space="preserve">
+    <value>Все окна</value>
+  </data>
+  <data name="Surface.Header" xml:space="preserve">
+    <value>Хедер WindowDock</value>
+  </data>
+  <data name="Surface.AllTabs" xml:space="preserve">
+    <value>Все вкладки</value>
+  </data>
+  <data name="Surface.Inherit" xml:space="preserve">
+    <value>Общие настройки</value>
+  </data>
+  <data name="Surface.FromTheme" xml:space="preserve">
+    <value>Цвет темы</value>
+  </data>
+  <data name="Surface.StaticGradient" xml:space="preserve">
+    <value>Статичный градиент</value>
+  </data>
+  <data name="Surface.FlowGradient" xml:space="preserve">
+    <value>Переливающийся градиент</value>
+  </data>
+  <data name="Surface.TitleColor" xml:space="preserve">
+    <value>Свой цвет названия окна</value>
+  </data>
+  <data name="Surface.StartColor" xml:space="preserve">
+    <value>Первый цвет</value>
+  </data>
+  <data name="Surface.EndColor" xml:space="preserve">
+    <value>Второй цвет</value>
+  </data>
+  <data name="Surface.CustomOpacity" xml:space="preserve">
+    <value>Своя прозрачность</value>
+  </data>
+  <data name="Surface.Reset" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
+  <data name="Surface.NativeOpacityUnsupported" xml:space="preserve">
+    <value>Это окно управляет своей прозрачностью.</value>
+  </data>
+  <data name="Power.PreventSleep" xml:space="preserve">
+    <value>Не переходить в режим сна</value>
+  </data>
+  <data name="Power.Off" xml:space="preserve">
+    <value>Выключено</value>
+  </data>
+  <data name="Power.WhileOpen" xml:space="preserve">
+    <value>Пока открыт WindowDock</value>
+  </data>
+  <data name="Power.WhileAgentsWork" xml:space="preserve">
+    <value>Пока работает агент с хуком</value>
+  </data>
+  <data name="Power.WhileDocked" xml:space="preserve">
+    <value>Пока есть подключённые окна</value>
+  </data>
+  <data name="Update.Button" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="Update.Available" xml:space="preserve">
+    <value>Вышла версия {0}</value>
+  </data>
+  <data name="Update.Dismiss" xml:space="preserve">
+    <value>Скрыть уведомление об обновлении</value>
+  </data>
+  <data name="Update.Changelog" xml:space="preserve">
+    <value>Вот что изменилось</value>
+  </data>
+  <data name="Update.Install" xml:space="preserve">
+    <value>Установить</value>
+  </data>
+  <data name="Update.Downloading" xml:space="preserve">
+    <value>Скачиваем обновление…</value>
+  </data>
+  <data name="Update.Failed" xml:space="preserve">
+    <value>Не удалось установить обновление.</value>
+  </data>
+  <data name="Update.Checking" xml:space="preserve">
+    <value>Проверяем обновления…</value>
+  </data>
+  <data name="Update.Current" xml:space="preserve">
+    <value>У вас последняя версия WindowDock.</value>
+  </data>
+  <data name="Update.CheckFailed" xml:space="preserve">
+    <value>Не удалось проверить обновления.</value>
+  </data>
+  <data name="Update.WhatsNew" xml:space="preserve">
+    <value>Что нового</value>
+  </data>
+  <data name="Update.WhatsNewVersion" xml:space="preserve">
+    <value>Что нового в {0}</value>
   </data>
 </root>

@@ -16,7 +16,7 @@ internal static partial class Program
         Directory.CreateDirectory(root); Store.DirectoryPath = Path.Combine(root, "data");
         try
         {
-            Versioning(); Localizations(); Layouts(); Persistence(); SessionActions(); RestoreAndRules(); Signals(); Workflows(); SnapshotOrdering(); Hooks(); await TransportAsync();
+            Versioning(); Localizations(); Layouts(); Persistence(); AppearanceAndUpdates(); SessionActions(); RestoreAndRules(); Signals(); Workflows(); SnapshotOrdering(); Hooks(); await TransportAsync();
             report.Add($"ALL CORE CHECKS PASSED ({checks} assertions)"); return 0;
         }
         catch (Exception exception) { report.Add("FAIL " + exception); return 1; }
@@ -58,10 +58,12 @@ internal static partial class Program
     private static void Persistence()
     {
         var config = AppConfig.Default(); config.Workspaces[0].Name = "Агенты / 日本語 / 😀";
+        config.ThemeId = "beams";
         config.Projects.Add(ProjectProfile.Create(config.SelectedWorkspace)); config.Rules.Add(WindowRule.Create(config.SelectedWorkspace));
         Store.Write(Store.ConfigPath, config);
         var loaded = Store.Read<AppConfig>(Store.ConfigPath)!; loaded.Validate();
         Check(loaded.Workspaces[0].Name == config.Workspaces[0].Name && loaded.Version == 4, "Existing schema or Unicode configuration changed.");
+        Check(loaded.ThemeId == "beams", "Light Beams is reset when loading a saved configuration.");
         var state = new GroupState { Panels = [new() { Id = "role", WorkspaceId = config.SelectedWorkspace, ProcessName = "agent", ClassName = "fixture", LastSeenUtc = DateTime.UtcNow.Ticks, HookSessions = ["codex:private-hash"] }] };
         GroupPersistence.Save(state); GroupPersistence.Save(state);
         File.WriteAllText(GroupPersistence.PathName, "broken");

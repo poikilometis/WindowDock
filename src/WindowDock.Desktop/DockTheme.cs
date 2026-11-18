@@ -25,13 +25,22 @@ internal static class DockTheme
         var palette = Palette(id);
         foreach (var (key, color) in palette) app.Resources[key] = new SolidColorBrush(Color.Parse(color));
     }
-    internal static Dictionary<string, string> Palette(string id) => id != "light" ? new()
+    internal static Dictionary<string, string> Palette(string id) => id switch
+    {
+        "beams" => new()
         {
-            ["DockGround"] = "#18191D", ["DockSurface"] = "#222328", ["DockRaised"] = "#2E2F36", ["DockText"] = "#F4F4F7",
-            ["DockMuted"] = "#AAABB5", ["DockAccent"] = "#8BBCFF", ["DockAccentInk"] = "#0D223D", ["DockBorder"] = "#40414A", ["DockSelection"] = "#324157"
-        } : new()
+            ["DockGround"] = "#090C15", ["DockSurface"] = "#171D2C", ["DockRaised"] = "#233049", ["DockText"] = "#F3F6FF",
+            ["DockMuted"] = "#ADBAD2", ["DockAccent"] = "#A0C5FF", ["DockAccentInk"] = "#0D1D36", ["DockBorder"] = "#34425F", ["DockSelection"] = "#2A3E63"
+        },
+        "light" => new()
         {
             ["DockGround"] = "#EFF0F3", ["DockSurface"] = "#F9F9FB", ["DockRaised"] = "#FFFFFF", ["DockText"] = "#1D1D1F",
             ["DockMuted"] = "#64656D", ["DockAccent"] = "#0064DC", ["DockAccentInk"] = "#FFFFFF", ["DockBorder"] = "#D2D4DA", ["DockSelection"] = "#DCE8FA"
-        };
+        },
+        _ => new()
+        {
+            ["DockGround"] = "#18191D", ["DockSurface"] = "#222328", ["DockRaised"] = "#2E2F36", ["DockText"] = "#F4F4F7",
+            ["DockMuted"] = "#AAABB5", ["DockAccent"] = "#8BBCFF", ["DockAccentInk"] = "#0D223D", ["DockBorder"] = "#40414A", ["DockSelection"] = "#324157"
+        }
+    };
 }

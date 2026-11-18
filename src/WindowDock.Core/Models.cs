@@ -12,6 +12,7 @@ namespace WindowDock
     [DataContract] public sealed class WorkspaceConfig
     {
         internal const int MaxCapacity = 25;
+        internal static readonly int DefaultBackgroundColor = Color.FromArgb(19, 22, 27).ToArgb();
         [DataMember] public string Id;
         [DataMember] public string Name;
         [DataMember] public int Capacity;
@@ -26,10 +27,11 @@ namespace WindowDock
         [DataMember(EmitDefaultValue = false)] public SplitArea CustomLayout;
         [DataMember(EmitDefaultValue = false)] public string PresentationDisplay, VirtualDesktop;
         [DataMember(EmitDefaultValue = false)] public int LayoutSlotCount;
+        [DataMember(EmitDefaultValue = false)] public SurfaceStyle TabStyle;
         public static WorkspaceConfig Create(string name)
         {
             return new WorkspaceConfig { Id = Guid.NewGuid().ToString("N"), Name = name, Capacity = 15,
-                Columns = 0, BackgroundMode = "solid", BackgroundColor = Color.FromArgb(19, 22, 27).ToArgb(), BackgroundPath = "",
+                Columns = 0, BackgroundMode = "solid", BackgroundColor = DefaultBackgroundColor, BackgroundPath = "",
                 Layout = "grid", MasterRatio = .60, PrimaryRatio = .58, DualRatio = .5,
                 ColumnWeights = new List<double>(), RowWeights = new List<double>() };
         }
@@ -52,6 +54,8 @@ namespace WindowDock
         [DataMember(EmitDefaultValue = false)] public Dictionary<int, string> Shortcuts;
         [DataMember(EmitDefaultValue = false)] public bool AgentNotifications, NotifyOnCompletion;
         [DataMember(EmitDefaultValue = false)] public bool RememberAgentSessions, ReopenTerminal;
+        [DataMember(EmitDefaultValue = false)] public SurfaceStyle WindowStyle, HeaderStyle, TabStyle;
+        [DataMember(EmitDefaultValue = false)] public string SleepMode;
         [DataMember(EmitDefaultValue = false)] public List<DisplayPlacement> DisplayPlacements;
         public static AppConfig Default()
         {
@@ -73,7 +77,8 @@ namespace WindowDock
             Projects.RemoveAll(delegate(ProjectProfile project) { return project == null; });
             foreach (WindowRule rule in Rules) rule.Validate();
             foreach (ProjectProfile project in Projects) project.Validate();
-            if (ThemeId != "graphite" && ThemeId != "light" && ThemeId != "frost" && ThemeId != "glass") ThemeId = "frost";
+            if (ThemeId is not ("graphite" or "light" or "frost" or "glass" or "beams")) ThemeId = "frost";
+            if (SleepMode is not ("open" or "agents" or "docked")) SleepMode = null;
             MinWidth = Math.Max(320, Math.Min(1200, MinWidth));
             MinHeight = Math.Max(200, Math.Min(900, MinHeight));
             WindowWidth = Math.Max(640, WindowWidth); WindowHeight = Math.Max(360, WindowHeight);
@@ -112,6 +117,7 @@ namespace WindowDock
     }
     [DataContract] public sealed class WindowRecord
     {
+        internal int? ManagedOpacity;
         [DataMember] public long Handle, Parent, Owner, Style, ExStyle;
         [DataMember] public bool NativeTopLevel;
         [DataMember(EmitDefaultValue = false)] public bool Linked;

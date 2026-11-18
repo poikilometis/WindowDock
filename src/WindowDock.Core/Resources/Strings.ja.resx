@@ -1085,6 +1085,12 @@
     <value>テーマを選ぶとすぐにプレビューできます。保存するか、キャンセルして元のテーマに戻してください。</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>光の帯</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>暗い背景をゆっくり動く柔らかな光</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>グラファイト</value>
     <comment>Context: ThemePreview</comment>
@@ -1499,5 +1505,98 @@
   </data>
   <data name="Recovery.AutomaticHistory" xml:space="preserve">
     <value>ターミナル履歴を自動保存</value>
+  </data>
+  <data name="Surface.Colors" xml:space="preserve">
+    <value>色と透明度</value>
+  </data>
+  <data name="Surface.AllWindows" xml:space="preserve">
+    <value>すべてのウィンドウ</value>
+  </data>
+  <data name="Surface.Header" xml:space="preserve">
+    <value>WindowDock ツールバー</value>
+  </data>
+  <data name="Surface.AllTabs" xml:space="preserve">
+    <value>すべてのタブ</value>
+  </data>
+  <data name="Surface.Inherit" xml:space="preserve">
+    <value>共通設定を使う</value>
+  </data>
+  <data name="Surface.FromTheme" xml:space="preserve">
+    <value>テーマを使う</value>
+  </data>
+  <data name="Surface.StaticGradient" xml:space="preserve">
+    <value>静止グラデーション</value>
+  </data>
+  <data name="Surface.FlowGradient" xml:space="preserve">
+    <value>動くグラデーション</value>
+  </data>
+  <data name="Surface.TitleColor" xml:space="preserve">
+    <value>タイトルの色を指定</value>
+  </data>
+  <data name="Surface.StartColor" xml:space="preserve">
+    <value>開始色</value>
+  </data>
+  <data name="Surface.EndColor" xml:space="preserve">
+    <value>終了色</value>
+  </data>
+  <data name="Surface.CustomOpacity" xml:space="preserve">
+    <value>不透明度を指定</value>
+  </data>
+  <data name="Surface.Reset" xml:space="preserve">
+    <value>リセット</value>
+  </data>
+  <data name="Surface.NativeOpacityUnsupported" xml:space="preserve">
+    <value>このウィンドウは独自に透明度を管理します。</value>
+  </data>
+  <data name="Power.PreventSleep" xml:space="preserve">
+    <value>スリープを防止</value>
+  </data>
+  <data name="Power.Off" xml:space="preserve">
+    <value>オフ</value>
+  </data>
+  <data name="Power.WhileOpen" xml:space="preserve">
+    <value>WindowDock を開いている間</value>
+  </data>
+  <data name="Power.WhileAgentsWork" xml:space="preserve">
+    <value>フック付きエージェントが動作中</value>
+  </data>
+  <data name="Power.WhileDocked" xml:space="preserve">
+    <value>ドッキングしたウィンドウがある間</value>
+  </data>
+  <data name="Update.Button" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="Update.Available" xml:space="preserve">
+    <value>バージョン {0} が公開されました</value>
+  </data>
+  <data name="Update.Dismiss" xml:space="preserve">
+    <value>更新通知を閉じる</value>
+  </data>
+  <data name="Update.Changelog" xml:space="preserve">
+    <value>変更内容を見る</value>
+  </data>
+  <data name="Update.Install" xml:space="preserve">
+    <value>インストール</value>
+  </data>
+  <data name="Update.Downloading" xml:space="preserve">
+    <value>更新をダウンロード中…</value>
+  </data>
+  <data name="Update.Failed" xml:space="preserve">
+    <value>更新をインストールできませんでした。</value>
+  </data>
+  <data name="Update.Checking" xml:space="preserve">
+    <value>更新を確認中…</value>
+  </data>
+  <data name="Update.Current" xml:space="preserve">
+    <value>WindowDock は最新です。</value>
+  </data>
+  <data name="Update.CheckFailed" xml:space="preserve">
+    <value>更新を確認できませんでした。</value>
+  </data>
+  <data name="Update.WhatsNew" xml:space="preserve">
+    <value>新機能</value>
+  </data>
+  <data name="Update.WhatsNewVersion" xml:space="preserve">
+    <value>{0} の変更内容</value>
   </data>
 </root>

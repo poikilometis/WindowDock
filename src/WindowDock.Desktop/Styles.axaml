@@ -22,6 +22,7 @@
   <Style Selector="Button.menu-action:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource DockSelection}" /></Style>
   <Style Selector="Button.tab"><Setter Property="Padding" Value="10,0" /><Setter Property="Foreground" Value="{DynamicResource DockMuted}" /></Style>
   <Style Selector="Button.tab.active"><Setter Property="Background" Value="{DynamicResource DockRaised}" /><Setter Property="Foreground" Value="{DynamicResource DockText}" /></Style>
+  <Style Selector="Button.tab.custom-fill.active"><Setter Property="BorderThickness" Value="1" /><Setter Property="BorderBrush" Value="{DynamicResource DockAccent}" /></Style>
   <Style Selector="Button.magnet.active"><Setter Property="Background" Value="{DynamicResource DockSelection}" /><Setter Property="Foreground" Value="{DynamicResource DockAccent}" /></Style>
   <Style Selector="TextBox"><Setter Property="MinHeight" Value="30" /><Setter Property="CornerRadius" Value="6" /></Style>
   <Style Selector="ComboBox"><Setter Property="MinHeight" Value="30" /><Setter Property="CornerRadius" Value="6" /></Style>

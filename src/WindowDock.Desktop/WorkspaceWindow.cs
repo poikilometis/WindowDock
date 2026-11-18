@@ -56,6 +56,7 @@ internal sealed class WorkspaceWindow : Window
         {
             if (args.Property != WindowStateProperty && args.Property != IsVisibleProperty) return;
             wallpaper.SetRunning(IsVisible && WindowState != WindowState.Minimized);
+            main.RefreshSurfaceMotion();
             main.QueueWorkspaceSync();
         };
         Closed += (_, _) => wallpaper.Dispose();
@@ -102,6 +103,7 @@ internal sealed class WorkspaceWindow : Window
     }
 
     internal bool Focuses(RuntimePanel panel) => zoom == panel.Id;
+    internal PanelCard? CardFor(RuntimePanel panel) => cards.GetValueOrDefault(panel.Id);
 
     internal void ToggleZoom(RuntimePanel panel)
     {
@@ -220,7 +222,7 @@ internal sealed class WorkspaceWindow : Window
             var clip = DrawingRectangle.Intersect(bounds, viewportBounds);
             if (clip.IsEmpty) continue;
             var record = card.Panel.Record;
-            windows.Add(new(record, bounds, clip, MainWindow.ScreenBounds(card), (int)Math.Round(7 * RenderScaling), Handle));
+            windows.Add(new(record, bounds, clip, MainWindow.ScreenBounds(card), (int)Math.Round(7 * RenderScaling), Handle, main.WindowOpacity(card.Panel)));
             hover.Add(new(record.Handle, record.Handle, clip, true, Handle));
         }
         hover.Add(new(Handle, Handle, viewportBounds, false, Handle));

@@ -11,8 +11,11 @@ internal sealed class PanelCard : Border
 {
     public RuntimePanel Panel { get; }
     public Border Slot { get; } = new() { Background = Brushes.Transparent };
+    private readonly Grid layout = new() { RowDefinitions = new("22,*") };
     private readonly Border header;
     private readonly TextBlock status;
+    private readonly TextBlock title;
+    private uint? titleInk;
     private readonly MainWindow window;
     private Point? dragStart;
     private IPointer? dragPointer;
@@ -20,9 +23,8 @@ internal sealed class PanelCard : Border
     public PanelCard(RuntimePanel panel, MainWindow window, bool allowDrag = true)
     {
         Panel = panel; this.window = window; DataContext = panel; Classes.Add("tile"); ClipToBounds = true;
-        var layout = new Grid { RowDefinitions = new("22,*") };
         var row = new Grid { ColumnDefinitions = new("*,Auto,22,22,22") };
-        var title = new TextBlock { FontSize = 11.5, Margin = new(8, 0, 4, 0), VerticalAlignment = VerticalAlignment.Center, TextTrimming = TextTrimming.CharacterEllipsis };
+        title = new TextBlock { FontSize = 11.5, Margin = new(8, 0, 4, 0), VerticalAlignment = VerticalAlignment.Center, TextTrimming = TextTrimming.CharacterEllipsis };
         title.Bind(TextBlock.TextProperty, new Binding(nameof(RuntimePanel.Caption)));
         status = new TextBlock { FontSize = 11, VerticalAlignment = VerticalAlignment.Center, MaxWidth = 90, TextTrimming = TextTrimming.CharacterEllipsis, Margin = new(0, 0, 4, 0) };
         status.Bind(TextBlock.TextProperty, new Binding(nameof(RuntimePanel.StatusText)));
@@ -48,11 +50,34 @@ internal sealed class PanelCard : Border
         };
         RefreshTheme();
     }
+    internal void ShowNotificationHighlight(NotificationHighlight highlight)
+    {
+        if (highlight.Parent != layout)
+        {
+            if (highlight.Parent is Panel previous) previous.Children.Remove(highlight);
+            Grid.SetRowSpan(highlight, 2);
+            layout.Children.Add(highlight);
+        }
+        highlight.Play();
+    }
+
     public void RefreshTheme()
     {
-        Classes.Set("selected", Panel.Selected); header.Background = dragging || dropTarget ? DockTheme.Resource("DockSelection") : DockTheme.Surface; status.Foreground = DockTheme.Accent;
+        var style = window.WindowStyle(Panel);
+        var surface = window.SurfaceFill(style, DockTheme.Surface);
+        var translucent = style.OpacityPercent(15) < 100 && OperatingSystem.IsWindows() && WindowsWindowBackend.SupportsOpacity(Panel.Record);
+        Classes.Set("selected", Panel.Selected);
+        header.Background = dragging || dropTarget ? DockTheme.Resource("DockSelection") : surface;
+        Background = translucent ? Brushes.Transparent : surface;
+        status.Foreground = DockTheme.Accent;
+        if (titleInk != style.TitleColor)
+        {
+            titleInk = style.TitleColor;
+            if (titleInk is { } ink) title.Foreground = new SolidColorBrush(Color.FromUInt32(ink));
+            else title.ClearValue(TextBlock.ForegroundProperty);
+        }
         BorderBrush = dragging || dropTarget || Panel.Selected || Panel.Attention ? DockTheme.Accent : DockTheme.Border;
-        Slot.Background = DockTheme.Ground;
+        Slot.Background = translucent ? Brushes.Transparent : DockTheme.Ground;
         if (Panel.Record.Linked && Slot.Child is null)
         {
             var open = DockControls.Button(L10n.Get("Compatibility.OpenLinked"), "detach", () => window.ActivatePanel(Panel));

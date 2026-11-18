@@ -1085,6 +1085,12 @@
     <value>選取主題即可立即預覽。儲存選擇，或取消以還原原本的主題。</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>流光</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>深色背景上的柔和動態光束</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>石墨</value>
     <comment>Context: ThemePreview</comment>
@@ -1499,5 +1505,98 @@
   </data>
   <data name="Recovery.AutomaticHistory" xml:space="preserve">
     <value>自動儲存終端機歷史記錄</value>
+  </data>
+  <data name="Surface.Colors" xml:space="preserve">
+    <value>色彩和透明度</value>
+  </data>
+  <data name="Surface.AllWindows" xml:space="preserve">
+    <value>所有視窗</value>
+  </data>
+  <data name="Surface.Header" xml:space="preserve">
+    <value>WindowDock 工具列</value>
+  </data>
+  <data name="Surface.AllTabs" xml:space="preserve">
+    <value>所有分頁</value>
+  </data>
+  <data name="Surface.Inherit" xml:space="preserve">
+    <value>使用全域設定</value>
+  </data>
+  <data name="Surface.FromTheme" xml:space="preserve">
+    <value>使用主題</value>
+  </data>
+  <data name="Surface.StaticGradient" xml:space="preserve">
+    <value>靜態漸層</value>
+  </data>
+  <data name="Surface.FlowGradient" xml:space="preserve">
+    <value>動態漸層</value>
+  </data>
+  <data name="Surface.TitleColor" xml:space="preserve">
+    <value>自訂標題色彩</value>
+  </data>
+  <data name="Surface.StartColor" xml:space="preserve">
+    <value>起始色彩</value>
+  </data>
+  <data name="Surface.EndColor" xml:space="preserve">
+    <value>結束色彩</value>
+  </data>
+  <data name="Surface.CustomOpacity" xml:space="preserve">
+    <value>自訂不透明度</value>
+  </data>
+  <data name="Surface.Reset" xml:space="preserve">
+    <value>重設</value>
+  </data>
+  <data name="Surface.NativeOpacityUnsupported" xml:space="preserve">
+    <value>此視窗自行管理透明度。</value>
+  </data>
+  <data name="Power.PreventSleep" xml:space="preserve">
+    <value>防止睡眠</value>
+  </data>
+  <data name="Power.Off" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="Power.WhileOpen" xml:space="preserve">
+    <value>WindowDock 開啟時</value>
+  </data>
+  <data name="Power.WhileAgentsWork" xml:space="preserve">
+    <value>已連接掛鉤的代理執行時</value>
+  </data>
+  <data name="Power.WhileDocked" xml:space="preserve">
+    <value>有停駐視窗時</value>
+  </data>
+  <data name="Update.Button" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="Update.Available" xml:space="preserve">
+    <value>版本 {0} 已發布</value>
+  </data>
+  <data name="Update.Dismiss" xml:space="preserve">
+    <value>關閉更新提醒</value>
+  </data>
+  <data name="Update.Changelog" xml:space="preserve">
+    <value>查看更新內容</value>
+  </data>
+  <data name="Update.Install" xml:space="preserve">
+    <value>安裝</value>
+  </data>
+  <data name="Update.Downloading" xml:space="preserve">
+    <value>正在下載更新…</value>
+  </data>
+  <data name="Update.Failed" xml:space="preserve">
+    <value>無法安裝更新。</value>
+  </data>
+  <data name="Update.Checking" xml:space="preserve">
+    <value>正在檢查更新…</value>
+  </data>
+  <data name="Update.Current" xml:space="preserve">
+    <value>WindowDock 已是最新版本。</value>
+  </data>
+  <data name="Update.CheckFailed" xml:space="preserve">
+    <value>無法檢查更新。</value>
+  </data>
+  <data name="Update.WhatsNew" xml:space="preserve">
+    <value>新增內容</value>
+  </data>
+  <data name="Update.WhatsNewVersion" xml:space="preserve">
+    <value>{0} 的新增內容</value>
   </data>
 </root>

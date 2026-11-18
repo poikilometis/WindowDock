@@ -12,6 +12,10 @@ internal sealed partial class WorkspaceSession
     internal event Action? AgentActivityChanged;
     internal event Action<AgentActivity>? AgentStatusTransition;
 
+    internal bool HasWorkingHookSession() => HookSessions.Values.Any(session =>
+        session.Signal.Status == "working" &&
+        session.PanelId is { } id && Panels.Any(panel => panel.Id == id && Backend.IsAlive(panel.Record)));
+
     internal IReadOnlyList<AgentActivity> AgentActivities()
     {
         var panels = Panels.ToDictionary(panel => panel.Id);

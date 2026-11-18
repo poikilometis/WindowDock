@@ -40,6 +40,7 @@ internal sealed class RuntimePanel(WindowRecord record, string? savedId = null) 
     public List<SavedAgentSession> AgentSessions { get; set; } = [];
     public List<TerminalTarget> TerminalTargets { get; set; } = [];
     public bool KeepTerminalHistory { get; set; }
+    internal SurfaceStyle? Style { get; set; }
     public long AgentSignalUtcTicks { get; set; }
     public SavedPanel Capture() => new()
     {
@@ -50,7 +51,7 @@ internal sealed class RuntimePanel(WindowRecord record, string? savedId = null) 
         ExecutablePath = Record.ExecutablePath, ProjectDirectory = Record.ProjectDirectory,
         AgentSessions = AgentSessions.Count == 0 ? null : [..AgentSessions],
         TerminalTargets = TerminalTargets.Count == 0 ? null : [..TerminalTargets],
-        KeepTerminalHistory = KeepTerminalHistory
+        KeepTerminalHistory = KeepTerminalHistory, Style = Style
     };
     public void Restore(SavedPanel saved)
     {
@@ -63,6 +64,7 @@ internal sealed class RuntimePanel(WindowRecord record, string? savedId = null) 
         TerminalTargets = (saved.TerminalTargets ?? []).Where(item => item is not null && item.Valid && HookSessions.Contains(item.Key))
             .DistinctBy(item => item.Key).Take(25).ToList();
         KeepTerminalHistory = saved.KeepTerminalHistory;
+        Style = saved.Style;
     }
 }
 

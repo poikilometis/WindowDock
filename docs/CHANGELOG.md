@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.2 — Make the workspace yours and stay up to date
+
+- **Style windows and tabs.** Set a solid color, a static gradient, or a flowing gradient for window cards, the toolbar, and tabs. Adjust the toolbar and compatible docked windows' opacity, pick a window title color, or customize individual panels and tabs. The Light Beams theme adds an animated workspace background.
+- **Keep Windows awake while work is running.** Choose to prevent automatic sleep while WindowDock runs, while a window is docked, or while a connected agent reports that it is working. Windows can still turn off the display.
+- **Go directly to an agent from its notification.** Clicking a Windows notification opens the source window and highlights its card for four seconds. Hook settings show a compact setup result, with the copyable preview available on demand.
+- **Install future stable updates in WindowDock.** The toolbar's **Update** button checks GitHub Releases. The update card shows the version, opens the changelog, and offers installation. A dismissed card returns after 24 hours or at the next launch. Installation checks the archive and opens a **What's new** tab after restarting.
+
 ## 0.2.1 — Resume your workspace and keep windows in place
 
 - **Pick up after a restart.** Reopen selected projects when WindowDock starts and resume linked Codex, Claude Code, and Gemini CLI conversations by ID. Restore Windows Terminal's saved tab and pane layout and keep optional text snapshots of terminal output.

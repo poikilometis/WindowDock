@@ -336,6 +336,7 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
         panel.TerminalTargets = panel.TerminalTargets.Concat(saved.TerminalTargets ?? []).Where(item => item is not null && item.Valid)
             .DistinctBy(item => item.Key).Take(25).ToList();
         panel.KeepTerminalHistory |= saved.KeepTerminalHistory;
+        panel.Style ??= saved.Style;
         foreach (var (key, entry) in HookSessions.ToArray()) if (entry.PanelId == oldId) HookSessions[key] = entry with { PanelId = panel.Id };
         Pending.Remove(saved);
         if (origin != target.Id) ClearLayoutIfEmpty(origin);

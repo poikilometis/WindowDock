@@ -31,12 +31,19 @@ internal sealed class AppearanceWindow : EditorWindow
     private readonly Dictionary<string, RadioButton> choices = [];
     public string Result { get; private set; }
     internal void SelectTheme(string id) => choices[id].IsChecked = true;
-    public AppearanceWindow(string current, Action<string>? preview = null) : base(L10n.Get("ThemePreview.WorkspaceAppearance"), 680, 520, L10n.Get("BackgroundWindow.Save"))
+    public AppearanceWindow(string current, Action<string>? preview = null) : base(L10n.Get("ThemePreview.WorkspaceAppearance"), 680, 625, L10n.Get("BackgroundWindow.Save"))
     {
         Result = current;
         Note(L10n.Get("ThemePreview.SelectAThemeToPreviewItImmediately"));
-        var grid = new Grid { ColumnDefinitions = new("*,*"), RowDefinitions = new("Auto,Auto"), ColumnSpacing = 12, RowSpacing = 12 };
-        var themes = new[] { ("graphite", L10n.Get("ThemePreview.Graphite"), L10n.Get("ThemePreview.SolidDarkMaterial")), ("light", L10n.Get("ThemePreview.Light"), L10n.Get("ThemePreview.LightSurfaces")), ("frost", L10n.Get("ThemePreview.FrostedGlass"), L10n.Get("ThemePreview.BlurredTranslucentBackground")), ("glass", L10n.Get("ThemePreview.ClearGlass"), L10n.Get("ThemePreview.LightweightTransparentMaterial")) };
+        var grid = new Grid { ColumnDefinitions = new("*,*"), RowDefinitions = new("Auto,Auto,Auto"), ColumnSpacing = 12, RowSpacing = 12 };
+        var themes = new[]
+        {
+            ("graphite", L10n.Get("ThemePreview.Graphite"), L10n.Get("ThemePreview.SolidDarkMaterial")),
+            ("light", L10n.Get("ThemePreview.Light"), L10n.Get("ThemePreview.LightSurfaces")),
+            ("frost", L10n.Get("ThemePreview.FrostedGlass"), L10n.Get("ThemePreview.BlurredTranslucentBackground")),
+            ("glass", L10n.Get("ThemePreview.ClearGlass"), L10n.Get("ThemePreview.LightweightTransparentMaterial")),
+            ("beams", L10n.Get("ThemePreview.LightBeams"), L10n.Get("ThemePreview.AnimatedLightBeams"))
+        };
         for (var index = 0; index < themes.Length; index++)
         {
             var (id, name, hint) = themes[index]; var palette = DockTheme.Palette(id);
@@ -47,7 +54,11 @@ internal sealed class AppearanceWindow : EditorWindow
             var option = new RadioButton { GroupName = "appearance", IsChecked = current == id, Content = content, Background = new SolidColorBrush(Color.Parse(palette["DockSurface"])), Foreground = new SolidColorBrush(Color.Parse(palette["DockText"])), MinHeight = 140, HorizontalAlignment = HorizontalAlignment.Stretch, HorizontalContentAlignment = HorizontalAlignment.Stretch };
             option.Classes.Add("appearance"); Avalonia.Automation.AutomationProperties.SetName(option, name);
             option.IsCheckedChanged += (_, _) => { if (option.IsChecked == true) { Result = id; preview?.Invoke(id); } };
-            choices[id] = option; Grid.SetRow(option, index / 2); Grid.SetColumn(option, index % 2); grid.Children.Add(option);
+            choices[id] = option;
+            Grid.SetRow(option, index / 2);
+            Grid.SetColumn(option, index % 2);
+            if (id == "beams") Grid.SetColumnSpan(option, 2);
+            grid.Children.Add(option);
         }
         Body.Children.Add(grid);
         Note(L10n.Get("ThemePreview.ThemesChangeTheShellDockedApplicationsKeep"));
@@ -64,6 +75,7 @@ internal sealed class ThemeScene(string id) : Control
         using (context.PushClip(new RoundedRect(rect, 5)))
         {
             context.DrawRectangle(Brush("DockGround"), null, rect);
+            if (id == "beams") BeamsView.Draw(context, rect);
             if (id is "frost" or "glass")
             {
                 context.DrawRectangle(ColorPickerView.Gradient((0, Color.Parse("#779696")), (.55, Color.Parse("#928EA0")), (1, Color.Parse("#AD927C"))), null, rect);
@@ -72,11 +84,13 @@ internal sealed class ThemeScene(string id) : Control
             context.DrawRectangle(Brush("DockSurface"), null, new Rect(0, 0, rect.Width, 12));
             context.DrawRectangle(Brush("DockRaised"), null, new Rect(5, 3, 40, 7), 2, 2);
             context.DrawRectangle(Brush("DockAccent"), null, new Rect(rect.Width - 12, 4, 6, 5), 1, 1);
+            var panelSurface = id == "beams" ? new SolidColorBrush(Color.Parse("#B3171D2C")) : Brush("DockSurface");
+            var terminal = new SolidColorBrush(Color.Parse(id == "beams" ? "#A6121725" : "#15171B"));
             for (var panel = 0; panel < 2; panel++)
             {
                 var x = 5 + panel * (rect.Width / 2); var w = rect.Width / 2 - 9;
-                context.DrawRectangle(Brush("DockSurface"), null, new Rect(x, 17, w, rect.Height - 22), 3, 3);
-                context.DrawRectangle(new SolidColorBrush(Color.Parse("#15171B")), null, new Rect(x + 2, 25, w - 4, rect.Height - 32), 2, 2);
+                context.DrawRectangle(panelSurface, null, new Rect(x, 17, w, rect.Height - 22), 3, 3);
+                context.DrawRectangle(terminal, null, new Rect(x + 2, 25, w - 4, rect.Height - 32), 2, 2);
                 for (var line = 0; line < 3; line++) context.DrawRectangle(new SolidColorBrush(Color.Parse(line == 0 ? "#97B5A8" : "#818792")), null, new Rect(x + 7, 30 + line * 8, (w - 18) * (line == 1 ? .65 : .9), 2));
             }
         }
