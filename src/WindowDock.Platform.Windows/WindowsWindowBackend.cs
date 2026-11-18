@@ -406,7 +406,7 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
             if (message == 0x0047 && !disposed) FollowHostTranslation(window);
             return response;
         }
-        if (attentionTray?.HandleMessage(message, wParam, lParam) == true) return 0;
+        if (attentionTray?.HandleMessage(message, lParam) == true) return 0;
         if (message == shellMessage && ((uint)wParam == 1 || (uint)wParam == 2)) discoveryExpires = 0;
         if (message == shellMessage && (uint)wParam == 0x8006) { Changed?.Invoke(new("attention", lParam)); return 0; }
         if (message == 0x004A && lParam != 0)

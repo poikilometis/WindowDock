@@ -1,6 +1,7 @@
 using System.Runtime.Versioning;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 
 namespace WindowDock;
 
@@ -67,6 +68,89 @@ internal static class DesktopWorkflowTests
         await PresentationAsync(main, panels[0]);
         await CompatibilityAsync(main);
         await SwapByDropAsync(main);
+        await AgentNotificationsAsync(main);
+    }
+
+    [SupportedOSPlatform("windows")]
+    private static async Task AgentNotificationsAsync(MainWindow main)
+    {
+        var session = main.Session;
+        var backend = (WindowsWindowBackend)session.Backend;
+        var originalTab = session.Current;
+        var otherTab = session.Config.Workspaces.First(workspace => workspace.Id != originalTab.Id);
+        var panels = session.CurrentPanels.Take(2).ToArray();
+        var first = panels[0];
+        var second = panels[1];
+        var state = main.WindowState;
+        var (enabled, completion) = (session.Config.AgentNotifications, session.Config.NotifyOnCompletion);
+        var icons = new Dictionary<uint, uint>();
+        var shown = new List<uint>();
+        var moved = false;
+        main.SetAgentNotifications(false, false);
+        backend.TestTrayOperation = (uint operation, ref WindowsAttentionTray.NotificationData data) =>
+        {
+            if (operation == 0) icons.Add(data.Id, data.State); // NIM_ADD
+            if (operation == 1 && data.Info.Length > 0) shown.Add(data.Id); // NIM_MODIFY with a balloon
+            if (operation == 2) icons.Remove(data.Id); // NIM_DELETE
+            return true;
+        };
+        var host = main.TryGetPlatformHandle()!.Handle;
+        void Click(uint id) => Native.SendMessageTimeout(host, WindowsAttentionTray.CallbackMessage, 0,
+            (nint)((id << 16) | WindowsAttentionTray.BalloonUserClick), 2, 1000, out _);
+        try
+        {
+            main.SetAgentNotifications(true, true);
+            const string firstKey = "codex:notification-qa";
+            const string secondKey = "claude:notification-qa";
+            DesktopSelfTest.Check(session.ReceiveAgentSignal(new() { Handle = first.Record.Handle, SessionKey = firstKey, Status = "waiting" }) &&
+                session.ReceiveAgentSignal(new() { Handle = second.Record.Handle, SessionKey = secondKey, Status = "done" }),
+                "Agent notifications could not be bound to the test windows.");
+            DesktopSelfTest.Check(shown.Count == 2 && shown[0] != shown[1] && shown.All(id => icons[id] == 1),
+                "Each agent notification needs a distinct, hidden Shell icon for its callback.");
+
+            // An older notification stays tied to its source after a later notification and a status update.
+            session.ReceiveAgentSignal(new() { SessionKey = firstKey, Status = "working" });
+            moved = session.Move([second], otherTab);
+            DesktopSelfTest.Check(moved, "Could not move the notification target to another tab.");
+            session.SelectedWorkspace = otherTab.Id;
+            main.WindowState = WindowState.Minimized;
+            await Task.Delay(80);
+            Click(shown[0]);
+            await Task.Delay(150);
+            DesktopSelfTest.Check(main.WindowState != WindowState.Minimized && session.SelectedWorkspace == originalTab.Id &&
+                session.ActivePanel(originalTab) == first && Native.IsWindowVisible(first.Record.Hwnd),
+                "The first notification did not restore the workspace and reveal its own window.");
+
+            var editor = new NameEditor("Notification click while editing", "Fixture");
+            var dialog = main.ShowEditorAsync(editor);
+            try
+            {
+                await Task.Delay(80);
+                Click(shown[1]);
+                await Task.Delay(60);
+                DesktopSelfTest.Check(session.SelectedWorkspace == originalTab.Id && editor.IsVisible,
+                    "A notification changed the tab before the current editor closed.");
+            }
+            finally { editor.Close(false); await dialog; }
+            await Task.Delay(150);
+            DesktopSelfTest.Check(session.SelectedWorkspace == otherTab.Id && session.ActivePanel(otherTab) == second &&
+                Native.IsWindowVisible(second.Record.Hwnd), "The completion notification did not reveal its window after moving it to another tab.");
+            DesktopSelfTest.Check(Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop &&
+                !desktop.Windows.OfType<AgentAttentionWindow>().Any(window => window.IsVisible),
+                "Clicking a notification opened the generic agent activity dialog.");
+            DesktopSelfTest.Check(shown.All(id => !icons.ContainsKey(id)), "Clicked notification icons were left registered.");
+            DesktopSelfTest.Pass("Older and completion notifications open their own native windows despite a status change, tab move, minimize or modal editor.");
+        }
+        finally
+        {
+            main.SetAgentNotifications(false, false);
+            backend.TestTrayOperation = null;
+            main.SetAgentNotifications(enabled, completion);
+            if (moved) session.Undo();
+            session.SelectedWorkspace = originalTab.Id;
+            main.WindowState = state;
+            main.TestRefresh();
+        }
     }
 
     [SupportedOSPlatform("windows")]

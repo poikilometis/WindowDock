@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Threading;
 
 namespace WindowDock;
 
@@ -15,7 +16,17 @@ internal sealed partial class MainWindow
         void Raise(object? sender, EventArgs args) { if (editor.TryGetPlatformHandle() is { } handle) Session.Backend.RaiseOverlay(handle.Handle); }
         editor.Opened += Raise;
         try { await editor.ShowDialog<bool>(owner ?? this); return editor.Accepted; }
-        finally { editor.Opened -= Raise; dialogDepth--; QueueSync(); }
+        finally
+        {
+            editor.Opened -= Raise;
+            dialogDepth--;
+            QueueSync();
+            if (dialogDepth == 0 && deferredAgentNotification is { } notification)
+            {
+                deferredAgentNotification = null;
+                Dispatcher.UIThread.Post(() => OpenAgentNotification(notification.Panel, notification.SessionKey));
+            }
+        }
     }
     private async Task<string?> AskNameAsync(string title, string value)
     {

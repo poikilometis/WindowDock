@@ -5,12 +5,13 @@ namespace WindowDock;
 internal sealed partial class WindowsWindowBackend
 {
     private WindowsAttentionTray? attentionTray;
+    internal WindowsAttentionTray.IconOperation? TestTrayOperation { get; set; }
 
     internal void ConfigureAgentTray(bool enabled, string tooltip)
     {
         if (enabled)
         {
-            attentionTray ??= new(host.Handle, () => Changed?.Invoke(new("agent-tray", 0)));
+            attentionTray ??= new(host.Handle, () => Changed?.Invoke(new("agent-tray", 0)), TestTrayOperation);
             attentionTray.Update(tooltip);
         }
         else
@@ -20,19 +21,26 @@ internal sealed partial class WindowsWindowBackend
         }
     }
 
-    internal void NotifyAgent(string message)
+    internal void NotifyAgent(string message, Action activate)
     {
-        if (attentionTray?.Notify(message) == false)
+        if (attentionTray?.Notify(message, activate) == false)
             Store.Log("Windows did not accept a WindowDock agent notification.");
     }
 }
 
-internal sealed class WindowsAttentionTray(nint owner, Action open) : IDisposable
+internal sealed class WindowsAttentionTray(nint owner, Action open, WindowsAttentionTray.IconOperation? operation = null) : IDisposable
 {
     private const uint Add = 0, Modify = 1, Delete = 2, SetVersion = 4;
-    private const uint MessageFlag = 1, IconFlag = 2, TipFlag = 4, InfoFlag = 0x10, ShowTip = 0x80;
-    private const uint CallbackMessage = 0x80B1, IconId = 1;
+    private const uint MessageFlag = 1, IconFlag = 2, TipFlag = 4, StateFlag = 8, InfoFlag = 0x10, ShowTip = 0x80;
+    private const uint TrayIconId = 1, Hidden = 1;
+    private const int NotificationLimit = 64;
+    internal const uint CallbackMessage = 0x80B1, BalloonUserClick = 0x405;
+    internal delegate bool IconOperation(uint operation, ref NotificationData data);
+
+    private readonly IconOperation send = operation ?? ShellNotifyIcon;
     private readonly uint taskbarCreated = Native.RegisterWindowMessage("TaskbarCreated");
+    private readonly Dictionary<uint, (long Sequence, Action Activate)> notifications = [];
+    private long nextSequence;
     private string tip = "WindowDock";
     private bool registered;
 
@@ -40,61 +48,98 @@ internal sealed class WindowsAttentionTray(nint owner, Action open) : IDisposabl
     {
         var changed = tip != tooltip;
         tip = tooltip;
-        if (!registered) Register();
+        if (!registered) registered = Register(TrayIconId);
         else if (changed)
         {
-            var data = Data(TipFlag | ShowTip);
-            ShellNotifyIcon(Modify, ref data);
+            var data = Data(TrayIconId, TipFlag | ShowTip);
+            send(Modify, ref data);
         }
     }
 
-    internal bool Notify(string message)
+    internal bool Notify(string message, Action activate)
     {
-        if (!registered) Register();
-        if (!registered) return false;
-        var data = Data(InfoFlag);
+        // A Windows balloon callback identifies its icon only. A separate hidden icon
+        // keeps queued notifications clickable without sharing the tray button's target.
+        uint id;
+        long sequence;
+        do
+        {
+            sequence = nextSequence++;
+            id = 2 + (uint)(sequence % (ushort.MaxValue - 1));
+        } while (notifications.ContainsKey(id));
+
+        var data = Data(id, InfoFlag);
         data.Title = "WindowDock";
         data.Info = ClampText(message, 255);
         data.InfoFlags = 0x11; // NIIF_INFO | NIIF_NOSOUND
-        if (ShellNotifyIcon(Modify, ref data)) return true;
-        // Explorer may have restarted before the tray recreation message reached this window.
-        registered = false;
-        Register();
-        return registered && ShellNotifyIcon(Modify, ref data);
+        if (!ShowBalloon(ref data, sequence, activate) && !ShowBalloon(ref data, sequence, activate)) return false;
+        if (notifications.Count > NotificationLimit)
+            RemoveNotification(notifications.MinBy(pair => pair.Value.Sequence).Key);
+        return true;
     }
 
-    internal bool HandleMessage(uint message, nuint wParam, nint lParam)
+    private bool ShowBalloon(ref NotificationData data, long sequence, Action activate)
+    {
+        if (!Register(data.Id, hidden: true)) return false;
+        notifications.Add(data.Id, (sequence, activate));
+        if (send(Modify, ref data)) return true;
+        RemoveNotification(data.Id);
+        return false;
+    }
+
+    internal bool HandleMessage(uint message, nint lParam)
     {
         if (taskbarCreated != 0 && message == taskbarCreated)
         {
-            registered = false;
-            Register();
+            notifications.Clear();
+            registered = Register(TrayIconId);
             return false;
         }
         if (message != CallbackMessage) return false;
         var packed = unchecked((uint)lParam);
-        if ((packed >> 16) == IconId && (packed & 0xFFFF) is 0x400 or 0x401 or 0x405 or 0x007B)
-            open(); // NIN_SELECT, NIN_KEYSELECT, NIN_BALLOONUSERCLICK, WM_CONTEXTMENU
+        var id = packed >> 16;
+        var notification = packed & 0xFFFF;
+        if (id == TrayIconId && notification is 0x400 or 0x401 or 0x007B)
+            open(); // NIN_SELECT, NIN_KEYSELECT, WM_CONTEXTMENU
+        else if (notification == BalloonUserClick && notifications.TryGetValue(id, out var target))
+        {
+            RemoveNotification(id);
+            target.Activate();
+        }
         return true;
     }
 
-    private void Register()
+    private bool Register(uint id, bool hidden = false)
     {
-        var data = Data(MessageFlag | IconFlag | TipFlag | ShowTip);
+        var data = Data(id, MessageFlag | IconFlag | (hidden ? StateFlag : TipFlag | ShowTip));
         data.Callback = CallbackMessage;
         data.Icon = SendMessage(owner, 0x007F, 0, 0); // WM_GETICON, ICON_SMALL
         if (data.Icon == 0) data.Icon = LoadIcon(0, 32512); // IDI_APPLICATION
-        registered = ShellNotifyIcon(Add, ref data);
-        if (!registered) return;
+        if (hidden) data.State = data.StateMask = Hidden;
+        if (!send(Add, ref data)) return false;
         data.Version = 4;
-        ShellNotifyIcon(SetVersion, ref data);
+        if (send(SetVersion, ref data)) return true;
+        DeleteIcon(id);
+        return false;
     }
 
-    private NotificationData Data(uint flags) => new()
+    private void RemoveNotification(uint id)
+    {
+        notifications.Remove(id);
+        DeleteIcon(id);
+    }
+
+    private void DeleteIcon(uint id)
+    {
+        var data = Data(id, 0);
+        send(Delete, ref data);
+    }
+
+    private NotificationData Data(uint id, uint flags) => new()
     {
         Size = (uint)Marshal.SizeOf<NotificationData>(),
         Owner = owner,
-        Id = IconId,
+        Id = id,
         Flags = flags,
         Tip = ClampText(tip, 127),
         Info = "",
@@ -109,9 +154,8 @@ internal sealed class WindowsAttentionTray(nint owner, Action open) : IDisposabl
 
     public void Dispose()
     {
-        if (!registered) return;
-        var data = Data(0);
-        ShellNotifyIcon(Delete, ref data);
+        foreach (var id in notifications.Keys.ToArray()) RemoveNotification(id);
+        if (registered) DeleteIcon(TrayIconId);
         registered = false;
     }
 
@@ -124,7 +168,7 @@ internal sealed class WindowsAttentionTray(nint owner, Action open) : IDisposabl
     private static extern nint LoadIcon(nint instance, nint icon);
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    private struct NotificationData
+    internal struct NotificationData
     {
         internal uint Size;
         internal nint Owner;
