@@ -1085,6 +1085,12 @@
     <value>테마를 선택하면 바로 미리 볼 수 있습니다. 저장하거나 취소하여 이전 테마로 돌아가세요.</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>빛줄기</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>어두운 배경 위로 부드럽게 움직이는 빛줄기</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>그래파이트</value>
     <comment>Context: ThemePreview</comment>

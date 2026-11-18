@@ -1085,6 +1085,12 @@
     <value>テーマを選ぶとすぐにプレビューできます。保存するか、キャンセルして元のテーマに戻してください。</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>光の帯</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>暗い背景をゆっくり動く柔らかな光</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>グラファイト</value>
     <comment>Context: ThemePreview</comment>

@@ -1085,6 +1085,12 @@
     <value>Chọn giao diện để xem trước ngay. Lưu lựa chọn hoặc hủy để trở về giao diện trước.</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>Luồng sáng</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>Các luồng sáng dịu chuyển động trên nền tối</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>Than chì</value>
     <comment>Context: ThemePreview</comment>

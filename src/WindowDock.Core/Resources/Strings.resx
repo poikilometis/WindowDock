@@ -1085,6 +1085,12 @@
     <value>Select a theme to preview it immediately. Save your choice or cancel to restore the previous theme.</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>Light Beams</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>Soft animated beams on a dark background</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>Graphite</value>
     <comment>Context: ThemePreview</comment>

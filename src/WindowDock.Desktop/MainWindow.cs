@@ -216,6 +216,7 @@ internal sealed partial class MainWindow : Window
             offsets[lastWorkspace] = viewport.Offset; lastWorkspace = Session.SelectedWorkspace;
             viewport.Offset = offsets.GetValueOrDefault(lastWorkspace);
         }
+        ApplyAppearance();
         RefreshTabs(); QueueAttentionUpdate();
         RefreshWorkspaceWindows();
         var presented = workspaceWindows.ContainsKey(Session.SelectedWorkspace);
@@ -238,7 +239,7 @@ internal sealed partial class MainWindow : Window
         grid.Classes.Set("active", gridActive);
         if (grid.Content is StackPanel gridRow && gridRow.Children.OfType<DockIcon>().FirstOrDefault() is { } gridGlyph) { gridGlyph.InkResource = gridActive ? "DockAccent" : null; gridGlyph.InvalidateVisual(); }
         grid.IsEnabled = current.Count > 0;
-        ApplyAppearance(); ArrangePanels(); RefreshStatus(); QueueSync();
+        ArrangePanels(); RefreshStatus(); QueueSync();
         // The first native frame must not wait behind persistence or a background dispatcher turn.
         if (IsVisible) { root.UpdateLayout(); FlushSync(); }
     }

@@ -1085,6 +1085,12 @@
     <value>選取主題即可立即預覽。儲存選擇，或取消以還原原本的主題。</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>流光</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>深色背景上的柔和動態光束</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>石墨</value>
     <comment>Context: ThemePreview</comment>

@@ -1085,6 +1085,12 @@
     <value>เลือกธีมเพื่อดูตัวอย่างทันที บันทึกตัวเลือกหรือยกเลิกเพื่อกลับไปใช้ธีมเดิม</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>ลำแสง</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>ลำแสงนุ่มที่เคลื่อนไหวบนพื้นหลังสีเข้ม</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>กราไฟต์</value>
     <comment>Context: ThemePreview</comment>

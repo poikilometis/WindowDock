@@ -13,6 +13,7 @@ internal sealed class WallpaperView : Grid, IDisposable
     private readonly Border background = new();
     private readonly Image image = new() { Stretch = Stretch.UniformToFill, IsHitTestVisible = false };
     private readonly Border tint = new() { IsHitTestVisible = false };
+    private BeamsView? beams;
     private readonly DispatcherTimer timer = new();
     private string key = "", contentKey = "";
     private WallpaperAsset? asset;
@@ -42,8 +43,19 @@ internal sealed class WallpaperView : Grid, IDisposable
         if (disposed) return;
         var next = $"{DockTheme.Id}|{config.BackgroundMode}|{config.BackgroundColor}|{config.BackgroundPath}";
         if (key == next) return; key = next;
-        var defaultColor = System.Drawing.Color.FromArgb(19, 22, 27).ToArgb();
-        background.Background = config.BackgroundMode == "transparent" ? Brushes.Transparent : config.BackgroundColor == defaultColor ? DockTheme.IsGlass ? DockTheme.Material : DockTheme.Ground : new SolidColorBrush(Color.FromUInt32(unchecked((uint)config.BackgroundColor)));
+        var defaultColor = config.BackgroundColor == WorkspaceConfig.DefaultBackgroundColor;
+        background.Background = config.BackgroundMode == "transparent" ? Brushes.Transparent : defaultColor ? DockTheme.IsGlass ? DockTheme.Material : DockTheme.Ground : new SolidColorBrush(Color.FromUInt32(unchecked((uint)config.BackgroundColor)));
+        var showBeams = DockTheme.Id == "beams" && config.BackgroundMode == "solid" && defaultColor;
+        if (showBeams && beams is null)
+        {
+            beams = new();
+            Children.Insert(1, beams);
+        }
+        if (beams is not null)
+        {
+            beams.IsVisible = showBeams;
+            beams.SetRunning(running && showBeams);
+        }
         image.Effect = DockTheme.IsGlass ? new BlurEffect { Radius = DockTheme.Id == "glass" ? 3 : 5 } : null;
         tint.Background = DockTheme.IsGlass && config.BackgroundMode == "image" ? new SolidColorBrush(Color.FromArgb(DockTheme.Id == "glass" ? (byte)24 : (byte)54, 0, 0, 0)) : Brushes.Transparent;
         var requested = config.BackgroundMode == "image" ? config.BackgroundPath ?? "" : "";
@@ -59,6 +71,7 @@ internal sealed class WallpaperView : Grid, IDisposable
     public void SetRunning(bool value)
     {
         running = value;
+        beams?.SetRunning(value && beams.IsVisible);
         if (!running) timer.Stop(); else ScheduleFrame();
     }
     private static async Task<T> DecodeAsync<T>(Func<T> decode, CancellationToken token)
@@ -127,7 +140,13 @@ internal sealed class WallpaperView : Grid, IDisposable
         image.Source = null; bitmap?.Dispose(); bitmap = null;
         var previous = asset; asset = null; previous?.Release();
     }
-    public void Dispose() { if (disposed) return; disposed = true; ReleaseImage(); }
+    public void Dispose()
+    {
+        if (disposed) return;
+        disposed = true;
+        beams?.SetRunning(false);
+        ReleaseImage();
+    }
 }
 
 // Reference-counted because switching a tab may outlive an in-flight native decode.

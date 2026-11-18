@@ -71,8 +71,19 @@ internal static class DesktopInteractionTests
         DesktopSelfTest.Check(DockTheme.Id == "light" && session.Config.ThemeId == original, "Theme preview modifies saved preferences or does not update immediately.");
         session.Save(); DesktopSelfTest.Check(Store.Read<AppConfig>(Store.ConfigPath)!.ThemeId == original, "Background saving persists the temporary theme preview.");
         appearance.SelectTheme("glass"); await Task.Delay(50); DesktopSelfTest.Check(DockTheme.Id == "glass", "Second theme preview does not update.");
+        appearance.SelectTheme("beams"); await Task.Delay(70);
+        var beams = main.GetVisualDescendants().OfType<BeamsView>().Single();
+        DesktopSelfTest.Check(DockTheme.Id == "beams" && beams.IsVisible && beams.AnimationRunning == Native.ClientAnimationsEnabled(),
+            "Light Beams does not follow the live theme preview and the system motion preference.");
+        var savedColor = session.Current.BackgroundColor;
+        session.Current.BackgroundColor = unchecked((int)0xFF3A5F5A);
+        main.TestRefresh();
+        DesktopSelfTest.Check(!beams.IsVisible && !beams.AnimationRunning, "Light Beams overrides a custom tab color.");
+        session.Current.BackgroundColor = savedColor;
+        main.TestRefresh();
         DesktopSelfTest.Snapshot(appearance, "avalonia-appearance-live.png"); appearance.Close(false); await preview;
         DesktopSelfTest.Check(DockTheme.Id == original && session.Config.ThemeId == original, "Cancel does not restore the original theme.");
+        DesktopSelfTest.Check(!beams.IsVisible && !beams.AnimationRunning, "Cancelling theme preview leaves hidden beams animating.");
         if (other is not null) { main.TestWindowEvent(new("foreground", other.Record.Handle)); await Task.Delay(40); }
         DesktopSelfTest.Check(session.SelectedWorkspace == selectedBefore, "Closing appearance or a delayed native foreground event changes the selected tab.");
         if (movedForEvent) { session.Move([other!], session.Config.Workspaces.First(w => w.Id == selectedBefore)); session.SelectedWorkspace = selectedBefore; }

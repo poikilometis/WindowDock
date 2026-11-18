@@ -1085,6 +1085,12 @@
     <value>Нажмите на тему — рабочее пространство сразу покажет её. Сохраните выбор или отмените изменения.</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>Световые лучи</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>Мягкие движущиеся лучи на тёмном фоне</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>Графит</value>
     <comment>Context: ThemePreview</comment>

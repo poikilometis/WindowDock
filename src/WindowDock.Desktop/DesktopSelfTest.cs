@@ -38,6 +38,10 @@ internal static class DesktopSelfTest
             Check(main.TestToolbarHeight == 30, "The shell reserves more than a 30-DIP command row.");
             Check(main.Title == "WindowDock", "Main caption contains a workspace name.");
             Snapshot(main, "avalonia-empty.png"); Pass("Avalonia window starts with compact shell, stable caption, clean empty state and new icon.");
+            main.PreviewTheme("beams");
+            await Task.Delay(120);
+            Snapshot(main, "avalonia-beams.png");
+            main.PreviewTheme(null);
             if (OperatingSystem.IsWindows()) await NativeWindowsAsync(main);
             await DesktopDialogTests.RunAsync(main);
             foreach (var (name, dialog) in new (string, EditorWindow)[]
@@ -149,14 +153,14 @@ internal static class DesktopSelfTest
             await Task.Delay(100); Check(hidden == 0, "Clicking the selected tab hides an embedded window.");
         }
         finally { Native.UnhookWinEvent(hook); GC.KeepAlive(observer); }
-        foreach (var theme in new[] { "graphite", "light", "frost", "glass" })
+        foreach (var theme in new[] { "graphite", "light", "frost", "glass", "beams" })
         {
             session.Config.ThemeId = theme; main.TestRefresh(); await Task.Delay(100);
             Check(main.TryGetPlatformHandle()!.Handle == stable, "Theme change recreated the main HWND.");
             Check(session.Panels.All(p => Native.IsWindow(p.Record.Hwnd) && Native.GetWindow(p.Record.Hwnd, 4) == stable), "Theme change lost a native window.");
             Snapshot(main, "avalonia-theme-" + theme + ".png");
         }
-        Pass("Selected-tab clicks emit zero hide events; all four themes preserve host / external handles and render without GDI text.");
+        Pass("Selected-tab clicks emit zero hide events; all five themes preserve host / external handles and render without GDI text.");
         session.Config.ThemeId = "frost"; main.TestRefresh();
         session.SelectedWorkspace = session.Config.Workspaces[1].Id; await Task.Delay(80);
         Check(!Native.IsWindowVisible(first.Record.Hwnd), "Inactive workspace remains visible.");

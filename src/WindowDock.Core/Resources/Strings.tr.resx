@@ -1085,6 +1085,12 @@
     <value>Bir temayı hemen önizlemek için seçin. Seçimi kaydedin veya önceki temaya dönmek için iptal edin.</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>Işık huzmeleri</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>Koyu arka planda hareket eden yumuşak ışık huzmeleri</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>Grafit</value>
     <comment>Context: ThemePreview</comment>

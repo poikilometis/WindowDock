@@ -1085,6 +1085,12 @@
     <value>Wählen Sie ein Thema für die sofortige Vorschau. Speichern Sie die Auswahl oder brechen Sie ab, um das vorherige Thema wiederherzustellen.</value>
     <comment>Context: ThemePreview</comment>
   </data>
+  <data name="ThemePreview.LightBeams" xml:space="preserve">
+    <value>Lichtstrahlen</value>
+  </data>
+  <data name="ThemePreview.AnimatedLightBeams" xml:space="preserve">
+    <value>Sanft bewegte Lichtstrahlen auf dunklem Hintergrund</value>
+  </data>
   <data name="ThemePreview.Graphite" xml:space="preserve">
     <value>Graphit</value>
     <comment>Context: ThemePreview</comment>
