@@ -1,13 +1,14 @@
 # Changelog
 
-## Unreleased
+## 0.2.1 — Resume your workspace and keep windows in place
 
-- Reopen selected projects on startup and resume linked Codex, Claude Code, and Gemini CLI conversations from saved session IDs. Save Windows Terminal's own layout and keep opt-in local snapshots of terminal output.
-- Assign a session to a Windows Terminal tab and pane so the bell and next-agent shortcut reach the right place inside a shared terminal.
-- Open workspaces in separate windows on different displays or bind them to Windows virtual desktops.
-- Search open desktop windows and docked panels together. Use executable paths and reported project folders to distinguish similar windows in capture rules.
-- Split individual layout areas and preserve the resized dividers with the workspace.
-- Keep incompatible applications in their original windows while accessing them from WindowDock.
+- **Pick up after a restart.** Reopen selected projects when WindowDock starts and resume linked Codex, Claude Code, and Gemini CLI conversations by ID. Restore Windows Terminal's saved tab and pane layout and keep optional text snapshots of terminal output.
+- **Jump to the right agent.** Bind a session to a Windows Terminal tab and pane. The bell and `Ctrl+Alt+J` use that binding. Notification switches and setup feedback are now in the integration dialog.
+- **Work across displays.** Open tabs in separate windows on different monitors or bind them to Windows virtual desktops.
+- **Find and add windows from one search.** `Ctrl+Alt+K` searches docked panels and desktop windows. Capture rules can use executable paths and project folders reported by hooks.
+- **Keep your layout in place.** Split and resize individual areas. Moving a window across tabs fills the first empty slot. Dropping one window onto another swaps the two positions.
+- **Keep difficult apps within reach.** Link an app to a panel while it runs in its original window.
+- **Scroll and resize terminals more reliably.** Inactive classic consoles can receive wheel input on hover, including in supported terminal UIs. Restored windows appear without a click, and scrollbars repaint after a resize.
 
 ## 0.2.0 — Agent activity and workspace controls
 

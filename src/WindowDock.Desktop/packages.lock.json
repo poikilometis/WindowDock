@@ -195,7 +195,7 @@
       "windowdock.platform.windows": {
         "type": "Project",
         "dependencies": {
-          "WindowDock.Core": "[0.2.0, )"
+          "WindowDock.Core": "[0.2.1, )"
         }
       }
     }
