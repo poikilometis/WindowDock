@@ -7,26 +7,27 @@ internal sealed partial class WindowsWindowBackend
 {
     private readonly Dictionary<long, bool> enabledBeforeModal = [];
     private IReadOnlyList<NativeHoverArea> hoverAreas = [];
-    private Point hostOrigin;
-    private Size hostSize;
-    private bool originKnown, translating;
-    private void RememberHostOrigin()
+    private readonly Dictionary<nint, Rectangle> hostGeometry = [];
+    private bool translating;
+    private void RememberHostOrigin(nint owner = 0)
     {
-        if (host.Handle == 0 || Native.IsIconic(host.Handle) || !Native.GetWindowRect(host.Handle, out var rect)) return;
-        hostOrigin = new(rect.Left, rect.Top); hostSize = rect.Rectangle.Size; originKnown = true;
+        if (owner == 0) owner = host.Handle;
+        if (owner == 0 || Native.IsIconic(owner) || !Native.GetWindowRect(owner, out var rect)) return;
+        hostGeometry[owner] = rect.Rectangle;
     }
     private static Rectangle Offset(Rectangle rectangle, int dx, int dy) { rectangle.Offset(dx, dy); return rectangle; }
-    private void PublishHoverTargets() => hover?.Update(hoverAreas.Select(a => new HoverTarget((nint)a.Root, (nint)a.Handle, a.Bounds, a.External)).ToArray());
-    private void FollowHostTranslation()
+    private void PublishHoverTargets() => hover?.Update(hoverAreas.Select(a => new HoverTarget((nint)a.Root, (nint)a.Handle, a.Bounds, a.External, a.Owner)).ToArray());
+    private void FollowHostTranslation(nint owner = 0)
     {
         // Runs in the native window-position message, including Windows' modal title-bar
         // move loop. No render-frame, timer or background dispatcher round-trip.
-        if (translating || host.Handle == 0 || Native.IsIconic(host.Handle) || !Native.GetWindowRect(host.Handle, out var rect)) return;
-        var now = new Point(rect.Left, rect.Top);
-        if (!originKnown) { hostOrigin = now; hostSize = rect.Rectangle.Size; originKnown = true; return; }
-        var resizing = hostSize != rect.Rectangle.Size;
-        var dx = now.X - hostOrigin.X; var dy = now.Y - hostOrigin.Y;
-        hostOrigin = now; hostSize = rect.Rectangle.Size;
+        if (owner == 0) owner = host.Handle;
+        if (translating || owner == 0 || Native.IsIconic(owner) || !Native.GetWindowRect(owner, out var rect)) return;
+        var known = hostGeometry.TryGetValue(owner, out var previous);
+        hostGeometry[owner] = rect.Rectangle;
+        if (!known) return;
+        var resizing = previous.Size != rect.Rectangle.Size;
+        var dx = rect.Left - previous.X; var dy = rect.Top - previous.Y;
         // Maximize/restore changes origin and size together. Moving the previous-size
         // panes first creates an unnecessary intermediate frame and another cross-process
         // positioning batch. The committed layout applies their final rectangles once.
@@ -35,9 +36,13 @@ internal sealed partial class WindowsWindowBackend
         translating = true;
         try
         {
-            placements = placements.Select(p => p with { Bounds = Offset(p.Bounds, dx, dy), Clip = Offset(p.Clip, dx, dy), Card = Offset(p.Card, dx, dy) }).ToArray();
-            hoverAreas = hoverAreas.Select(a => a with { Bounds = Offset(a.Bounds, dx, dy) }).ToArray(); PublishHoverTargets();
-            var visible = placements.Where(p => Native.IsWindowVisible(p.Record.Hwnd) && !Native.IsIconic(p.Record.Hwnd) && !Native.IsHungAppWindow(p.Record.Hwnd)).ToArray();
+            bool ThisHost(nint target) => (target == 0 ? host.Handle : target) == owner;
+            placements = placements.Select(p => ThisHost(p.Owner)
+                ? p with { Bounds = Offset(p.Bounds, dx, dy), Clip = Offset(p.Clip, dx, dy), Card = Offset(p.Card, dx, dy) } : p).ToArray();
+            hoverAreas = hoverAreas.Select(a => ThisHost(a.Owner) ? a with { Bounds = Offset(a.Bounds, dx, dy) } : a).ToArray();
+            PublishHoverTargets();
+            var visible = placements.Where(p => ThisHost(p.Owner) && Native.IsWindowVisible(p.Record.Hwnd) &&
+                !Native.IsIconic(p.Record.Hwnd) && !Native.IsHungAppWindow(p.Record.Hwnd)).ToArray();
             var batch = Native.BeginWindowBatch(visible.Length);
             foreach (var placement in visible)
             {
@@ -53,7 +58,9 @@ internal sealed partial class WindowsWindowBackend
         }
         finally
         {
-            foreach (var placement in placements) if (fitted.ContainsKey(placement.Record.Handle)) fitted[placement.Record.Handle] = placement;
+            foreach (var placement in placements)
+                if ((placement.Owner == 0 ? host.Handle : placement.Owner) == owner && fitted.ContainsKey(placement.Record.Handle))
+                    fitted[placement.Record.Handle] = placement;
             translating = false;
         }
     }

@@ -790,8 +790,11 @@
     <value>이 탭에 빈자리가 없습니다</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>패널 순서 바꾸기</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>창 위치 바꾸기</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>빈 칸으로 이동</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">
@@ -1063,7 +1066,7 @@
     <comment>Context: SessionDialogs</comment>
   </data>
   <data name="SessionDialogs.FilesChanged" xml:space="preserve">
-    <value>{0}변경된 파일: {1}{2}{3}</value>
+    <value>{0}변경된 파일: {1}</value>
     <comment>Context: SessionDialogs</comment>
   </data>
   <data name="SessionDialogs.SelectAnAgent" xml:space="preserve">
@@ -1382,5 +1385,119 @@
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>연결되지 않은 명령 다시 시도</value>
+  </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>도킹 없이 연결</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>원래 창 열기</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>사용자 지정 레이아웃</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>빈 영역 제거</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>저장된 창 대기 중</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>영역 분할</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>아래에 영역 추가</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>오른쪽에 영역 추가</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>이 가상 데스크톱에 연결</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>Windows에서 지정된 가상 데스크톱을 열 수 없습니다.</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>탭을 별도 창으로 열 수 없습니다.</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>모니터에서 탭 열기</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>탭을 WindowDock으로 되돌리기</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>이 탭은 별도 창에 열려 있습니다.</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>Win+Tab으로 이 탭의 가상 데스크톱으로 전환하세요.</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>탭의 앱이 응답하면 다시 시도하세요.</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>터미널 기록을 저장했습니다.</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>닫을 때 터미널 탭과 창 저장</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>저장할 수 있는 터미널 텍스트가 없습니다.</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>이 프로젝트 명령에서 사용할 저장된 대화를 선택하세요.</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>창 번호 (0은 탭만 선택)</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>보이는 창에 위에서 아래로, 같은 줄에서는 왼쪽부터 번호를 매깁니다.</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>시작할 때 이 프로젝트 다시 열기</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>{0}을(를) 다시 열 수 없습니다. {1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>복구를 위해 에이전트 대화 기억</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>시작할 때 Windows Terminal 다시 열기</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>터미널 기록 저장</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>터미널 기록</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>터미널 작업 공간 복원</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>Windows Terminal이 레이아웃을 저장합니다. 출력은 WindowDock 패널에서 따로 저장하세요.</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>Windows Terminal 설정</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>Windows Terminal 설정에 접근할 수 없습니다.</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>터미널 탭과 창 선택</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>선택한 터미널이나 창에 접근할 수 없습니다.</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>이 터미널에서 제목이 고유한 탭을 선택하세요.</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>바탕 화면 · 창 추가</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>실행 파일 경로</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>터미널 기록 자동 저장</value>
   </data>
 </root>

@@ -11,11 +11,13 @@ namespace WindowDock
     internal static partial class Native
     {
         public const int GWL_STYLE = -16, GWL_EXSTYLE = -20, GWLP_HWNDPARENT = -8;
+        public const uint GW_HWNDPREV = 3;
         public const long WS_CHILD = 0x40000000L, WS_POPUP = 0x80000000L, WS_CAPTION = 0x00C00000L;
         public const long WS_THICKFRAME = 0x00040000L, WS_SYSMENU = 0x00080000L, WS_MINIMIZEBOX = 0x20000L, WS_MAXIMIZEBOX = 0x10000L;
         public const long WS_CLIPCHILDREN = 0x02000000L, WS_CLIPSIBLINGS = 0x04000000L;
         public const long WS_EX_APPWINDOW = 0x40000L, WS_EX_TOOLWINDOW = 0x80L, WS_EX_TOPMOST = 0x8L;
         public const uint SWP_NOZORDER = 4, SWP_NOACTIVATE = 0x10, SWP_FRAMECHANGED = 0x20, SWP_SHOWWINDOW = 0x40, SWP_HIDEWINDOW = 0x80, SWP_NOSIZE = 1, SWP_NOMOVE = 2, SWP_ASYNCWINDOWPOS = 0x4000;
+        public const uint RDW_INVALIDATE = 0x0001, RDW_ALLCHILDREN = 0x0080, RDW_FRAME = 0x0400;
         [DllImport("kernel32.dll")] public static extern IntPtr GetConsoleWindow();
         [DllImport("kernel32.dll")] public static extern bool AttachConsole(uint processId);
         [DllImport("kernel32.dll")] public static extern bool FreeConsole();

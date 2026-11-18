@@ -790,8 +790,11 @@
     <value>このタブに空きがありません</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>パネルを並べ替え</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>ウィンドウを入れ替え</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>空き枠に移動</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">
@@ -1063,7 +1066,7 @@
     <comment>Context: SessionDialogs</comment>
   </data>
   <data name="SessionDialogs.FilesChanged" xml:space="preserve">
-    <value>{0}変更したファイル: {1}{2}{3}</value>
+    <value>{0}変更したファイル: {1}</value>
     <comment>Context: SessionDialogs</comment>
   </data>
   <data name="SessionDialogs.SelectAnAgent" xml:space="preserve">
@@ -1382,5 +1385,119 @@
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>未接続のコマンドを再試行</value>
+  </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>ドッキングせずにリンク</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>元のウィンドウを開く</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>カスタムレイアウト</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>空き領域を削除</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>保存したウィンドウを待機中</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>領域を分割</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>下に領域を追加</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>右に領域を追加</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>この仮想デスクトップに割り当て</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>指定した仮想デスクトップを開けませんでした。</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>タブを別ウィンドウで開けませんでした。</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>モニターでタブを開く</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>タブを WindowDock に戻す</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>このタブは別ウィンドウで開いています。</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>Win+Tab でこのタブの仮想デスクトップに切り替えてください。</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>タブ内のアプリが応答してからもう一度試してください。</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>ターミナル履歴を保存しました。</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>終了時にターミナルのタブとペインを保存</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>保存できるターミナルテキストがありません。</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>このプロジェクトコマンドの保存済み会話を選んでください。</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>ペイン番号（0 はタブのみ選択）</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>表示中のペインは上から下、次に左から右に番号を振ります。</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>起動時にこのプロジェクトを再開</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>{0} を再開できませんでした。{1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>復元用にエージェントの会話を記憶</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>起動時に Windows Terminal を開く</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>ターミナル履歴を保存</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>ターミナル履歴</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>ターミナルワークスペースの復元</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>レイアウトは Windows Terminal が保存します。出力は WindowDock のパネルから保存できます。</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>Windows Terminal の設定</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>Windows Terminal の設定にアクセスできません。</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>ターミナルのタブとペインを選ぶ</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>選択したターミナルまたはペインにアクセスできませんでした。</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>このターミナル内で固有のタイトルを持つタブを選んでください。</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>デスクトップ · ウィンドウを追加</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>実行ファイルのパス</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>ターミナル履歴を自動保存</value>
   </data>
 </root>

@@ -8,6 +8,7 @@ namespace WindowDock {
         public static List<WindowCandidate> List(ICollection<long> excluded, bool includeOwn)
         {
             List<WindowCandidate> result = new List<WindowCandidate>();
+            Dictionary<uint, string> images = new Dictionary<uint, string>();
             int ownPid = Process.GetCurrentProcess().Id;
             Native.EnumWindows(delegate(IntPtr h, IntPtr data) {
                 uint id; Native.GetWindowThreadProcessId(h, out id);
@@ -25,13 +26,15 @@ namespace WindowDock {
                 try { int cloaked; if (Native.DwmGetWindowAttribute(h, 14, out cloaked, 4) == 0 && cloaked != 0) return true; } catch { }
                 string name; long processStart=0;
                 try { using (Process p = Process.GetProcessById((int)id)) { name = p.ProcessName; try { processStart=p.StartTime.ToUniversalTime().Ticks; } catch { } } } catch { name = L10n.Get("RuleDialogs.Application"); }
-                bool term = cls == "ConsoleWindowClass" || cls == "CASCADIA_HOSTING_WINDOW_CLASS" ||
+                bool term = cls == Native.ConsoleWindowClass || cls == Native.TerminalWindowClass ||
                     name.IndexOf("terminal", StringComparison.OrdinalIgnoreCase) >= 0 ||
                     name.Equals("powershell", StringComparison.OrdinalIgnoreCase) || name.Equals("pwsh", StringComparison.OrdinalIgnoreCase) ||
                     name.Equals("cmd", StringComparison.OrdinalIgnoreCase) || name.Equals("conhost", StringComparison.OrdinalIgnoreCase) ||
                     name.Equals("wezterm-gui", StringComparison.OrdinalIgnoreCase) || name.Equals("mintty", StringComparison.OrdinalIgnoreCase);
                 if ((ex & Native.WS_EX_TOOLWINDOW) != 0 && !term) return true;
-                result.Add(new WindowCandidate { Handle = h, ProcessId = (int)id, ProcessStartTicks = processStart, Title = title, ProcessName = name, ClassName = cls, IsTerminal = term, IsMinimized = Native.IsIconic(h) });
+                if (!images.TryGetValue(id, out var image)) images[id] = image = WindowsImages.Path(id);
+                result.Add(new WindowCandidate { Handle = h, ProcessId = (int)id, ProcessStartTicks = processStart, Title = title,
+                    ProcessName = name, ClassName = cls, ExecutablePath = image, IsTerminal = term, IsMinimized = Native.IsIconic(h) });
                 return true;
             }, IntPtr.Zero);
             result.Sort(delegate(WindowCandidate a, WindowCandidate b) {

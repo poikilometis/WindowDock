@@ -15,6 +15,7 @@ internal static class DesktopAdvancedTests
         await HookCallbacksAsync(first);
         await DesktopVersioningTests.RunAsync(first);
         await ConsoleAsync(main);
+        await DesktopConsoleWheelTest.RunAsync(main, first);
         await ProjectAsync(main);
         await GifAsync(main);
         await RecoveryAsync(main);
@@ -56,19 +57,47 @@ internal static class DesktopAdvancedTests
         var start = new ProcessStartInfo(Path.Combine(Environment.SystemDirectory, "conhost.exe"), "\"" + Path.Combine(Environment.SystemDirectory, "cmd.exe") + "\" /d /q /k \"" + script + "\"") { UseShellExecute = false };
         var process = Process.Start(start)!; subjects.Add(process);
         var candidate = await WaitAsync(main, c => c.Title.Contains(token) && c.ClassName == "ConsoleWindowClass");
+        var owner = main.TryGetPlatformHandle()!.Handle;
+        bool ConsoleIsAboveOwner()
+        {
+            var foundConsole = false;
+            Native.EnumWindows((window, _) =>
+            {
+                if (window == candidate.Handle) foundConsole = true;
+                return window != owner && !foundConsole;
+            }, 0);
+            return foundConsole;
+        }
+        Check(Native.SetWindowPos(candidate.Handle, owner, 0, 0, 0, 0,
+            Native.SWP_NOACTIVATE | Native.SWP_NOMOVE | Native.SWP_NOSIZE) && !ConsoleIsAboveOwner(),
+            "The console fixture must begin behind WindowDock, as it can be at startup.");
         var panel = main.Session.Attach(candidate); await Task.Delay(100);
+        Check(ConsoleIsAboveOwner(), "A restored console stays behind WindowDock until the user clicks.");
         Check(Native.IsWindowVisible(panel.Record.Hwnd) && Native.GetAncestor(panel.Record.Hwnd, 2) == panel.Record.Hwnd, "Classic console did not remain an interactive top-level window.");
-        Native.SetForegroundWindow(main.TryGetPlatformHandle()!.Handle); await Task.Delay(80);
+        Native.SetForegroundWindow(owner); await Task.Delay(80);
         Native.VerticalScroll(candidate.Handle, out var scrollBefore);
         Native.GetWindowRect(candidate.Handle, out var consoleBounds);
         var active = Native.GetForegroundWindow(); var focus = Native.ForegroundFocus();
-        var routed = ((WindowsWindowBackend)main.Session.Backend).TestHover(new() { X = consoleBounds.Left + 40, Y = consoleBounds.Top + 50 }, 120);
-        await Task.Delay(100); Native.VerticalScroll(candidate.Handle, out var scrollAfter);
-        Check(routed && scrollAfter.Position < scrollBefore.Position, $"Inactive classic console did not scroll: routed={routed}, before={scrollBefore.Position}, after={scrollAfter.Position}, max={scrollBefore.Maximum}, page={scrollBefore.Page}");
-        Check(Native.GetForegroundWindow() == active && Native.ForegroundFocus() == focus, "Classic console hover changed focus.");
+        var backend = (WindowsWindowBackend)main.Session.Backend;
+        var point = new Native.Point { X = consoleBounds.Left + 40, Y = consoleBounds.Top + 50 };
+        // Isolate the fixture's hit target without activating it on a shared desktop.
+        const uint orderOnly = Native.SWP_NOMOVE | Native.SWP_NOSIZE | Native.SWP_NOACTIVATE;
+        Native.SetWindowPos(candidate.Handle, -1, 0, 0, 0, 0, orderOnly);
+        try
+        {
+            var routed = backend.TestHover(point, 120);
+            await Task.Delay(100);
+            Native.VerticalScroll(candidate.Handle, out var scrollAfter);
+            Check(routed && scrollAfter.Position < scrollBefore.Position, $"Inactive classic console did not scroll: routed={routed}, before={scrollBefore.Position}, after={scrollAfter.Position}, max={scrollBefore.Maximum}, page={scrollBefore.Page}. {backend.DescribeHover(point)}");
+            Check(Native.GetForegroundWindow() == active && Native.ForegroundFocus() == focus, "Classic console hover changed focus.");
+        }
+        finally { Native.SetWindowPos(candidate.Handle, -2, 0, 0, 0, 0, orderOnly); }
+        await TerminalAccess.SaveHistoryAsync(panel);
+        Check(File.ReadAllText(TerminalAccess.HistoryPath(panel.Id)).Contains("Disposable native console line 220", StringComparison.Ordinal),
+            "Classic console history did not preserve existing scrollback.");
         main.Session.ReleasePanels([panel]); await Task.Delay(100);
         Check(Native.IsWindow(candidate.Handle) && !process.HasExited, "Detaching classic console destroyed its session.");
-        Pass("Real classic conhost / cmd window attaches and detaches with its native input root and process intact.");
+        Pass("Classic console reveals above its owner, scrolls without focus, and saves real scrollback before returning to the desktop.");
     }
     [SupportedOSPlatform("windows")]
     private static async Task ProjectAsync(MainWindow main)

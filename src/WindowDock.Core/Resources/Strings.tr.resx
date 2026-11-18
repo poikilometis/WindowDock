@@ -790,8 +790,11 @@
     <value>Bu sekmede boş yer yok</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>Panelleri sırala</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>Pencerelerin yerini değiştir</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>Boş alana taşı</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">
@@ -1063,7 +1066,7 @@
     <comment>Context: SessionDialogs</comment>
   </data>
   <data name="SessionDialogs.FilesChanged" xml:space="preserve">
-    <value>{0}Değiştirilen dosya: {1}{2}{3}</value>
+    <value>{0}Değiştirilen dosya: {1}</value>
     <comment>Context: SessionDialogs</comment>
   </data>
   <data name="SessionDialogs.SelectAnAgent" xml:space="preserve">
@@ -1382,5 +1385,119 @@
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Bağlanmayan komutları yeniden dene</value>
+  </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>Yerleştirmeden bağla</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>Asıl pencereyi aç</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>Özel düzen</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>Boş alanı kaldır</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>Kaydedilen pencere bekleniyor</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>Alanı böl</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>Alta alan ekle</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>Sağa alan ekle</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>Bu sanal masaüstüne bağla</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>Windows seçilen sanal masaüstünü açamadı.</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>Sekme ayrı bir pencerede açılamadı.</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>Sekmeyi ekranda aç</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>Sekmeyi WindowDock'a döndür</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>Bu sekme ayrı bir pencerede açık.</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>Win+Tab ile bu sekmenin sanal masaüstüne geçin.</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>Sekmedeki uygulamaların yanıt vermesini bekleyip yeniden deneyin.</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>Terminal geçmişi kaydedildi.</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>Kapatırken terminal sekmelerini ve bölmelerini kaydet</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>Kaydedilebilecek terminal metni yok.</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>Bu proje komutu için kayıtlı bir görüşme seçin.</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>Bölme numarası (0 yalnızca sekmeyi seçer)</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>Görünür bölmeler yukarıdan aşağıya, sonra soldan sağa numaralanır.</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>Başlangıçta bu projeyi yeniden aç</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>{0} yeniden açılamadı. {1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>Kurtarma için ajan görüşmelerini hatırla</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>Başlangıçta Windows Terminal'i yeniden aç</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>Terminal geçmişini kaydet</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>Terminal geçmişi</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>Terminal çalışma alanını geri yükle</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>Windows Terminal düzenini kaydeder. Çıktıyı WindowDock panelinden ayrıca kaydedin.</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>Windows Terminal ayarları</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>Windows Terminal ayarlarına erişilemiyor.</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>Terminal sekmesini ve bölmesini seç</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>Seçilen terminale veya bölmeye erişilemedi.</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>Bu terminalde benzersiz başlıklı bir sekme seçin.</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>Masaüstü · pencere ekle</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>Yürütülebilir dosya yolu</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>Terminal geçmişini otomatik kaydet</value>
   </data>
 </root>

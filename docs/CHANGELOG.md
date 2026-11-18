@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.1 — Resume your workspace and keep windows in place
+
+- **Pick up after a restart.** Reopen selected projects when WindowDock starts and resume linked Codex, Claude Code, and Gemini CLI conversations by ID. Restore Windows Terminal's saved tab and pane layout and keep optional text snapshots of terminal output.
+- **Jump to the right agent.** Bind a session to a Windows Terminal tab and pane. The bell and `Ctrl+Alt+J` use that binding. Notification switches and setup feedback are now in the integration dialog.
+- **Work across displays.** Open tabs in separate windows on different monitors or bind them to Windows virtual desktops.
+- **Find and add windows from one search.** `Ctrl+Alt+K` searches docked panels and desktop windows. Capture rules can use executable paths and project folders reported by hooks.
+- **Keep your layout in place.** Split and resize individual areas. Moving a window across tabs fills the first empty slot. Dropping one window onto another swaps the two positions.
+- **Keep difficult apps within reach.** Link an app to a panel while it runs in its original window.
+- **Scroll and resize terminals more reliably.** Inactive classic consoles can receive wheel input on hover, including in supported terminal UIs. Restored windows appear without a click, and scrollbars repaint after a resize.
+
 ## 0.2.0 — Agent activity and workspace controls
 
 When several agents are running in separate terminals, you can now see who needs a reply and jump straight to their window. WindowDock also remembers where you were working when you switch tabs, so you can pick up from the same panel.

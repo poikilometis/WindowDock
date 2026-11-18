@@ -20,6 +20,7 @@ internal sealed partial class MainWindow
         {
             displayChangeTimer.Stop();
             ApplyDisplayTopology();
+            Refresh();
         };
         placementTimer.Tick += (_, _) =>
         {

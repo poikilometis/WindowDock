@@ -2,6 +2,36 @@ namespace WindowDock;
 
 internal sealed partial class WorkspaceSession
 {
+    internal IReadOnlyList<WindowCandidate> DesktopWindows(bool cached = false)
+    {
+        var windows = cached ? Backend.Discover() : Backend.Enumerate();
+        if (HookSessions.Count == 0) return windows;
+        var signals = HookSessions.Values.Select(entry => entry.Signal).Where(signal => !string.IsNullOrWhiteSpace(signal.Directory)).ToArray();
+        var byConsole = signals.Where(signal => signal.ConsoleHandle != 0).ToLookup(signal => signal.ConsoleHandle);
+        var reuse = windows.ToLookup(window => (window.ProcessId, window.ProcessStartTicks));
+        var byProcess = signals.SelectMany(signal => (signal.ProcessChain ?? []).Where(process => process.StartTicks != 0)
+            .Select(process => (Process: (process.Id, process.StartTicks), Signal: signal))).ToLookup(entry => entry.Process, entry => entry.Signal);
+        foreach (var window in windows)
+        {
+            var identity = (window.ProcessId, window.ProcessStartTicks);
+            var matches = byConsole[window.Handle.ToInt64()].Concat(reuse[identity].Take(2).Count() == 1 ? byProcess[identity] : []);
+            var directories = matches.Select(signal => signal.Directory).Distinct(StringComparer.OrdinalIgnoreCase).Take(2).ToArray();
+            window.ProjectDirectory = directories.Length == 1 ? directories[0] : null;
+        }
+        return windows;
+    }
+
+    internal static bool MatchesQuery(string text, string query) => query.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries)
+        .All(term => text.Contains(term, StringComparison.CurrentCultureIgnoreCase));
+
+    internal RuntimePanel AttachFromSearch(WindowCandidate window, bool link)
+    {
+        using var update = BeginUpdate();
+        var before = Config.Workspaces.Select(workspace => workspace.Id).ToHashSet();
+        var target = Destination(Current, true)!;
+        try { return Attach(window, target, link: link); }
+        catch { RemoveFailedDestination(target, before); throw; }
+    }
     internal RuntimePanel? ActivePanel(WorkspaceConfig workspace)
     {
         var panels = Panels.Where(panel => panel.WorkspaceId == workspace.Id);
@@ -23,11 +53,11 @@ internal sealed partial class WorkspaceSession
 
     internal void RememberActivation(RuntimePanel panel)
     {
-        if (panel.WorkspaceId != SelectedWorkspace || !Panels.Contains(panel)) return;
-        if (Current.ActivePanelId == panel.Id && panel.ActivatedUtc != 0 &&
+        if (!Panels.Contains(panel) || Config.Workspaces.FirstOrDefault(tab => tab.Id == panel.WorkspaceId) is not { } workspace) return;
+        if (workspace.ActivePanelId == panel.Id && panel.ActivatedUtc != 0 &&
             !Panels.Any(other => other.ActivatedUtc > panel.ActivatedUtc)) return;
 
-        Current.ActivePanelId = panel.Id;
+        workspace.ActivePanelId = panel.Id;
         panel.ActivatedUtc = DateTime.UtcNow.Ticks;
         RequestSave();
     }
@@ -68,6 +98,8 @@ internal sealed partial class WorkspaceSession
         var workspace = Config.Workspaces.FirstOrDefault(workspace => workspace.Id == panel.WorkspaceId);
         var project = Config.Projects.FirstOrDefault(project => project.Id == panel.ProjectId);
         var command = project?.Commands.FirstOrDefault(command => command.Id == panel.CommandId);
-        return string.Join(" ", panel.Caption, panel.Title, panel.Record.ProcessName, workspace?.Name, project?.Name, command?.Directory, panel.StatusText);
+        return string.Join(" ", panel.Caption, panel.Title, panel.Record.ProcessName, panel.Record.ExecutablePath,
+            panel.Record.ProjectDirectory, workspace?.Name, project?.Name, command?.Directory, panel.StatusText,
+            string.Join(" ", panel.AgentSessions.Select(item => item.Directory)));
     }
 }

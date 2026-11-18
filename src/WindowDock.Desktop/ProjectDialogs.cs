@@ -35,8 +35,10 @@ internal sealed class ProjectEditor : EditorWindow
     public ProjectEditor(MainWindow host, ProjectProfile profile) : base(L10n.Get("ProjectDialogs.EditProject"), 760, 580)
     {
         var name = Input(profile.Name);
+        var restore = Check(L10n.Get("Recovery.ProjectAtStartup"), profile.RestoreOnStartup);
         var workspace = Choices(host.Session.Config.Workspaces.Select(w => new Choice<WorkspaceConfig>(w, w.Name)), w => w.Id == profile.WorkspaceId); workspace.SelectedItem ??= workspace.Items.Cast<object>().FirstOrDefault();
         Field(L10n.Get("EditorWindow.Name"), name); Field(L10n.Get("ProjectDialogs.InitialTab"), workspace);
+        Body.Children.Add(restore);
         var list = new ListBox { Height = 245, ItemTemplate = Rows.Template<ProjectCommand>(command => Rows.Line(command.Name, command.Executable + " " + command.Arguments)) };
         void Update() { list.ItemsSource = profile.Commands.ToArray(); list.SelectedItem = profile.Commands.FirstOrDefault(); }
         async Task Edit(bool create)
@@ -44,7 +46,7 @@ internal sealed class ProjectEditor : EditorWindow
             var existing = create ? null : list.SelectedItem as ProjectCommand; if (!create && existing is null) return;
             if (create && profile.Commands.Count >= 64) throw new InvalidOperationException(L10n.Get("ProjectDialogs.AProjectCanContainUpToCommands"));
             var working = existing is null ? ProjectCommand.Create() : GroupPersistence.Clone(existing);
-            if (!await host.ShowEditorAsync(new CommandEditor(working), this)) return;
+            if (!await host.ShowEditorAsync(new CommandEditor(working, host.Session.ProjectSessions(profile, working)), this)) return;
             if (existing is null) profile.Commands.Add(working); else profile.Commands[profile.Commands.IndexOf(existing)] = working; Update(); list.SelectedItem = working;
         }
         var actions = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8 };
@@ -52,13 +54,19 @@ internal sealed class ProjectEditor : EditorWindow
         actions.Children.Add(DockControls.Button(L10n.Get("ProjectDialogs.Edit"), "settings", () => _ = host.UserActionAsync(() => Edit(false))));
         actions.Children.Add(DockControls.Button(L10n.Get("ProjectDialogs.Remove"), "close", () => { if (list.SelectedItem is ProjectCommand command) { profile.Commands.Remove(command); Update(); } }));
         Body.Children.Add(actions); Body.Children.Add(list); Update();
-        Commit = () => { profile.Name = Required(name, L10n.Get("EditorWindow.Name")); profile.WorkspaceId = Value<WorkspaceConfig>(workspace).Id; profile.Validate(); };
+        Commit = () =>
+        {
+            profile.Name = Required(name, L10n.Get("EditorWindow.Name"));
+            profile.WorkspaceId = Value<WorkspaceConfig>(workspace).Id;
+            profile.RestoreOnStartup = restore.IsChecked == true;
+            profile.Validate();
+        };
     }
 }
 
 internal sealed class CommandEditor : EditorWindow
 {
-    public CommandEditor(ProjectCommand command) : base(L10n.Get("ProjectDialogs.ProjectCommand"), 760, 680)
+    public CommandEditor(ProjectCommand command, IReadOnlyList<SavedAgentSession>? sessions = null) : base(L10n.Get("ProjectDialogs.ProjectCommand"), 760, 680)
     {
         var name = Input(command.Name); var executable = Input(command.Executable); var arguments = Input(command.Arguments); var directory = Input(command.Directory); var title = Input(command.TitlePattern);
         var reuseProcess = Input(command.ReuseProcess ?? "");
@@ -73,6 +81,16 @@ internal sealed class CommandEditor : EditorWindow
         Field(L10n.Get("Workflow.ReuseProcess"), reuseProcess);
         Field(L10n.Get("Workflow.ReuseTitle"), reuseTitle);
         Field(L10n.Get("Workflow.ResumeArguments"), resumeArguments);
+        ComboBox? resumeSession = null;
+        if (sessions is { Count: > 0 })
+        {
+            var saved = new[] { new Choice<string>("", L10n.Get("MainWindowCommands.Automatic")) }
+                .Concat(sessions.Select(item => new Choice<string>(item.Key,
+                    (HookProvider.Find(item.Provider)?.Name ?? item.Provider) + " · " + item.Id))).ToArray();
+            resumeSession = Choices(saved, key => key == command.ResumeSessionKey);
+            resumeSession.SelectedItem ??= saved[0];
+            Field(L10n.Get("SessionDialogs.AgentSessions"), resumeSession);
+        }
         Note(L10n.Get("Workflow.ReuseHelp"));
         Note(L10n.Get("ProjectDialogs.OneKEYValueVariablePerLineAgentId"));
         Note(L10n.Get("ProjectDialogs.HooksAreConfiguredBeforeLaunchExistingHooks"));
@@ -83,6 +101,7 @@ internal sealed class CommandEditor : EditorWindow
             command.ReuseProcess = reuseProcess.Text?.Trim() ?? "";
             command.ReuseTitle = reuseTitle.Text?.Trim() ?? "";
             command.ResumeArguments = resumeArguments.Text ?? "";
+            if (resumeSession is not null) command.ResumeSessionKey = Value<string>(resumeSession);
             List<EnvironmentEntry> parsed = []; HashSet<string> keys = new(OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal);
             foreach (var line in (environment.Text ?? "").Split('\n').Select(s => s.TrimEnd('\r')).Where(s => !string.IsNullOrWhiteSpace(s)))
             {

@@ -1,4 +1,7 @@
+using Avalonia;
+using Avalonia.Automation;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.VisualTree;
 
 namespace WindowDock;
@@ -49,12 +52,69 @@ internal static class DesktopDialogTests
                 editor.Close(false); await task;
             }
             await NestedEditorsAsync(main, profile);
+            if (OperatingSystem.IsWindows()) await IntegrationSetupAsync(main);
             DesktopSelfTest.Pass("Populated window picker filters repeatedly; search, rules, projects, commands, panels, saved roles and hook-session lists recycle safely.");
         }
         finally
         {
             session.Config.Rules = rules; session.Config.Projects = projects;
             session.Pending.Clear(); session.Pending.AddRange(pending);
+        }
+    }
+    private static async Task IntegrationSetupAsync(MainWindow main)
+    {
+        var config = main.Session.Config;
+        var (project, notifications, completion) = (config.LastHookProject, config.AgentNotifications, config.NotifyOnCompletion);
+        var folder = Path.Combine(Store.DirectoryPath, "integration-dialog-test");
+        Directory.CreateDirectory(folder);
+        var editor = new IntegrationWindow(main);
+        var dialog = main.ShowEditorAsync(editor);
+        try
+        {
+            await Task.Delay(60);
+            var inputs = editor.GetVisualDescendants().OfType<TextBox>().ToArray();
+            var preview = inputs.Single(input => input.IsReadOnly);
+            inputs.Single(input => !input.IsReadOnly).Text = folder;
+            var checks = editor.GetVisualDescendants().OfType<CheckBox>().ToArray();
+            var agentNotifications = checks.Single(check => AutomationProperties.GetName(check) == L10n.Get("Workflow.AgentNotifications"));
+            var completionNotifications = checks.Single(check => AutomationProperties.GetName(check) == L10n.Get("Workflow.NotifyOnCompletion"));
+            agentNotifications.IsChecked = true;
+            completionNotifications.IsChecked = true;
+            DesktopSelfTest.Check(config.AgentNotifications && config.NotifyOnCompletion,
+                "Notification settings in the integration dialog did not update the shared preferences.");
+            foreach (var check in checks.Except([agentNotifications, completionNotifications]))
+                check.IsChecked = AutomationProperties.GetName(check)?.StartsWith("Codex", StringComparison.Ordinal) == true;
+            await Task.Delay(50);
+
+            var buttons = editor.GetVisualDescendants().OfType<Button>().ToArray();
+            var setup = buttons.Single(button => AutomationProperties.GetName(button) == L10n.Get("SessionDialogs.SetUp"));
+            void Click(string key) => buttons.Single(button => AutomationProperties.GetName(button) == L10n.Get(key))
+                .RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            Click("SessionDialogs.Preview");
+            var previewText = preview.Text;
+            DesktopSelfTest.Check(!string.IsNullOrWhiteSpace(previewText) && previewText.Contains("Codex", StringComparison.Ordinal),
+                "The integration preview did not show the selected agent.");
+            setup.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            await Task.Delay(70);
+            var status = editor.GetVisualDescendants().OfType<TextBlock>().Single(text => text.IsVisible &&
+                text.Text?.StartsWith(L10n.Get("SessionDialogs.SetupComplete").TrimEnd(), StringComparison.Ordinal) == true);
+            DesktopSelfTest.Check(status.PointToScreen(default).Y >= setup.PointToScreen(new(0, setup.Bounds.Height)).Y,
+                "The hook result was not placed below the setup button.");
+            preview.SelectAll();
+            DesktopSelfTest.Check(preview.Text == previewText && preview.SelectedText == previewText,
+                "Installing hooks changed the copyable preview.");
+            Click("SessionDialogs.RemoveSetup");
+            DesktopSelfTest.Check(status.Text?.StartsWith(L10n.Get("SessionDialogs.WindowDockHooksRemoved").TrimEnd(), StringComparison.Ordinal) == true &&
+                preview.Text == previewText, "Removing hooks did not update the inline result independently of the preview.");
+            DesktopSelfTest.Snapshot(editor, "avalonia-agent-integration-status.png");
+            DesktopSelfTest.Pass("The integration dialog controls Windows agent notifications and reports hook setup below the action buttons while retaining the copyable preview.");
+        }
+        finally
+        {
+            editor.Close(false);
+            await dialog;
+            config.LastHookProject = project;
+            main.SetAgentNotifications(notifications, completion);
         }
     }
     private static async Task NestedEditorsAsync(MainWindow main, ProjectProfile profile)

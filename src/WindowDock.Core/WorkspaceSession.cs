@@ -67,7 +67,7 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
         }
     }
     public WorkspaceConfig Current => Config.Workspaces.First(w => w.Id == SelectedWorkspace);
-    public IEnumerable<RuntimePanel> CurrentPanels => Panels.Where(p => p.WorkspaceId == SelectedWorkspace);
+    public IEnumerable<RuntimePanel> CurrentPanels => PanelsIn(Current);
     public string? FocusedPanel { get => focusedPanel; set { if (Set(ref focusedPanel, value)) InvalidateLayout(false); } }
     public string Status { get => status; set => Set(ref status, value); }
     public bool CanUndo => undo.Count > 0;
@@ -92,17 +92,7 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
     }
     private SessionSnapshotWriter.Snapshot CaptureSnapshot()
     {
-        var reserved = Pending.GroupBy(panel => panel.WorkspaceId)
-            .ToDictionary(group => group.Key, group => group.Select(panel => panel.Order).ToHashSet());
-        var order = new Dictionary<string,int>(); var saved = new List<SavedPanel>(Panels.Count + Pending.Count);
-        foreach (var panel in Panels)
-        {
-            var index = order.GetValueOrDefault(panel.WorkspaceId);
-            if (reserved.TryGetValue(panel.WorkspaceId, out var gaps))
-                while (gaps.Contains(index)) index++;
-            saved.Add(panel.Capture(index));
-            order[panel.WorkspaceId] = index + 1;
-        }
+        var saved = Panels.Select(panel => panel.Capture()).ToList();
         var ids = saved.Select(panel => panel.Id).ToHashSet(); var workspaces = Config.Workspaces.Select(w => w.Id).ToHashSet();
         saved.AddRange(Pending.Where(panel => !ids.Contains(panel.Id) && workspaces.Contains(panel.WorkspaceId)));
         return snapshotWriter.Capture(Config, new() { Panels = saved, Suppressed = suppressed.TakeLast(1000).ToList() });
@@ -113,45 +103,39 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
         try { snapshotWriter.Enqueue(CaptureSnapshot()); }
         catch (Exception exception) { Status = L10n.Format("WorkspaceSession.SettingsWereNotSaved", exception.Message); Store.Log(exception.ToString()); }
     }
-    private int CurrentOrder(RuntimePanel panel) => Panels.Where(p => p.WorkspaceId == panel.WorkspaceId).ToList().IndexOf(panel);
     private void Checkpoint(string name)
     {
         if (replaying) return;
         undo.Add(new(name, GroupPersistence.Clone(Config.Workspaces), SelectedWorkspace,
-            Panels.Select(p => new PanelHistory(p.Capture(CurrentOrder(p)), p.Record, p.AgentStatus, p.AgentMessage, p.Attention)).ToList(), GroupPersistence.Clone(Pending)));
+            Panels.Select(p => new PanelHistory(p.Capture(), p.Record, p.AgentStatus, p.AgentMessage, p.Attention)).ToList(), GroupPersistence.Clone(Pending)));
         if (undo.Count > 20) undo.RemoveAt(0);
         Notify(nameof(CanUndo)); Notify(nameof(UndoName));
     }
-    public RuntimePanel Attach(WindowCandidate candidate, WorkspaceConfig? workspace = null, SavedPanel? saved = null, bool checkpoint = true)
+    public RuntimePanel Attach(WindowCandidate candidate, WorkspaceConfig? workspace = null, SavedPanel? saved = null,
+        bool checkpoint = true, SplitArea? area = null, bool link = false)
     {
         workspace ??= Current;
         if (Panels.Any(p => p.Record.Handle == candidate.Handle)) throw new InvalidOperationException(L10n.Get("WorkspaceSession.ThisWindowIsAlreadyDocked"));
         if (Panels.Count(p => p.WorkspaceId == workspace.Id) >= workspace.Capacity) throw new InvalidOperationException(L10n.Get("WorkspaceSession.ThisTabHasNoFreeSlots"));
+        var slot = ChooseLayoutSlot(workspace, saved);
         if (checkpoint) Checkpoint(L10n.Get("WorkspaceSession.AddWindow"));
-        var record = Backend.Attach(candidate, workspace.Id);
+        var record = link || saved?.Linked == true ? Backend.Link(candidate, workspace.Id) : Backend.Attach(candidate, workspace.Id);
         var panel = new RuntimePanel(record, saved?.Id);
         if (saved is not null) { panel.Restore(saved); Pending.RemoveAll(p => p.Id == saved.Id); }
-        if (saved is null)
-            Panels.Add(panel);
-        else
-        {
-            var siblings = Panels.Where(p => p.WorkspaceId == workspace.Id).ToArray();
-            var index = RestoreIndex(saved, workspace, siblings.Length);
-            Panels.Insert(index < siblings.Length ? Panels.IndexOf(siblings[index]) : Panels.Count, panel);
-        }
+        AssignLayoutSlot(panel, workspace, slot);
+        Panels.Add(panel);
+        if (area is { IsLeaf: true, PanelId: null } && workspace.CustomLayout?.Leaves().Contains(area) == true)
+            area.PanelId = panel.Id;
         suppressed.Remove(WindowMatching.Identity(candidate));
         ApplyEarlySignals(panel); RaiseStructureChanged(); RequestSave(); return panel;
     }
-    private int RestoreIndex(SavedPanel saved, WorkspaceConfig workspace, int panelCount) =>
-        Math.Clamp(saved.Order - Pending.Count(role => role.Id != saved.Id &&
-            role.WorkspaceId == workspace.Id && role.Order < saved.Order), 0, panelCount);
     public WorkspaceConfig NewWorkspace(string name, WorkspaceConfig? inherit = null, bool checkpoint = true)
     {
         if (checkpoint) Checkpoint(L10n.Get("WorkspaceSession.NewTab"));
         var workspace = WorkspaceConfig.Create(name);
         if (inherit is not null)
         {
-            workspace.Capacity = inherit.Capacity; workspace.Columns = inherit.Columns; workspace.Layout = inherit.Layout;
+            workspace.Capacity = inherit.Capacity; workspace.Columns = inherit.Columns; workspace.Layout = inherit.Layout == "custom" ? "grid" : inherit.Layout;
             workspace.MasterRatio = inherit.MasterRatio; workspace.PrimaryRatio = inherit.PrimaryRatio; workspace.DualRatio = inherit.DualRatio;
             workspace.ColumnWeights = [..inherit.ColumnWeights]; workspace.RowWeights = [..inherit.RowWeights];
             workspace.BackgroundMode = inherit.BackgroundMode; workspace.BackgroundColor = inherit.BackgroundColor; workspace.BackgroundPath = inherit.BackgroundPath;
@@ -191,18 +175,29 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
     public IReadOnlyList<RuntimePanel> ActionPanels(RuntimePanel? panel = null)
     {
         if (panel is not null && !panel.Selected) return [panel];
-        var selected = Panels.Where(p => p.Selected).ToArray();
+        var selected = Config.Workspaces.SelectMany(PanelsIn).Where(panel => panel.Selected).ToArray();
         return selected.Length > 0 ? selected : panel is not null ? [panel] : [];
     }
     public void SelectAll(bool selected) { foreach (var panel in CurrentPanels) panel.Selected = selected; SelectionChanged?.Invoke(); }
     public bool Move(IReadOnlyList<RuntimePanel> panels, WorkspaceConfig target, bool checkpoint = true)
     {
         using var update = BeginUpdate();
-        var incoming = panels.Where(p => p.WorkspaceId != target.Id).ToList();
-        if (incoming.Count == 0) return false;
-        if (Panels.Count(p => p.WorkspaceId == target.Id) + incoming.Count > target.Capacity) { Status = L10n.Get("WorkspaceSession.TheSelectedTabDoesNotHaveEnough"); return false; }
+        var incoming = panels.Where(panel => panel.WorkspaceId != target.Id && Panels.Contains(panel)).Distinct().ToArray();
+        if (incoming.Length == 0 || !Config.Workspaces.Contains(target)) return false;
+        if (Panels.Count(p => p.WorkspaceId == target.Id) + incoming.Length > target.Capacity) { Status = L10n.Get("WorkspaceSession.TheSelectedTabDoesNotHaveEnough"); return false; }
+        var slots = FreeLayoutSlots(target).Take(incoming.Length).ToArray();
+        if (slots.Length != incoming.Length) return false;
         if (checkpoint) Checkpoint(L10n.Get("WorkspaceSession.MoveWindows"));
-        foreach (var panel in incoming) { Backend.Reassign(panel.Record, target.Id); panel.WorkspaceId = target.Id; }
+        var origins = incoming.Select(panel => panel.WorkspaceId).Distinct().ToArray();
+        for (var index = 0; index < incoming.Length; index++)
+        {
+            var panel = incoming[index];
+            Backend.Reassign(panel.Record, target.Id);
+            panel.WorkspaceId = target.Id;
+            AssignLayoutSlot(panel, target, slots[index]);
+        }
+        foreach (var origin in origins) ClearLayoutIfEmpty(origin);
+        if (target.Layout == "custom") PrepareCustomLayout(target);
         SelectedWorkspace = target.Id; focusedPanel = null; RaiseStructureChanged(); RequestSave(); return true;
     }
     public bool MoveToNew(IReadOnlyList<RuntimePanel> panels, string name)
@@ -219,10 +214,18 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
         if (previous.Contains(workspace.Id) || Panels.Any(p => p.WorkspaceId == workspace.Id) || Pending.Any(p => p.WorkspaceId == workspace.Id)) return;
         Config.Workspaces.Remove(workspace); RaiseStructureChanged();
     }
-    public void ReorderPanel(RuntimePanel panel, RuntimePanel target)
+    internal void SwapPanels(RuntimePanel panel, RuntimePanel target)
     {
-        if (panel == target || panel.WorkspaceId != target.WorkspaceId) return;
-        Checkpoint(L10n.Get("WorkspaceSession.PanelOrder")); var destination = Panels.IndexOf(target); Panels.Move(Panels.IndexOf(panel), destination);
+        if (panel == target || panel.WorkspaceId != target.WorkspaceId || !Panels.Contains(panel) || !Panels.Contains(target)) return;
+        Checkpoint(L10n.Get("WorkspaceSession.PanelOrder"));
+        if (Config.Workspaces.FirstOrDefault(workspace => workspace.Id == panel.WorkspaceId) is { Layout: "custom" } custom)
+        {
+            var slots = PrepareCustomLayout(custom).Leaves().ToArray();
+            var first = slots.Single(area => area.PanelId == panel.Id);
+            var second = slots.Single(area => area.PanelId == target.Id);
+            (first.PanelId, second.PanelId) = (second.PanelId, first.PanelId);
+        }
+        else (panel.LayoutSlot, target.LayoutSlot) = (target.LayoutSlot, panel.LayoutSlot);
         RaiseStructureChanged(); RequestSave();
     }
     public void ReorderWorkspace(WorkspaceConfig workspace, WorkspaceConfig target)
@@ -234,10 +237,18 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
     public void BeginLayoutChange() => Checkpoint(L10n.Get("WorkspaceSession.LayoutProportions"));
     public void LayoutChanged(bool save = true) { InvalidateLayout(save); if (save) RequestSave(); }
     public void RenamePanel(RuntimePanel panel, string name) { Checkpoint(L10n.Get("WorkspaceSession.PanelName")); panel.Alias = name.Trim(); RequestSave(); }
+    internal void KeepOriginalWindow(RuntimePanel panel)
+    {
+        if (!Panels.Contains(panel)) return;
+        if (!Backend.KeepExternal(panel.Record)) throw new InvalidOperationException(L10n.Get("WindowsWindowBackend.CouldNotReturnTheWindowToThe"));
+        RaiseStructureChanged();
+        RequestSave();
+    }
     public void ReleasePanels(IEnumerable<RuntimePanel> source, bool checkpoint = true)
     {
         using var update = BeginUpdate();
         var release = source.ToList(); if (release.Count == 0) return;
+        var workspaces = release.Select(panel => panel.WorkspaceId).Distinct().ToArray();
         if (checkpoint) Checkpoint(L10n.Get("WorkspaceSession.UndockWindows"));
         foreach (var panel in release)
         {
@@ -245,6 +256,7 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
             suppressed.Add(WindowMatching.Identity(panel.Record)); Panels.Remove(panel);
             if (FocusedPanel == panel.Id) FocusedPanel = null;
         }
+        foreach (var workspace in workspaces) ClearLayoutIfEmpty(workspace);
         RaiseStructureChanged(); RequestSave();
     }
     private WorkspaceConfig? Destination(WorkspaceConfig? preferred, bool overflow)
@@ -268,13 +280,13 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
         var changed = false;
         foreach (var panel in Panels.ToArray())
         {
-            if (!Backend.IsAlive(panel.Record)) { Pending.Add(panel.Capture(Panels.IndexOf(panel))); Panels.Remove(panel); changed = true; continue; }
+            if (!Backend.IsAlive(panel.Record)) { Pending.Add(panel.Capture()); Panels.Remove(panel); changed = true; continue; }
             panel.Title = Backend.Title(panel.Record);
         }
         var needsCatalog = (Config.RestoreGroups || forceRestore) && Pending.Count > 0 || launches.Count > 0 ||
             Config.AutomaticRules && Config.Rules.Any(rule => rule.Enabled && !rule.Exclude);
         if (!Backend.Available || !needsCatalog) { if (changed) { RaiseStructureChanged(); RequestSave(); } return; }
-        var candidates = Backend.Discover();
+        var candidates = DesktopWindows(cached: true);
         DiscoverLaunches(candidates);
         if (Config.RestoreGroups || forceRestore)
         {
@@ -308,23 +320,31 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
     public bool BindPending(SavedPanel saved, RuntimePanel panel)
     {
         using var update = BeginUpdate();
-        if (!Pending.Contains(saved) || Config.Workspaces.FirstOrDefault(w => w.Id == saved.WorkspaceId) is not { } target) return false;
+        if (!Panels.Contains(panel) || !Pending.Contains(saved) || Config.Workspaces.FirstOrDefault(w => w.Id == saved.WorkspaceId) is not { } target) return false;
         if (panel.WorkspaceId != target.Id && Panels.Count(p => p.WorkspaceId == target.Id) >= target.Capacity) { Status = L10n.Get("WorkspaceSession.TheSavedPanelSTabIsFull"); return false; }
+        var slot = ChooseLayoutSlot(target, saved, panel);
+        var origin = panel.WorkspaceId;
         Checkpoint(L10n.Get("WorkspaceSession.LinkSavedPanel")); var oldId = panel.Id;
         Backend.Reassign(panel.Record, target.Id); panel.WorkspaceId = target.Id; panel.AssignRoleId(saved.Id);
+        AssignLayoutSlot(panel, target, slot);
         if (!string.IsNullOrWhiteSpace(saved.Alias)) panel.Alias = saved.Alias;
         if (string.IsNullOrEmpty(panel.AgentId)) panel.AgentId = saved.AgentId ?? "";
         if (string.IsNullOrEmpty(panel.ProjectId)) { panel.ProjectId = saved.ProjectId ?? ""; panel.CommandId = saved.CommandId ?? ""; }
         panel.HookSessions = panel.HookSessions.Concat(saved.HookSessions ?? []).Distinct().ToList();
+        if (Config.RememberAgentSessions)
+            panel.AgentSessions = panel.AgentSessions.Concat(saved.AgentSessions ?? []).DistinctBy(item => item.Key).Take(25).ToList();
+        panel.TerminalTargets = panel.TerminalTargets.Concat(saved.TerminalTargets ?? []).Where(item => item is not null && item.Valid)
+            .DistinctBy(item => item.Key).Take(25).ToList();
+        panel.KeepTerminalHistory |= saved.KeepTerminalHistory;
         foreach (var (key, entry) in HookSessions.ToArray()) if (entry.PanelId == oldId) HookSessions[key] = entry with { PanelId = panel.Id };
-        Panels.Remove(panel); var siblings = Panels.Where(p => p.WorkspaceId == target.Id).ToList();
-        var index = RestoreIndex(saved, target, siblings.Count);
-        Panels.Insert(index < siblings.Count ? Panels.IndexOf(siblings[index]) : siblings.Count > 0 ? Panels.IndexOf(siblings[^1]) + 1 : Panels.Count, panel);
-        Pending.Remove(saved); SelectedWorkspace = target.Id; focusedPanel = null; RaiseStructureChanged(); RequestSave(); return true;
+        Pending.Remove(saved);
+        if (origin != target.Id) ClearLayoutIfEmpty(origin);
+        SelectedWorkspace = target.Id; focusedPanel = null; RaiseStructureChanged(); RequestSave(); return true;
     }
     public void Undo()
     {
         if (undo.Count == 0) return;
+        using var update = BeginUpdate();
         var frame = undo[^1]; undo.RemoveAt(undo.Count - 1); replaying = true;
         try
         {
@@ -340,23 +360,50 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
                 {
                     if (!Backend.IsAlive(old.Record)) continue;
                     var candidate = Candidate(old.Record);
-                    panel = new RuntimePanel(Backend.Attach(candidate, old.Saved.WorkspaceId), old.Saved.Id);
+                    var record = old.Saved.Linked ? Backend.Link(candidate, old.Saved.WorkspaceId) : Backend.Attach(candidate, old.Saved.WorkspaceId);
+                    panel = new RuntimePanel(record, old.Saved.Id);
                     suppressed.Remove(WindowMatching.Identity(candidate));
                 }
                 Backend.Reassign(panel.Record, old.Saved.WorkspaceId); panel.WorkspaceId = old.Saved.WorkspaceId; panel.Restore(old.Saved);
+                panel.LayoutSlot = old.Saved.Order;
                 panel.AgentStatus = old.Status; panel.AgentMessage = old.Message; panel.Attention = old.Attention; restored.Add(panel);
             }
             // Keep windows whose detach failed visible in a surviving workspace.
             restored.AddRange(Panels.Where(p => !desired.Contains(p.Id)));
-            Panels.Clear(); foreach (var panel in restored) { if (!Config.Workspaces.Any(w => w.Id == panel.WorkspaceId)) Backend.Reassign(panel.Record, Config.Workspaces[0].Id); Panels.Add(panel); }
             Pending.Clear(); Pending.AddRange(frame.Pending);
+            Panels.Clear();
+            foreach (var panel in restored)
+            {
+                var workspace = Config.Workspaces.FirstOrDefault(tab => tab.Id == panel.WorkspaceId);
+                if (workspace is null)
+                {
+                    workspace = Config.Workspaces.FirstOrDefault(tab => FreeLayoutSlots(tab).Any()) ??
+                        NewWorkspace(NextWorkspaceName(), Config.Workspaces[0], checkpoint: false);
+                    Backend.Reassign(panel.Record, workspace.Id);
+                    panel.WorkspaceId = workspace.Id;
+                }
+                var openSlots = FreeLayoutSlots(workspace).ToArray();
+                if (openSlots.Length == 0)
+                {
+                    workspace = NewWorkspace(NextWorkspaceName(), workspace, checkpoint: false);
+                    Backend.Reassign(panel.Record, workspace.Id);
+                    panel.WorkspaceId = workspace.Id;
+                    openSlots = [0];
+                }
+                AssignLayoutSlot(panel, workspace, openSlots.Contains(panel.LayoutSlot) ? panel.LayoutSlot : openSlots[0]);
+                Panels.Add(panel);
+            }
             selectedWorkspace = Config.SelectedWorkspace = Config.Workspaces.Any(w => w.Id == frame.Selected) ? frame.Selected : Config.Workspaces[0].Id;
             focusedPanel = null; Status = L10n.Format("WorkspaceSession.Undone", frame.Name); RaiseStructureChanged(); RequestSave();
         }
         finally { replaying = false; Notify(nameof(CanUndo)); Notify(nameof(UndoName)); }
     }
     public static WindowCandidate Candidate(WindowRecord record) => new()
-    { Handle = record.Hwnd, ProcessId = record.ProcessId, ProcessStartTicks = record.ProcessStartTicks, Title = record.Title, ClassName = record.ClassName, ProcessName = record.ProcessName };
+    {
+        Handle = record.Hwnd, ProcessId = record.ProcessId, ProcessStartTicks = record.ProcessStartTicks, Title = record.Title,
+        ClassName = record.ClassName, ProcessName = record.ProcessName, ExecutablePath = record.ExecutablePath,
+        ProjectDirectory = record.ProjectDirectory
+    };
     public void Dispose()
     {
         if (disposed) return; disposed = true;

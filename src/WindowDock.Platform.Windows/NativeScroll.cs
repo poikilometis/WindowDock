@@ -2,6 +2,18 @@ using System.Runtime.InteropServices;
 namespace WindowDock;
 internal static partial class Native
 {
+    internal const uint VerticalWheel = 0x020A;
+    internal const uint HorizontalWheel = 0x020E;
+    internal const string ConsoleWindowClass = "ConsoleWindowClass";
+    internal const string TerminalWindowClass = "CASCADIA_HOSTING_WINDOW_CLASS";
+
+    internal static bool PostWheel(nint window, uint message, Point point, int delta, int modifiers = 0)
+    {
+        int wheel = ((delta & 0xFFFF) << 16) | (modifiers & 0xFFFF);
+        int coordinates = ((point.Y & 0xFFFF) << 16) | (point.X & 0xFFFF);
+        return PostMessage(window, message, wheel, coordinates);
+    }
+
     [StructLayout(LayoutKind.Sequential)] internal struct ScrollInformation
     {
         public uint Size, Mask;

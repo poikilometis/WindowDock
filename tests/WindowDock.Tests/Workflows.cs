@@ -7,6 +7,8 @@ internal static partial class Program
 {
     private static void Workflows()
     {
+        StablePanelSlots();
+        SavedWorkspaceFeatures();
         var backend = new FakeBackend();
         using var session = Session(backend, 2);
         var original = session.Current;

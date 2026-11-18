@@ -28,7 +28,8 @@
   <Style Selector="ListBox"><Setter Property="Background" Value="Transparent" /></Style>
   <Style Selector="ListBoxItem"><Setter Property="MinHeight" Value="30" /><Setter Property="Padding" Value="8,5" /></Style>
   <Style Selector="MenuItem"><Setter Property="MinHeight" Value="28" /></Style>
-  <Style Selector="ScrollBar"><Setter Property="MinWidth" Value="5" /><Setter Property="Width" Value="5" /></Style>
+  <Style Selector="ScrollBar[Orientation=Vertical]"><Setter Property="MinWidth" Value="5" /><Setter Property="Width" Value="5" /></Style>
+  <Style Selector="ScrollBar[Orientation=Horizontal]"><Setter Property="MinHeight" Value="5" /><Setter Property="Height" Value="5" /></Style>
   <Style Selector="Border.tile"><Setter Property="Background" Value="{DynamicResource DockSurface}" /><Setter Property="BorderBrush" Value="{DynamicResource DockBorder}" /><Setter Property="BorderThickness" Value="1" /><Setter Property="CornerRadius" Value="8" /></Style>
   <Style Selector="Border.tile.selected"><Setter Property="BorderBrush" Value="{DynamicResource DockAccent}" /></Style>
   <Style Selector="RadioButton.appearance">

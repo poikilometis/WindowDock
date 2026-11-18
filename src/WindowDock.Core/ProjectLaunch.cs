@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 
 namespace WindowDock;
 
@@ -48,6 +49,10 @@ internal sealed partial class WorkspaceSession
                 var process = command.ReuseProcess.EndsWith(".exe", StringComparison.OrdinalIgnoreCase) ? command.ReuseProcess[..^4] : command.ReuseProcess;
                 matches = available.Where(candidate =>
                     Wildcard.Matches(process, candidate.ProcessName) && Wildcard.Matches(command.ReuseTitle, candidate.Title)).ToArray();
+                var matchingFolder = matches.Where(candidate => AgentResume.SameDirectory(candidate.ProjectDirectory, command.Directory)).ToArray();
+                if (matchingFolder.Length > 0) matches = matchingFolder;
+                else matches = matches.Where(candidate => string.IsNullOrWhiteSpace(candidate.ProjectDirectory) ||
+                    string.IsNullOrWhiteSpace(command.Directory)).ToArray();
             }
 
             if (matches.Length == 0 &&
@@ -82,17 +87,18 @@ internal sealed partial class WorkspaceSession
             : role).ToArray();
     }
 
-    internal IReadOnlyList<ProjectRole> OpenProject(ProjectProfile profile, bool startMissing, bool useResumeArguments, bool retryUnmatched = false)
+    internal IReadOnlyList<ProjectRole> OpenProject(ProjectProfile profile, bool startMissing, bool useResumeArguments,
+        bool retryUnmatched = false, bool selectWorkspace = true)
     {
         using var update = BeginUpdate();
         var preferred = Config.Workspaces.FirstOrDefault(workspace => workspace.Id == profile.WorkspaceId) ?? Current;
-        var candidates = Backend.Enumerate();
+        var candidates = DesktopWindows();
         var previous = candidates.Select(candidate => candidate.Handle.ToInt64()).ToHashSet();
         var plan = ProjectPlan(profile, candidates);
         List<ProjectRole> result = [];
         if (plan.Any(role => role.State == ProjectRoleState.Connect))
             Checkpoint(L10n.Format("Workflow.OpenProject", profile.Name));
-        SelectedWorkspace = preferred.Id;
+        if (selectWorkspace) SelectedWorkspace = preferred.Id;
 
         foreach (var role in plan)
         {
@@ -123,7 +129,7 @@ internal sealed partial class WorkspaceSession
                 }
                 else if (startMissing && (role.State == ProjectRoleState.Missing || retryUnmatched && role.CanRetry))
                 {
-                    LaunchCommand(profile, role.Command, preferred, previous, role.Saved?.Id, useResumeArguments);
+                    LaunchCommand(profile, role.Command, preferred, previous, role.Saved, useResumeArguments);
                     result.Add(role with { State = ProjectRoleState.Starting });
                 }
                 else
@@ -160,7 +166,7 @@ internal sealed partial class WorkspaceSession
     }
 
     private void LaunchCommand(ProjectProfile profile, ProjectCommand command, WorkspaceConfig workspace,
-        HashSet<long> previous, string? savedId, bool useResumeArguments)
+        HashSet<long> previous, SavedPanel? saved, bool useResumeArguments)
     {
         command.Validate();
         var directory = Environment.ExpandEnvironmentVariables(command.Directory);
@@ -177,19 +183,36 @@ internal sealed partial class WorkspaceSession
         }
 
         var token = Guid.NewGuid().ToString("N");
-        var arguments = useResumeArguments && !string.IsNullOrWhiteSpace(command.ResumeArguments) ? command.ResumeArguments : command.Arguments;
-        var start = new ProcessStartInfo(Environment.ExpandEnvironmentVariables(command.Executable), arguments.Replace("{agentId}", token))
+        var arguments = AgentResume.Arguments(command, saved, useResumeArguments);
+        var executable = Environment.ExpandEnvironmentVariables(command.Executable);
+        var start = new ProcessStartInfo(executable, arguments.Replace("{agentId}", token))
         {
             UseShellExecute = false,
             WorkingDirectory = string.IsNullOrWhiteSpace(directory) ? Environment.CurrentDirectory : directory
         };
+        var generatedResume = string.IsNullOrWhiteSpace(command.ResumeArguments) &&
+            string.IsNullOrWhiteSpace(command.Arguments) && !string.IsNullOrWhiteSpace(arguments);
+        if (OperatingSystem.IsWindows() && generatedResume && HookProvider.Find(AgentResume.ProviderFor(command)) is { } direct)
+        {
+            var path = Path.IsPathFullyQualified(executable) ? executable : direct.FindCommand();
+            if (Path.GetExtension(path)?.ToLowerInvariant() is ".cmd" or ".bat" or ".ps1")
+            {
+                // Run provider shims with separated arguments. Keep explicit launcher templates as configured.
+                const string script = "$arguments = @(ConvertFrom-Json -InputObject $env:WINDOWDOCK_RESUME_ARGS); & $env:WINDOWDOCK_RESUME_PROGRAM @arguments";
+                var shell = Path.Combine(Environment.SystemDirectory, "WindowsPowerShell", "v1.0", "powershell.exe");
+                start.FileName = shell;
+                start.Arguments = "-NoLogo -NoProfile -NoExit -EncodedCommand " + Convert.ToBase64String(Encoding.Unicode.GetBytes(script));
+                start.Environment["WINDOWDOCK_RESUME_PROGRAM"] = path;
+                start.Environment["WINDOWDOCK_RESUME_ARGS"] = System.Text.Json.JsonSerializer.Serialize(arguments.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+            }
+        }
         foreach (var variable in command.Environment) start.Environment[variable.Key] = variable.Value ?? "";
         start.Environment["WINDOWDOCK_AGENT_ID"] = token;
         start.Environment["WINDOWDOCK_EXE"] = RuntimePaths.Executable;
         start.Environment["WINDOWDOCK_STATUS_SCRIPT"] = Path.Combine(AppContext.BaseDirectory, "agent-status.ps1");
         using var process = Process.Start(start) ?? throw new InvalidOperationException(L10n.Format("WorkspaceSession.CouldNotStart", command.Name));
         launches.Add(new(token, profile.Id, command.Id, workspace.Id, command.Name, command.TitlePattern.Replace("{agentId}", token),
-            process.Id, WindowMatching.StartTicks(process.Id), previous, DateTime.UtcNow.AddSeconds(60), savedId));
+            process.Id, WindowMatching.StartTicks(process.Id), previous, DateTime.UtcNow.AddSeconds(60), saved?.Id));
         unresolvedLaunches.Remove((profile.Id, command.Id));
     }
 

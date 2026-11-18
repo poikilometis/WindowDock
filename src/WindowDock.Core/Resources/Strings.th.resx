@@ -790,8 +790,11 @@
     <value>แท็บนี้ไม่มีที่ว่าง</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
-  <data name="PanelDragPreview.ReorderPanels" xml:space="preserve">
-    <value>จัดลำดับแผงใหม่</value>
+  <data name="PanelDragPreview.SwapPanels" xml:space="preserve">
+    <value>สลับตำแหน่งหน้าต่าง</value>
+  </data>
+  <data name="PanelDragPreview.MoveToFreeSlot" xml:space="preserve">
+    <value>ย้ายไปยังช่องว่าง</value>
     <comment>Context: PanelDragPreview</comment>
   </data>
   <data name="PanelDragPreview.DropOntoAPanelOrTab" xml:space="preserve">
@@ -1063,7 +1066,7 @@
     <comment>Context: SessionDialogs</comment>
   </data>
   <data name="SessionDialogs.FilesChanged" xml:space="preserve">
-    <value>{0}ไฟล์ที่เปลี่ยน: {1}{2}{3}</value>
+    <value>{0}ไฟล์ที่เปลี่ยน: {1}</value>
     <comment>Context: SessionDialogs</comment>
   </data>
   <data name="SessionDialogs.SelectAnAgent" xml:space="preserve">
@@ -1382,5 +1385,119 @@
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>ลองเริ่มคำสั่งที่ยังไม่เชื่อมอีกครั้ง</value>
+  </data>
+  <data name="Compatibility.LinkWindow" xml:space="preserve">
+    <value>เชื่อมโยงโดยไม่ฝัง</value>
+  </data>
+  <data name="Compatibility.OpenLinked" xml:space="preserve">
+    <value>เปิดหน้าต่างเดิม</value>
+  </data>
+  <data name="CustomLayout.Custom" xml:space="preserve">
+    <value>เค้าโครงกำหนดเอง</value>
+  </data>
+  <data name="CustomLayout.RemoveArea" xml:space="preserve">
+    <value>ลบพื้นที่ว่าง</value>
+  </data>
+  <data name="CustomLayout.SavedWindow" xml:space="preserve">
+    <value>กำลังรอหน้าต่างที่บันทึกไว้</value>
+  </data>
+  <data name="CustomLayout.Split" xml:space="preserve">
+    <value>แบ่งพื้นที่</value>
+  </data>
+  <data name="CustomLayout.SplitBelow" xml:space="preserve">
+    <value>เพิ่มพื้นที่ด้านล่าง</value>
+  </data>
+  <data name="CustomLayout.SplitRight" xml:space="preserve">
+    <value>เพิ่มพื้นที่ด้านขวา</value>
+  </data>
+  <data name="Presentation.BindDesktop" xml:space="preserve">
+    <value>ผูกกับเดสก์ท็อปเสมือนนี้</value>
+  </data>
+  <data name="Presentation.DesktopUnavailable" xml:space="preserve">
+    <value>Windows เปิดเดสก์ท็อปเสมือนที่เลือกไม่ได้</value>
+  </data>
+  <data name="Presentation.OpenFailed" xml:space="preserve">
+    <value>เปิดแท็บในหน้าต่างแยกไม่ได้</value>
+  </data>
+  <data name="Presentation.OpenOnDisplay" xml:space="preserve">
+    <value>เปิดแท็บบนจอภาพ</value>
+  </data>
+  <data name="Presentation.ReturnTab" xml:space="preserve">
+    <value>นำแท็บกลับไปที่ WindowDock</value>
+  </data>
+  <data name="Presentation.SeparateWindow" xml:space="preserve">
+    <value>แท็บนี้เปิดอยู่ในหน้าต่างแยก</value>
+  </data>
+  <data name="Presentation.SwitchDesktop" xml:space="preserve">
+    <value>ใช้ Win+Tab เพื่อไปยังเดสก์ท็อปเสมือนของแท็บนี้</value>
+  </data>
+  <data name="Presentation.WaitForWindows" xml:space="preserve">
+    <value>รอให้แอปในแท็บตอบสนองแล้วลองอีกครั้ง</value>
+  </data>
+  <data name="Recovery.HistorySaved" xml:space="preserve">
+    <value>บันทึกประวัติเทอร์มินัลแล้ว</value>
+  </data>
+  <data name="Recovery.KeepTerminalLayout" xml:space="preserve">
+    <value>บันทึกแท็บและบานหน้าต่างเทอร์มินัลเมื่อปิด</value>
+  </data>
+  <data name="Recovery.NoTerminalText" xml:space="preserve">
+    <value>ไม่มีข้อความเทอร์มินัลให้บันทึก</value>
+  </data>
+  <data name="Recovery.NoUniqueAgentSession" xml:space="preserve">
+    <value>เลือกการสนทนาที่บันทึกไว้สำหรับคำสั่งโปรเจกต์นี้</value>
+  </data>
+  <data name="Recovery.PaneNumber" xml:space="preserve">
+    <value>หมายเลขบานหน้าต่าง (0 เลือกเฉพาะแท็บ)</value>
+  </data>
+  <data name="Recovery.PaneNumberHelp" xml:space="preserve">
+    <value>นับบานหน้าต่างที่มองเห็นจากบนลงล่าง แล้วจากซ้ายไปขวา</value>
+  </data>
+  <data name="Recovery.ProjectAtStartup" xml:space="preserve">
+    <value>เปิดโปรเจกต์นี้อีกครั้งเมื่อเริ่มต้น</value>
+  </data>
+  <data name="Recovery.ProjectFailed" xml:space="preserve">
+    <value>เปิด {0} อีกครั้งไม่ได้ {1}</value>
+  </data>
+  <data name="Recovery.RememberAgentSessions" xml:space="preserve">
+    <value>จดจำการสนทนาของเอเจนต์เพื่อกู้คืน</value>
+  </data>
+  <data name="Recovery.ReopenTerminal" xml:space="preserve">
+    <value>เปิด Windows Terminal อีกครั้งเมื่อเริ่มต้น</value>
+  </data>
+  <data name="Recovery.SaveTerminalHistory" xml:space="preserve">
+    <value>บันทึกประวัติเทอร์มินัล</value>
+  </data>
+  <data name="Recovery.TerminalHistory" xml:space="preserve">
+    <value>ประวัติเทอร์มินัล</value>
+  </data>
+  <data name="Recovery.TerminalLayout" xml:space="preserve">
+    <value>กู้คืนพื้นที่ทำงานเทอร์มินัล</value>
+  </data>
+  <data name="Recovery.TerminalLayoutHelp" xml:space="preserve">
+    <value>Windows Terminal บันทึกเค้าโครงเอง บันทึกเอาต์พุตแยกจากแผง WindowDock</value>
+  </data>
+  <data name="Recovery.TerminalSettings" xml:space="preserve">
+    <value>การตั้งค่า Windows Terminal</value>
+  </data>
+  <data name="Recovery.TerminalSettingsUnavailable" xml:space="preserve">
+    <value>ไม่สามารถเข้าถึงการตั้งค่า Windows Terminal</value>
+  </data>
+  <data name="Recovery.TerminalTarget" xml:space="preserve">
+    <value>เลือกแท็บและบานหน้าต่างเทอร์มินัล</value>
+  </data>
+  <data name="Recovery.TerminalUnavailable" xml:space="preserve">
+    <value>เข้าถึงเทอร์มินัลหรือบานหน้าต่างที่เลือกไม่ได้</value>
+  </data>
+  <data name="Recovery.UniqueTabTitle" xml:space="preserve">
+    <value>เลือกแท็บที่มีชื่อไม่ซ้ำในเทอร์มินัลนี้</value>
+  </data>
+  <data name="WindowSearch.Desktop" xml:space="preserve">
+    <value>เดสก์ท็อป · เพิ่มหน้าต่าง</value>
+  </data>
+  <data name="WindowSearch.Executable" xml:space="preserve">
+    <value>เส้นทางไฟล์ปฏิบัติการ</value>
+  </data>
+  <data name="Recovery.AutomaticHistory" xml:space="preserve">
+    <value>บันทึกประวัติเทอร์มินัลโดยอัตโนมัติ</value>
   </data>
 </root>

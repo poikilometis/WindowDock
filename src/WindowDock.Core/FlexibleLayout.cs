@@ -14,6 +14,8 @@ namespace WindowDock
         public int Index, First, Second, Minimum;
         public bool Vertical;
         public List<double> Weights;
+        public SplitArea Split;
+        public int SecondMinimum;
     }
     internal sealed class FlexiblePlan
     {
@@ -122,6 +124,11 @@ namespace WindowDock
         public static void Resize(WorkspaceConfig config, DividerSpec spec, int delta)
         {
             int total = spec.First + spec.Second;
+            if (spec.Split is { } split)
+            {
+                split.Ratio = Math.Clamp(spec.First + delta, spec.Minimum, total - spec.SecondMinimum) / (double)total;
+                return;
+            }
             int minimum = Math.Min(spec.Minimum, total / 2);
             int first = Math.Max(minimum, Math.Min(total - minimum, spec.First + delta));
             double ratio = first / (double)Math.Max(1, total);

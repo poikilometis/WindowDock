@@ -10,6 +10,7 @@ namespace WindowDock {
         [DataMember] public long Handle;
         [DataMember] public string AgentId,Status,Message;
         [DataMember] public string Provider,SessionKey,Directory;
+        [DataMember(EmitDefaultValue = false)] public string ConversationId;
         [DataMember] public long ConsoleHandle,EventUtcTicks;
         [DataMember] public System.Collections.Generic.List<HookProcess> ProcessChain;
     }
@@ -49,6 +50,7 @@ internal static class HookPayload {
             if(String.IsNullOrWhiteSpace(session)||session.Length>512) return null;
             string directory=root.String("cwd")??""; if(directory.Length>2048) directory=directory.Substring(0,2048);
             return new AgentSignal { AgentId=agentId,Provider=provider.Id,SessionKey=SessionKey(provider.Id,session),Directory=directory,
+                ConversationId=AgentResume.ParseId(session),
                 ConsoleHandle=console,ProcessChain=parents,EventUtcTicks=eventTicks,Status=status,
                 Message=status=="waiting"?L10n.Get("HookPayload.TheAgentIsRequestingPermission"):status=="error"?L10n.Get("HookPayload.AgentError"):"" };
         }

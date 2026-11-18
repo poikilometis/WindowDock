@@ -25,7 +25,7 @@ internal sealed partial class WorkspaceSession
             if (attached.Contains(window.Handle))
                 state = CaptureState.AlreadyDocked;
             else if (options.TerminalsOnly && !window.IsTerminal ||
-                     !terms.All(term => window.Display.Contains(term, StringComparison.CurrentCultureIgnoreCase)))
+                     !terms.All(term => window.SearchText.Contains(term, StringComparison.CurrentCultureIgnoreCase)))
                 state = CaptureState.Filtered;
             else if (decision.Excluded)
                 state = CaptureState.Excluded;

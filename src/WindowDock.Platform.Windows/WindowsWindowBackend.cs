@@ -90,15 +90,20 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
         }
         return unavailable;
     }
-    private void SaveJournal() { if (journalPath is not null && journal is not null) Store.Write(journalPath, journal); }
+    private void SaveJournal()
+    {
+        if (journalPath is null || journal is null) return;
+        journal.Windows = windows.Where(record => !record.Linked).ToList();
+        Store.Write(journalPath, journal);
+    }
     public IReadOnlyList<WindowCandidate> Enumerate() => WindowCatalog.List(windows.Select(r => r.Handle).ToArray(), false);
     public bool IsAlive(WindowRecord record)
     {
         // An attached HWND must still belong to our host and the original process/class.
         // Process-start validation stays on attach/recovery and detached undo records.
-        if (!attached.TryGetValue(record.Handle, out var tracked) || !ReferenceEquals(record, tracked)) return NativeIdentity.Matches(record);
+        if (record.Linked || !attached.TryGetValue(record.Handle, out var tracked) || !ReferenceEquals(record, tracked)) return NativeIdentity.Matches(record);
         Native.GetWindowThreadProcessId(record.Hwnd, out var pid);
-        return pid == record.ProcessId && Native.GetWindow(record.Hwnd, 4) == host.Handle;
+        return pid == record.ProcessId && Native.GetWindow(record.Hwnd, 4) == OwnerOf(record);
     }
     public string Title(WindowRecord record)
     {
@@ -117,7 +122,14 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
     }
     public void Activate(WindowRecord record)
     {
-        if (suspension > 0 || !IsAlive(record) || !Native.IsWindowVisible(record.Hwnd) ||
+        if (suspension > 0 || !IsAlive(record)) return;
+        if (record.Linked)
+        {
+            if (Native.IsIconic(record.Hwnd)) Native.ShowWindowAsync(record.Hwnd, 9); // SW_RESTORE
+            Native.SetForegroundWindow(record.Hwnd);
+            return;
+        }
+        if (!Native.IsWindowVisible(record.Hwnd) ||
             !Native.IsWindowEnabled(record.Hwnd) || Native.IsHungAppWindow(record.Hwnd)) return;
         Native.SetForegroundWindow(record.Hwnd);
         if (Native.GetForegroundWindow() == record.Hwnd && Native.ForegroundFocus() == 0)
@@ -127,15 +139,16 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
     internal bool GroupHasForeground()
     {
         var current = Native.GetForegroundWindow();
-        return current == host.Handle || attached.ContainsKey(current) || Native.GetWindow(current, 4) == host.Handle;
+        return current == host.Handle || workspaceHosts.Contains(current) || attached.ContainsKey(current) || Native.GetWindow(current, 4) == host.Handle;
     }
     public WindowRecord Attach(WindowCandidate candidate, string workspace)
     {
         if (host.Handle == 0) throw new InvalidOperationException(L10n.Get("WindowsWindowBackend.TheWindowDockWindowIsNotReadyYet"));
         if (windows.Any(r => r.Handle == candidate.Handle)) throw new InvalidOperationException(L10n.Get("WorkspaceSession.ThisWindowIsAlreadyDocked"));
         Native.GetWindowThreadProcessId(candidate.Handle, out var pid);
-        if (!Native.IsWindow(candidate.Handle) || pid != candidate.ProcessId || Native.IsHungAppWindow(candidate.Handle)) throw new InvalidOperationException(L10n.Get("WindowsWindowBackend.TheWindowWasClosedOrTheApplication"));
+        if (!Native.IsWindow(candidate.Handle) || pid != candidate.ProcessId) throw new InvalidOperationException(L10n.Get("WindowsWindowBackend.TheWindowWasClosedOrTheApplication"));
         if (pid == Environment.ProcessId) throw new InvalidOperationException(L10n.Get("WindowsWindowBackend.WindowDockCannotDockItsOwnWindow"));
+        if (Native.IsHungAppWindow(candidate.Handle) || WindowsScreens.IsFullScreen(candidate.Handle)) return Link(candidate, workspace);
         var record = Snapshot(candidate, workspace);
         windows.Add(record); attached.Add(record.Handle, record); titles[record.Handle] = candidate.Title; discoveryExpires = 0;
         try { SaveJournal(); } catch { Forget(record); throw; }
@@ -155,11 +168,30 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
         }
         catch (Exception exception)
         {
-            if (!changed || Restore(record)) Forget(record);
+            var restored = !changed || Restore(record);
+            if (restored) Forget(record);
             SaveJournal();
+            if (restored && exception is Win32Exception { NativeErrorCode: 5 }) return Link(candidate, workspace);
             if (exception is Win32Exception { NativeErrorCode: 5 }) throw new InvalidOperationException(L10n.Get("WindowsWindowBackend.AccessToTheWindowIsRestrictedRun"), exception);
             throw;
         }
+    }
+    public WindowRecord Link(WindowCandidate candidate, string workspace)
+    {
+        if (attached.ContainsKey(candidate.Handle)) throw new InvalidOperationException(L10n.Get("WorkspaceSession.ThisWindowIsAlreadyDocked"));
+        var record = new WindowRecord
+        {
+            Handle = candidate.Handle, ProcessId = candidate.ProcessId, ProcessStartTicks = candidate.ProcessStartTicks,
+            ClassName = candidate.ClassName, ProcessName = candidate.ProcessName, Title = candidate.Title, WorkspaceId = workspace,
+            Linked = true, ExecutablePath = candidate.ExecutablePath, ProjectDirectory = candidate.ProjectDirectory
+        };
+        if (record.ProcessId == Environment.ProcessId || !NativeIdentity.Matches(record))
+            throw new InvalidOperationException(L10n.Get("WindowsWindowBackend.TheWindowWasClosedOrTheApplication"));
+        windows.Add(record);
+        attached.Add(record.Handle, record);
+        titles[record.Handle] = record.Title;
+        discoveryExpires = 0;
+        return record;
     }
     private static WindowRecord Snapshot(WindowCandidate candidate, string workspace)
     {
@@ -176,19 +208,35 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
             X = bounds.Left, Y = bounds.Top, Width = bounds.Right - bounds.Left, Height = bounds.Bottom - bounds.Top,
             ShowCmd = placement.ShowCmd, PlacementFlags = placement.Flags, MinX = placement.Min.X, MinY = placement.Min.Y, MaxX = placement.Max.X, MaxY = placement.Max.Y,
             NormalLeft = placement.Normal.Left, NormalTop = placement.Normal.Top, NormalRight = placement.Normal.Right, NormalBottom = placement.Normal.Bottom,
-            Title = candidate.Title, ProcessName = candidate.ProcessName, ClassName = candidate.ClassName, WorkspaceId = workspace
+            Title = candidate.Title, ProcessName = candidate.ProcessName, ClassName = candidate.ClassName, WorkspaceId = workspace,
+            ExecutablePath = candidate.ExecutablePath, ProjectDirectory = candidate.ProjectDirectory
         };
     }
     private void Forget(WindowRecord record)
     {
         windows.Remove(record); attached.Remove(record.Handle); clips.Remove(record.Handle); fitted.Remove(record.Handle); titles.Remove(record.Handle); visibleHandles.Remove(record.Handle); enabledBeforeModal.Remove(record.Handle); discoveryExpires = 0;
+        paneOwners.Remove(record.Handle);
     }
     public bool Release(WindowRecord record, out string? error)
     {
         error = null;
+        if (record.Linked) { Forget(record); return true; }
         if (Native.IsHungAppWindow(record.Hwnd)) { error = L10n.Get("WindowsWindowBackend.TheApplicationIsNotRespondingTryUndocking"); return false; }
         if (!Restore(record)) { error = L10n.Get("WindowsWindowBackend.CouldNotReturnTheWindowToThe"); return false; }
         Forget(record); SaveJournal(); return true;
+    }
+    public bool KeepExternal(WindowRecord record)
+    {
+        if (record.Linked) return true;
+        if (!IsAlive(record) || Native.IsHungAppWindow(record.Hwnd) || !Restore(record)) return false;
+        visibleHandles.Remove(record.Handle);
+        fitted.Remove(record.Handle);
+        clips.Remove(record.Handle);
+        paneOwners.Remove(record.Handle);
+        enabledBeforeModal.Remove(record.Handle);
+        record.Linked = true;
+        SaveJournal();
+        return true;
     }
     public void Reassign(WindowRecord record, string workspace) { record.WorkspaceId = workspace; } // Recovery does not depend on tab metadata.
     public void Synchronize(HostWindowState state, IReadOnlyList<WindowPlacement> next)
@@ -200,13 +248,15 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
         if (audit) regionAuditAfter = Environment.TickCount64 + 850;
         List<WindowPlacement> visible = new(next.Count);
         var wanted = new HashSet<long>();
-        if (state.Visible) foreach (var placement in next)
+        foreach (var placement in next)
         {
+            if (placement.Owner == 0 ? !state.Visible : !workspaceHosts.Contains(placement.Owner)) continue;
             var record = placement.Record;
-            if (placement.Clip.IsEmpty || !attached.TryGetValue(record.Handle, out var tracked) || !ReferenceEquals(record, tracked)) continue;
+            if (record.Linked || placement.Clip.IsEmpty || !attached.TryGetValue(record.Handle, out var tracked) || !ReferenceEquals(record, tracked)) continue;
             if (!IsAlive(record)) { Forget(record); continue; }
             wanted.Add(record.Handle);
             if (Native.IsHungAppWindow(record.Hwnd)) continue;
+            if (!ChangeOwner(record, placement.Owner == 0 ? host.Handle : placement.Owner)) continue;
             if (audit && Native.ClassName(record.Hwnd) != record.ClassName) { Forget(record); continue; }
             if (audit && (clips.TryGetValue(record.Handle, out var clip) && !Native.HasRegionBox(record.Hwnd, clip) ||
                 fitted.TryGetValue(record.Handle, out var fit) && Native.GetWindowRect(record.Hwnd, out var actual) && actual.Rectangle != fit.Bounds))
@@ -219,10 +269,10 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
         if (audit) foreach (var record in windows.ToArray())
         {
             if (!IsAlive(record)) { Forget(record); continue; }
-            if (!wanted.Contains(record.Handle)) Hide(record);
+            if (!record.Linked && !wanted.Contains(record.Handle)) Hide(record);
         }
         visibleHandles.Clear(); visibleHandles.UnionWith(wanted);
-                // Commit the whole group's bounds together. Do not ask each application to erase
+        // Commit the whole group's bounds together. Do not ask each application to erase
         // and paint intermediate layouts while its neighbours still have their old size.
         var moves = visible.Where(p => !fitted.TryGetValue(p.Record.Handle, out var previous) || previous.Bounds != p.Bounds || !Native.IsWindowVisible(p.Record.Hwnd)).ToArray();
         var moveStart = Stopwatch.GetTimestamp();
@@ -269,11 +319,21 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
             }
             if (Native.SetWindowRgn(record.Hwnd, region, false) != 0) clips[record.Handle] = local; else Native.DeleteObject(region);
         }
-        if (!visible) Native.ShowWindow(record.Hwnd, 4); // WM_SHOWWINDOW resumes renderers without activation.
+        if (!visible)
+        {
+            // Assigning an owner can leave the window below it in the previous Z order.
+            // Insert the pane directly above the host without raising the entire group.
+            var aboveHost = Native.GetWindow(OwnerOf(record), Native.GW_HWNDPREV);
+            var insertAfter = aboveHost != 0 && (Native.GetLong(aboveHost, Native.GWL_EXSTYLE) & Native.WS_EX_TOPMOST) == 0 ? aboveHost : 0;
+            var flags = Native.SWP_SHOWWINDOW | Native.SWP_NOACTIVATE | Native.SWP_NOMOVE | Native.SWP_NOSIZE;
+            if (aboveHost == record.Hwnd) flags |= Native.SWP_NOZORDER;
+            Native.SetWindowPos(record.Hwnd, insertAfter, 0, 0, 0, 0, flags);
+        }
         fitted[record.Handle] = placement;
-        // Invalidate the application and its original input/rendering children once after reveal.
-        // Avoid WM_ERASEBKGND, which produces the solid flash over hardware-rendered content.
-        if (!visible || resized || regionChanged) Native.RedrawWindow(record.Hwnd, 0, 0, 0x0001 | 0x0080);
+        // Include the native frame and scrollbars in the repaint after a no-redraw resize.
+        // Let the application's own message loop paint without synchronously erasing the background.
+        if (!visible || resized || regionChanged)
+            Native.RedrawWindow(record.Hwnd, 0, 0, Native.RDW_INVALIDATE | Native.RDW_ALLCHILDREN | Native.RDW_FRAME);
     }
     private void ReconcileInput()
     {
@@ -289,7 +349,7 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
     {
         if (suspension++ == 0)
         {
-            foreach (var record in windows.Where(IsAlive))
+            foreach (var record in windows.Where(record => !record.Linked && IsAlive(record)))
             { enabledBeforeModal[record.Handle] = Native.IsWindowEnabled(record.Hwnd); }
             ReconcileInput();
             if (hover is not null) hover.Enabled = false;
@@ -325,8 +385,10 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
             foreach (var id in hotkeys) Native.UnregisterHotKey(host.Handle, id);
             if (subclass is not null) RemoveWindowSubclass(host.Handle, subclass, 0x57444F43);
         }
+        foreach (var window in workspaceHosts) RemoveWindowSubclass(window, subclass!, 0x57444F43);
+        workspaceHosts.Clear();
         hover?.Dispose();
-        foreach (var record in windows.ToArray()) if (!Native.IsHungAppWindow(record.Hwnd) && Restore(record)) Forget(record);
+        foreach (var record in windows.ToArray()) if (record.Linked || !Native.IsHungAppWindow(record.Hwnd) && Restore(record)) Forget(record);
         SaveJournal();
         if (windows.Count == 0 && journalPath is not null && File.Exists(journalPath)) File.Delete(journalPath);
         guardian?.Dispose(); GC.KeepAlive(events); GC.KeepAlive(subclass);
@@ -338,6 +400,12 @@ internal sealed partial class WindowsWindowBackend : IWindowBackend
     public Func<AgentSignal, bool>? SignalHandler { get; set; }
     private nint Dispatch(nint window, uint message, nuint wParam, nint lParam, nuint id, nuint data)
     {
+        if (window != host.Handle)
+        {
+            var response = DefSubclassProc(window, message, wParam, lParam);
+            if (message == 0x0047 && !disposed) FollowHostTranslation(window);
+            return response;
+        }
         if (attentionTray?.HandleMessage(message, wParam, lParam) == true) return 0;
         if (message == shellMessage && ((uint)wParam == 1 || (uint)wParam == 2)) discoveryExpires = 0;
         if (message == shellMessage && (uint)wParam == 0x8006) { Changed?.Invoke(new("attention", lParam)); return 0; }

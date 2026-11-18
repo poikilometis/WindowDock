@@ -30,14 +30,15 @@ WindowDock groups **existing application windows** into a single workspace. Keep
 ## Why WindowDock?
 
 - **Collect windows in one action.** Capture rules route matching windows. The rest fill the current tab and its overflow tabs. Right-click **Collect windows** to filter by name, include minimized windows, or inspect the last result.
-- **Keep text readable.** Choose a grid, a main window with smaller panels, or a stack with an optional pinned panel. The adaptive grid switches to a stack when the grid would exceed the available height.
+- **Keep text readable.** Choose a grid, a main window with smaller panels, or a stack with an optional pinned panel. Split individual areas to build and save a custom layout.
 - **Focus without losing context.** Double-click a panel header to enlarge it inside its tab. Return to the grid with one click.
-- **Organize freely.** Rename tabs and panels, drag to reorder or move across tabs, select several panels, search across workspaces, and undo supported actions.
-- **Restore groups.** Reconnect windows that are still running after restarting WindowDock. Ambiguous matches wait for a manual assignment.
-- **Automate capture.** Match application names and window titles, limit a rule to terminals, choose a destination tab, and add exclusions that take priority.
+- **Organize freely.** Drag one panel onto another to swap their positions. Moving across tabs fills the first empty position. Rename, search, select several panels, and undo supported actions.
+- **Restore groups and projects.** Reconnect running windows. Opt in to reopening projects, resuming saved agent conversations, and opening the Windows Terminal layout when WindowDock starts.
+- **Find and capture similar windows.** Search both docked panels and desktop windows with `Ctrl+Alt+K`. Use the executable path or a project folder reported by hooks to narrow capture rules. Exclusions take priority.
 - **Open project workspaces.** Preview which windows will reconnect and optionally start missing commands. Link an existing panel to a saved command from its menu.
 - **See what needs attention.** The bell shows waiting and failed agent sessions across all tabs. Open the exact panel from the list or enable Windows notifications in **View**.
-- **Return to your work.** Each tab remembers its last active panel. WindowDock also remembers its position and size for each display setup.
+- **Use multiple displays.** Open tabs in separate windows and bind them to Windows virtual desktops. Each tab remembers its last active panel.
+- **Keep difficult windows handy.** Link a fullscreen or incompatible app in its original window and open it from a panel or search result.
 - **Stay compact.** A 30-DIP command row and 22-DIP panel headers leave room for your applications. Hover scrolling routes the wheel without deliberately changing keyboard focus, where the target app supports it.
 
 ## Quick start
@@ -94,7 +95,13 @@ Edit the default bindings in **View → Global shortcuts**. Windows may reserve 
 | Move the group to another screen | Choose **View → Move WindowDock to display**. WindowDock remembers its placement for each display setup. |
 | Put the windows back on the desktop | Choose **… → Return all windows and pause capture**. The returned applications keep running. |
 
-Agent status comes from configured hooks. If several sessions share a single terminal window, they appear separately in the activity list. Opening a session focuses the containing terminal window.
+Agent status comes from configured hooks. Sessions in a shared Windows Terminal window appear separately. Assign each session a uniquely named terminal tab and, if needed, a pane in **Agent integrations → Sessions**. The bell and `Ctrl+Alt+J` use that assignment.
+
+### Arrange tabs and displays
+
+- In a panel's **… → Split area** menu, add an area to the right or below. Add a window to the new area or drag another panel into it. Drag the dividers to size the areas. Select **Layout → Custom layout** to return to the saved splits after using another layout.
+- Right-click a WindowDock tab and choose **Open tab on display**. Its separate window retains live input and can stay open while the main window is minimized. A bound display that disconnects makes the tab available in the main window again.
+- To bind a tab to a virtual desktop, open WindowDock on that desktop and select **Bind to this virtual desktop** from the same menu. Use Windows Task View to switch desktops.
 
 ## Languages
 
@@ -126,7 +133,7 @@ WindowDock has project-scoped hook adapters for **Claude Code, Codex, and Gemini
 
 **Codex hooks require review and approval through `/hooks`.** You can enable automatic hook setup for a saved project command. WindowDock then applies it immediately before starting that command.
 
-The integration keeps status and routing metadata, not prompt or response content. Agent versions and hook formats can change. See [integrations and manual status reporting](docs/AGENT-INTEGRATIONS.md).
+Hooks retain status and routing metadata. With **Remember agent conversations for recovery** enabled, WindowDock also retains supported session identifiers and working folders. See [integration and recovery settings](docs/AGENT-INTEGRATIONS.md).
 
 ## Builds and releases
 
@@ -183,15 +190,17 @@ The current stack is **.NET 10 LTS, C# 14, and Avalonia 12.1.6**. This codebase 
 
 ## Limits and recovery
 
-Some elevated, protected, exclusive fullscreen, unusual GPU-rendered, or DPI-incompatible windows cannot be embedded reliably. Menus, IME, popups, focus, and scrolling remain dependent on the host OS and target application. WindowDock is not a terminal emulator and cannot recreate the contents of a terminated terminal session.
+Some elevated, protected, fullscreen, and GPU-rendered apps work best in their original windows. Choose **Link without docking** when adding one, or switch an existing panel to that mode. Normal window ownership lets the original app handle its menus, IME, popups and input. Windows permissions still govern access.
 
-Group restoration reconnects **existing** windows; it does not automatically relaunch saved commands. Normal shutdown restores native window state. A local recovery journal and guardian process attempt restoration after an unexpected exit; the next startup also checks for orphaned windows. Keep the application folder and `data` available during recovery.
+Group restoration reconnects running windows. For reboot recovery, enable **Reopen this project at startup** in each project you want WindowDock to restart. Use **Restore terminal workspace** to enable Windows Terminal's tab and pane layout persistence. **Save terminal history** preserves the available scrollback as a local text snapshot, which opens in WindowDock from the panel or **Saved groups**. Automatic snapshots can be enabled per panel.
+
+Normal shutdown restores native window state. A local recovery journal and guardian process attempt restoration after an unexpected exit. Keep the application folder and `data` available during recovery.
 
 ## Data and privacy
 
 Settings, saved groups, backups, and recovery journals are stored locally in `data/` beside the portable app. `--data-dir <folder>` or `WINDOWDOCK_DATA_DIR` selects a separate profile. Local agent communication uses named pipes; a Windows message route is also supported. WindowDock includes no telemetry or cloud account requirement.
 
-Project commands, environment variables, window titles, and paths can be sensitive. Review diagnostic files before sharing them. Do not upload your `data/` directory or private agent configuration. See [security reporting](SECURITY.md).
+Project commands, environment variables, session identifiers, and saved terminal text can contain private information. Keep `data/` and agent configuration local. Terminal snapshots are stored under `data/terminal-history/`. See [security reporting](SECURITY.md).
 
 ## Documentation
 

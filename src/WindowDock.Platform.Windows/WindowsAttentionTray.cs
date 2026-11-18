@@ -20,7 +20,11 @@ internal sealed partial class WindowsWindowBackend
         }
     }
 
-    internal void NotifyAgent(string message) => attentionTray?.Notify(message);
+    internal void NotifyAgent(string message)
+    {
+        if (attentionTray?.Notify(message) == false)
+            Store.Log("Windows did not accept a WindowDock agent notification.");
+    }
 }
 
 internal sealed class WindowsAttentionTray(nint owner, Action open) : IDisposable
@@ -31,7 +35,6 @@ internal sealed class WindowsAttentionTray(nint owner, Action open) : IDisposabl
     private readonly uint taskbarCreated = Native.RegisterWindowMessage("TaskbarCreated");
     private string tip = "WindowDock";
     private bool registered;
-    private long lastNotice;
 
     internal void Update(string tooltip)
     {
@@ -45,16 +48,19 @@ internal sealed class WindowsAttentionTray(nint owner, Action open) : IDisposabl
         }
     }
 
-    internal void Notify(string message)
+    internal bool Notify(string message)
     {
         if (!registered) Register();
-        var now = Environment.TickCount64;
-        if (!registered || lastNotice != 0 && now - lastNotice < 5000) return;
+        if (!registered) return false;
         var data = Data(InfoFlag);
         data.Title = "WindowDock";
         data.Info = ClampText(message, 255);
         data.InfoFlags = 0x11; // NIIF_INFO | NIIF_NOSOUND
-        if (ShellNotifyIcon(Modify, ref data)) lastNotice = now;
+        if (ShellNotifyIcon(Modify, ref data)) return true;
+        // Explorer may have restarted before the tray recreation message reached this window.
+        registered = false;
+        Register();
+        return registered && ShellNotifyIcon(Modify, ref data);
     }
 
     internal bool HandleMessage(uint message, nuint wParam, nint lParam)

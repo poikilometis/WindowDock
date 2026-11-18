@@ -14,6 +14,7 @@ namespace WindowDock
     {
         [DataMember] public string Id,Name,WorkspaceId;
         [DataMember] public List<ProjectCommand> Commands;
+        [DataMember(EmitDefaultValue = false)] public bool RestoreOnStartup;
         public static ProjectProfile Create(string workspace)
         {
             return new ProjectProfile { Id=Guid.NewGuid().ToString("N"),Name=L10n.Get("ProjectModels.NewProject"),WorkspaceId=workspace,Commands=new List<ProjectCommand>() };
@@ -32,6 +33,7 @@ namespace WindowDock
     {
         [DataMember] public string Id,Name,Executable,Arguments,Directory,TitlePattern,IntegrationId;
         [DataMember(EmitDefaultValue = false)] public string ReuseProcess, ReuseTitle, ResumeArguments;
+        [DataMember(EmitDefaultValue = false)] public string ResumeSessionKey;
         [DataMember] public List<EnvironmentEntry> Environment;
         public static ProjectCommand Create()
         {
@@ -47,6 +49,7 @@ namespace WindowDock
             ReuseProcess = (ReuseProcess ?? "").Trim();
             ReuseTitle = (ReuseTitle ?? "").Trim();
             ResumeArguments = ResumeArguments ?? "";
+            if (ResumeSessionKey?.Length > 128) ResumeSessionKey = null;
             if(Environment==null) Environment=new List<EnvironmentEntry>();
             Environment.RemoveAll(delegate(EnvironmentEntry e){return e==null||String.IsNullOrWhiteSpace(e.Key)||e.Key.IndexOf('=')>=0||e.Key.IndexOf('\0')>=0|| (e.Value??"").IndexOf('\0')>=0;});
         }

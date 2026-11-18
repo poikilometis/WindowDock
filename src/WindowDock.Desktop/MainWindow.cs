@@ -18,6 +18,7 @@ internal sealed partial class MainWindow : Window
     private readonly ScrollViewer tabScroll;
     private readonly ScrollViewer viewport;
     private readonly Canvas canvas = new();
+    private IReadOnlyList<DrawingRectangle> presetSlotBounds = [];
     private readonly Grid workspace = new() { RowDefinitions = new("Auto,*") };
     private readonly Border toolbar;
     private readonly TextBlock status = new() { FontSize = 11.5, Margin = new(8, 3), TextTrimming = TextTrimming.CharacterEllipsis, IsVisible = false };
@@ -38,7 +39,8 @@ internal sealed partial class MainWindow : Window
     private string? draggedTab;
     private DateTime statusUntil;
     private Point? tabDragStart;
-    private readonly Dictionary<string, double> offsets = [];
+    private readonly Dictionary<string, Vector> offsets = [];
+    private readonly Dictionary<SplitArea, Control> emptyAreas = [];
 
     public MainWindow(WorkspaceSession session)
     {
@@ -74,6 +76,7 @@ internal sealed partial class MainWindow : Window
         Grid.SetColumn(status, 1); commands.Children.Add(status); Grid.SetColumn(actions, 2); commands.Children.Add(actions);
         toolbar = new Border { Child = commands }; root.Children.Add(toolbar);
         viewport = new ScrollViewer { Content = canvas, HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled, VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Auto };
+        canvas.Children.Add(dropOutline);
         Grid.SetRowSpan(wallpaper, 2);
         workspace.Children.Add(wallpaper);
         workspace.Children.Add(CreateStackBar());
@@ -148,6 +151,8 @@ internal sealed partial class MainWindow : Window
             }
             if (Program.IsSelfTest) _ = DesktopSelfTest.RunAsync(this);
             else if (Program.PerformanceReport is not null && OperatingSystem.IsWindows()) _ = DesktopPerformanceTest.RunAsync(this, Program.PerformanceReport);
+            else if (Program.CrashTarget == 0 && (Session.Config.ReopenTerminal || Session.Config.Projects.Any(project => project.RestoreOnStartup)))
+                Dispatcher.UIThread.Post(() => _ = UserActionAsync(RestoreWorkAsync), DispatcherPriority.Background);
         }
         catch (Exception exception)
         {
@@ -163,6 +168,7 @@ internal sealed partial class MainWindow : Window
         Session.Config.Maximized = lastVisibleState == WindowState.Maximized;
         if (WindowState == WindowState.Normal) { Session.Config.WindowWidth = (int)Width; Session.Config.WindowHeight = (int)Height; Session.Config.WindowX = Position.X; Session.Config.WindowY = Position.Y; }
         Session.Dispose();
+        foreach (var view in workspaceWindows.Values.ToArray()) view.Close();
     }
     private void OnClosed()
     {
@@ -177,6 +183,7 @@ internal sealed partial class MainWindow : Window
         if (closing) return;
         if (dialogDepth > 0) { Session.Backend.Maintain(); return; }
         UserAction(() => { Session.Poll(); RefreshStatus(); Session.Backend.Maintain(); });
+        if (OperatingSystem.IsWindows()) PollTerminalHistory();
         if (status.IsVisible && DateTime.UtcNow > statusUntil) status.IsVisible = false;
     }
     internal void UserAction(Action action)
@@ -206,11 +213,13 @@ internal sealed partial class MainWindow : Window
         if (closing) return; layoutFrameQueued = false; RefreshCount++;
         if (lastWorkspace != Session.SelectedWorkspace)
         {
-            offsets[lastWorkspace] = viewport.Offset.Y; lastWorkspace = Session.SelectedWorkspace;
-            viewport.Offset = new(0, offsets.GetValueOrDefault(lastWorkspace));
+            offsets[lastWorkspace] = viewport.Offset; lastWorkspace = Session.SelectedWorkspace;
+            viewport.Offset = offsets.GetValueOrDefault(lastWorkspace);
         }
         RefreshTabs(); QueueAttentionUpdate();
-        var current = Session.CurrentPanels.ToList();
+        RefreshWorkspaceWindows();
+        var presented = workspaceWindows.ContainsKey(Session.SelectedWorkspace);
+        var current = presented ? [] : Session.CurrentPanels.ToList();
         var currentIds = current.Select(panel => panel.Id).ToHashSet(); var allIds = Session.Panels.Select(panel => panel.Id).ToHashSet();
         foreach (var (id, card) in cards.ToArray())
             if (!allIds.Contains(id) || id != card.Panel.Id) { canvas.Children.Remove(card); cards.Remove(id); }
@@ -220,7 +229,9 @@ internal sealed partial class MainWindow : Window
         if (cards.Count > 96)
             foreach (var (id, card) in cards.Where(pair => !pair.Value.IsVisible).Take(cards.Count - 96).ToArray())
             { canvas.Children.Remove(card); cards.Remove(id); }
-        empty.IsVisible = current.Count == 0; viewport.IsVisible = current.Count > 0;
+        empty.IsVisible = !presented && current.Count == 0 && Session.Current.Layout != "custom";
+        viewport.IsVisible = !presented && !empty.IsVisible;
+        ShowPresentationNotice(presented);
         add.IsEnabled = Session.Backend.Available && current.Count < Session.Current.Capacity; collect.IsEnabled = Session.Backend.Available;
         magnet.Classes.Set("active", Session.Config.Magnet);
         var gridActive = Session.Current.Layout == "grid" && Session.FocusedPanel is null;
@@ -244,7 +255,9 @@ internal sealed partial class MainWindow : Window
             var active = Session.Current.Layout == "grid" && Session.FocusedPanel is null;
             grid.Classes.Set("active", active);
             if (grid.Content is StackPanel row && row.Children.OfType<DockIcon>().FirstOrDefault() is { } icon) { icon.InkResource = active ? "DockAccent" : null; icon.InvalidateVisual(); }
-            ArrangePanels(); root.UpdateLayout(); FlushSync();
+            ArrangePanels();
+            foreach (var view in workspaceWindows.Values) view.Arrange();
+            root.UpdateLayout(); FlushSync();
         }
         if (final) { Apply(); return; }
         if (layoutFrameQueued) return; layoutFrameQueued = true;
@@ -329,10 +342,31 @@ internal sealed partial class MainWindow : Window
         if (arranging || closing) return; arranging = true; LayoutCount++;
         try
         {
+            presetSlotBounds = [];
+            if (workspaceWindows.ContainsKey(Session.SelectedWorkspace))
+            {
+                ClearEmptyAreas();
+                foreach (var grip in grips) grip.IsVisible = false;
+                stackBar.IsVisible = false;
+                return;
+            }
             var panels = Session.CurrentPanels.ToList(); var width = Math.Max(1, (int)viewport.Viewport.Width); var height = Math.Max(1, (int)viewport.Viewport.Height);
             if (width < 10) { width = Math.Max(1, (int)workspace.Bounds.Width - 8); height = Math.Max(1, (int)workspace.Bounds.Height); }
-            var plan = FlexibleLayout.Plan(panels.Count, new DrawingSize(width, height), Session.Config.MinWidth, Session.Config.MinHeight, Session.Current, 4);
-            var stack = ShowStack(panels, width);
+            var custom = Session.FocusedPanel is null && Session.Current.Layout == "custom";
+            viewport.HorizontalScrollBarVisibility = custom ? Avalonia.Controls.Primitives.ScrollBarVisibility.Auto : Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled;
+            empty.IsVisible = panels.Count == 0 && !custom;
+            viewport.IsVisible = !empty.IsVisible;
+            if (!custom) ClearEmptyAreas();
+            if (custom)
+            {
+                stackBar.IsVisible = false;
+                ArrangeCustomPanels(Session.Current, new(width, height));
+                return;
+            }
+            var tab = Session.Current;
+            var slotCount = panels.Count > 0 ? tab.LayoutSlotCount : 0;
+            var plan = FlexibleLayout.Plan(slotCount, new DrawingSize(width, height), Session.Config.MinWidth, Session.Config.MinHeight, tab, 4);
+            var stack = ShowStack(panels, plan.Extent.Height);
             if (Session.FocusedPanel is { } focused)
             {
                 foreach (var panel in panels)
@@ -350,24 +384,18 @@ internal sealed partial class MainWindow : Window
             }
             else
             {
-                for (var index = 0; index < panels.Count; index++) { var card = cards[panels[index].Id]; card.IsVisible = true; Place(card, plan.Tiles[index]); }
-                canvas.Height = Math.Max(height, plan.Extent.Height);
-                // Retain a captured divider until its gesture finishes.
-                if (!grips.Any(g => g.IsDragging))
+                presetSlotBounds = plan.Tiles;
+                foreach (var panel in panels)
                 {
-                    while (grips.Count > plan.Dividers.Count) { canvas.Children.Remove(grips[^1]); grips.RemoveAt(grips.Count - 1); }
-                    for (var index = 0; index < plan.Dividers.Count; index++)
-                    {
-                        var spec = plan.Dividers[index];
-                        if (index >= grips.Count) { var grip = new LayoutGrip(spec, Session); grips.Add(grip); canvas.Children.Add(grip); }
-                        grips[index].Update(spec); grips[index].IsVisible = true; Place(grips[index], spec.Bounds);
-                    }
+                    var card = cards[panel.Id]; card.IsVisible = true;
+                    Place(card, plan.Tiles[panel.LayoutSlot]);
                 }
+                canvas.Height = Math.Max(height, plan.Extent.Height);
+                ArrangeGrips(canvas, grips, plan.Dividers, Session, Session.Current);
             }
             canvas.Width = width;
         }
-        finally { arranging = false; }
-        QueueSync();
+        finally { arranging = false; QueueSync(); }
     }
     private static void Place(Control control, DrawingRectangle bounds)
     { Canvas.SetLeft(control, bounds.X); Canvas.SetTop(control, bounds.Y); control.Width = bounds.Width; control.Height = bounds.Height; }
@@ -381,7 +409,7 @@ internal sealed partial class MainWindow : Window
         if (!syncQueued || closing || arranging) return;
         syncQueued = false; UserAction(Synchronize);
     }
-    private static DrawingRectangle ScreenBounds(Control control)
+    internal static DrawingRectangle ScreenBounds(Control control)
     {
         var start = control.PointToScreen(default); var end = control.PointToScreen(new(control.Bounds.Width, control.Bounds.Height));
         return new(start.X, start.Y, Math.Max(0, end.X - start.X), Math.Max(0, end.Y - start.Y));
@@ -400,21 +428,30 @@ internal sealed partial class MainWindow : Window
             return new(origin.X + a.X, origin.Y + a.Y, Math.Max(0, b.X - a.X), Math.Max(0, b.Y - a.Y));
         }
         var viewportBounds = BoundsOnScreen(viewport);
-        foreach (var panel in Session.CurrentPanels)
+        foreach (var panel in visible && viewport.IsVisible ? Session.CurrentPanels : [])
         {
+            if (panel.Record.Linked) continue;
             if (!cards.TryGetValue(panel.Id, out var card) || !card.IsVisible || card.Slot.Bounds.Width <= 0) continue;
             var bounds = BoundsOnScreen(card.Slot); var clip = DrawingRectangle.Intersect(bounds, viewportBounds); if (clip.Width <= 0 || clip.Height <= 0) continue;
             placements.Add(new(panel.Record, bounds, clip, BoundsOnScreen(card), (int)Math.Round(7 * RenderScaling)));
             areas.Add(new(panel.Record.Handle, panel.Record.Handle, clip, true));
         }
-        areas.Add(new(platform.Handle, platform.Handle, viewportBounds, false));
-        areas.Add(new(platform.Handle, platform.Handle, BoundsOnScreen(tabScroll), false));
+        if (visible)
+        {
+            if (viewport.IsVisible) areas.Add(new(platform.Handle, platform.Handle, viewportBounds, false));
+            areas.Add(new(platform.Handle, platform.Handle, BoundsOnScreen(tabScroll), false));
+        }
+        foreach (var view in workspaceWindows.Values) view.AppendPlacements(placements, areas);
         Session.Backend.Synchronize(new(platform.Handle, visible), placements);
-        CompletePanelActivation(placements, visible);
-        Session.Backend.UpdateHoverTargets(visible ? areas : []);
+        CompletePanelActivation(placements, visible || workspaceWindows.Count > 0);
+        Session.Backend.UpdateHoverTargets(areas);
     }
     internal void ToggleFocus(RuntimePanel panel)
-    { Session.FocusedPanel = Session.FocusedPanel == panel.Id ? null : panel.Id; if (Session.FocusedPanel is not null) viewport.Offset = default; }
+    {
+        if (workspaceWindows.TryGetValue(panel.WorkspaceId, out var view)) { view.ToggleZoom(panel); return; }
+        Session.FocusedPanel = Session.FocusedPanel == panel.Id ? null : panel.Id;
+        if (Session.FocusedPanel is not null) viewport.Offset = default;
+    }
     private WorkspaceConfig? HitTab(Point point)
     {
         var screen = this.PointToScreen(point);
@@ -427,10 +464,11 @@ internal sealed partial class MainWindow : Window
     }
     internal void DropPanel(RuntimePanel panel, Point point)
     {
-        if (HitTab(point) is { } workspace) { Session.Move(Session.ActionPanels(panel), workspace); return; }
-        var screen = this.PointToScreen(point);
-        var target = cards.Values.FirstOrDefault(c => c.IsVisible && ScreenBounds(c).Contains(screen.X, screen.Y));
-        if (target is not null) Session.ReorderPanel(panel, target.Panel);
+        var target = FindDropDestination(panel, point);
+        if (target.Tab is { } workspace) Session.Move(Session.ActionPanels(panel), workspace);
+        else if (target.Card is { } card) Session.SwapPanels(panel, card.Panel);
+        else if (target.Area is { } area) Session.MovePanelToArea(panel, area);
+        else if (target.Slot is { } slot) Session.MovePanelToSlot(panel, slot);
     }
     private void BackendChanged(WindowSystemEvent change) => Dispatcher.UIThread.Post(() =>
     {
@@ -443,8 +481,8 @@ internal sealed partial class MainWindow : Window
                 var panel = Session.Panels.FirstOrDefault(p => p.Record.Handle == change.Handle);
                 // Native activation events can arrive after a menu/dialog or for a hidden owner.
                 // Only an explicit user navigation command is allowed to choose another workspace.
-                if (panel is not null && panel.WorkspaceId == Session.SelectedWorkspace &&
-                    cards.TryGetValue(panel.Id, out var card) && card.IsVisible)
+                if (panel is not null && (workspaceWindows.ContainsKey(panel.WorkspaceId) ||
+                    panel.WorkspaceId == Session.SelectedWorkspace && cards.TryGetValue(panel.Id, out var card) && card.IsVisible))
                 {
                     Session.RememberActivation(panel);
                     if (panel.AgentStatus is not ("waiting" or "error")) panel.Attention = false;
@@ -465,7 +503,7 @@ internal sealed partial class MainWindow : Window
             else if (change.Kind == "destroy") Poll();
             else if (change.Kind == "move-end" && Session.Config.Magnet && OperatingSystem.IsWindows() && Native.GetCursorPos(out var cursor) && ScreenBounds(workspace).Contains(cursor.X, cursor.Y))
             {
-                var candidate = Session.Backend.Enumerate().FirstOrDefault(c => c.Handle == change.Handle);
+                var candidate = Session.DesktopWindows().FirstOrDefault(c => c.Handle == change.Handle);
                 if (candidate is not null && !RuleEngine.Evaluate(Session.Config.Rules, candidate).Excluded) Session.Attach(candidate);
             }
         });
