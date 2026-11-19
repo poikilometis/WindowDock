@@ -9,7 +9,7 @@
   </h1>
   <p><strong>One Windows workspace for your open terminals and apps</strong></p>
 
-  https://github.com/user-attachments/assets/dac915fa-7a5e-4306-9e56-d02eb4614c44
+  https://github.com/user-attachments/assets/f9a60bc5-be52-4aaa-8a09-5c505acf3cfb
 
   <p>Collect the windows you already have open into named tabs and readable grids.<br>With optional hooks, see which Codex, Claude Code, or Gemini CLI session is waiting for you.</p>
 
