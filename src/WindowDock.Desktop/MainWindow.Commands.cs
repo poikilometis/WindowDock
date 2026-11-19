@@ -12,6 +12,7 @@ internal sealed partial class MainWindow
     internal async Task<bool> ShowEditorAsync(EditorWindow editor, Window? owner = null)
     {
         if (owner is EditorWindow page) return await page.ShowNestedAsync(editor);
+        CloseAgentActivity();
         dialogDepth++; HideUpdateCard(); using var suspension = Session.Backend.Suspend();
         void Raise(object? sender, EventArgs args) { if (editor.TryGetPlatformHandle() is { } handle) Session.Backend.RaiseOverlay(handle.Handle); }
         editor.Opened += Raise;
@@ -82,7 +83,7 @@ internal sealed partial class MainWindow
             {
                 if (Session.PreviousPanel() is { } previous) ActivatePanel(previous);
             }, Session.PreviousPanel() is not null),
-            AsyncItem(L10n.Get("Workflow.AgentActivity"), OpenAttentionAsync),
+            Item(L10n.Get("Workflow.AgentActivity"), ToggleAgentActivity),
             AsyncItem(L10n.Get("Recovery.TerminalLayout"), async () =>
             {
                 if (OperatingSystem.IsWindows()) await ShowEditorAsync(new TerminalRecoveryWindow(Session));
@@ -192,6 +193,10 @@ internal sealed partial class MainWindow
                 Item(L10n.Get("CustomLayout.SplitBelow"), () => Session.SplitPanel(panel, false))
             ]),
             LinkProjectMenu(panel),
+            AsyncItem(L10n.Get("Recovery.Shortcut"), async () =>
+            {
+                if (OperatingSystem.IsWindows()) await ShowEditorAsync(new RecoveryShortcutWindow(Session, panel.Capture()));
+            }, OperatingSystem.IsWindows() && !Session.HasProjectCommand(panel.Capture())),
             Item(L10n.Get("Compatibility.LinkWindow"), () => Session.KeepOriginalWindow(panel),
                 OperatingSystem.IsWindows() && !panel.Record.Linked),
             AsyncItem(L10n.Get("Recovery.SaveTerminalHistory"), () => SaveTerminalHistoryAsync(panel),

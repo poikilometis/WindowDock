@@ -1387,7 +1387,7 @@
     <value>Fenster nach Erfassungsregeln zuordnen</value>
   </data>
   <data name="Workflow.WaitingOnly" xml:space="preserve">
-    <value>Sitzungen mit Handlungsbedarf anzeigen</value>
+    <value>Nur Sitzungen, die Aufmerksamkeit erfordern</value>
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Nicht verbundene Befehle erneut starten</value>
@@ -1598,5 +1598,44 @@
   </data>
   <data name="Update.WhatsNewVersion" xml:space="preserve">
     <value>Neu in Version {0}</value>
+  </data>
+  <data name="Recovery.Shortcut" xml:space="preserve">
+    <value>Startverknüpfung</value>
+  </data>
+  <data name="Recovery.ShortcutHelp" xml:space="preserve">
+    <value>Wählen Sie die ursprüngliche .lnk-Verknüpfung für {0}. Sie gilt in allen Tabs für diese Anwendung. Leeren Sie den Pfad, um die Verknüpfung zu entfernen.</value>
+  </data>
+  <data name="Recovery.ShortcutLaunchTitle" xml:space="preserve">
+    <value>Fenstertitel beim Start</value>
+  </data>
+  <data name="Recovery.ShortcutTitleHelp" xml:space="preserve">
+    <value>Öffnet die Verknüpfung einen anderen Terminalhost, geben Sie den genauen Fenstertitel beim Start ein.</value>
+  </data>
+  <data name="Recovery.ChooseOpenWindow" xml:space="preserve">
+    <value>Offenes Fenster auswählen</value>
+  </data>
+  <data name="Recovery.ShortcutUnavailable" xml:space="preserve">
+    <value>Wählen Sie eine vorhandene Windows-Verknüpfung (.lnk).</value>
+  </data>
+  <data name="Recovery.AmbiguousShortcutWindow" xml:space="preserve">
+    <value>Ein passendes Fenster ist bereits geöffnet. Wählen Sie es aus, um es der gespeicherten Position zuzuordnen.</value>
+  </data>
+  <data name="Recovery.ShortcutDidNotOpen" xml:space="preserve">
+    <value>{0} hat kein passendes Fenster geöffnet.</value>
+  </data>
+  <data name="Recovery.ShortcutFailed" xml:space="preserve">
+    <value>{0} konnte nicht geöffnet werden. {1}</value>
+  </data>
+  <data name="Recovery.RestoringWindows" xml:space="preserve">
+    <value>Gespeicherte Fenster werden wiederhergestellt …</value>
+  </data>
+  <data name="Recovery.RestoreSummary" xml:space="preserve">
+    <value>Wiederhergestellt {0} · Ausstehend {1}</value>
+  </data>
+  <data name="Recovery.RestorePendingHelp" xml:space="preserve">
+    <value>Wählen Sie ein offenes Fenster aus oder hinterlegen Sie eine Startverknüpfung für eine geschlossene Anwendung.</value>
+  </data>
+  <data name="Workflow.NoWaitingAgents" xml:space="preserve">
+    <value>Keine Sitzung erfordert Aufmerksamkeit.</value>
   </data>
 </root>

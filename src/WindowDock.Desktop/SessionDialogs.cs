@@ -21,27 +21,112 @@ internal sealed class PendingGroupsWindow : EditorWindow
 {
     public PendingGroupsWindow(MainWindow host) : base(L10n.Get("SessionDialogs.PendingWindows"), 760, 530, L10n.Get("BasicDialogs.Close"))
     {
+        var session = host.Session;
         Note(L10n.Get("SessionDialogs.GroupsAreRetainedForUpToDays"));
-        var list = new ListBox { Height = 280, ItemTemplate = Rows.Template<SavedPanel>(saved => Rows.Line(string.IsNullOrWhiteSpace(saved.Alias) ? saved.Title : saved.Alias, saved.ProcessName + " · " + host.Session.Config.Workspaces.FirstOrDefault(w => w.Id == saved.WorkspaceId)?.Name)) };
-        void Update() { list.ItemsSource = host.Session.Pending.ToArray(); list.SelectedItem = host.Session.Pending.FirstOrDefault(); }
-        var actions = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8 };
-        actions.Children.Add(DockControls.Button(L10n.Get("SessionDialogs.Restore"), "collect", () => { host.Session.Poll(true); Update(); }));
-        actions.Children.Add(DockControls.Button(L10n.Get("SessionDialogs.AssignToPanel"), "settings", () => _ = host.UserActionAsync(async () =>
+        var feedback = DockControls.Note("");
+        feedback.IsVisible = false;
+        AutomationProperties.SetLiveSetting(feedback, AutomationLiveSetting.Polite);
+        void Report(string message) { feedback.Text = message; feedback.IsVisible = message.Length > 0; }
+        var list = new ListBox
         {
-            if (list.SelectedItem is not SavedPanel saved) return;
-            var picker = new PanelPicker(host.Session); if (await host.ShowEditorAsync(picker, this) && picker.Selected is { } panel) { host.Session.BindPending(saved, panel); Update(); }
-        })));
-        actions.Children.Add(DockControls.Button(L10n.Get("SessionDialogs.Forget"), "close", () => { if (list.SelectedItem is SavedPanel saved) { host.Session.Pending.Remove(saved); host.Session.Save(); Update(); } }));
+            Height = 240,
+            ItemTemplate = Rows.Template<SavedPanel>(saved =>
+            {
+                var name = string.IsNullOrWhiteSpace(saved.Alias) ? saved.Title : saved.Alias;
+                var tab = session.Config.Workspaces.FirstOrDefault(workspace => workspace.Id == saved.WorkspaceId)?.Name;
+                var shortcutName = Path.GetFileName(session.ShortcutFor(saved)?.Path);
+                return Rows.Line(name, string.Join(" · ", new[] { saved.ProcessName, tab, shortcutName }
+                    .Where(value => !string.IsNullOrWhiteSpace(value))));
+            })
+        };
+        var restoring = false;
+        var restore = DockControls.Button(L10n.Get("SessionDialogs.Restore"), "collect", primary: true);
+        var bind = DockControls.Button(L10n.Get("Recovery.ChooseOpenWindow"), "focus");
+        var shortcut = DockControls.Button(L10n.Get("Recovery.Shortcut"), "settings");
+        var forget = DockControls.Button(L10n.Get("SessionDialogs.Forget"), "close");
         var history = DockControls.Button(L10n.Get("Recovery.TerminalHistory"), "search", () => _ = host.UserActionAsync(async () =>
         {
             if (list.SelectedItem is SavedPanel saved) await host.ViewTerminalHistoryAsync(saved.Id, saved.Title, this);
         }));
-        void UpdateHistory() => history.IsEnabled = OperatingSystem.IsWindows() && list.SelectedItem is SavedPanel saved &&
-            File.Exists(TerminalAccess.HistoryPath(saved.Id));
-        list.SelectionChanged += (_, _) => UpdateHistory();
-        actions.Children.Add(history);
-        Body.Children.Add(actions); Body.Children.Add(list); Update();
-        UpdateHistory();
+        bind.Click += (_, _) => _ = host.UserActionAsync(async () =>
+        {
+            if (list.SelectedItem is not SavedPanel saved) return;
+            var picker = new PendingWindowPicker(session);
+            if (!await host.ShowEditorAsync(picker, this) || picker.Selected is not { } selected) return;
+            if (selected.Panel is { } panel) { if (!session.BindPending(saved, panel)) { Report(session.Status); return; } }
+            else if (selected.Window is { } window) session.AttachSavedWindow(saved, window);
+            Update();
+        });
+        shortcut.Click += (_, _) => _ = host.UserActionAsync(async () =>
+        {
+            if (!OperatingSystem.IsWindows() || list.SelectedItem is not SavedPanel saved) return;
+            if (await host.ShowEditorAsync(new RecoveryShortcutWindow(session, saved), this)) { Report(""); Update(); }
+        });
+        forget.Click += (_, _) =>
+        {
+            if (list.SelectedItem is not SavedPanel saved) return;
+            session.Pending.Remove(saved);
+            session.Save();
+            Update();
+        };
+        void UpdateActions()
+        {
+            var selected = list.SelectedItem as SavedPanel;
+            restore.IsEnabled = !restoring && session.Backend.Available && session.Pending.Count > 0;
+            bind.IsEnabled = !restoring && session.Backend.Available && selected is not null;
+            forget.IsEnabled = !restoring && selected is not null;
+            shortcut.IsEnabled = !restoring && OperatingSystem.IsWindows() && selected is not null && !session.HasProjectCommand(selected);
+            history.IsEnabled = OperatingSystem.IsWindows() && selected is not null && File.Exists(TerminalAccess.HistoryPath(selected.Id));
+        }
+        void Update()
+        {
+            var selected = list.SelectedItem as SavedPanel;
+            list.ItemsSource = session.Pending.ToArray();
+            list.SelectedItem = selected is not null && session.Pending.Contains(selected) ? selected : session.Pending.FirstOrDefault();
+            UpdateActions();
+        }
+        restore.Click += async (_, _) =>
+        {
+            restoring = true;
+            UpdateActions();
+            try { await host.RestoreWorkAsync(startup: false, Report); }
+            catch (Exception exception) { Report(exception.Message); Store.Log(exception.ToString()); }
+            finally { restoring = false; Update(); }
+        };
+        list.SelectionChanged += (_, _) => UpdateActions();
+        Opened += (_, _) => { session.StructureChanged += Update; Update(); };
+        Closed += (_, _) => session.StructureChanged -= Update;
+        Body.Children.Add(new WrapPanel { ItemSpacing = 8, LineSpacing = 6, Children = { restore, bind, shortcut, forget, history } });
+        Body.Children.Add(feedback);
+        Body.Children.Add(list);
+        Update();
+    }
+}
+
+internal sealed class PendingWindowPicker : EditorWindow
+{
+    internal WindowSearchResult? Selected { get; private set; }
+
+    internal PendingWindowPicker(WorkspaceSession session)
+        : base(L10n.Get("Recovery.ChooseOpenWindow"), 680, 470, L10n.Get("SessionDialogs.Link"))
+    {
+        var items = session.Panels.Select(panel => new WindowSearchResult(panel, null, panel.Caption,
+                session.Config.Workspaces.First(workspace => workspace.Id == panel.WorkspaceId).Name))
+            .Concat(session.DesktopWindows().Select(window => new WindowSearchResult(null, window, window.Title, Rows.WindowDetail(window))))
+            .ToArray();
+        var filter = Input("");
+        filter.PlaceholderText = L10n.Get("BasicDialogs.WindowOrApplicationName");
+        var list = new ListBox
+        {
+            Height = 272, ItemsSource = items,
+            ItemTemplate = Rows.Template<WindowSearchResult>(item => Rows.Line(item.Title, item.Detail))
+        };
+        filter.TextChanged += (_, _) => list.ItemsSource = items.Where(item =>
+            WorkspaceSession.MatchesQuery(item.Title + " " + item.Detail, filter.Text ?? "")).ToArray();
+        Body.Children.Add(filter);
+        Body.Children.Add(list);
+        if (items.Length == 0) Note(L10n.Get("BasicDialogs.NoAvailableWindowsDockedAndSystemWindows"));
+        Commit = () => Selected = list.SelectedItem as WindowSearchResult ?? throw new InvalidOperationException(L10n.Get("Recovery.ChooseOpenWindow"));
     }
 }
 

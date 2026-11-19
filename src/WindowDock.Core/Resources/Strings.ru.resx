@@ -1387,7 +1387,7 @@
     <value>Распределять окна по правилам захвата</value>
   </data>
   <data name="Workflow.WaitingOnly" xml:space="preserve">
-    <value>Показать сессии, требующие внимания</value>
+    <value>Только сессии, требующие внимания</value>
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Повторить запуск неподключённых команд</value>
@@ -1598,5 +1598,44 @@
   </data>
   <data name="Update.WhatsNewVersion" xml:space="preserve">
     <value>Что нового в {0}</value>
+  </data>
+  <data name="Recovery.Shortcut" xml:space="preserve">
+    <value>Ярлык запуска</value>
+  </data>
+  <data name="Recovery.ShortcutHelp" xml:space="preserve">
+    <value>Укажите исходный ярлык .lnk для {0}. Он будет действовать во всех вкладках для окон этого приложения. Чтобы убрать привязку, очистите путь.</value>
+  </data>
+  <data name="Recovery.ShortcutLaunchTitle" xml:space="preserve">
+    <value>Заголовок при запуске</value>
+  </data>
+  <data name="Recovery.ShortcutTitleHelp" xml:space="preserve">
+    <value>Если ярлык открывает окно через другой терминал, укажите точный заголовок, который виден сразу после запуска.</value>
+  </data>
+  <data name="Recovery.ChooseOpenWindow" xml:space="preserve">
+    <value>Выбрать открытое окно</value>
+  </data>
+  <data name="Recovery.ShortcutUnavailable" xml:space="preserve">
+    <value>Укажите существующий ярлык Windows (.lnk).</value>
+  </data>
+  <data name="Recovery.AmbiguousShortcutWindow" xml:space="preserve">
+    <value>Уже открыто подходящее окно. Нажмите «Выбрать открытое окно», чтобы привязать его к сохранённой позиции.</value>
+  </data>
+  <data name="Recovery.ShortcutDidNotOpen" xml:space="preserve">
+    <value>Ярлык {0} не открыл подходящее окно.</value>
+  </data>
+  <data name="Recovery.ShortcutFailed" xml:space="preserve">
+    <value>Не удалось открыть {0}. {1}</value>
+  </data>
+  <data name="Recovery.RestoringWindows" xml:space="preserve">
+    <value>Восстанавливаем сохранённые окна…</value>
+  </data>
+  <data name="Recovery.RestoreSummary" xml:space="preserve">
+    <value>Восстановлено {0} · Ожидают {1}</value>
+  </data>
+  <data name="Recovery.RestorePendingHelp" xml:space="preserve">
+    <value>Выберите открытое окно или задайте ярлык запуска для закрытого приложения.</value>
+  </data>
+  <data name="Workflow.NoWaitingAgents" xml:space="preserve">
+    <value>Нет сессий, требующих внимания.</value>
   </data>
 </root>

@@ -55,4 +55,14 @@ internal static class WindowsTerminalLayout
         if (!File.Exists(Alias)) throw new FileNotFoundException(L10n.Get("Recovery.TerminalSettingsUnavailable"));
         using var process = Process.Start(new ProcessStartInfo(Alias) { UseShellExecute = true });
     }
+
+    internal static ShortcutProcess OpenShortcut(string path)
+    {
+        if (!RecoveryShortcut.IsShortcutPath(path) || !File.Exists(path))
+            throw new FileNotFoundException(L10n.Get("Recovery.ShortcutUnavailable"));
+        // Resolve the original shortcut through Windows, including its arguments,
+        // working directory and elevation preference.
+        using var process = Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+        return process is null ? default : new(process.Id, WindowMatching.StartTicks(process.Id));
+    }
 }

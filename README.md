@@ -220,7 +220,7 @@ The current stack is **.NET 10 LTS, C# 14, and Avalonia 12.1.6**. This codebase 
 
 Some elevated, protected, fullscreen, and GPU-rendered apps work best in their original windows. Choose **Link without docking** when adding one, or switch an existing panel to that mode. Normal window ownership lets the original app handle its menus, IME, popups and input. Windows permissions still govern access.
 
-Group restoration reconnects running windows. For reboot recovery, enable **Reopen this project at startup** in each project you want WindowDock to restart. Use **Restore terminal workspace** to enable Windows Terminal's tab and pane layout persistence. **Save terminal history** preserves the available scrollback as a local text snapshot, which opens in WindowDock from the panel or **Saved groups**. Automatic snapshots can be enabled per panel.
+Group restoration reconnects running windows and returns them to their saved slots. To reopen a custom terminal or other application after a reboot, assign its original Windows shortcut from the panel menu or **Workspaces → Pending windows**. Projects can also reopen their configured commands and resume agent conversations. Use **Restore terminal workspace** to enable Windows Terminal's tab and pane layout persistence. **Save terminal history** preserves the available scrollback as a local text snapshot, which opens in WindowDock from the panel or **Pending windows**. Automatic snapshots can be enabled per panel.
 
 Normal shutdown restores native window state. A local recovery journal and guardian process attempt restoration after an unexpected exit. Keep the application folder and `data` available during recovery.
 

@@ -1387,7 +1387,7 @@
     <value>按收集规则分配窗口</value>
   </data>
   <data name="Workflow.WaitingOnly" xml:space="preserve">
-    <value>显示需要处理的会话</value>
+    <value>仅显示需要关注的会话</value>
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>重试未连接的命令</value>
@@ -1598,5 +1598,44 @@
   </data>
   <data name="Update.WhatsNewVersion" xml:space="preserve">
     <value>{0} 的新增内容</value>
+  </data>
+  <data name="Recovery.Shortcut" xml:space="preserve">
+    <value>启动快捷方式</value>
+  </data>
+  <data name="Recovery.ShortcutHelp" xml:space="preserve">
+    <value>请选择 {0} 原来的 .lnk 快捷方式。此设置适用于所有标签页中的该应用。清空路径即可移除设置。</value>
+  </data>
+  <data name="Recovery.ShortcutLaunchTitle" xml:space="preserve">
+    <value>启动时的窗口标题</value>
+  </data>
+  <data name="Recovery.ShortcutTitleHelp" xml:space="preserve">
+    <value>如果快捷方式通过另一个终端程序打开窗口，请输入启动时显示的完整标题。</value>
+  </data>
+  <data name="Recovery.ChooseOpenWindow" xml:space="preserve">
+    <value>选择已打开的窗口</value>
+  </data>
+  <data name="Recovery.ShortcutUnavailable" xml:space="preserve">
+    <value>请选择一个存在的 Windows 快捷方式（.lnk）。</value>
+  </data>
+  <data name="Recovery.AmbiguousShortcutWindow" xml:space="preserve">
+    <value>已有符合条件的窗口打开。请手动选择该窗口，将其关联到保存的位置。</value>
+  </data>
+  <data name="Recovery.ShortcutDidNotOpen" xml:space="preserve">
+    <value>{0} 未打开符合条件的窗口。</value>
+  </data>
+  <data name="Recovery.ShortcutFailed" xml:space="preserve">
+    <value>无法打开 {0}。{1}</value>
+  </data>
+  <data name="Recovery.RestoringWindows" xml:space="preserve">
+    <value>正在恢复已保存的窗口…</value>
+  </data>
+  <data name="Recovery.RestoreSummary" xml:space="preserve">
+    <value>已恢复 {0} 个 · 待恢复 {1} 个</value>
+  </data>
+  <data name="Recovery.RestorePendingHelp" xml:space="preserve">
+    <value>请选择已打开的窗口，或为已关闭的应用设置启动快捷方式。</value>
+  </data>
+  <data name="Workflow.NoWaitingAgents" xml:space="preserve">
+    <value>没有需要关注的会话。</value>
   </data>
 </root>

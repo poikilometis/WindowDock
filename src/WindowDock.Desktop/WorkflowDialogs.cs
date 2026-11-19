@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Threading;
 
 namespace WindowDock;
 
@@ -94,60 +93,6 @@ internal sealed class ProjectReportWindow : EditorWindow
         : base(L10n.Get("Workflow.ProjectReport"), 650, 450, L10n.Get("BasicDialogs.Close"))
     {
         Body.Children.Add(ProjectOpenWindow.RoleList(roles));
-    }
-}
-
-internal sealed class AgentAttentionWindow : EditorWindow
-{
-    internal AgentActivity? Selected { get; private set; }
-
-    internal AgentAttentionWindow(WorkspaceSession session)
-        : base(L10n.Get("Workflow.AgentActivity"), 620, 480, L10n.Get("Workflow.Open"))
-    {
-        var waitingOnly = Check(L10n.Get("Workflow.WaitingOnly"), true);
-        var list = new ListBox
-        {
-            Height = 255,
-            ItemTemplate = Rows.Template<AgentActivity>(activity => Rows.Line(
-                activity.Panel?.Caption ?? L10n.Get("SessionDialogs.NoPanelAssigned"), Describe(session, activity)))
-        };
-        var empty = DockControls.Note(L10n.Get("Workflow.NoAgentActivity"));
-        Body.Children.Add(waitingOnly);
-        Body.Children.Add(list);
-        Body.Children.Add(empty);
-        void Refresh()
-        {
-            var last = (list.SelectedItem as AgentActivity)?.Key;
-            var items = session.AgentActivities().Where(activity => waitingOnly.IsChecked != true || activity.NeedsAttention).ToArray();
-            list.ItemsSource = items;
-            list.SelectedItem = items.FirstOrDefault(activity => activity.Key == last) ?? items.FirstOrDefault();
-            empty.IsVisible = items.Length == 0;
-        }
-        var update = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-        update.Tick += (_, _) => Refresh();
-        Opened += (_, _) => { update.Start(); list.Focus(); };
-        Closed += (_, _) => update.Stop();
-        waitingOnly.IsCheckedChanged += (_, _) => Refresh();
-        Commit = () => Selected = list.SelectedItem as AgentActivity;
-        list.DoubleTapped += (_, _) => { Commit(); if (Selected is not null) MarkAccepted(); };
-        Refresh();
-    }
-
-    private static string Describe(WorkspaceSession session, AgentActivity activity)
-    {
-        var workspace = session.Config.Workspaces.FirstOrDefault(workspace => workspace.Id == activity.Panel?.WorkspaceId);
-        var provider = HookProvider.Find(activity.Signal.Provider)?.Name ?? activity.Signal.Provider;
-        var status = L10n.Get("RuntimePanel." + (activity.Signal.Status switch
-        {
-            "waiting" => "NeedsInput", "error" => "Error", "working" => "Working", _ => "Done"
-        }));
-        var elapsed = DateTime.UtcNow - (activity.NeedsAttention ? activity.StateSince : activity.LastSeen);
-        var duration = TimeSpan.FromSeconds(Math.Max(0, (long)elapsed.TotalSeconds)).ToString("g");
-        var directory = string.IsNullOrEmpty(activity.Signal.Directory) ? "" : Path.GetFileName(Path.TrimEndingDirectorySeparator(activity.Signal.Directory));
-        var label = activity.Signal.SessionKey?.Split(':').LastOrDefault();
-        if (label?.Length > 6) label = label[..6];
-        return string.Join(" · ", new[] { workspace?.Name, provider, directory, label, status, duration, activity.Signal.Message }
-            .Where(text => !string.IsNullOrWhiteSpace(text)));
     }
 }
 

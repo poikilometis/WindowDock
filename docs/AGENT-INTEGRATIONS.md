@@ -39,6 +39,10 @@ Each launch receives `WINDOWDOCK_AGENT_ID` and `WINDOWDOCK_EXE`. The literal `{a
 
 The agent loads the conversation from its own storage. A missing or expired conversation follows the agent's normal recovery behavior.
 
+To reopen windows from a custom launcher, including an administrator or sandbox terminal, select one of its windows in **Workspaces → Pending windows** or open its panel menu. Choose **Launch shortcut**, enter the original Windows `.lnk` path, and leave **Restore on startup** enabled. The shortcut applies to windows of that application across tabs. If it opens a different terminal host, enter its exact startup window title. **Restore** reconnects running windows and opens missing windows with a configured launcher. Use **Choose open window** to assign a saved position when several windows look alike.
+
+A shortcut uses its own startup arguments and environment. To reopen a specific conversation, configure its resume command under **Projects**.
+
 ### Navigate and restore Windows Terminal
 
 - Give terminal tabs unique, stable titles. In **Agent integrations → Sessions**, assign a session to its containing WindowDock panel and select **Choose terminal tab and pane**. Pane numbers use the current spatial order. Set the number to zero to open the tab. Update a binding if you rename its tab or rearrange its panes. The bell and `Ctrl+Alt+J` use that binding.
@@ -47,7 +51,7 @@ The agent loads the conversation from its own storage. A missing or expired conv
 
 ## Routing and privacy
 
-The bell lists recent agent activity and keeps each session's waiting or error state visible across tabs. Click a session to focus its panel. Enable **Agent notifications in Windows** in the integrations dialog or under **View** for alerts about waiting or failed sessions. **Also notify on completion** adds alerts when an agent finishes a turn. Click a Windows notification to open the panel for that session and its assigned Windows Terminal tab or pane. An outline highlights the destination for four seconds.
+The bell opens an activity card below the header. It lists sessions across tabs and can filter to those that need attention. Select a session to focus its panel. Enable **Agent notifications in Windows** in the integrations dialog or under **View** for alerts about waiting or failed sessions. **Also notify on completion** adds alerts when an agent finishes a turn. Click a Windows notification to open the panel for that session and its assigned Windows Terminal tab or pane. An outline highlights the destination for four seconds.
 
 Signals are associated using launch identity, persisted session bindings, console handles, or an unambiguous process ancestry match. If WindowDock cannot identify a panel safely, use **Agent integrations → Sessions** to assign it manually. It does not guess when several panels match.
 

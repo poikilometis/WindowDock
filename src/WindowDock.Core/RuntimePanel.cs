@@ -35,6 +35,7 @@ internal sealed class RuntimePanel(WindowRecord record, string? savedId = null) 
     public string AgentId { get; set; } = "";
     public string ProjectId { get; set; } = "";
     public string CommandId { get; set; } = "";
+    internal string? RecoveryShortcutId { get; set; }
     public long ActivatedUtc { get; set; }
     public List<string> HookSessions { get; set; } = [];
     public List<SavedAgentSession> AgentSessions { get; set; } = [];
@@ -47,7 +48,7 @@ internal sealed class RuntimePanel(WindowRecord record, string? savedId = null) 
         Id = Id, WorkspaceId = WorkspaceId, Alias = Alias, Title = Title, ProcessName = Record.ProcessName,
         ClassName = Record.ClassName, Handle = Record.Handle, ProcessId = Record.ProcessId, ProcessStartTicks = Record.ProcessStartTicks,
         AgentId = AgentId, HookSessions = [..HookSessions], Order = LayoutSlot, LastSeenUtc = DateTime.UtcNow.Ticks,
-        ProjectId = ProjectId, CommandId = CommandId, ActivatedUtc = ActivatedUtc, Linked = Record.Linked,
+        ProjectId = ProjectId, CommandId = CommandId, RecoveryShortcutId = RecoveryShortcutId, ActivatedUtc = ActivatedUtc, Linked = Record.Linked,
         ExecutablePath = Record.ExecutablePath, ProjectDirectory = Record.ProjectDirectory,
         AgentSessions = AgentSessions.Count == 0 ? null : [..AgentSessions],
         TerminalTargets = TerminalTargets.Count == 0 ? null : [..TerminalTargets],
@@ -57,6 +58,7 @@ internal sealed class RuntimePanel(WindowRecord record, string? savedId = null) 
     {
         Alias = saved.Alias ?? ""; AgentId = saved.AgentId ?? ""; HookSessions = [..saved.HookSessions ?? []];
         ProjectId = saved.ProjectId ?? ""; CommandId = saved.CommandId ?? ""; ActivatedUtc = saved.ActivatedUtc;
+        RecoveryShortcutId = saved.RecoveryShortcutId;
         Record.ProjectDirectory ??= saved.ProjectDirectory;
         AgentSessions = (saved.AgentSessions ?? []).Where(item => item is not null && AgentResume.ParseId(item.Id) is not null &&
             HookProvider.Find(item.Provider) is not null && !string.IsNullOrWhiteSpace(item.Directory))

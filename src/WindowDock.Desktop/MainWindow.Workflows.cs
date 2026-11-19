@@ -209,6 +209,7 @@ internal sealed partial class MainWindow
 
     private void UpdateAttentionCount()
     {
+        agentActivityCard?.Refresh();
         var waiting = Session.AgentActivities().Where(activity => activity.NeedsAttention).ToArray();
         attentionCount.Text = waiting.Length.ToString();
         attentionCount.IsVisible = waiting.Length > 0;
@@ -247,6 +248,7 @@ internal sealed partial class MainWindow
     {
         if (closing || !Session.Config.AgentNotifications) return;
         ActiveMenu?.Close();
+        CloseAgentActivity();
         if (dialogDepth > 0)
         {
             deferredAgentNotification = (panel, sessionKey);
@@ -270,32 +272,12 @@ internal sealed partial class MainWindow
         });
     }
 
-    private async Task OpenAttentionAsync()
-    {
-        if (closing || dialogDepth > 0 && ActiveMenu is null) return;
-        RestoreHost();
-        var dialog = new AgentAttentionWindow(Session);
-        if (!await ShowEditorAsync(dialog) || dialog.Selected is not { } selected) return;
-        if (selected.Panel is { } panel && Session.Panels.Contains(panel))
-        {
-            lastAgentKey = selected.Key;
-            await ActivateAgentAsync(panel, selected.Key);
-        }
-        else if (Session.HookSessions.ContainsKey(selected.Key))
-        {
-            var picker = new PanelPicker(Session);
-            if (!await ShowEditorAsync(picker) || picker.Selected is not { } destination) return;
-            Session.BindHook(selected.Key, destination);
-            await ActivateAgentAsync(destination, selected.Key);
-        }
-    }
-
     private void NextAgent()
     {
         var waiting = Session.AgentActivities().Where(activity => activity.NeedsAttention && activity.Panel is not null).ToArray();
         if (waiting.Length == 0)
         {
-            _ = UserActionAsync(OpenAttentionAsync);
+            UserAction(ToggleAgentActivity);
             return;
         }
         var last = Array.FindIndex(waiting, activity => activity.Key == lastAgentKey);

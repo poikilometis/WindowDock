@@ -54,6 +54,7 @@ namespace WindowDock
         [DataMember(EmitDefaultValue = false)] public Dictionary<int, string> Shortcuts;
         [DataMember(EmitDefaultValue = false)] public bool AgentNotifications, NotifyOnCompletion;
         [DataMember(EmitDefaultValue = false)] public bool RememberAgentSessions, ReopenTerminal;
+        [DataMember(EmitDefaultValue = false)] public List<RecoveryShortcut> RecoveryShortcuts;
         [DataMember(EmitDefaultValue = false)] public SurfaceStyle WindowStyle, HeaderStyle, TabStyle;
         [DataMember(EmitDefaultValue = false)] public string SleepMode;
         [DataMember(EmitDefaultValue = false)] public List<DisplayPlacement> DisplayPlacements;
@@ -70,6 +71,8 @@ namespace WindowDock
             if (Version < 4) { RestoreGroups = true; AutomaticRules = true; Version = 4; }
             if (Rules == null) Rules = new List<WindowRule>();
             if (Projects == null) Projects = new List<ProjectProfile>();
+            RecoveryShortcuts = (RecoveryShortcuts ?? []).Where(shortcut => shortcut != null && shortcut.Valid)
+                .DistinctBy(shortcut => shortcut.Id).ToList();
             Shortcuts ??= new Dictionary<int, string>();
             DisplayPlacements = (DisplayPlacements ?? new List<DisplayPlacement>())
                 .Where(p => p != null && p.IsValid).DistinctBy(p => p.Topology).TakeLast(12).ToList();

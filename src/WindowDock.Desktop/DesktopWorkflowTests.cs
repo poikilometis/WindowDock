@@ -146,7 +146,7 @@ internal static class DesktopWorkflowTests
                 secondCard.GetVisualDescendants().Contains(highlight) && !firstCard.GetVisualDescendants().Contains(highlight),
                 "A new notification did not move the highlight to its own card.");
             DesktopSelfTest.Check(Application.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop &&
-                !desktop.Windows.OfType<AgentAttentionWindow>().Any(window => window.IsVisible),
+                !desktop.Windows.OfType<EditorWindow>().Any(window => window.IsVisible),
                 "Clicking a notification opened the generic agent activity dialog.");
             DesktopSelfTest.Check(shown.All(id => !icons.ContainsKey(id)), "Clicked notification icons were left registered.");
             await Task.Delay(4100);

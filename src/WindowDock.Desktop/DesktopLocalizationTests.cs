@@ -21,11 +21,15 @@ internal static class DesktopLocalizationTests
                     new ProjectsWindow(main), new ProjectEditor(main, ProjectProfile.Create(main.Session.Current.Id)), new CommandEditor(ProjectCommand.Create()),
                     new RulesWindow(main), new RuleEditor(WindowRule.Create(main.Session.Current.Id), main.Session.Config.Workspaces),
                     new IntegrationWindow(main), new SettingsWindow(main.Session.Config, main.Session.Current), new HelpWindow(), new WindowPicker([], 10),
-                    new CaptureOptionsWindow(main.Session, []), new CaptureReportWindow([]), new AgentAttentionWindow(main.Session),
+                    new CaptureOptionsWindow(main.Session, []), new CaptureReportWindow([]), new PendingGroupsWindow(main), new PendingWindowPicker(main.Session),
                     new ProjectOpenWindow(ProjectProfile.Create(main.Session.Current.Id), []), new ShortcutsWindow(main.Session.Config, new HashSet<int>()),
                     new TerminalTargetWindow("fixture", ["Development", "Review"], null), new TerminalHistoryWindow("Development", "Output")
                 ];
-                if (OperatingSystem.IsWindows()) dialogs.Add(new TerminalRecoveryWindow(main.Session));
+                if (OperatingSystem.IsWindows())
+                {
+                    dialogs.Add(new TerminalRecoveryWindow(main.Session));
+                    dialogs.Add(new RecoveryShortcutWindow(main.Session, new SavedPanel { ProcessName = "Fixture" }));
+                }
                 foreach (var dialog in dialogs)
                 {
                     var task = main.ShowEditorAsync(dialog);

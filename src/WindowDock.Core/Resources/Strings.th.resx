@@ -1387,7 +1387,7 @@
     <value>จัดหน้าต่างตามกฎการรวบรวม</value>
   </data>
   <data name="Workflow.WaitingOnly" xml:space="preserve">
-    <value>แสดงเซสชันที่ต้องดูแล</value>
+    <value>เฉพาะเซสชันที่ต้องตรวจสอบ</value>
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>ลองเริ่มคำสั่งที่ยังไม่เชื่อมอีกครั้ง</value>
@@ -1598,5 +1598,44 @@
   </data>
   <data name="Update.WhatsNewVersion" xml:space="preserve">
     <value>มีอะไรใหม่ใน {0}</value>
+  </data>
+  <data name="Recovery.Shortcut" xml:space="preserve">
+    <value>ทางลัดสำหรับเปิดแอป</value>
+  </data>
+  <data name="Recovery.ShortcutHelp" xml:space="preserve">
+    <value>เลือกทางลัด .lnk เดิมของ {0} ทางลัดนี้ใช้กับแอปนี้ในทุกแท็บ ล้างเส้นทางเพื่อยกเลิกการตั้งค่า</value>
+  </data>
+  <data name="Recovery.ShortcutLaunchTitle" xml:space="preserve">
+    <value>ชื่อหน้าต่างเมื่อเปิด</value>
+  </data>
+  <data name="Recovery.ShortcutTitleHelp" xml:space="preserve">
+    <value>หากทางลัดเปิดผ่านเทอร์มินัลตัวอื่น ให้ป้อนชื่อหน้าต่างที่แสดงตอนเปิดให้ตรงกัน</value>
+  </data>
+  <data name="Recovery.ChooseOpenWindow" xml:space="preserve">
+    <value>เลือกหน้าต่างที่เปิดอยู่</value>
+  </data>
+  <data name="Recovery.ShortcutUnavailable" xml:space="preserve">
+    <value>เลือกทางลัด Windows (.lnk) ที่มีอยู่</value>
+  </data>
+  <data name="Recovery.AmbiguousShortcutWindow" xml:space="preserve">
+    <value>มีหน้าต่างที่ตรงกันเปิดอยู่แล้ว เลือกหน้าต่างนั้นเพื่อเชื่อมกับตำแหน่งที่บันทึกไว้</value>
+  </data>
+  <data name="Recovery.ShortcutDidNotOpen" xml:space="preserve">
+    <value>{0} ไม่ได้เปิดหน้าต่างที่ตรงกัน</value>
+  </data>
+  <data name="Recovery.ShortcutFailed" xml:space="preserve">
+    <value>เปิด {0} ไม่ได้ {1}</value>
+  </data>
+  <data name="Recovery.RestoringWindows" xml:space="preserve">
+    <value>กำลังกู้คืนหน้าต่างที่บันทึกไว้…</value>
+  </data>
+  <data name="Recovery.RestoreSummary" xml:space="preserve">
+    <value>กู้คืนแล้ว {0} · รอกู้คืน {1}</value>
+  </data>
+  <data name="Recovery.RestorePendingHelp" xml:space="preserve">
+    <value>เลือกหน้าต่างที่เปิดอยู่หรือตั้งทางลัดให้แอปที่ปิดอยู่</value>
+  </data>
+  <data name="Workflow.NoWaitingAgents" xml:space="preserve">
+    <value>ไม่มีเซสชันที่ต้องตรวจสอบ</value>
   </data>
 </root>

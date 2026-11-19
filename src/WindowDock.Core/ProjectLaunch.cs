@@ -88,13 +88,13 @@ internal sealed partial class WorkspaceSession
     }
 
     internal IReadOnlyList<ProjectRole> OpenProject(ProjectProfile profile, bool startMissing, bool useResumeArguments,
-        bool retryUnmatched = false, bool selectWorkspace = true)
+        bool retryUnmatched = false, bool selectWorkspace = true, IReadOnlySet<string>? commands = null)
     {
         using var update = BeginUpdate();
         var preferred = Config.Workspaces.FirstOrDefault(workspace => workspace.Id == profile.WorkspaceId) ?? Current;
         var candidates = DesktopWindows();
         var previous = candidates.Select(candidate => candidate.Handle.ToInt64()).ToHashSet();
-        var plan = ProjectPlan(profile, candidates);
+        var plan = ProjectPlan(profile, candidates).Where(role => commands is null || commands.Contains(role.Command.Id)).ToArray();
         List<ProjectRole> result = [];
         if (plan.Any(role => role.State == ProjectRoleState.Connect))
             Checkpoint(L10n.Format("Workflow.OpenProject", profile.Name));
@@ -114,7 +114,7 @@ internal sealed partial class WorkspaceSession
                         continue;
                     }
                     var tabsBefore = Config.Workspaces.Select(workspace => workspace.Id).ToHashSet();
-                    var target = Destination(preferred, true)!;
+                    var target = Destination(ProjectDestination(preferred, role.Saved), true)!;
                     try
                     {
                         var panel = Attach(window, target, role.Saved, checkpoint: false);
@@ -129,7 +129,7 @@ internal sealed partial class WorkspaceSession
                 }
                 else if (startMissing && (role.State == ProjectRoleState.Missing || retryUnmatched && role.CanRetry))
                 {
-                    LaunchCommand(profile, role.Command, preferred, previous, role.Saved, useResumeArguments);
+                    LaunchCommand(profile, role.Command, ProjectDestination(preferred, role.Saved), previous, role.Saved, useResumeArguments);
                     result.Add(role with { State = ProjectRoleState.Starting });
                 }
                 else
@@ -143,6 +143,12 @@ internal sealed partial class WorkspaceSession
         }
         return result;
     }
+
+    internal bool IsLaunchingSavedRole(IReadOnlySet<string> pending) =>
+        launches.Any(launch => launch.SavedId is { } id && pending.Contains(id));
+
+    private WorkspaceConfig ProjectDestination(WorkspaceConfig preferred, SavedPanel? saved) =>
+        saved is null ? preferred : Config.Workspaces.FirstOrDefault(workspace => workspace.Id == saved.WorkspaceId) ?? preferred;
 
     internal void BindProjectRole(RuntimePanel panel, ProjectProfile profile, ProjectCommand command)
     {

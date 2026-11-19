@@ -1387,7 +1387,7 @@
     <value>取り込みルールで振り分ける</value>
   </data>
   <data name="Workflow.WaitingOnly" xml:space="preserve">
-    <value>対応が必要なセッションを表示</value>
+    <value>対応が必要なセッションのみ</value>
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>未接続のコマンドを再試行</value>
@@ -1598,5 +1598,44 @@
   </data>
   <data name="Update.WhatsNewVersion" xml:space="preserve">
     <value>{0} の変更内容</value>
+  </data>
+  <data name="Recovery.Shortcut" xml:space="preserve">
+    <value>起動ショートカット</value>
+  </data>
+  <data name="Recovery.ShortcutHelp" xml:space="preserve">
+    <value>{0} の元の .lnk ショートカットを選択します。このアプリのすべてのタブに適用されます。パスを消去すると設定を解除できます。</value>
+  </data>
+  <data name="Recovery.ShortcutLaunchTitle" xml:space="preserve">
+    <value>起動時のウィンドウタイトル</value>
+  </data>
+  <data name="Recovery.ShortcutTitleHelp" xml:space="preserve">
+    <value>別のターミナルで開くショートカットの場合は、起動時に表示されるタイトルを正確に入力してください。</value>
+  </data>
+  <data name="Recovery.ChooseOpenWindow" xml:space="preserve">
+    <value>開いているウィンドウを選択</value>
+  </data>
+  <data name="Recovery.ShortcutUnavailable" xml:space="preserve">
+    <value>既存の Windows ショートカット（.lnk）を選択してください。</value>
+  </data>
+  <data name="Recovery.AmbiguousShortcutWindow" xml:space="preserve">
+    <value>該当するウィンドウはすでに開いています。そのウィンドウを選択し、保存した位置に関連付けてください。</value>
+  </data>
+  <data name="Recovery.ShortcutDidNotOpen" xml:space="preserve">
+    <value>{0} から該当するウィンドウが開きませんでした。</value>
+  </data>
+  <data name="Recovery.ShortcutFailed" xml:space="preserve">
+    <value>{0} を開けませんでした。{1}</value>
+  </data>
+  <data name="Recovery.RestoringWindows" xml:space="preserve">
+    <value>保存したウィンドウを復元しています…</value>
+  </data>
+  <data name="Recovery.RestoreSummary" xml:space="preserve">
+    <value>復元済み {0} 件 · 待機中 {1} 件</value>
+  </data>
+  <data name="Recovery.RestorePendingHelp" xml:space="preserve">
+    <value>開いているウィンドウを選択するか、閉じているアプリの起動ショートカットを設定してください。</value>
+  </data>
+  <data name="Workflow.NoWaitingAgents" xml:space="preserve">
+    <value>対応が必要なセッションはありません。</value>
   </data>
 </root>

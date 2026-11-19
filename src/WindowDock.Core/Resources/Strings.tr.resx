@@ -1387,7 +1387,7 @@
     <value>Pencereleri toplama kurallarına göre yönlendir</value>
   </data>
   <data name="Workflow.WaitingOnly" xml:space="preserve">
-    <value>İlgi bekleyen oturumları göster</value>
+    <value>Yalnızca ilgilenilmesi gereken oturumlar</value>
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Bağlanmayan komutları yeniden dene</value>
@@ -1598,5 +1598,44 @@
   </data>
   <data name="Update.WhatsNewVersion" xml:space="preserve">
     <value>{0} sürümündeki yenilikler</value>
+  </data>
+  <data name="Recovery.Shortcut" xml:space="preserve">
+    <value>Başlatma kısayolu</value>
+  </data>
+  <data name="Recovery.ShortcutHelp" xml:space="preserve">
+    <value>{0} için özgün .lnk kısayolunu seçin. Bu ayar tüm sekmelerdeki bu uygulama için geçerlidir. Kaldırmak için yolu temizleyin.</value>
+  </data>
+  <data name="Recovery.ShortcutLaunchTitle" xml:space="preserve">
+    <value>Başlangıçta pencere başlığı</value>
+  </data>
+  <data name="Recovery.ShortcutTitleHelp" xml:space="preserve">
+    <value>Kısayol başka bir terminalde açılıyorsa ilk görünen pencere başlığını olduğu gibi girin.</value>
+  </data>
+  <data name="Recovery.ChooseOpenWindow" xml:space="preserve">
+    <value>Açık pencere seç</value>
+  </data>
+  <data name="Recovery.ShortcutUnavailable" xml:space="preserve">
+    <value>Var olan bir Windows kısayolu (.lnk) seçin.</value>
+  </data>
+  <data name="Recovery.AmbiguousShortcutWindow" xml:space="preserve">
+    <value>Eşleşen bir pencere zaten açık. Kayıtlı konuma bağlamak için o pencereyi seçin.</value>
+  </data>
+  <data name="Recovery.ShortcutDidNotOpen" xml:space="preserve">
+    <value>{0} eşleşen bir pencere açmadı.</value>
+  </data>
+  <data name="Recovery.ShortcutFailed" xml:space="preserve">
+    <value>{0} açılamadı. {1}</value>
+  </data>
+  <data name="Recovery.RestoringWindows" xml:space="preserve">
+    <value>Kayıtlı pencereler geri yükleniyor…</value>
+  </data>
+  <data name="Recovery.RestoreSummary" xml:space="preserve">
+    <value>Geri yüklenen {0} · Bekleyen {1}</value>
+  </data>
+  <data name="Recovery.RestorePendingHelp" xml:space="preserve">
+    <value>Açık bir pencere seçin veya kapalı uygulama için bir başlatma kısayolu ayarlayın.</value>
+  </data>
+  <data name="Workflow.NoWaitingAgents" xml:space="preserve">
+    <value>İlgilenilmesi gereken oturum yok.</value>
   </data>
 </root>

@@ -9,29 +9,82 @@ internal sealed partial class MainWindow
     private readonly NotificationHighlight notificationHighlight = new();
     private long nextHistoryCapture = Environment.TickCount64 + 180_000;
     private bool savingHistories;
+    private readonly CancellationTokenSource recoveryLifetime = new();
+    private bool restoringWork;
 
-    private async Task RestoreWorkAsync()
+    internal async Task RestoreWorkAsync(bool startup, Action<string>? report = null)
     {
-        if (closing || !OperatingSystem.IsWindows()) return;
-        if (Session.Config.ReopenTerminal &&
-            !Session.Panels.Any(panel => panel.Record.ClassName == Native.TerminalWindowClass) &&
-            !Session.DesktopWindows().Any(window => window.ClassName == Native.TerminalWindowClass))
+        if (closing || !OperatingSystem.IsWindows() || !Session.Backend.Available) return;
+        void Report(string message) { if (report is null) SetStatus(message); else report(message); }
+        if (restoringWork)
         {
-            UserAction(WindowsTerminalLayout.Reopen);
-            // Give the native layout a chance to restore before resolving project roles.
-            using var deadline = new CancellationTokenSource(TimeSpan.FromSeconds(4));
-            while (!closing && !deadline.IsCancellationRequested &&
+            Report(L10n.Get("Recovery.RestoringWindows"));
+            return;
+        }
+        restoringWork = true;
+        var cancellation = recoveryLifetime.Token;
+        var requested = Session.Pending.Select(saved => saved.Id).ToHashSet();
+        try
+        {
+            if (!startup) Report(L10n.Get("Recovery.RestoringWindows"));
+            if (!startup || Session.Config.RestoreGroups) Session.Poll(forceRestore: true);
+            string? problem = null;
+            var restoreGroups = !startup || Session.Config.RestoreGroups;
+            var needsDefaultTerminal = Session.Pending.Any(saved => saved.ClassName == Native.TerminalWindowClass &&
+                Session.ShortcutFor(saved) is null && !Session.HasProjectCommand(saved));
+            if (Session.Config.ReopenTerminal &&
+                (restoreGroups && needsDefaultTerminal || startup && Session.Config.RecoveryShortcuts.Count == 0) &&
                 !Session.Panels.Any(panel => panel.Record.ClassName == Native.TerminalWindowClass) &&
-                !Session.DesktopWindows(cached: true).Any(window => window.ClassName == Native.TerminalWindowClass))
-                await Task.Delay(250);
+                !Session.DesktopWindows().Any(window => window.ClassName == Native.TerminalWindowClass))
+            {
+                try
+                {
+                    WindowsTerminalLayout.Reopen();
+                    var deadline = Environment.TickCount64 + 4_000;
+                    while (Environment.TickCount64 < deadline && !Session.DesktopWindows().Any(window => window.ClassName == Native.TerminalWindowClass))
+                        await Task.Delay(250, cancellation);
+                    if (restoreGroups) Session.Poll(forceRestore: true);
+                }
+                catch (Exception exception) when (exception is IOException or InvalidOperationException or System.ComponentModel.Win32Exception)
+                { problem = exception.Message; }
+            }
+
+            foreach (var profile in Session.Config.Projects.ToArray())
+            {
+                if (startup && !profile.RestoreOnStartup) continue;
+                var commands = Session.Pending.Where(saved => saved.ProjectId == profile.Id && !string.IsNullOrEmpty(saved.CommandId))
+                    .Select(saved => saved.CommandId!).ToHashSet();
+                if (!startup && commands.Count == 0) continue;
+                var result = Session.OpenProject(profile, startMissing: true, useResumeArguments: true, selectWorkspace: false,
+                    commands: startup ? null : commands);
+                if (result.FirstOrDefault(role => role.State == ProjectRoleState.Failed || role.Error.Length > 0) is { } failed)
+                    problem ??= L10n.Format("Recovery.ProjectFailed", profile.Name, failed.Error);
+            }
+            if (restoreGroups && Session.Config.RecoveryShortcuts.Count > 0)
+            {
+                var shortcutProblem = await Session.RecoverShortcutsAsync(startup,
+                    path => Task.Run(() => OperatingSystem.IsWindows()
+                        ? WindowsTerminalLayout.OpenShortcut(path) : throw new PlatformNotSupportedException(), cancellation), cancellation);
+                problem ??= shortcutProblem;
+            }
+            if (!startup)
+                while (Session.IsLaunchingSavedRole(requested))
+                {
+                    await Task.Delay(250, cancellation);
+                    Session.Poll(forceRestore: true);
+                }
+            var restored = Session.Panels.Count(panel => requested.Contains(panel.Id));
+            var remaining = Session.Pending.Count;
+            if (!startup || restored > 0 || problem is not null)
+            {
+                var summary = L10n.Format("Recovery.RestoreSummary", restored, remaining);
+                if (problem is not null) summary += " " + problem;
+                else if (!startup && remaining > 0) summary += " " + L10n.Get("Recovery.RestorePendingHelp");
+                Report(summary);
+            }
         }
-        if (closing) return;
-        foreach (var profile in Session.Config.Projects.Where(project => project.RestoreOnStartup).ToArray())
-        {
-            var result = Session.OpenProject(profile, startMissing: true, useResumeArguments: true, selectWorkspace: false);
-            if (result.FirstOrDefault(role => role.State == ProjectRoleState.Failed) is { } failed)
-                SetStatus(L10n.Format("Recovery.ProjectFailed", profile.Name, failed.Error));
-        }
+        catch (OperationCanceledException) when (cancellation.IsCancellationRequested) { }
+        finally { restoringWork = false; }
     }
 
     internal async Task EditTerminalTargetAsync(RuntimePanel panel, string key, EditorWindow owner)

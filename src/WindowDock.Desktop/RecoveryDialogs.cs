@@ -1,4 +1,6 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using Avalonia.Media;
 
 namespace WindowDock;
@@ -52,6 +54,46 @@ internal sealed class TerminalRecoveryWindow : EditorWindow
             session.Config.ReopenTerminal = reopen.IsChecked == true;
             session.Save();
         };
+    }
+}
+
+[System.Runtime.Versioning.SupportedOSPlatform("windows")]
+internal sealed class RecoveryShortcutWindow : EditorWindow
+{
+    internal RecoveryShortcutWindow(WorkspaceSession session, SavedPanel saved)
+        : base(L10n.Get("Recovery.Shortcut"), 660, 400)
+    {
+        var current = session.ShortcutFor(saved);
+        var path = Input(current?.Path ?? "");
+        path.PlaceholderText = @"C:\…\Application.lnk";
+        var browse = DockControls.Button("", "search", tip: L10n.Get("Recovery.Shortcut"));
+        browse.Height = 30;
+        browse.Click += async (_, _) =>
+        {
+            try
+            {
+                var files = await PresentationHost.StorageProvider.OpenFilePickerAsync(new()
+                {
+                    Title = L10n.Get("Recovery.Shortcut"), AllowMultiple = false,
+                    FileTypeFilter = [new(L10n.Get("Recovery.Shortcut")) { Patterns = ["*.lnk"] }]
+                });
+                if (files.FirstOrDefault()?.TryGetLocalPath() is { } selected) path.Text = selected;
+            }
+            catch (Exception exception) { Error.Text = exception.Message; Error.IsVisible = true; }
+        };
+        var picker = new Grid { ColumnDefinitions = new("*,Auto"), ColumnSpacing = 8 };
+        picker.Children.Add(path);
+        Grid.SetColumn(browse, 1);
+        picker.Children.Add(browse);
+        Note(L10n.Format("Recovery.ShortcutHelp", saved.ProcessName));
+        Field(L10n.Get("Recovery.Shortcut"), picker);
+        Avalonia.Automation.AutomationProperties.SetName(path, L10n.Get("Recovery.Shortcut"));
+        var title = Input(current?.LaunchTitle ?? "");
+        var reopen = Check(L10n.Get("MainWindowCommands.RestoreOnStartup"), current?.ReopenOnStartup ?? true);
+        Field(L10n.Get("Recovery.ShortcutLaunchTitle"), title);
+        Note(L10n.Get("Recovery.ShortcutTitleHelp"));
+        Body.Children.Add(reopen);
+        Commit = () => session.SetRecoveryShortcut(saved, (path.Text ?? "").Trim().Trim('"'), title.Text, reopen.IsChecked == true);
     }
 }
 

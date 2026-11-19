@@ -1387,7 +1387,7 @@
     <value>Route windows by capture rules</value>
   </data>
   <data name="Workflow.WaitingOnly" xml:space="preserve">
-    <value>Show sessions that need attention</value>
+    <value>Only sessions that need attention</value>
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Retry commands that did not connect</value>
@@ -1598,5 +1598,44 @@
   </data>
   <data name="Update.WhatsNewVersion" xml:space="preserve">
     <value>What's new in {0}</value>
+  </data>
+  <data name="Recovery.Shortcut" xml:space="preserve">
+    <value>Launch shortcut</value>
+  </data>
+  <data name="Recovery.ShortcutHelp" xml:space="preserve">
+    <value>Select the original .lnk shortcut for {0}. It applies to this application across tabs. Clear the path to remove it.</value>
+  </data>
+  <data name="Recovery.ShortcutLaunchTitle" xml:space="preserve">
+    <value>Startup window title</value>
+  </data>
+  <data name="Recovery.ShortcutTitleHelp" xml:space="preserve">
+    <value>If the shortcut opens a different terminal host, enter the exact title shown when it opens.</value>
+  </data>
+  <data name="Recovery.ChooseOpenWindow" xml:space="preserve">
+    <value>Choose open window</value>
+  </data>
+  <data name="Recovery.ShortcutUnavailable" xml:space="preserve">
+    <value>Choose a Windows shortcut (.lnk) that exists.</value>
+  </data>
+  <data name="Recovery.AmbiguousShortcutWindow" xml:space="preserve">
+    <value>A matching window is already open. Use Choose open window to link it to the saved slot.</value>
+  </data>
+  <data name="Recovery.ShortcutDidNotOpen" xml:space="preserve">
+    <value>{0} did not open a matching window.</value>
+  </data>
+  <data name="Recovery.ShortcutFailed" xml:space="preserve">
+    <value>Could not open {0}. {1}</value>
+  </data>
+  <data name="Recovery.RestoringWindows" xml:space="preserve">
+    <value>Restoring saved windows…</value>
+  </data>
+  <data name="Recovery.RestoreSummary" xml:space="preserve">
+    <value>Restored {0} · Pending {1}</value>
+  </data>
+  <data name="Recovery.RestorePendingHelp" xml:space="preserve">
+    <value>Choose an open window or set a launch shortcut for a closed application.</value>
+  </data>
+  <data name="Workflow.NoWaitingAgents" xml:space="preserve">
+    <value>No sessions need attention.</value>
   </data>
 </root>

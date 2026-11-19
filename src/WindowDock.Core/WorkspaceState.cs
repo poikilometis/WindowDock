@@ -16,6 +16,7 @@ namespace WindowDock
         [DataMember] public int ProcessId, Order;
         [DataMember] public List<string> HookSessions;
         [DataMember(EmitDefaultValue = false)] public string ProjectId, CommandId;
+        [DataMember(EmitDefaultValue = false)] public string RecoveryShortcutId;
         [DataMember(EmitDefaultValue = false)] public long ActivatedUtc;
         [DataMember(EmitDefaultValue = false)] public bool Linked;
         [DataMember(EmitDefaultValue = false)] public string ExecutablePath, ProjectDirectory;
@@ -99,7 +100,7 @@ namespace WindowDock
         public static int Score(SavedPanel saved, WindowCandidate candidate)
         {
             if (!String.Equals(saved.ProcessName, candidate.ProcessName, StringComparison.OrdinalIgnoreCase) ||
-                !String.Equals(saved.ClassName, candidate.ClassName, StringComparison.Ordinal)) return 0;
+                !SameClass(saved.ClassName, candidate.ClassName)) return 0;
             bool sameProcess = saved.ProcessId == candidate.ProcessId && saved.ProcessStartTicks != 0 &&
                 saved.ProcessStartTicks == (candidate.ProcessStartTicks!=0?candidate.ProcessStartTicks:StartTicks(candidate.ProcessId));
             if (sameProcess && saved.Handle == candidate.Handle.ToInt64()) return 1000;
@@ -107,20 +108,45 @@ namespace WindowDock
                 !string.Equals(saved.ExecutablePath, candidate.ExecutablePath, StringComparison.OrdinalIgnoreCase)) return 0;
             bool title = String.Equals(saved.Title, candidate.Title, StringComparison.Ordinal);
             if (sameProcess && title) return 900;
-            if (!string.IsNullOrWhiteSpace(saved.ProjectDirectory))
+            if (!string.IsNullOrWhiteSpace(saved.ProjectDirectory) && !string.IsNullOrWhiteSpace(candidate.ProjectDirectory))
                 return AgentResume.SameDirectory(saved.ProjectDirectory, candidate.ProjectDirectory) ? title ? 800 : 700 : 0;
             return title && !String.IsNullOrWhiteSpace(saved.Title) ? 500 : 0;
         }
-        public static WindowCandidate UniqueMatch(SavedPanel saved, IEnumerable<WindowCandidate> candidates)
+
+        internal static bool SameClass(string left, string right) => string.Equals(left, right, StringComparison.Ordinal) ||
+            (AvaloniaClass(left) && AvaloniaClass(right));
+
+        // Avalonia registers a new window-class GUID in each process.
+        private static bool AvaloniaClass(string name) => name is not null &&
+            name.StartsWith("Avalonia-", StringComparison.Ordinal) && Guid.TryParseExact(name.AsSpan(9), "D", out _);
+        internal static IEnumerable<(SavedPanel Saved, WindowCandidate Window)> RestoreMatches(
+            IReadOnlyList<SavedPanel> roles, IReadOnlyList<WindowCandidate> windows)
         {
-            WindowCandidate best = null; int score = 0; bool ambiguous = false;
-            foreach (WindowCandidate candidate in candidates)
+            // A window must be the unique best candidate for its role, and vice versa.
+            // This keeps identical terminal titles from taking the first saved slot by accident.
+            var bestByRole = new (WindowCandidate Window, int Score, bool Tied)[roles.Count];
+            var bestByWindow = new Dictionary<nint, (int Role, int Score, bool Tied)>();
+            for (var index = 0; index < roles.Count; index++)
             {
-                int next = Score(saved, candidate);
-                if (next > score) { best = candidate; score = next; ambiguous = false; }
-                else if (next > 0 && next == score) ambiguous = true;
+                foreach (var window in windows)
+                {
+                    var score = Score(roles[index], window);
+                    if (score == 0) continue;
+                    var role = bestByRole[index];
+                    if (score > role.Score) bestByRole[index] = (window, score, false);
+                    else if (score == role.Score) bestByRole[index].Tied = true;
+                    var best = bestByWindow.GetValueOrDefault(window.Handle);
+                    if (score > best.Score) bestByWindow[window.Handle] = (index, score, false);
+                    else if (score == best.Score) bestByWindow[window.Handle] = (best.Role, best.Score, true);
+                }
             }
-            return ambiguous ? null : best;
+            for (var index = 0; index < roles.Count; index++)
+            {
+                var best = bestByRole[index];
+                if (best.Window is null || best.Tied) continue;
+                var reverse = bestByWindow[best.Window.Handle];
+                if (reverse.Role == index && !reverse.Tied) yield return (roles[index], best.Window);
+            }
         }
     }
 }

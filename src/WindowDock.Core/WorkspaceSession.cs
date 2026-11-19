@@ -283,22 +283,18 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
             if (!Backend.IsAlive(panel.Record)) { Pending.Add(panel.Capture()); Panels.Remove(panel); changed = true; continue; }
             panel.Title = Backend.Title(panel.Record);
         }
-        var needsCatalog = (Config.RestoreGroups || forceRestore) && Pending.Count > 0 || launches.Count > 0 ||
+        var needsCatalog = (Config.RestoreGroups || forceRestore) && Pending.Count > 0 || launches.Count > 0 || shortcutAttempt is not null ||
             Config.AutomaticRules && Config.Rules.Any(rule => rule.Enabled && !rule.Exclude);
         if (!Backend.Available || !needsCatalog) { if (changed) { RaiseStructureChanged(); RequestSave(); } return; }
-        var candidates = DesktopWindows(cached: true);
+        var candidates = DesktopWindows(cached: !forceRestore && shortcutAttempt is null);
+        if (shortcutAttempt is { } attempt)
+        {
+            changed |= RestoreShortcutWindow(candidates);
+            candidates = candidates.Where(candidate => !attempt.Reserves(candidate)).ToArray();
+        }
         DiscoverLaunches(candidates);
         if (Config.RestoreGroups || forceRestore)
-        {
-            foreach (var saved in Pending.OrderBy(p => p.Order).ToArray())
-            {
-                if (launches.Any(launch => launch.SavedId == saved.Id)) continue;
-                var match = WindowMatching.UniqueMatch(saved, candidates.Where(c => !Panels.Any(p => p.Record.Handle == c.Handle)));
-                var workspace = Config.Workspaces.FirstOrDefault(w => w.Id == saved.WorkspaceId);
-                if (match is null || workspace is null || Panels.Count(p => p.WorkspaceId == workspace.Id) >= workspace.Capacity) continue;
-                try { Attach(match, workspace, saved, false); changed = true; } catch (Exception exception) { Store.Log(exception.Message); }
-            }
-        }
+            changed |= RestoreRunningWindows(candidates);
         if (Config.AutomaticRules)
         {
             foreach (var candidate in candidates)
@@ -330,6 +326,7 @@ internal sealed partial class WorkspaceSession : ObservableObject, IDisposable
         if (!string.IsNullOrWhiteSpace(saved.Alias)) panel.Alias = saved.Alias;
         if (string.IsNullOrEmpty(panel.AgentId)) panel.AgentId = saved.AgentId ?? "";
         if (string.IsNullOrEmpty(panel.ProjectId)) { panel.ProjectId = saved.ProjectId ?? ""; panel.CommandId = saved.CommandId ?? ""; }
+        panel.RecoveryShortcutId ??= saved.RecoveryShortcutId;
         panel.HookSessions = panel.HookSessions.Concat(saved.HookSessions ?? []).Distinct().ToList();
         if (Config.RememberAgentSessions)
             panel.AgentSessions = panel.AgentSessions.Concat(saved.AgentSessions ?? []).DistinctBy(item => item.Key).Take(25).ToList();

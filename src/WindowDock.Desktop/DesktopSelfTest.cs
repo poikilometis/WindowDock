@@ -182,15 +182,16 @@ internal static class DesktopSelfTest
         await DesktopAdvancedTests.RunAsync(main, first);
         await DesktopInteractionTests.RunAsync(main);
         await DesktopWorkflowTests.RunAsync(main);
+        await DesktopRecoveryTests.RunAsync(main);
     }
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     private static long Message(nint window, uint message, long wParam = 0, long lParam = 0)
     {
         Native.SendMessageTimeout(window, message, (nint)wParam, (nint)lParam, 2, 1000, out var result); return result;
     }
-    internal static void Snapshot(Window window, string name)
+    internal static void Snapshot(Control control, string name)
     {
-        using var bitmap = new RenderTargetBitmap(new(Math.Max(1, (int)Math.Ceiling(window.Bounds.Width)), Math.Max(1, (int)Math.Ceiling(window.Bounds.Height))), new(96, 96));
-        bitmap.Render(window); bitmap.Save(Path.Combine(output, name), PngBitmapEncoderOptions.Default);
+        using var bitmap = new RenderTargetBitmap(new(Math.Max(1, (int)Math.Ceiling(control.Bounds.Width)), Math.Max(1, (int)Math.Ceiling(control.Bounds.Height))), new(96, 96));
+        bitmap.Render(control); bitmap.Save(Path.Combine(output, name), PngBitmapEncoderOptions.Default);
     }
 }

@@ -1387,7 +1387,7 @@
     <value>Distribuir ventanas según las reglas de captura</value>
   </data>
   <data name="Workflow.WaitingOnly" xml:space="preserve">
-    <value>Mostrar sesiones que requieren atención</value>
+    <value>Solo sesiones que requieren atención</value>
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Reintentar comandos que no se conectaron</value>
@@ -1598,5 +1598,44 @@
   </data>
   <data name="Update.WhatsNewVersion" xml:space="preserve">
     <value>Novedades de {0}</value>
+  </data>
+  <data name="Recovery.Shortcut" xml:space="preserve">
+    <value>Acceso directo de inicio</value>
+  </data>
+  <data name="Recovery.ShortcutHelp" xml:space="preserve">
+    <value>Selecciona el acceso directo .lnk original de {0}. Se aplica a esta aplicación en todas las pestañas. Borra la ruta para quitarlo.</value>
+  </data>
+  <data name="Recovery.ShortcutLaunchTitle" xml:space="preserve">
+    <value>Título de la ventana al iniciar</value>
+  </data>
+  <data name="Recovery.ShortcutTitleHelp" xml:space="preserve">
+    <value>Si el acceso directo abre otro terminal, escribe el título exacto de la ventana al abrirse.</value>
+  </data>
+  <data name="Recovery.ChooseOpenWindow" xml:space="preserve">
+    <value>Elegir ventana abierta</value>
+  </data>
+  <data name="Recovery.ShortcutUnavailable" xml:space="preserve">
+    <value>Elige un acceso directo de Windows (.lnk) que exista.</value>
+  </data>
+  <data name="Recovery.AmbiguousShortcutWindow" xml:space="preserve">
+    <value>Ya hay una ventana que coincide. Selecciónala para vincularla con la posición guardada.</value>
+  </data>
+  <data name="Recovery.ShortcutDidNotOpen" xml:space="preserve">
+    <value>{0} no abrió una ventana que coincidiera.</value>
+  </data>
+  <data name="Recovery.ShortcutFailed" xml:space="preserve">
+    <value>No se pudo abrir {0}. {1}</value>
+  </data>
+  <data name="Recovery.RestoringWindows" xml:space="preserve">
+    <value>Restaurando ventanas guardadas…</value>
+  </data>
+  <data name="Recovery.RestoreSummary" xml:space="preserve">
+    <value>Restauradas {0} · Pendientes {1}</value>
+  </data>
+  <data name="Recovery.RestorePendingHelp" xml:space="preserve">
+    <value>Elige una ventana abierta o asigna un acceso directo a una aplicación cerrada.</value>
+  </data>
+  <data name="Workflow.NoWaitingAgents" xml:space="preserve">
+    <value>Ninguna sesión requiere atención.</value>
   </data>
 </root>

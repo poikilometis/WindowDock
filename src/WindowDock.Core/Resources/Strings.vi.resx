@@ -1387,7 +1387,7 @@
     <value>Phân cửa sổ theo quy tắc gom</value>
   </data>
   <data name="Workflow.WaitingOnly" xml:space="preserve">
-    <value>Hiện phiên cần chú ý</value>
+    <value>Chỉ hiện các phiên cần chú ý</value>
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>Thử lại các lệnh chưa kết nối</value>
@@ -1598,5 +1598,44 @@
   </data>
   <data name="Update.WhatsNewVersion" xml:space="preserve">
     <value>Có gì mới trong {0}</value>
+  </data>
+  <data name="Recovery.Shortcut" xml:space="preserve">
+    <value>Lối tắt khởi chạy</value>
+  </data>
+  <data name="Recovery.ShortcutHelp" xml:space="preserve">
+    <value>Chọn lối tắt .lnk gốc của {0}. Lối tắt áp dụng cho ứng dụng này trên mọi thẻ. Xóa đường dẫn để bỏ liên kết.</value>
+  </data>
+  <data name="Recovery.ShortcutLaunchTitle" xml:space="preserve">
+    <value>Tiêu đề cửa sổ khi khởi chạy</value>
+  </data>
+  <data name="Recovery.ShortcutTitleHelp" xml:space="preserve">
+    <value>Nếu lối tắt mở một trình đầu cuối khác, hãy nhập chính xác tiêu đề hiện ra lúc mở.</value>
+  </data>
+  <data name="Recovery.ChooseOpenWindow" xml:space="preserve">
+    <value>Chọn cửa sổ đang mở</value>
+  </data>
+  <data name="Recovery.ShortcutUnavailable" xml:space="preserve">
+    <value>Chọn một lối tắt Windows (.lnk) có sẵn.</value>
+  </data>
+  <data name="Recovery.AmbiguousShortcutWindow" xml:space="preserve">
+    <value>Đã có cửa sổ phù hợp đang mở. Hãy chọn cửa sổ đó để gắn vào vị trí đã lưu.</value>
+  </data>
+  <data name="Recovery.ShortcutDidNotOpen" xml:space="preserve">
+    <value>{0} không mở cửa sổ phù hợp.</value>
+  </data>
+  <data name="Recovery.ShortcutFailed" xml:space="preserve">
+    <value>Không thể mở {0}. {1}</value>
+  </data>
+  <data name="Recovery.RestoringWindows" xml:space="preserve">
+    <value>Đang khôi phục các cửa sổ đã lưu…</value>
+  </data>
+  <data name="Recovery.RestoreSummary" xml:space="preserve">
+    <value>Đã khôi phục {0} · Đang chờ {1}</value>
+  </data>
+  <data name="Recovery.RestorePendingHelp" xml:space="preserve">
+    <value>Chọn một cửa sổ đang mở hoặc đặt lối tắt cho ứng dụng đã đóng.</value>
+  </data>
+  <data name="Workflow.NoWaitingAgents" xml:space="preserve">
+    <value>Không có phiên nào cần chú ý.</value>
   </data>
 </root>

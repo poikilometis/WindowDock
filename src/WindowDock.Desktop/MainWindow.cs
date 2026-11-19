@@ -69,7 +69,7 @@ internal sealed partial class MainWindow : Window
         add = DockControls.Button("", "addwindow", () => _ = AddWindowsAsync(), true, L10n.Get("MainWindow.AddWindowsCtrlAltA"));
         grid = DockControls.Button("", "grid", ReturnToGrid, tip: L10n.Get("MainWindow.GridShowAllWindowsAndResetThe")); grid.Classes.Add("layout");
         magnet = DockControls.Button("", "magnet", () => { Session.Config.Magnet = !Session.Config.Magnet; Session.Save(); Refresh(); }, tip: L10n.Get("MainWindow.CaptureWindowsAsYouDragThem")); magnet.Classes.Add("magnet");
-        attention = DockControls.Button("", "bell", () => _ = UserActionAsync(OpenAttentionAsync), tip: L10n.Get("Workflow.AgentActivity"));
+        attention = DockControls.Button("", "bell", () => UserAction(ToggleAgentActivity), tip: L10n.Get("Workflow.AgentActivity"));
         ((StackPanel)attention.Content!).Children.Add(attentionCount);
         var menu = DockControls.Button("", "more", () => ShowAppMenu(), tip: L10n.Get("MainWindow.WindowDockMenu"));
         foreach (var button in new[] { updateButton, collect, newTab, add, grid, magnet, attention, menu }) actions.Children.Add(button);
@@ -96,11 +96,12 @@ internal sealed partial class MainWindow : Window
         viewport.PropertyChanged += (_, args) => { if (args.Property == ScrollViewer.ViewportProperty) ArrangePanels(); };
         PositionChanged += (_, _) => { QueueSync(); SchedulePlacementSave(); PositionUpdateCard(); };
         ScalingChanged += (_, _) => { QueueSync(); PositionUpdateCard(); };
-        SizeChanged += (_, _) => { UpdateCollectCaption(); SchedulePlacementSave(); PositionUpdateCard(); };
+        SizeChanged += (_, _) => { UpdateCollectCaption(); SchedulePlacementSave(); PositionUpdateCard(); ResizeAgentActivity(); };
         PropertyChanged += (_, args) =>
         {
             if (args.Property != WindowStateProperty && args.Property != IsVisibleProperty) return;
             if (WindowState != WindowState.Minimized) lastVisibleState = WindowState;
+            if (WindowState == WindowState.Minimized || !IsVisible) CloseAgentActivity();
             wallpaper.SetRunning(IsVisible && WindowState != WindowState.Minimized);
             RefreshSurfaceMotion();
             ShowUpdateCardIfNeeded();
@@ -158,8 +159,10 @@ internal sealed partial class MainWindow : Window
             }
             if (Program.IsSelfTest) _ = DesktopSelfTest.RunAsync(this);
             else if (Program.PerformanceReport is not null && OperatingSystem.IsWindows()) _ = DesktopPerformanceTest.RunAsync(this, Program.PerformanceReport);
-            else if (Program.CrashTarget == 0 && (Session.Config.ReopenTerminal || Session.Config.Projects.Any(project => project.RestoreOnStartup)))
-                Dispatcher.UIThread.Post(() => _ = UserActionAsync(RestoreWorkAsync), DispatcherPriority.Background);
+            else if (Program.CrashTarget == 0 && (Session.Config.ReopenTerminal ||
+                Session.Config.RestoreGroups && Session.Config.RecoveryShortcuts.Any(shortcut => shortcut.ReopenOnStartup) ||
+                Session.Config.Projects.Any(project => project.RestoreOnStartup)))
+                Dispatcher.UIThread.Post(() => _ = UserActionAsync(() => RestoreWorkAsync(startup: true)), DispatcherPriority.Background);
         }
         catch (Exception exception)
         {
@@ -172,6 +175,8 @@ internal sealed partial class MainWindow : Window
         if (closing) return;
         closing = true; EndPanelDrag(); timer.Stop(); saveTimer.Stop();
         HideUpdateCard();
+        CloseAgentActivity();
+        recoveryLifetime.Cancel();
         updateLifetime.Cancel();
         UpdateWakefulness();
         StopDisplayTracking();
@@ -186,6 +191,7 @@ internal sealed partial class MainWindow : Window
         Session.AgentActivityChanged -= QueueAttentionUpdate;
         surfaceBrushes.Dispose();
         updateLifetime.Dispose();
+        recoveryLifetime.Dispose();
         Session.AgentStatusTransition -= OnAgentStatusTransition;
         if (signals is not null) _ = signals.DisposeAsync();
     }
@@ -541,7 +547,7 @@ internal sealed partial class MainWindow : Window
                 var panel = Session.Panels.FirstOrDefault(p => p.Record.Handle == change.Handle);
                 if (panel is not null) { panel.Attention = true; RefreshPanel(panel); }
             }
-            else if (change.Kind == "agent-tray") _ = UserActionAsync(OpenAttentionAsync);
+            else if (change.Kind == "agent-tray") UserAction(ToggleAgentActivity);
             else if (change.Kind == "title")
             {
                 var panel = Session.Panels.FirstOrDefault(p => p.Record.Handle == change.Handle);
@@ -578,6 +584,12 @@ internal sealed partial class MainWindow : Window
     private void OnKeyDown(object? sender, KeyEventArgs args)
     {
         if (dialogDepth > 0) return;
+        if (args.Key == Key.Escape && agentActivityPopup is { IsOpen: true })
+        {
+            CloseAgentActivity(focusBell: true);
+            args.Handled = true;
+            return;
+        }
         if (args.Key == Key.Escape && dragPreview is not null) { EndPanelDrag(); args.Handled = true; return; }
         var control = args.KeyModifiers.HasFlag(KeyModifiers.Control);
         if (control && args.Key == Key.N) { _ = NewWorkspaceAsync(); args.Handled = true; }

@@ -1387,7 +1387,7 @@
     <value>依收集規則分配視窗</value>
   </data>
   <data name="Workflow.WaitingOnly" xml:space="preserve">
-    <value>顯示需要處理的工作階段</value>
+    <value>僅顯示需要注意的工作階段</value>
   </data>
   <data name="Workflow.RetryUnmatched" xml:space="preserve">
     <value>重試未能連結的指令</value>
@@ -1598,5 +1598,44 @@
   </data>
   <data name="Update.WhatsNewVersion" xml:space="preserve">
     <value>{0} 的新增內容</value>
+  </data>
+  <data name="Recovery.Shortcut" xml:space="preserve">
+    <value>啟動捷徑</value>
+  </data>
+  <data name="Recovery.ShortcutHelp" xml:space="preserve">
+    <value>請選擇 {0} 原本的 .lnk 捷徑。此設定適用於所有分頁中的該應用程式。清空路徑即可移除設定。</value>
+  </data>
+  <data name="Recovery.ShortcutLaunchTitle" xml:space="preserve">
+    <value>啟動時的視窗標題</value>
+  </data>
+  <data name="Recovery.ShortcutTitleHelp" xml:space="preserve">
+    <value>如果捷徑透過另一個終端機開啟視窗，請輸入啟動時顯示的完整標題。</value>
+  </data>
+  <data name="Recovery.ChooseOpenWindow" xml:space="preserve">
+    <value>選擇已開啟的視窗</value>
+  </data>
+  <data name="Recovery.ShortcutUnavailable" xml:space="preserve">
+    <value>請選擇一個現有的 Windows 捷徑（.lnk）。</value>
+  </data>
+  <data name="Recovery.AmbiguousShortcutWindow" xml:space="preserve">
+    <value>已有符合條件的視窗開啟。請手動選擇該視窗，將它連結到已儲存的位置。</value>
+  </data>
+  <data name="Recovery.ShortcutDidNotOpen" xml:space="preserve">
+    <value>{0} 未開啟符合條件的視窗。</value>
+  </data>
+  <data name="Recovery.ShortcutFailed" xml:space="preserve">
+    <value>無法開啟 {0}。{1}</value>
+  </data>
+  <data name="Recovery.RestoringWindows" xml:space="preserve">
+    <value>正在還原已儲存的視窗…</value>
+  </data>
+  <data name="Recovery.RestoreSummary" xml:space="preserve">
+    <value>已還原 {0} 個 · 等待還原 {1} 個</value>
+  </data>
+  <data name="Recovery.RestorePendingHelp" xml:space="preserve">
+    <value>請選擇已開啟的視窗，或為已關閉的應用程式設定啟動捷徑。</value>
+  </data>
+  <data name="Workflow.NoWaitingAgents" xml:space="preserve">
+    <value>沒有需要注意的工作階段。</value>
   </data>
 </root>
