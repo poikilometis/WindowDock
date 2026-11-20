@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#18191d">
+  <title>How I organize 20 Claude Code and Codex terminals on Windows</title>
+  <meta name="description" content="A Windows workflow for keeping 20 already-open Claude Code and Codex terminals in project tabs, readable grids and a single workspace.">
+  <link rel="canonical" href="https://poikilometis.github.io/WindowDock/guides/organize-claude-code-codex-terminals/">
+  <link rel="icon" href="../../assets/icon.png" type="image/png">
+  <link rel="stylesheet" href="../../styles.css">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How I organize 20 Claude Code and Codex terminals on Windows">
+  <meta property="og:description" content="Collect running terminals, give each project a tab, and see which session needs a reply.">
+  <meta property="og:url" content="https://poikilometis.github.io/WindowDock/guides/organize-claude-code-codex-terminals/">
+  <meta property="og:image" content="https://poikilometis.github.io/WindowDock/assets/social-preview.png">
+  <meta property="og:image:alt" content="WindowDock workspace showing active terminal sessions in a grid">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../"><img src="../../assets/icon.png" width="34" height="34" alt=""><span>WindowDock</span></a>
+      <nav aria-label="Main">
+        <a href="./" aria-current="page">Guide</a>
+        <a href="https://github.com/poikilometis/WindowDock">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <article class="article">
+      <header>
+        <h1>How I organize 20 Claude Code and Codex terminals on Windows</h1>
+        <p class="lede">At one point I had 20 terminal windows open across agent sessions. A prompt could sit unanswered behind another window. I built <a href="../../">WindowDock</a> to bring the windows I’d already started into one workspace.</p>
+      </header>
+      <figure class="article-media">
+        <img src="../../assets/workspace.webp" width="1440" height="810" alt="A WindowDock tab with eight terminal panels, including an agent marked Needs input">
+        <figcaption>A smaller demo workspace with eight terminal windows and one session waiting for input.</figcaption>
+      </figure>
+
+      <h2>Collect the terminals you already opened</h2>
+      <p>Open WindowDock while your terminals are running. Use <strong>Add windows</strong> to select specific terminals, or <strong>Collect windows</strong> to gather visible application windows. When the tab fills, WindowDock can put the remaining windows in another tab.</p>
+      <p>If you’ve also got a browser or editor open, use <strong>Add windows</strong> for the first pass. After that, capture rules can route matching windows and exclude apps you want to leave on the desktop.</p>
+
+      <h2>Use one tab per project</h2>
+      <p>Name tabs by project and keep related sessions together. A grid makes it easy to see which terminals are still producing output. Double-click a panel header when you need to read a long diff or type a reply. Use <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>K</kbd> to search for a window by name.</p>
+      <p>When you need the desktop, minimize WindowDock. The terminals keep running. Closing WindowDock returns its windows to the desktop.</p>
+
+      <h2>Find the agent that needs a reply</h2>
+      <p>In <strong>Agent integrations</strong>, choose a project folder and preview the proposed hook changes. Set up your provider, restart its CLI session when ready, and complete its hook approval. The bell lists sessions that need attention. Enable Windows notifications if you want prompts while you’re in another app. Clicking a notification opens the source panel.</p>
+      <p>If agents share a single Windows Terminal window, assign the hook session to its named terminal tab and pane. The integration guide walks through that setup and its permissions. <a href="https://github.com/poikilometis/WindowDock/blob/main/docs/AGENT-INTEGRATIONS.md">Read the agent integration guide</a>.</p>
+
+      <section class="article-cta" aria-labelledby="try-title">
+        <h2 id="try-title">Start with your next two sessions</h2>
+        <p>Choose the Windows x64 portable ZIP on GitHub Releases. Extract it and add a pair of terminals you already have open. If a window behaves differently in your setup, share its app name and Windows version in the project discussion.</p>
+        <div class="article-links">
+          <a class="primary" href="https://github.com/poikilometis/WindowDock/releases/latest">Download WindowDock</a>
+          <a href="https://github.com/poikilometis/WindowDock/discussions/6">Share your setup</a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>WindowDock <span aria-hidden="true">·</span> MIT</span>
+      <nav aria-label="Project resources">
+        <a href="../../">Home</a>
+        <a href="https://github.com/poikilometis/WindowDock#quick-start">Install help</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
