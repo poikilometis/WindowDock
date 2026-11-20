@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#18191d">
+  <title>How to group open app windows into tabs on Windows 11 | WindowDock</title>
+  <meta name="description" content="Group already-open app windows into named tabs on Windows 11. Use WindowDock to arrange them side by side and move or minimize the workspace together.">
+  <link rel="canonical" href="https://poikilometis.github.io/WindowDock/guides/group-open-windows-into-tabs/">
+  <link rel="icon" href="../../assets/icon.png" type="image/png">
+  <link rel="stylesheet" href="../../styles.css">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to group open app windows into tabs on Windows 11">
+  <meta property="og:description" content="Put the app windows you already have open into named workspaces with readable grids.">
+  <meta property="og:url" content="https://poikilometis.github.io/WindowDock/guides/group-open-windows-into-tabs/">
+  <meta property="og:image" content="https://poikilometis.github.io/WindowDock/assets/social-preview.png">
+  <meta property="og:image:alt" content="WindowDock workspace showing open terminal windows in a grid">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../../"><img src="../../assets/icon.png" width="34" height="34" alt=""><span>WindowDock</span></a>
+      <nav aria-label="Main">
+        <a href="../organize-claude-code-codex-terminals/">Agent guide</a>
+        <a href="https://github.com/poikilometis/WindowDock">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <article class="article">
+      <header>
+        <h1>How to group open app windows into tabs on Windows 11</h1>
+        <p class="lede">When one task has an editor, a terminal and a browser open, keep them together in a named tab. Each tab in <a href="../../">WindowDock</a> can hold several live windows, so you can see related apps side by side and move or minimize them together.</p>
+      </header>
+      <figure class="article-media">
+        <img src="../../assets/workspace.webp" width="1440" height="810" alt="WindowDock showing eight application windows in a grid under the Agents tab">
+        <figcaption>A WindowDock tab with eight open terminals in a grid.</figcaption>
+      </figure>
+
+      <h2>Add the windows you already have open</h2>
+      <ol>
+        <li>Download the Windows x64 ZIP, extract the full archive, and launch <code>WindowDock.exe</code>.</li>
+        <li>Use <strong>Add windows</strong> and select the windows for your first workspace. This works with windows you have already opened.</li>
+        <li>Use <strong>Collect windows</strong> when you want to gather visible desktop windows in one action. When a tab fills up, remaining windows can go into a new tab.</li>
+      </ol>
+
+      <h2>Make a tab for each task</h2>
+      <p>Press the <strong>+</strong> button to create a tab and give it a task or project name. Use <strong>Move to tab</strong> from a window’s panel menu to move it to the right workspace.</p>
+      <p>Use the grid to keep several windows visible. Double-click a panel header to enlarge one window for reading or typing. Drag a panel onto another to swap their positions. Press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>K</kbd> to search by window name.</p>
+
+      <h2>Clear the desktop when you need it</h2>
+      <p>Minimize WindowDock to get the grouped windows out of the way. The applications keep running. To return a single window to the desktop, choose <strong>Undock</strong> from its panel menu. Closing WindowDock returns the docked windows to the desktop.</p>
+      <p>Use a matching privilege level for WindowDock and the app windows you want to dock. If a particular app is difficult to dock, its window can also be linked for quick switching. <a href="https://github.com/poikilometis/WindowDock#limits-and-recovery">See compatibility details</a>.</p>
+
+      <section class="article-cta" aria-labelledby="try-title">
+        <h2 id="try-title">Try it on your next task</h2>
+        <p>Pick the Windows x64 portable ZIP from GitHub Releases. If you use Scoop, you can install it from the project’s bucket.</p>
+        <pre class="commands"><code>scoop bucket add poikilometis https://github.com/poikilometis/scoop-bucket
+scoop install poikilometis/windowdock</code></pre>
+        <div class="article-links">
+          <a class="primary" href="https://github.com/poikilometis/WindowDock/releases/latest">Download WindowDock</a>
+          <a href="../organize-claude-code-codex-terminals/">Organize Codex and Claude Code terminals</a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>WindowDock <span aria-hidden="true">·</span> MIT</span>
+      <nav aria-label="Project resources">
+        <a href="../../">Home</a>
+        <a href="https://github.com/poikilometis/WindowDock#quick-start">Install help</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

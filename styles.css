@@ -130,6 +130,7 @@ h2 { font-size: clamp(1.65rem, 2.6vw, 2.5rem); font-weight: 640; }
 
 .start p { max-width: 61ch; margin-top: .8rem; }
 .quiet { color: var(--muted); }
+.guide-links { display: grid; gap: .85rem; }
 
 .guide-link {
   display: grid;
@@ -151,10 +152,13 @@ h2 { font-size: clamp(1.65rem, 2.6vw, 2.5rem); font-weight: 640; }
 .article h1 { font-size: clamp(2.35rem, 5.1vw, 4rem); }
 .article h2 { font-size: clamp(1.5rem, 2.4vw, 1.9rem); margin-top: 2.25rem; }
 .article p { margin-top: .9rem; }
+.article ol { margin: .9rem 0 0; padding-inline-start: 1.5rem; }
+.article li + li { margin-top: .35rem; }
 .article .lede { margin-top: 1.2rem; }
 .article-media { margin-top: 1.85rem; }
 .article-cta { margin-top: 2.6rem; border-top: 1px solid var(--border); }
 .article-links { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1.1rem; margin-top: 1rem; }
+.commands { margin: 1rem 0 0; padding: .9rem 1rem; border-radius: .5rem; background: var(--surface); white-space: pre-wrap; }
 
 code, kbd {
   font-family: "Cascadia Mono", Consolas, monospace;
